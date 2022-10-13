@@ -9,6 +9,7 @@ Desarrollo de un e-commerce para equipos tecnológicos que permita pagos en lín
 - Damian Gonzalez
 - Estefano Müller
 - Nahuel Puig
+- Enrique López
 - Anderson Marín
 
 ## Tecnologías usadas
@@ -20,4 +21,3 @@ Desarrollo de un e-commerce para equipos tecnológicos que permita pagos en lín
 - Pasarela de pagos: Mercado Pagos
 - Almacenamiento de imágenes: Cloudinary
 - Notificaciones: Socket.io
-
