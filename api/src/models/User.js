@@ -27,16 +27,13 @@ module.exports= (sequelize) => {
         billing_address: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isAlphanumeric: true
-            }
         },
         country: {
             type: DataTypes.STRING,
             allowNull: false,
         },
         phone: {
-            type: DataTypes.STRING,
+            type: DataTypes.BIGINT,
             validate: {
                 isInt: true,
                 isNumeric: true
