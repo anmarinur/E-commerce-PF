@@ -1,6 +1,8 @@
 const { Products } = require('../db.js');
 
-const getProducts = () => {};
+const getProducts = (req, res) => {
+    res.send("Hello World");
+};
 const getProductById = () => {};
 const postProduct = () => {};
 const deleteProduct = () => {};

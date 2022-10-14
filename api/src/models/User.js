@@ -21,7 +21,7 @@ module.exports= (sequelize) => {
             }
         },
         password: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         role:{
@@ -29,18 +29,18 @@ module.exports= (sequelize) => {
             defaultValue: "guest",
         },
         billing_address: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 isAlphanumeric: true
             }
         },
         country: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         phone: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             validate: {
                 isInt: true,
                 isNumeric: true
