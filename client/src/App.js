@@ -12,7 +12,6 @@ function App() {
       <button onClick = {() => loginWithRedirect()}>Login</button> 
       : isAuthenticated && <button onClick = {() => logout()}>Logout</button>}
       <div>
-        { isAuthenticated && <img src={user.picture} />} 
         { isAuthenticated && <p>{user.name}</p>} 
         { isAuthenticated && <p>{user.nickname}</p>}
         { isAuthenticated && <p>{user.email}</p>} 
