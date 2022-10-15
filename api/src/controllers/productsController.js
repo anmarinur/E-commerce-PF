@@ -1,6 +1,18 @@
 const { Product } = require('../db.js');
 
 const getProducts = async (req, res) => {
+    for(let i=0; i<25; i++){
+        await Product.create({
+            name: "ThinkPad E14",
+            image: "https://www.lenovo.com/medias/lenovo-laptop-thinkpad-e14-gen-2-hero.png?context=bWFzdGVyfHJvb3R8MjY4OTA2fGltYWdlL3BuZ3xoYTAvaGIyLzE0MTA2OTIyMzE5OTAyLnBuZ3xkMTM5OTVhY2M3ODRhNGZlOGZiN2M0N2RlNjJiYTA4Zjg2ZjUwM2RhY2UyM2VkZWYwMzY4OTA3ZmQ3ZTlkYjVh",
+            description: "Procesamiento hasta Intel® Core™ i7 de 11va generación",
+            price: 289999.00,
+            brand:"Lenovo",
+            stock: 5,
+            category: "laptops"
+        });
+    }
+
     const pageNumber = Number.parseInt(req.query.page);
     const sizeNumber = Number.parseInt(req.query.size);
 
@@ -25,7 +37,12 @@ const getProducts = async (req, res) => {
     }
 };
 
-const getProductById = () => {}
+const getProductById = async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findByPk(id);
+    if(product) return res.status(200).json(product);
+    res.status(404).json({ error: "product ID not found or invalid" });
+}
 
 const postProduct = async ( req, res ) => {
  try {
