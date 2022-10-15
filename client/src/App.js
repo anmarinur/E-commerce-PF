@@ -1,23 +1,41 @@
-import { useAuth0 } from '@auth0/auth0-react';
+import { Route, Switch } from 'react-router-dom';
+import Landing from './pages/Landing';
+import PageNotFound from './pages/PageNotFound';
+import FormCreate from './pages/FormCreate';
+import ProductDetail from './pages/ProductDetail';
+import Home from './pages/Home';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
 
-function App() {
 
-  const { loginWithRedirect, user, isAuthenticated, logout, isLoading } = useAuth0();
-  isAuthenticated && console.log(user)
-
+export default function App() {
   return (
-    <div>
-      <h1>E-commerce app - Final Project</h1>
-      {!isAuthenticated ? 
-      <button onClick = {() => loginWithRedirect()}>Login</button> 
-      : isAuthenticated && <button onClick = {() => logout()}>Logout</button>}
-      <div>
-        { isAuthenticated && <p>{user.name}</p>} 
-        { isAuthenticated && <p>{user.nickname}</p>}
-        { isAuthenticated && <p>{user.email}</p>} 
-      </div>     
+    <div className="App">
+      <Switch>
+        <Route exact path='/'>
+          <Landing />
+        </Route>
+        <Route exact path='/home'>
+          <Nav />
+          <Home />
+          <Footer />
+        </Route>
+        <Route exact path='/create'>
+          <Nav />
+          <FormCreate/>
+          <Footer />
+        </Route>
+        <Route exact path='/product/:id'>
+          <Nav />
+          <ProductDetail/>
+          <Footer />
+        </Route>
+        <Route>
+          <Nav />
+          <PageNotFound />
+          <Footer />
+        </Route>
+      </Switch>
     </div>
   );
-}
-
-export default App;
+};
