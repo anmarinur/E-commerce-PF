@@ -16,7 +16,7 @@ const getProducts = async (req, res) => {
 };
 const getProductById = () => {}
 
-const postProduct = async ( req, res, next) => {
+const postProduct = async ( req, res ) => {
  try {
   const { name, image, description, price, category, discountPercentage, rating, stock, brand } = req.body; 
 
@@ -36,10 +36,10 @@ const postProduct = async ( req, res, next) => {
    name, image, description, price, category, discountPercentage, rating, stock, brand
   });
 
-  res.status(200).send('Product created successfully');
+  res.status(200).json('Product created successfully');
 
  } catch (error) {
-  next(error);
+  res.json({error: error.message});
  }
 }
 
