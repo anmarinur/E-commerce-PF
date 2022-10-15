@@ -1,6 +1,7 @@
 const { Product } = require('../db.js');
 
 const getProducts = async (req, res) => {
+
     const pageNumber = Number.parseInt(req.query.page);
     const sizeNumber = Number.parseInt(req.query.size);
 
@@ -25,7 +26,12 @@ const getProducts = async (req, res) => {
     }
 };
 
-const getProductById = () => {}
+const getProductById = async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findByPk(id);
+    if(product) return res.status(200).json(product);
+    res.status(404).json({ error: "product ID not found or invalid" });
+}
 
 const postProduct = async ( req, res ) => {
  try {
