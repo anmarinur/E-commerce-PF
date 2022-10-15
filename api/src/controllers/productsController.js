@@ -1,4 +1,5 @@
 const { Product } = require('../db.js');
+const data = require('./../../productsInfo.json');
 
 const getProducts = async (req, res) => {
     
@@ -81,10 +82,22 @@ const updateProduct = async (req, res) => {
     .catch( (error) => res.status(400).json({error: error.message}) )
 }
 
+const chargeProducts = () =>{
+ //const products = JSON.parse(data);
+
+ try {
+  let dataBD = data.map((e) => Product.create(e));
+  PromiseAll(dataBD).then(()=> console.log('Se creó'));
+ } catch (error) {
+  return error.message;
+ }
+}
+
 module.exports = {
     getProducts,
     getProductById,
     postProduct,
     deleteProduct,
     updateProduct,
+    chargeProducts
 }
