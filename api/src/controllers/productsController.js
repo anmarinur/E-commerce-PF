@@ -15,7 +15,14 @@ const getProducts = async (req, res) => {
     }
 };
 const getProductById = () => {}
-const postProduct = () => {}
+const postProduct = async (req,res) => {
+ 
+ try {
+  
+ } catch (error) {
+  
+ }
+}
 const deleteProduct = () => {}
 const updateProduct = () => {}
 
