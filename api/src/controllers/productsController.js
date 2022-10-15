@@ -15,14 +15,17 @@ const getProducts = async (req, res) => {
     }
 };
 const getProductById = () => {}
-const postProduct = async (req,res) => {
- 
+
+const postProduct = async ( req, res) => {
+ const { name, image, description, price, category, discountPercentage, rating, stock, brand } = req.body;
+
  try {
   
  } catch (error) {
   
  }
 }
+
 const deleteProduct = () => {}
 const updateProduct = () => {}
 
