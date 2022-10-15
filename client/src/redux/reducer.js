@@ -1,6 +1,8 @@
-import { GET_PRODUCTS, GET_PRODUCT } from "./actions";
+import { GET_PRODUCTS, GET_PRODUCT } from "./actions/productActions";
 
-const stateInitial = {};
+const stateInitial = {
+    products: {}
+};
 
 export default function rootReducer(state= stateInitial, action){
     switch(action.type){
