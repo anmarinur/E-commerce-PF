@@ -48,7 +48,7 @@ const CardProductsList = (props) => {
                 
                 <div className="row">
                     <div className="col mx-auto">
-                        <PaginationProducts setPagePagination={setPagePagination} totalPages = {props.totalPages}/>
+                        <PaginationProducts currentPage={page+1} setPagePagination={setPagePagination} totalPages = {props.totalPages}/>
                     </div>
                 </div>
                 

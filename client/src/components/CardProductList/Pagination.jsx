@@ -12,18 +12,16 @@ function PaginationProducts(props) {
 
     return (
       <Pagination className='' >
-        <Pagination.First />
-        <Pagination.Prev />
-
-        {numberPages.map( n => (
-                    <Pagination.Item onClick={() => props.setPagePagination (n-1)} >{n}</Pagination.Item>
+        <Pagination.First onClick={() => props.setPagePagination (0)} />
+        <Pagination.Prev disabled />
+        {numberPages.map( n =>(
+            n === props.currentPage ? 
+            (<Pagination.Item active onClick={() => props.setPagePagination (n-1)} >{n}</Pagination.Item>) : 
+            (<Pagination.Item onClick={() => props.setPagePagination (n-1)} >{n}</Pagination.Item>) 
         ))}
         
-        
-  
-        
-        <Pagination.Next />
-        <Pagination.Last />
+        <Pagination.Next disabled />
+        <Pagination.Last onClick={() => props.setPagePagination (props.totalPages-1)} />
       </Pagination>
     );
   }
