@@ -1,10 +1,12 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button'
 
 export default function FormCreate(){
     return (
         <div>
-            <Form>
+            <h1 className="text-center">Create a new product</h1>
+            <Form className="w-50 mx-auto">
                 <Form.Group className="mb-3" controlId="productName">
                     <Form.Label>Name</Form.Label>        
                     <Form.Control type="text" placeholder="Enter a name"/>
@@ -44,6 +46,11 @@ export default function FormCreate(){
                     <Form.Control type="text" placeholder="Enter a brand" />
                 </Form.Group>
             </Form>
+
+            <div className="text-center">
+                <Button variant="danger">Submit</Button>{' '}
+            </div>
+            
         </div>
         
     )
