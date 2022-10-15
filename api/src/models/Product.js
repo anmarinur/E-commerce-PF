@@ -33,8 +33,16 @@ module.exports = (sequelize) => {
       }
     },
     category: {
-      type: DataTypes.ENUM("notebook","smartphone"),
+      type: DataTypes.ENUM("laptops","smartphones"),
       allowNull: false,
+    },
+    stock: {
+     type: DataTypes.INTEGER,
+     allowNull: false,
+    },
+    brand: {
+     type: DataTypes.STRING,
+     allowNull: false,
     }
   },
   {

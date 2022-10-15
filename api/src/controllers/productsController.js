@@ -1,6 +1,7 @@
 const { Product } = require('../db.js');
 
 const getProducts = async (req, res) => {
+
     const pageNumber = Number.parseInt(req.query.page);
     const sizeNumber = Number.parseInt(req.query.size);
 
@@ -25,8 +26,38 @@ const getProducts = async (req, res) => {
     }
 };
 
-const getProductById = () => {}
-const postProduct = () => {}
+const getProductById = async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findByPk(id);
+    if(product) return res.status(200).json(product);
+    res.status(404).json({ error: "product ID not found or invalid" });
+}
+
+const postProduct = async ( req, res ) => {
+ try {
+  const { name, image, description, price, category, stock, brand } = req.body; 
+
+  if( !name || !image || !description || !price || !category || !stock || !brand) throw(Error('Invalid inputs'));
+
+  let productData = await Product.findAll({
+   where:{
+    name: name,
+    brand: brand,
+    stock: stock
+   }
+  });
+
+  if(productData.length > 0) throw(Error('Product already in database'));
+
+  let product = await Product.create({ name, image, description, price, category, stock, brand });
+
+  res.status(200).json('Product created successfully');
+
+ } catch (error) {
+  res.status(404).json({error: error.message});
+ }
+}
+
 const deleteProduct = () => {}
 const updateProduct = () => {}
 
