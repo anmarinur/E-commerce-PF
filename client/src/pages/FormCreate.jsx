@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form'
+import Form from 'react-bootstrap/Form';
 
 export default function FormCreate(){
     return (
@@ -25,16 +25,23 @@ export default function FormCreate(){
                     <Form.Control type="number" placeholder="Enter a price"/>
                 </Form.Group>
 
-                <Form.Select className="mb-3" controlId="productCategory">
+                <Form.Group className="mb-3" controlId="productCategory">
                     <Form.Label>Category</Form.Label>
-                    <option>Select a category</option>
-                    <option value="smarthphones">Smarthphones</option>
-                    <option value="laptops">Laptops</option>
-                </Form.Select>
+                    <Form.Control as="select">
+                        <option>Select a category</option>
+                        <option value="smarthphones">Smarthphones</option>
+                        <option value="laptops">Laptops</option>
+                    </Form.Control>
+                </Form.Group>
 
-                <Form.Group>
+                <Form.Group className="mb-3" controlId="productStock">
                     <Form.Label>Stock</Form.Label>
                     <Form.Control type="text" placeholder="Set an initial stock"/>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="productBrand">
+                    <Form.Label>Brand</Form.Label>
+                    <Form.Control type="text" placeholder="Enter a brand" />
                 </Form.Group>
             </Form>
         </div>
