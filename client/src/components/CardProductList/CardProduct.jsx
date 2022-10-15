@@ -4,19 +4,20 @@ import Card from 'react-bootstrap/Card';
 
 
 
-const CardProduct = () => {
 
+const CardProduct = ({product}) => {
 
+    
 
     return (
-        <Card  className='' >
-            <Card.Img variant="top" src="https://dummyjson.com/image/i/products/1/1.jpg" />
+        <Card  className='h-100' >
+            <Card.Img variant="top" src={product.image}  style={{ width: '100%', height : '150px'}} />
             <Card.Body>
-                <Card.Title className="text-center">iPhone 9</Card.Title>
+                <Card.Title className="text-center">{product.name}</Card.Title>
                 <Card.Text>
-                    <p className="text-center fw-light text-muted start lh-1" >Smartphone</p>
-                    <p className="text-center  text-danger fs-4">$549</p>
-                    <p className="text-center fw-light text-muted start lh-1" >"An apple mobile which is nothing like apple"</p>
+                    <p className="text-center fw-light text-muted start lh-1" >{product.category}</p>
+                    <p className="text-center  text-danger fs-4">{product.price}</p>
+                    <p className="text-center fw-light text-muted start lh-1" >{product.description}</p>
                     
 
                 </Card.Text>
@@ -25,7 +26,7 @@ const CardProduct = () => {
                         <Button variant="danger"> Fav </Button>
                     </div>
                     <div className="col-6">
-                        <Button variant="danger"> Add a Cart</Button>
+                        <Button variant="danger">add to cart</Button>
                     </div>
                 </div>
                 

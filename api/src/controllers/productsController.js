@@ -1,7 +1,8 @@
 const { Product } = require('../db.js');
+const data = require('./../../productsInfo.json');
 
 const getProducts = async (req, res) => {
-
+    
     const pageNumber = Number.parseInt(req.query.page);
     const sizeNumber = Number.parseInt(req.query.size);
 
@@ -58,8 +59,39 @@ const postProduct = async ( req, res ) => {
  }
 }
 
-const deleteProduct = () => {}
-const updateProduct = () => {}
+const deleteProduct = (req, res) => {
+    const { id } = req.params;
+    Product.destroy({
+        where: {
+            id
+        }
+    })
+    .then( (data) => res.status(200).json("Product deleted successfully") )
+    .catch( (error) => res.status(400).json(error.message) )
+}
+
+const updateProduct = async (req, res) => {
+    const { id } = req.params;
+    const updateData = req.body;
+    Product.update({...updateData},{
+        where: {
+            id
+        }
+    })
+    .then( (data) => res.status(200).json("Product update successfully") )
+    .catch( (error) => res.status(400).json({error: error.message}) )
+}
+
+const chargeProducts = () =>{
+ //const products = JSON.parse(data);
+
+ try {
+  let dataBD = data.map((e) => Product.create(e));
+  PromiseAll(dataBD).then(()=> console.log('Se creó'));
+ } catch (error) {
+  return error.message;
+ }
+}
 
 module.exports = {
     getProducts,
@@ -67,4 +99,5 @@ module.exports = {
     postProduct,
     deleteProduct,
     updateProduct,
+    chargeProducts
 }
