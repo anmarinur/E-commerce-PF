@@ -26,7 +26,32 @@ const getProducts = async (req, res) => {
 };
 
 const getProductById = () => {}
-const postProduct = () => {}
+
+const postProduct = async ( req, res ) => {
+ try {
+  const { name, image, description, price, category, stock, brand } = req.body; 
+
+  if( !name || !image || !description || !price || !category || !stock || !brand) throw(Error('Invalid inputs'));
+
+  let productData = await Product.findAll({
+   where:{
+    name: name,
+    brand: brand,
+    stock: stock
+   }
+  });
+
+  if(productData.length > 0) throw(Error('Product already in database'));
+
+  let product = await Product.create({ name, image, description, price, category, stock, brand });
+
+  res.status(200).json('Product created successfully');
+
+ } catch (error) {
+  res.status(404).json({error: error.message});
+ }
+}
+
 const deleteProduct = () => {}
 const updateProduct = () => {}
 
