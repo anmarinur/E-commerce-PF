@@ -4,8 +4,11 @@ import Button from 'react-bootstrap/Button';
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 export default function FormCreate(){
+
+    const history = useHistory();
 
     const [input, setInput]= useState({
         name: '',
@@ -88,7 +91,7 @@ export default function FormCreate(){
 
     function handleClick(e) {
         axios.post('/product', input)
-        alert('Product created successfully');
+        .then(() => alert('Product created successfully'));
         setInput({
             name: '',
             image: '',
@@ -98,6 +101,7 @@ export default function FormCreate(){
             stock: 0,
             brand: ''
         })
+        history.push('/home');
     }
 
     return (
