@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       }
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -33,8 +33,16 @@ module.exports = (sequelize) => {
       }
     },
     category: {
-      type: DataTypes.ENUM("notebook","smartphone"),
+      type: DataTypes.ENUM("laptops","smartphones"),
       allowNull: false,
+    },
+    stock: {
+     type: DataTypes.INTEGER,
+     allowNull: false,
+    },
+    brand: {
+     type: DataTypes.STRING,
+     allowNull: false,
     }
   },
   {
