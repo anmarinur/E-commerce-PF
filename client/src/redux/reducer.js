@@ -1,7 +1,8 @@
-import { GET_PRODUCTS, GET_PRODUCT, GET_DETAILS } from "./actions/productActions";
-
+import { GET_PRODUCTS, GET_PRODUCT} from "./actions/productActions";
+import { GET_DETAILS } from "./actions.js"
 const stateInitial = {
-    products: {}
+    products: {},
+    datails: []
 };
 
 export default function rootReducer(state= stateInitial, action){

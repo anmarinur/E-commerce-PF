@@ -17,12 +17,12 @@ export const getProduct = ()=>{
 
 export const getDetails = (id)=> {
     console.log(id)
+    console.log('juaniiiiiiii')
     return async function (dispatch) {
         try {
-            var json = await axios.get("/product/1")
-            console.log(json)
-            
-            return dispatch({
+            var json = await axios.get("/product/" + id)
+         
+             return dispatch({
                 type: GET_DETAILS,
                 payload: json.data
             })

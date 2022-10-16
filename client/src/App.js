@@ -27,7 +27,7 @@ export default function App() {
           <FormCreate/>
           <Footer />
         </Route>
-        <Route exact path='/product/:id'>
+        <Route exact path='/product/:id' component= {ProductDetail}>
           <Nav />
           <ProductDetail/>
           <Footer />
