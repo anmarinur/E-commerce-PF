@@ -29,6 +29,7 @@ const getProducts = async (req, res) => {
 
 const getProductById = async (req, res) => {
     const { id } = req.params;
+    console.log(id)
     const product = await Product.findByPk(id);
     if(product) return res.status(200).json(product);
     res.status(404).json({ error: "product ID not found or invalid" });

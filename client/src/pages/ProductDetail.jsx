@@ -8,18 +8,15 @@ import Card from 'react-bootstrap/Card';
 
 
 
-
-
-
-
-
 export default function ProductDetail(props) {
     
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getDetails(props))
+        dispatch(getDetails(props.id))
     }, [dispatch])
+    
+    
     const productDetail = useSelector((state) => state.details)
  
 
