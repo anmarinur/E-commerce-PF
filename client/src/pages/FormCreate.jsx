@@ -3,8 +3,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 export default function FormCreate(){
+
+    const history = useHistory();
 
     const [input, setInput]= useState({
         name: '',
@@ -68,7 +72,6 @@ export default function FormCreate(){
         } else {
             errors.brand = '';
         }
-        console.log(errors)
         return errors;
     }
 
@@ -87,7 +90,9 @@ export default function FormCreate(){
     }
 
     function handleClick(e) {
-        alert('Product created successfully');
+        axios.post('/product', input)
+        .then(() => alert('Product created successfully'))
+        .catch((error) => alert(error.response.data.error));
         setInput({
             name: '',
             image: '',
@@ -97,6 +102,7 @@ export default function FormCreate(){
             stock: 0,
             brand: ''
         })
+        history.push('/home');
     }
 
     return (

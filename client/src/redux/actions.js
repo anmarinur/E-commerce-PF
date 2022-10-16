@@ -19,7 +19,7 @@ export const getAllProducts = (size, page) => {
 
 
 export const getDetails = (id)=> {
-    console.log(id)
+    
     return async function (dispatch) {
         try {
             var json = await axios.get("/product/" + id);

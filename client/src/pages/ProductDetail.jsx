@@ -12,7 +12,8 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 
 export default function ProductDetail(props) {
-  console.log(props)
+
+console.log(props)
   const dispatch = useDispatch();
   const id = props.match.params.id;
 
@@ -92,4 +93,5 @@ export default function ProductDetail(props) {
   // </div>
 
   //    )
+
 }
