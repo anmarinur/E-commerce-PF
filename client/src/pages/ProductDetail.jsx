@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Nav from "../components/Nav/Nav";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
 
 
 

@@ -1,7 +1,7 @@
 import CardProductsList from "../components/CardProductList/CardProductsList";
 import FilterAndOrder from "../components/FilterAndOrderProducts/FilterAndOrder";
 import Nav from "../components/Nav/Nav";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
 
 export default function Home(){
     return (
