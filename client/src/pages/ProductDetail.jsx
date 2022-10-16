@@ -11,7 +11,7 @@ import Footer from "../components/Footer/Footer";
 
 
 export default function ProductDetail(props) {
-    console.log(props)
+    
     const dispatch = useDispatch();
     const id = props.match.params.id;
 
@@ -32,38 +32,20 @@ export default function ProductDetail(props) {
           </Link>
           <Card.Title>Nombre del producto: {productDetail.name}</Card.Title>
 
-          <Card.Img variant="top" src="holder.js/400px580" />
+          <Card.Img variant="top" src={productDetail.image} />
 
           <Card.Subtitle className="mb-2 text-muted">
-            Description:{" "}
+            Description:{productDetail.description}
           </Card.Subtitle>
           <Card.Body>
             <p className="text-center fw-light text-muted start lh-1">
-              Category: Smartphone
+              Category:{productDetail.category}
             </p>
-            <p className="text-center  text-danger fs-4">Price: $549</p>
+            <p className="text-center  text-danger fs-4">Price: {productDetail.price}</p>
           </Card.Body>
         </Card>
         <Footer />
       </>
     );
 
-
-//   {productDetail[0].name}
-//   {productDetail[0].description}
-
-    //     <h1>Detail Product ID</h1>
-    //     <h2> Name:</h2>
-    //     <img width="400px" height="250px" />
-    //     <h2> Description:</h2>
-    //     <h2> Price:</h2>
-    //     <h2> Category:</h2>
-       
-        
-        
-        
-       
-    // </div>
-       
-    //    )
 }
