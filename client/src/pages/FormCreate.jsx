@@ -18,7 +18,7 @@ export default function FormCreate(){
         name: 'Enter a valid name',
         image: 'Enter a valid url',
         description: 'Enter a description',
-        price: 'Enter a price higher than 0',
+        price: 'Enter a value higher than 0',
         category: 'Select one category',
         stock: 'Enter a value higher than 0',
         brand: 'Enter a valid brand name'
@@ -44,7 +44,7 @@ export default function FormCreate(){
         }
 
         if(!input.price || input.price <= 0) {
-            errors.price = 'Enter a price higher than 0'
+            errors.price = 'Enter a value higher than 0'
         } else {
             errors.price = '';
         }
@@ -104,21 +104,25 @@ export default function FormCreate(){
                 <Form.Group className="mb-3" controlId="productName">
                     <Form.Label>Name</Form.Label>        
                     <Form.Control type="text" name="name" value={input.name} onChange={(e) => handleChange(e)} placeholder="Enter a name"/>
+                    {errors.name && <Form.Text className="text-muted">Enter a valid name</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="productImage">
                     <Form.Label>Image</Form.Label>
                     <Form.Control type="url" name="image" value={input.image} onChange={(e) => handleChange(e)} placeholder="Enter an URL"/>
+                    {errors.image && <Form.Text className="text-muted">Enter a valid url</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="productDescription">
                     <Form.Label>Description</Form.Label>
                     <Form.Control as="textarea" rows={2} name="description" value={input.description} onChange={(e) => handleChange(e)} placeholder="Enter a description"/>
+                    {errors.description && <Form.Text className="text-muted">Enter a description</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="productPrice">
                     <Form.Label>Price</Form.Label>
                     <Form.Control type="number" name="price" value ={input.price} onChange={(e) => handleChange(e)} placeholder="Enter a price"/>
+                    {errors.price && <Form.Text className="text-muted">Enter a value higher than 0</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="productCategory">
@@ -128,16 +132,19 @@ export default function FormCreate(){
                         <option value="smartphones">Smartphones</option>
                         <option value="laptops">PC Laptops</option>
                     </Form.Control>
+                    {errors.category && <Form.Text className="text-muted">Select one category</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="productStock">
                     <Form.Label>Stock</Form.Label>
                     <Form.Control type="number" name="stock" value={input.stock} onChange={(e) => handleChange(e)} placeholder="Set an initial stock"/>
+                    {errors.stock && <Form.Text className="text-muted">Enter a value higher than 0</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="productBrand">
                     <Form.Label>Brand</Form.Label>
                     <Form.Control type="text" name="brand" value={input.brand} onChange={(e) => handleChange(e)} placeholder="Enter a brand" />
+                    {errors.brand && <Form.Text className="text-muted">Enter a valid brand name</Form.Text>}
                 </Form.Group>
             </Form>
 
