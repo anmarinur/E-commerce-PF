@@ -1,7 +1,7 @@
 [
   {
     "name": "iPhone 9",
-    "image":"https://dummyjson.com/image/i/products/1/1.jpg",
+    "image": "https://dummyjson.com/image/i/products/1/1.jpg",
     "description": "An apple mobile which is nothing like apple",
     "price": 549,
     "category": "smartphones",
@@ -116,7 +116,7 @@
     "price": 880,
     "category": "smartphones",
     "discountPercentage": 5,
-    "rating": 4.30,
+    "rating": 4.3,
     "stock": 12,
     "brand": "Apple"
   },
@@ -251,5 +251,203 @@
     "rating": 3.7,
     "stock": 21,
     "brand": "Huawei"
-    }
+  },
+  {
+    "name": "Hi nova 9z",
+    "image": "https://phonesdata.com/files/models/Huawei-Hi-nova-9z-193.jpg",
+    "description": "The size of the Huawei Hi nova 9z is 161.8 x74.7 x 8.6 mm (HxWxD). The weight of the Huawei Hi nova 9z is 190 g.",
+    "price": 650,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 3.1,
+    "stock": 20,
+    "brand": "Huawei"
+  },
+  {
+    "name": "Honor 60 SE",
+    "image": "https://phonesdata.com/files/models/Huawei-Honor-60-SE-119.jpg",
+    "description": "The size of the Huawei Honor 60 SE is 161.3 x 73.4 x 7.7 mm (HxWxD). The weight of the Huawei Honor 60 SE is 175 g.",
+    "price": 300,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 3,
+    "stock": 15,
+    "brand": "Huawei"
+  },
+  {
+    "name": "Honor 70",
+    "image": "https://phonesdata.com/files/models/Huawei-Honor-70-655.jpg",
+    "description": "The size of the Huawei Honor 70 is 161.4 x 73.3 x 7.9 mm (HxWxD). The screen size of the Huawei Honor 70 is 6.67 inches. The weight of the Huawei Honor 70 is 178 g.",
+    "price": 380,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 3,
+    "stock": 21,
+    "brand": "Huawei"
+  },
+  {
+    "name": "Honor 70 Pro",
+    "image": "https://phonesdata.com/files/models/Huawei-Honor-70-Pro-447.jpg",
+    "description": "The size of the Huawei Honor 70 Pro is 163.9 x 74.6 x 8.2 mm (HxWxD). The screen size of the Huawei Honor 70 Pro is 6.78 inches. The weight of the Huawei Honor 70 Pro is 192 g.",
+    "price": 520,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4,
+    "stock": 26,
+    "brand": "Huawei"
+  },
+  {
+    "name": "Honor 70 Pro+",
+    "image": "https://phonesdata.com/files/models/Huawei-Honor-70-Pro+-532.jpg",
+    "description": "The size of the Huawei Honor 70 Pro+ is 163.9 x 74.6 x 8.2 mm (HxWxD). The screen size of the Huawei Honor 70 Pro+ is 6.78 inches. The weight of the Huawei Honor 70 Pro+ is 192 g.",
+    "price": 600,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 0,
+    "stock": 24,
+    "brand": "Huawei"
+  },
+  {
+    "name": "Honor Magic V",
+    "image": "https://phonesdata.com/files/models/Huawei-Honor-Magic-V-837.jpg",
+    "description": "The size of the Huawei Honor Magic V is 160.4 x 141.1 x 6.7 mm (HxWxD). The screen size of the Huawei Honor Magic V is 7.9 inches. The weight of the Huawei Honor Magic V is 288 g.",
+    "price": 800,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.3,
+    "stock": 3.8,
+    "brand": "Huawei"
+  },
+  {
+    "name": "Honor Magic4",
+    "image": "https://phonesdata.com/files/models/Huawei-Honor-Magic4-805.jpg",
+    "description": "The size of the Huawei Honor Magic4 is 163.6 x 74.5 x 8.8 mm (HxWxD). The screen size of the Huawei Honor Magic4 is 6.81 inches. The weight of the Huawei Honor Magic4 is 199 g.",
+    "price": 900,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.6,
+    "stock": 23,
+    "brand": "Huawei"
+  },
+  {
+    "name": "Honor MAgic4 Lite",
+    "image": "https://phonesdata.com/files/models/Huawei-Honor-Magic4-Lite-786.jpg",
+    "description": "The size of the Huawei Honor Magic4 Lite is 166.1 x 75.8 x 8.1 mm (HxWxD). The screen size of the Huawei Honor Magic4 Lite is 6.81 inches. The weight of the Huawei Honor Magic4 Lite is 189 g.",
+    "price": 300,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 3.4,
+    "stock": 17,
+    "brand": "Huawei"
+  },
+  {
+    "name": "Xiaomi 11i",
+    "image": "https://phonesdata.com/files/models/Xiaomi-11i-957.jpg",
+    "description": "The size of the Xiaomi 11i is 163.7 x 76.2 x 8.3 mm (HxWxD). The screen size of the Xiaomi 11i is 6.67 inches. The weight of the Xiaomi 11i is 207 g.",
+    "price": 330,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.2,
+    "stock": 30,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi 11i HyperCharge",
+    "image": "https://phonesdata.com/files/models/Xiaomi-11i-HyperCharge-372.jpg",
+    "description": "The size of the Xiaomi 11i HyperCharge is 163.7 x 76.2 x 8.3 mm (HxWxD). The screen size of the Xiaomi 11i HyperCharge is 6.67 inches. The weight of the Xiaomi 11i HyperCharge is 204 g.",
+    "price": 300,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 3.8,
+    "stock": 25,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi 12 Lite",
+    "image": "https://phonesdata.com/files/models/Xiaomi-12-Lite-633.jpg",
+    "description": "The size of the Xiaomi 12 Lite is 159.3 x 73.7 x 7.3 mm (HxWxD). The screen size of the Xiaomi 12 Lite is 6.55 inches. The weight of the Xiaomi 12 Lite is 173 g.",
+    "price": 440,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.2,
+    "stock": 31,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi 12 Pro",
+    "image": "https://phonesdata.com/files/models/Xiaomi-12-Pro-(Dimensity)-613.jpg",
+    "description": "The size of the Xiaomi 12 Pro (Dimensity) is 163.6 x 74.6 x 8.2 mm (HxWxD). The screen size of the Xiaomi 12 Pro (Dimensity) is 6.73 inches. The weight of the Xiaomi 12 Pro (Dimensity) is 201 g.",
+    "price": 570,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 3.8,
+    "stock": 26,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi 12s",
+    "image": "https://phonesdata.com/files/models/Xiaomi-12S-860.jpg",
+    "description": "The size of the Xiaomi 12S is 152.7 x 69.9 x 8.2 mm (HxWxD). The screen size of the Xiaomi 12S is 6.28 inches. The weight of the Xiaomi 12S is 179 g.",
+    "price": 570,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 3.7,
+    "stock": 27,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi 12s Pro",
+    "image": "https://phonesdata.com/files/models/Xiaomi-12S-Pro-598.jpg",
+    "description": "The size of the Xiaomi 12S Pro is 163.6 x 74.6 x 8.2 mm (HxWxD). The screen size of the Xiaomi 12S Pro is 6.73 inches. The weight of the Xiaomi 12S Pro is 203 g.",
+    "price": 670,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.0,
+    "stock": 33,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi 12s Ultra",
+    "image": "https://phonesdata.com/files/models/Xiaomi-12S-Ultra-936.jpg",
+    "description": "The size of the Xiaomi 12S Ultra is 163.2 x 75 x 9.1 mm (HxWxD). The screen size of the Xiaomi 12S Ultra is 6.73 inches. The weight of the Xiaomi 12S Ultra is 225 g.",
+    "price": 950,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.4,
+    "stock": 30,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi 12T",
+    "image": "https://phonesdata.com/files/models/Xiaomi-12T-618.jpg",
+    "description": "The size of the Xiaomi 12T is 163.1 x 75.9 x 8.6 mm (HxWxD). The screen size of the Xiaomi 12T is 6.67 inches. The weight of the Xiaomi 12T is 202 g.",
+    "price": 600,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.0,
+    "stock": 37,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi 12T Pro",
+    "image": "https://phonesdata.com/files/models/Xiaomi-12T-Pro-419.jpg",
+    "description": "The size of the Xiaomi 12T Pro is 163.1 x 75.9 x 8.6 mm (HxWxD). The screen size of the Xiaomi 12T Pro is 6.67 inches. The weight of the Xiaomi 12T Pro is 205 g.",
+    "price": 800,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.6,
+    "stock": 38,
+    "brand": "Xiaomi"
+  },
+  {
+    "name": "Xiaomi Black Shark 5",
+    "image": "https://phonesdata.com/files/models/Xiaomi-Black-Shark-5-542.jpg",
+    "description": "The size of the Xiaomi Black Shark 5 is 163.8 x 76.3 x 10 mm (HxWxD). The screen size of the Xiaomi Black Shark 5 is 6.67 inches. The weight of the Xiaomi Black Shark 5 is 218 g.",
+    "price": 500,
+    "category": "smartphones",
+    "discountPercentage": 0,
+    "rating": 4.7,
+    "stock": 34,
+    "brand": "Xiaomi"
+  }
 ]
