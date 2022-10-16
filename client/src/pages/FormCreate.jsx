@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
+import axios from 'axios';
 
 export default function FormCreate(){
 
@@ -68,7 +69,6 @@ export default function FormCreate(){
         } else {
             errors.brand = '';
         }
-        console.log(errors)
         return errors;
     }
 
@@ -87,6 +87,7 @@ export default function FormCreate(){
     }
 
     function handleClick(e) {
+        axios.post('/product', input)
         alert('Product created successfully');
         setInput({
             name: '',
