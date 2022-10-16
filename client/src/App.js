@@ -1,5 +1,4 @@
 import { Route, Switch } from 'react-router-dom';
-import Landing from './pages/Landing';
 import PageNotFound from './pages/PageNotFound';
 import FormCreate from './pages/FormCreate';
 import ProductDetail from './pages/ProductDetail';
@@ -13,9 +12,6 @@ export default function App() {
     <div className="App">      
       <Switch>
         <Route exact path="/">
-          <Landing />
-        </Route>
-        <Route exact path="/home">
           <Home />
         </Route>
         <Route exact path="/create">
