@@ -13,7 +13,6 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 export default function ProductDetail(props) {
 
-console.log(props)
   const dispatch = useDispatch();
   const id = props.match.params.id;
 
@@ -32,7 +31,7 @@ console.log(props)
 
         <Card className="border border-danger shadow" >
           <Card.Header className="text-center text-uppercase py-3 bg-danger text-white fw-semibold">
-          <Card.Title className="text-start fs-3">   {productDetail.name} </Card.Title>
+          <Card.Title className="text-start fs-3"> {productDetail.name} </Card.Title>
             <div class="position-absolute top-0 end-0">
               <Link to="/home">
                 <Button className="m-3 fw-bold text-danger" variant="light">X</Button>
@@ -55,7 +54,7 @@ console.log(props)
               In Stock: {productDetail.stock}
             </p>
 
-            <p className="text-center  text-danger fs-4">Price: $549</p>
+            <p className="text-center  text-danger fs-4">Price: ${productDetail.price}</p>
             <div className="row text-center">
               <div className="col-6">
                 <Button className="px-5 py-2" variant="danger"> <i class="fa-solid fa-heart-circle-plus"></i> </Button>
@@ -67,31 +66,9 @@ console.log(props)
           </Card.Body>
         </Card>
 
-        
-
 
       </div>
       <Footer />
     </>
   );
-
-
-  //   {productDetail[0].name}
-  //   {productDetail[0].description}
-
-  //     <h1>Detail Product ID</h1>
-  //     <h2> Name:</h2>
-  //     <img width="400px" height="250px" />
-  //     <h2> Description:</h2>
-  //     <h2> Price:</h2>
-  //     <h2> Category:</h2>
-
-
-
-
-
-  // </div>
-
-  //    )
-
 }
