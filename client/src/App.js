@@ -4,8 +4,9 @@ import PageNotFound from './pages/PageNotFound';
 import FormCreate from './pages/FormCreate';
 import ProductDetail from './pages/ProductDetail';
 import Home from './pages/Home';
-import Nav from './components/Nav';
+import Nav from './components/Nav/Nav';
 import Footer from './components/Footer';
+import * as bootstrap from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
