@@ -91,7 +91,8 @@ export default function FormCreate(){
 
     function handleClick(e) {
         axios.post('/product', input)
-        .then(() => alert('Product created successfully'));
+        .then(() => alert('Product created successfully'))
+        .catch((error) => alert(error.response.data.error));
         setInput({
             name: '',
             image: '',
