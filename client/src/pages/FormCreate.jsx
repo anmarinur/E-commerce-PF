@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import Nav from "../components/Nav/Nav";
+import Footer from "../components/Footer";
 
 export default function FormCreate(){
 
@@ -99,6 +101,7 @@ export default function FormCreate(){
 
     return (
         <div>
+         <Nav />
             <h1 className="text-center">Create a new product</h1>
             <Form className="w-50 mx-auto">
                 <Form.Group className="mb-3" controlId="productName">
@@ -153,6 +156,7 @@ export default function FormCreate(){
                 disabled={(errors.name || errors.image || errors.description || errors.price || errors.category || errors.stock || errors.brand) ? true : ''}
                 >Submit</Button>{' '}
             </div>
+          <Footer />
         </div>
     )
 }

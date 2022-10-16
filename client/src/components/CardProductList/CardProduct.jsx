@@ -7,8 +7,6 @@ import Card from 'react-bootstrap/Card';
 
 const CardProduct = ({product}) => {
 
-    
-
     return (
         <Card  className='h-100' >
             <Card.Img variant="top" src={product.image}  style={{ width: '100%', height : '150px'}} />

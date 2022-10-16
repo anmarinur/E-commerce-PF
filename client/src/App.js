@@ -12,32 +12,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   return (
-    <div className="App">
+    <div className="App">      
       <Switch>
-        <Route exact path='/'>
+        <Route exact path="/">
           <Landing />
         </Route>
-        <Route exact path='/home'>
-          <Nav />
+        <Route exact path="/home">
           <Home />
-          <Footer />
         </Route>
-        <Route exact path='/create'>
-          <Nav />
-          <FormCreate/>
-          <Footer />
+        <Route exact path="/create">
+          <FormCreate />
         </Route>
-        <Route exact path='/product/:id' component= {ProductDetail}>
-          <Nav />
-          <ProductDetail/>
-          <Footer />
-        </Route>
+        <Route exact path="/product/:id" component={ProductDetail}></Route>
         <Route>
-          <Nav />
-          <PageNotFound />
-          <Footer />
+          <PageNotFound />         
         </Route>
-      </Switch>
+      </Switch>      
     </div>
   );
 };
