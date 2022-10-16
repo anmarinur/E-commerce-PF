@@ -17,17 +17,17 @@ const CardProduct = ({product}) => {
                 </Link>
                 <Card.Text>
                     <p className="text-center fw-light text-muted start lh-1" >{product.category}</p>
-                    <p className="text-center  text-danger fs-4">{product.price}</p>
-                    <p className="text-center fw-light text-muted start lh-1" >{product.description}</p>
+                    <p className="text-center  text-danger fs-4">${product.price}</p>
+                    <p className="text-center fw-light text-muted start lh-1" >{product.brand}</p>
                     
 
                 </Card.Text>
                 <div className="row text-center">
                     <div className="col-6">
-                        <Button variant="danger"> Fav </Button>
+                        <Button variant="danger"> <i class="fa-solid fa-heart-circle-plus"></i> </Button>
                     </div>
                     <div className="col-6">
-                        <Button variant="danger">add to cart</Button>
+                        <Button variant="danger"> <i class="fa-solid fa-cart-plus"></i> </Button>
                     </div>
                 </div>
                 
