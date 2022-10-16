@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCT } from "./actions/productActions";
+import { GET_PRODUCTS, GET_PRODUCT, GET_DETAILS } from "./actions/productActions";
 
 const stateInitial = {
     products: {}
@@ -16,6 +16,12 @@ export default function rootReducer(state= stateInitial, action){
                 ...JSON.parse(JSON.stringify(state)),
                 product: action.payload
             }
+            case GET_DETAILS :
+                return {
+                    ...JSON.parse(JSON.stringify(state)),
+                    details: action.payload
+                }
+    
         default: return state;
     }
 }
