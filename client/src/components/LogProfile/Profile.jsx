@@ -20,6 +20,7 @@ export const Profile = () => {
                 <img class="dropdown-item" src={user.picture} alt={user.name}/>
                 <h2 class="dropdown-item" >{user.name}</h2>
                 <p class="dropdown-item" >{user.email}</p>
+                <a class="dropdown-item w-75 ms-2 text-center" href={window.location.origin + "/create"}>Create product</a>
                 <LogoutButton/>
             </div>
         </div>
