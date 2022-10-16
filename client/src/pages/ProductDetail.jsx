@@ -33,7 +33,7 @@ export default function ProductDetail(props) {
           <Card.Header className="text-center text-uppercase py-3 bg-danger text-white fw-semibold">
           <Card.Title className="text-start fs-3"> {productDetail.name} </Card.Title>
             <div class="position-absolute top-0 end-0">
-              <Link to="/home">
+              <Link to="/">
                 <Button className="m-3 fw-bold text-danger" variant="light">X</Button>
               </Link>
             </div>

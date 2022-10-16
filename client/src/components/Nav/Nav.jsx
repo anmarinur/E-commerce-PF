@@ -13,11 +13,11 @@ export default function Nav(){
         <nav class="navbar d-inline">
                 <div class="row mx-0 py-2 d-flex justify-content-between align-items-center" style={{"background-color": "#a52323"}}>
                     <div class="col-2 text-center text-white">+57 3184612011</div>
-                    <a class="col-2 text-center text-white" href="http://localhost:3000/home">www.tecnoshop.com.ar</a>
+                    <a class="col-2 text-center text-white" href="http://localhost:3000">www.tecnoshop.com.ar</a>
                         {isAuthenticated ? <Profile/> : <LoginButton/> }
                 </div>
                 <div class="row mx-0 py-0 align-items-center justify-content-center" style={{"background-color": "#4b1b1b"}}>   
-                    <a class="navbar-brand col-3 text-white" href="http://localhost:3000/home">
+                    <a class="navbar-brand col-3 text-white" href="http://localhost:3000">
                     <img src={logo} alt="logo" class="w-25"></img>
                     TECNOSHOP
                     </a>
