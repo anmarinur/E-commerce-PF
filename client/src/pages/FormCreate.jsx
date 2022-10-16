@@ -14,12 +14,74 @@ export default function FormCreate(){
         brand: ''
     });
 
+    const [errors, setErrors] = useState({
+        name: 'Enter a valid name',
+        image: 'Enter a valid url',
+        description: 'Enter a description',
+        price: 'Enter a price higher than 0',
+        category: 'Select one category',
+        stock: 'Enter a value higher than 0',
+        brand: 'Enter a valid brand name'
+    })
+
+    function validate(input) {
+        if(!input.name || input.name.length < 3) {
+            errors.name = 'Enter a valid name';
+        } else {
+            errors.name = '';
+        }
+
+        if(!input.image || input.image.length < 5) {
+            errors.image = 'Enter a valid url'
+        } else {
+            errors.image = '';
+        }
+
+        if(!input.description || input.description.length < 10) {
+            errors.description = 'Enter a description'
+        } else {
+            errors.description = '';
+        }
+
+        if(!input.price || input.price <= 0) {
+            errors.price = 'Enter a price higher than 0'
+        } else {
+            errors.price = '';
+        }
+
+        if(!input.category) {
+            errors.category = 'Select one category'
+        } else {
+            errors.category = '';
+        }
+
+        if(!input.stock || input.stock <= 0) {
+            errors.stock = 'Enter a value higher than 0'
+        } else {
+            errors.stock = '';
+        }
+
+        if(!input.brand || input.brand.length < 2) {
+            errors.brand = 'Enter a valid brand name'
+        } else {
+            errors.brand = '';
+        }
+        console.log(errors)
+        return errors;
+    }
+
     function handleChange(e) {
         e.preventDefault();
         setInput({
             ...input,
             [e.target.name]: e.target.value
         })
+        setErrors(
+            validate({
+                ...input,
+                [e.target.name]: e.target.value
+            })
+        )
     }
 
     function handleClick(e) {
@@ -63,8 +125,8 @@ export default function FormCreate(){
                     <Form.Label>Category</Form.Label>
                     <Form.Control as="select" name="category" onChange={(e) => handleChange(e)}>
                         <option>Select a category</option>
-                        <option value="Smartphones">Smartphones</option>
-                        <option value="PC Laptops">PC Laptops</option>
+                        <option value="smartphones">Smartphones</option>
+                        <option value="laptops">PC Laptops</option>
                     </Form.Control>
                 </Form.Group>
 
