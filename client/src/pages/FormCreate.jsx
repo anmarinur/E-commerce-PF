@@ -149,7 +149,9 @@ export default function FormCreate(){
             </Form>
 
             <div className="text-center">
-                <Button variant="danger" type="submit"  onClick={(e) => handleClick(e)}>Submit</Button>{' '}
+                <Button variant="danger" type="submit"  onClick={(e) => handleClick(e)} 
+                disabled={(errors.name || errors.image || errors.description || errors.price || errors.category || errors.stock || errors.brand) ? true : ''}
+                >Submit</Button>{' '}
             </div>
         </div>
     )
