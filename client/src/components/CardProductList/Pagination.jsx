@@ -11,9 +11,9 @@ function PaginationProducts(props) {
     }
 
     return (
-      <Pagination className='' >
-        <Pagination.First onClick={() => props.setPagePagination (0)} />
-        <Pagination.Prev disabled />
+      <Pagination className='justify-content-center' >
+        <Pagination.First   onClick={() => props.setPagePagination (0)} />
+        <Pagination.Prev  disabled />
         {numberPages.map( n =>(
             n === props.currentPage ? 
             (<Pagination.Item active onClick={() => props.setPagePagination (n-1)} >{n}</Pagination.Item>) : 

@@ -16,9 +16,6 @@ const CardProductsList = () => {
    const totalPages = useSelector(state => state.products.totalPages);
    const products = useSelector(state => state.products.products);
 
-   console.log('totalPages: ', totalPages);
-   console.log('products: ', products);
-
     const [size, setSize] = useState(4);
     const [page,setPage] = useState(0);
 
@@ -28,7 +25,6 @@ const CardProductsList = () => {
 
 
     useEffect(() => {
-     console.log('hola')
         dispatch(getAllProducts(size, page));
     },[dispatch, size, page])
 
@@ -41,20 +37,12 @@ const CardProductsList = () => {
                             <Col  sm={6} md={6} lg={4} xl={3} className='mb-4'>
                                 <CardProduct product={product} />
                             </Col>
-                        )) : ( <p>Cargando . . .</p> )
-
-                        /* products && products.map( product => (
-                            <Col  sm={6} md={6} lg={4} xl={3} className='mb-4'>
-                                <CardProduct product={product} />
-                            </Col>
-                        )) */
+                        )) : ( <p>Cargando . . .</p> )                  
                     }
                 </Row>
                 
-                <div className="row">
-                    <div className="col mx-auto">
-                        <PaginationProducts currentPage={page+1} setPagePagination={setPagePagination} totalPages = {totalPages}/>
-                    </div>
+                <div className="container mx-auto">
+                        <PaginationProducts currentPage={page+1} setPagePagination={setPagePagination} totalPages = {totalPages}/>              
                 </div>
                 
             </Container>
