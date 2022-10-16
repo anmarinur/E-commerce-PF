@@ -3,7 +3,7 @@ import FilterAndOrder from "../components/FilterAndOrderProducts/FilterAndOrder"
 
 export default function Home(){
     return(
-        <div className="container">
+        <div className="container mt-4">
             <div className="row">
                 <div className="col-3">
                     <FilterAndOrder/>
