@@ -16,7 +16,7 @@ export default function Nav(){
                     <a class="col-2 text-center text-white" href="http://localhost:3000/home">www.tecnoshop.com.ar</a>
                         {isAuthenticated ? <Profile/> : <LoginButton/> }
                 </div>
-                <div class="row mx-0 py-0 justify-content-center" style={{"background-color": "#4b1b1b"}}>   
+                <div class="row mx-0 py-0 align-items-center justify-content-center" style={{"background-color": "#4b1b1b"}}>   
                     <a class="navbar-brand col-3 text-white" href="http://localhost:3000/home">
                     <img src={logo} alt="logo" class="w-25"></img>
                     TECNOSHOP
