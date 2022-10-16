@@ -1,26 +1,58 @@
 const { Product } = require('../db.js');
 const data = require('./../../productsInfo.json');
+const { Op } = require("sequelize");
 
 const getProducts = async (req, res) => {
-    
     const pageNumber = Number.parseInt(req.query.page);
     const sizeNumber = Number.parseInt(req.query.size);
-
+    const cat        = req.query.cat //recibo la categoria x query en la variable cat
+    const orderPrice = req.query.ordprice
+    console.log(orderPrice)
+    
     let page = 0;
     let size = 12;
 
     if(!Number.isNaN(pageNumber) && pageNumber > 0) page = pageNumber;
     if(!Number.isNaN(sizeNumber) && sizeNumber > 0 && sizeNumber < 12) size = sizeNumber;
 
+   
     try {
-        const products = await Product.findAndCountAll({
-            limit: size,
-            offset: page * size
-        });
-        res.status(200).json({
-            totalPages: Math.ceil(products.count / size),
-            products: products.rows
-        });
+        if (cat) { //si hay categoria se asume deseo de filtro
+            if (orderPrice) { //si hay criterio de ordenacion tomalo en cuenta
+                const products = await Product.findAndCountAll({
+                    where : { category: {[Op.eq]: cat} }, 
+                    order: [ ['price', orderPrice] ],  
+                    limit: size, offset: page * size, 
+                });      
+                res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
+            } else  {
+                const products = await Product.findAndCountAll({
+                    where : { category: {[Op.eq]: cat} }, 
+                    limit: size, offset: page * size, 
+                });      
+                res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
+            }
+        } else 
+            { //Cat en blanco se asume no desea filtro
+                if (orderPrice) { //si hay criterio de ordenacion tomalo en cuenta
+                    const products = await Product.findAndCountAll({  //Busco todo y cuenta registros
+                    order: [ ['price', orderPrice] ],  
+
+                    limit: size,
+                    offset: page * size,
+                });
+                res.status(200).json({ totalPages: Math.ceil(products.count / size),
+                products: products.rows});
+                } else 
+                {
+                    const products = await Product.findAndCountAll({  //Busco todo y cuenta registros
+                        limit: size,
+                        offset: page * size,
+                    });
+                    res.status(200).json({ totalPages: Math.ceil(products.count / size),
+                    products: products.rows});
+                }
+            } //del else de Cat en blanco
 
     } catch (error) {
        res.status(404).json({error: error.message}); 
