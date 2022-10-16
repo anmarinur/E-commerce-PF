@@ -102,7 +102,7 @@ export default function FormCreate(){
             stock: 0,
             brand: ''
         })
-        history.push('/home');
+        history.push('/');
     }
 
     return (
