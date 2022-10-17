@@ -5,58 +5,69 @@ const getProducts = async (req, res) => {
     const pageNumber = Number.parseInt(req.query.page);
     const sizeNumber = Number.parseInt(req.query.size);
     const cat        = req.query.cat //recibo la categoria x query en la variable cat
-    const orderPrice = req.query.ordprice
-    console.log(orderPrice)
-    
+    const orderPrice = req.query.ordprice; // Se recibe por query el criterio de ordenacion EJ: &ordprice=ASC
+    const search     = req.query.search; // en caso de llamar este endpoint para search x query enviar EJ: &search=iPhone
+        
     let page = 0;
     let size = 12;
 
     if(!Number.isNaN(pageNumber) && pageNumber > 0) page = pageNumber;
     if(!Number.isNaN(sizeNumber) && sizeNumber > 0 && sizeNumber < 12) size = sizeNumber;
 
-   
+    //si el endpoint es llamado x search, buscar en el catalogo de productos las coincidencias mas alla de la categoria
+    //el criterio sera los names que contengan la palabra enviada en search seal al final, principio o enmedio
+    if (search) {
+        const products = await Product.findAndCountAll({
+            where : { name: {[Op.substring]: search} }, 
+           limit: size, offset: page * size,  
+       });  
+       
+       if (products.count) return res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
+       else 
+        return res.status(404).json({ error: "search empty" });
+    }
+
     try {
         if (cat) { //si hay categoria se asume deseo de filtro
             if (orderPrice) { //si hay criterio de ordenacion tomalo en cuenta
                 const products = await Product.findAndCountAll({
-                    where : { category: {[Op.eq]: cat} }, 
+                     where : { category: {[Op.eq]: cat} }, 
                     order: [ ['price', orderPrice] ],  
-                    limit: size, offset: page * size, 
-                });      
-                res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
+                    limit: size, offset: page * size,  
+         
+                });   
+                return res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
             } else  {
                 const products = await Product.findAndCountAll({
                     where : { category: {[Op.eq]: cat} }, 
                     limit: size, offset: page * size, 
                 });      
-                res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
+                return res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
             }
         } else 
             { //Cat en blanco se asume no desea filtro
                 if (orderPrice) { //si hay criterio de ordenacion tomalo en cuenta
                     const products = await Product.findAndCountAll({  //Busco todo y cuenta registros
                     order: [ ['price', orderPrice] ],  
-
                     limit: size,
                     offset: page * size,
                 });
-                res.status(200).json({ totalPages: Math.ceil(products.count / size),
-                products: products.rows});
+                return res.status(200).json({ totalPages: Math.ceil(products.count / size), products: products.rows});
                 } else 
                 {
                     const products = await Product.findAndCountAll({  //Busco todo y cuenta registros
+                        order: [ ['id', "ASC"]],
                         limit: size,
                         offset: page * size,
                     });
-                    res.status(200).json({ totalPages: Math.ceil(products.count / size),
-                    products: products.rows});
+                    return res.status(200).json({ totalPages: Math.ceil(products.count / size), products: products.rows});
                 }
             } //del else de Cat en blanco
-
     } catch (error) {
        res.status(404).json({error: error.message}); 
     }
 };
+
 
 const getProductById = async (req, res) => {
     const { id } = req.params;

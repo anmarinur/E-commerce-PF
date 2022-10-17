@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails, deleteProduct } from "../redux/actions";
+import { getDetails, flagUpdate } from "../redux/actions";
 import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -9,6 +9,7 @@ import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import CloseButton from 'react-bootstrap/CloseButton';
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 
 
@@ -22,16 +23,29 @@ export default function ProductDetail(props) {
     dispatch(getDetails(id))
   }, [dispatch, id])
 
-  const { isAuthenticated } = useAuth0()
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0()
 
-  const deleteP = (id) => {
-    dispatch(deleteProduct(id))
-    alert("Product Removed")
+  const deleteP = async (id) => {
+    const token =  await getAccessTokenSilently();
+    try {
+        await axios.delete(`/product/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        alert("Product Removed")
+    } catch (error) {
+        console.log(error)
+    }
     history.push("/")
   }
 
-  const productDetail = useSelector((state) => state.details)
+  const updateProduct = () => {
+    dispatch(flagUpdate(true, id))
+    history.push('/create');
+  }
 
+  const productDetail = useSelector((state) => state.details)
 
   return (
     <>
@@ -43,6 +57,7 @@ export default function ProductDetail(props) {
           <Card.Title className="text-start fs-3"> 
             {productDetail.name} 
             {isAuthenticated && <Button type="button" class="btn text-white" variant="danger" onClick={() => deleteP(id)}>Remove Product</Button>}
+            {isAuthenticated && <Button type="button" class="btn text-white" variant="danger" onClick={() => updateProduct()}>Update Product</Button>}
           </Card.Title>
             <div class="position-absolute top-0 end-0">
               <Link to="/">
