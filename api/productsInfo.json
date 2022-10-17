@@ -1366,13 +1366,13 @@
   {
     "name": "Colmi Land 1",
     "image": "https://tecnocompro.com/pub/media/wysiwyg/contenido_Smartwatch_Colmi_Land_1_Colores_Varios.png",
-    "description": "",
-    "price": 0,
-    "category": "",
+    "description": "This sports smartwatch features an ultra-long battery life, making it ideal for reaching your fitness goals.",
+    "price": 630,
+    "category": "smartwatches",
     "discountPercentage": 0,
-    "rating": 0,
-    "stock": 0,
-    "brand": ""
+    "rating": 4.4,
+    "stock": 30,
+    "brand": "Colmi"
   },
   {
     "name": "",
