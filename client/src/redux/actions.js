@@ -3,7 +3,7 @@ import axios from 'axios';
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DETAILS = "GET_DETAILS";
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
-
+export const FLAG_UPDATE = "FLAG_UPDATE";
 
 
 
@@ -54,6 +54,16 @@ export const deleteProduct = (id) => {
 
         } catch (error) {
             console.log(error)
+        }
+    }
+}
+
+export const flagUpdate = (flag, id) => {
+    return {
+        type: FLAG_UPDATE,
+        payload: {
+            flag,
+            id
         }
     }
 }
