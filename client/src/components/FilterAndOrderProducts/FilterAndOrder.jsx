@@ -75,9 +75,9 @@ const FilterAndOrder = (props) => {
                         </div>
                         <div className="col-auto">
 
-                            <select onChange={(e) => { props.setPage(e.target.value) }} className="p-1 border-0 w-auto fw-semibold text-white bg-danger" id='page' aria-label="Default select example">
+                            <select defaultValue={8} onChange={(e) => { props.setPage(e.target.value) }} className="p-1 border-0 w-auto fw-semibold text-white bg-danger" id='page' aria-label="Default select example">
                                 <option className='fw-semibold text-white bg-danger' value={4}>4</option>
-                                <option selected className='fw-semibold text-white bg-danger' value={8}>8</option>
+                                <option  className='fw-semibold text-white bg-danger' value={8}>8</option>
                                 <option className='fw-semibold text-white bg-danger' value={12}>12</option>
                             </select>
 
