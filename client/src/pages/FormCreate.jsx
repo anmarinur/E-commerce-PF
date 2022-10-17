@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import checkPermissions from '../utils/checkPermissions';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function FormCreate(){
 
@@ -29,6 +31,12 @@ export default function FormCreate(){
         stock: 'Enter a value higher than 0',
         brand: 'Enter a valid brand name'
     })
+
+    const { getAccessTokenSilently } = useAuth0();
+    
+    useEffect(()=>{
+        checkPermissions(getAccessTokenSilently, history);
+    },[]);
 
     function validate(input) {
         if(!input.name || input.name.length < 3) {

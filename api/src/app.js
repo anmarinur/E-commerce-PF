@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const productRouter = require('./routes/productRouter.js');
 const userRouter = require('./routes/userRouter.js');
+const login = require("./middlewares/login.js");
+const authorization = require("./middlewares/authorization.js");
 
 const app = express();
 
@@ -15,6 +17,10 @@ app.use(morgan('dev'));
 //routes
 app.use('/product', productRouter);
 app.use('/user', userRouter);
+
+app.get("/authorization", login, authorization, (req, res)=>{
+  res.json({message: "authorized"});
+})
 
 // Error catching endware.
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars

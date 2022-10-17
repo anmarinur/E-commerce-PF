@@ -1,6 +1,6 @@
 const app = require('./src/app.js');
 const { db } = require('./src/db.js');
-const { chargeProducts } = require('./src/controllers/productsController');
+const chargeProducts = require('./src/utils/chargeProducts.js');
 
 db.sync({ force: true })
   .then(()=>{
