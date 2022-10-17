@@ -16,6 +16,8 @@ const CardProductsList = () => {
     const dispatch = useDispatch();
     const totalPages = useSelector(state => state.products.totalPages);
     const products = useSelector(state => state.products.products);
+    const productNameSearch = useSelector(state => state.productNameSearch);
+
 
     const [size, setSize] = useState(8);
     const [page, setPage] = useState(0);
@@ -33,7 +35,7 @@ const CardProductsList = () => {
     }
 
     useEffect(() => {
-        dispatch(getAllProducts(size, page,categoryFilter,sort));
+        dispatch(getAllProducts(size, page,categoryFilter,sort,productNameSearch));
     }, [dispatch, size, page, categoryFilter,sort])
 
     return (
