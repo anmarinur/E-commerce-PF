@@ -135,7 +135,7 @@ export default function FormCreate(){
     return (
         <div>
          <Nav />
-            {flag ? <h1 className="text-center">Update product</h1> : <h1 className="text-center">Create new product</h1>}
+            {flag.flag ? <h1 className="text-center py-5 text-danger">Update product</h1> : <h1 className="text-center py-5 text-danger">Create new product</h1>}
             <Form className="w-50 mx-auto">
                 <Form.Group className="mb-3" controlId="productName">
                     <Form.Label>Name</Form.Label>        
@@ -184,11 +184,11 @@ export default function FormCreate(){
                 </Form.Group>
             </Form>
 
-            <div className="text-center">
+            <div className="d-flex justify-content-around py-3 w-50 mx-auto">
+                <Button variant="danger" type="submit"  onClick={(e) => history.push('/')}>Home</Button>{' '}
                 <Button variant="danger" type="submit"  onClick={(e) => handleClick(e)} 
                 disabled={(errors.name || errors.image || errors.description || errors.price || errors.category || errors.stock || errors.brand) ? true : ''}
                 >Submit</Button>{' '}
-                <Button variant="danger" type="submit"  onClick={(e) => history.push('/')}>Home</Button>
             </div>
           <Footer />
         </div>
