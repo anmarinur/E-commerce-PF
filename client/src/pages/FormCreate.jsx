@@ -106,15 +106,17 @@ export default function FormCreate(){
         try {
             const token = await getAccessTokenSilently();
             if (flag.flag) {
-                await axios.put(`/product/${flag.id}`, {
+                await axios.put(`/product/${flag.id}`,input, {
                     headers: {
                         Authorization: `Bearer ${token}`
-                    }}, input);
+                    }
+                });
             } else {
-                await axios.post('/product', {
+                await axios.post('/product', input, {
                     headers: {
                         Authorization: `Bearer ${token}`
-                    }}, input);
+                    }
+                });
             }
             alert('Product created successfully');
         } catch (error) {

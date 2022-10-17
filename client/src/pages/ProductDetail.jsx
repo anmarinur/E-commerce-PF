@@ -22,10 +22,10 @@ export default function ProductDetail(props) {
     dispatch(getDetails(id))
   }, [dispatch, id])
 
-  const { isAuthenticated } = useAuth0()
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0()
 
   const deleteP = (id) => {
-    dispatch(deleteProduct(id))
+    dispatch(deleteProduct(id, getAccessTokenSilently))
     alert("Product Removed")
     history.push("/")
   }
