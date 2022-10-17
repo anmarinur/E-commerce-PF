@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails, deleteProduct } from "../redux/actions";
+import { getDetails, deleteProduct, flagUpdate } from "../redux/actions";
 import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -30,6 +30,11 @@ export default function ProductDetail(props) {
     history.push("/")
   }
 
+  const updateProduct = () => {
+    dispatch(flagUpdate(true, id))
+    history.push('/create');
+  }
+
   const productDetail = useSelector((state) => state.details)
 
 
@@ -43,6 +48,7 @@ export default function ProductDetail(props) {
           <Card.Title className="text-start fs-3"> 
             {productDetail.name} 
             {isAuthenticated && <Button type="button" class="btn text-white" variant="danger" onClick={() => deleteP(id)}>Remove Product</Button>}
+            {isAuthenticated && <Button type="button" class="btn text-white" variant="danger" onClick={() => updateProduct()}>Update Product</Button>}
           </Card.Title>
             <div class="position-absolute top-0 end-0">
               <Link to="/">

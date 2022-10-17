@@ -7,19 +7,24 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import checkPermissions from '../utils/checkPermissions';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { flagUpdate } from '../redux/actions';
 
 export default function FormCreate(){
 
     const history = useHistory();
+    const dispatch = useDispatch();
+    const flag = useSelector((state) => state.flagUpdate);
+    let inputDetail = useSelector((state) => state.details);
 
     const [input, setInput]= useState({
-        name: '',
-        image: '',
-        description: '',
-        price: 0,
-        category: '',
-        stock: 0,
-        brand: ''
+        name: flag.flag ? inputDetail.name : '',
+        image: flag.flag ? inputDetail.image : '',
+        description: flag.flag ? inputDetail.description : '',
+        price: flag.flag ? inputDetail.price: 0,
+        category: flag.flag ? inputDetail.category : '',
+        stock: flag.flag ? inputDetail.stock : 0,
+        brand: flag.flag ? inputDetail.brand : '',
     });
 
     const [errors, setErrors] = useState({
@@ -97,10 +102,25 @@ export default function FormCreate(){
         )
     }
 
-    function handleClick(e) {
-        axios.post('/product', input)
-        .then(() => alert('Product created successfully'))
-        .catch((error) => alert(error.response.data.error));
+    async function handleClick(e) {
+        try {
+            const token = await getAccessTokenSilently();
+            if (flag.flag) {
+                await axios.put(`/product/${flag.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }}, input);
+            } else {
+                await axios.post('/product', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }}, input);
+            }
+            alert('Product created successfully');
+        } catch (error) {
+            alert(error);
+        }
+        dispatch(flagUpdate(false, null))
         setInput({
             name: '',
             image: '',
@@ -116,7 +136,7 @@ export default function FormCreate(){
     return (
         <div>
          <Nav />
-            <h1 className="text-center">Create a new product</h1>
+            {flag.flag ? <h1 className="text-center py-5 text-danger">Update product</h1> : <h1 className="text-center py-5 text-danger">Create new product</h1>}
             <Form className="w-50 mx-auto">
                 <Form.Group className="mb-3" controlId="productName">
                     <Form.Label>Name</Form.Label>        
@@ -165,7 +185,8 @@ export default function FormCreate(){
                 </Form.Group>
             </Form>
 
-            <div className="text-center">
+            <div className="d-flex justify-content-around py-3 w-50 mx-auto">
+                <Button variant="danger" type="submit"  onClick={(e) => history.push('/')}>Home</Button>{' '}
                 <Button variant="danger" type="submit"  onClick={(e) => handleClick(e)} 
                 disabled={(errors.name || errors.image || errors.description || errors.price || errors.category || errors.stock || errors.brand) ? true : ''}
                 >Submit</Button>{' '}
