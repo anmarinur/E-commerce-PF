@@ -18,7 +18,7 @@ const getProducts = async (req, res) => {
     //el criterio sera los names que contengan la palabra enviada en search seal al final, principio o enmedio
     if (search) {
         const products = await Product.findAndCountAll({
-            where : { name: {[Op.substring]: search} }, 
+            where : { name: {[Op.iLike]: `%${search}%` }}, 
            limit: size, offset: page * size,  
        });  
        
