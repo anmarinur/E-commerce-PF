@@ -16,7 +16,6 @@ export default function FormCreate(){
     const dispatch = useDispatch();
     const flag = useSelector((state) => state.flagUpdate);
     let inputDetail = useSelector((state) => state.details);
-    console.log(flag)
 
     const [input, setInput]= useState({
         name: flag.flag ? inputDetail.name : '',
@@ -104,21 +103,23 @@ export default function FormCreate(){
     }
 
     async function handleClick(e) {
-        const token = await getAccessTokenSilently();
-        if (flag.flag) {
-            await axios.put(`/product/${flag.id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }}, input);
-        } else {
-            await axios.post('/product', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }}, input);
+        try {
+            const token = await getAccessTokenSilently();
+            if (flag.flag) {
+                await axios.put(`/product/${flag.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }}, input);
+            } else {
+                await axios.post('/product', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }}, input);
+            }
+            alert('Product created successfully');
+        } catch (error) {
+            alert(error);
         }
-        
-        alert('Product created successfully');
-        // .catch((error) => alert(error.response.data.error));
         dispatch(flagUpdate(false, null))
         setInput({
             name: '',
