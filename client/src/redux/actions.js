@@ -40,28 +40,6 @@ export const getDetails = (id) => {
     }
 }
 
-export const deleteProduct = (id, getAccessTokenSilently) => {
-
-    return async function (dispatch) {
-        const token =  await getAccessTokenSilently();
-        try {
-            await axios.delete(`/product/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            return dispatch({
-                type: DELETE_PRODUCT,
-                payload: id,
-            })
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}
-
 export const flagUpdate = (flag, id) => {
     return {
         type: FLAG_UPDATE,
