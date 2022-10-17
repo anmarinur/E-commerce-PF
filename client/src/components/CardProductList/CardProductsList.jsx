@@ -20,6 +20,7 @@ const CardProductsList = () => {
     const [size, setSize] = useState(8);
     const [page, setPage] = useState(0);
     const [categoryFilter, setCategoryFilter] = useState(undefined);
+    const [sort, setSort] = useState(undefined);
     
     function setPagePagination(n) {
         setPage(n)
@@ -27,19 +28,22 @@ const CardProductsList = () => {
     function setCategory(category) {
         setCategoryFilter(category);
     }
+    function setSortOrder(sort){
+        setSort(sort);
+    }
 
     useEffect(() => {
-        dispatch(getAllProducts(size, page,categoryFilter));
-    }, [dispatch, size, page, categoryFilter])
+        dispatch(getAllProducts(size, page,categoryFilter,sort));
+    }, [dispatch, size, page, categoryFilter,sort])
 
     return (
         <>
             <div className="container mt-4">
-                <div className="row">
-                    <div className="col-3">
-                        <FilterAndOrder  setCategory = {setCategory}/>
+                <div className="row g-4">
+                    <div className="col-lg-3 col-md-12">
+                        <FilterAndOrder setPage={setSize} sort={sort} setSortOrder={setSortOrder} setCategory = {setCategory}/>
                     </div>
-                    <div className="col-9">
+                    <div className="col-lg-9 col-md-12">
                         <Container className="bg-light border shadow p-3">
                             <Row>
                                 {
