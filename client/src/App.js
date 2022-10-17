@@ -5,7 +5,7 @@ import ProductDetail from './pages/ProductDetail';
 import Home from './pages/Home';
 import * as bootstrap from 'bootstrap'; // do not delete this line - is for the navBar !!
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import './App.css'
 
 export default function App() {
   return (
