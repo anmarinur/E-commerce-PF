@@ -111,16 +111,17 @@ export default function FormCreate(){
                         Authorization: `Bearer ${token}`
                     }
                 });
+                alert('Product updated successfully');
             } else {
                 await axios.post('/product', input, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
+                alert('Product created successfully');
             }
-            alert('Product created successfully');
         } catch (error) {
-            alert(error);
+            alert(error.response.data.error);
         }
         dispatch(flagUpdate(false, null))
         setInput({

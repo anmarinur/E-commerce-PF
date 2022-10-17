@@ -56,6 +56,7 @@ const getProducts = async (req, res) => {
                 } else 
                 {
                     const products = await Product.findAndCountAll({  //Busco todo y cuenta registros
+                        order: [ ['id', "ASC"]],
                         limit: size,
                         offset: page * size,
                     });
