@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_DETAILS } from "./actions";
+import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT } from "./actions";
 
 const stateInitial = {
     products: {},
@@ -17,7 +17,12 @@ export default function rootReducer(state= stateInitial, action){
          return {
           ...JSON.parse(JSON.stringify(state)),
           details: action.payload
-        }    
+        }
+        case DELETE_PRODUCT:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                products: state.products.filter((p) => p.id !== action.payload),
+            }
         default: 
          return state;
     }

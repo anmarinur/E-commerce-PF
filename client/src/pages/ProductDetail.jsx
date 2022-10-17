@@ -1,13 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails } from "../redux/actions";
+import { getDetails, deleteProduct } from "../redux/actions";
 import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import CloseButton from 'react-bootstrap/CloseButton';
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
@@ -15,11 +16,19 @@ export default function ProductDetail(props) {
 
   const dispatch = useDispatch();
   const id = props.match.params.id;
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(getDetails(id))
   }, [dispatch, id])
 
+  const { isAuthenticated } = useAuth0()
+
+  const deleteP = (id) => {
+    dispatch(deleteProduct(id))
+    alert("Product Removed")
+    history.push("/")
+  }
 
   const productDetail = useSelector((state) => state.details)
 
@@ -31,7 +40,10 @@ export default function ProductDetail(props) {
 
         <Card className="border border-danger shadow" >
           <Card.Header className="text-center text-uppercase py-3 bg-danger text-white fw-semibold">
-          <Card.Title className="text-start fs-3"> {productDetail.name} </Card.Title>
+          <Card.Title className="text-start fs-3"> 
+            {productDetail.name} 
+            {isAuthenticated && <Button type="button" class="btn text-white" variant="danger" onClick={() => deleteP(id)}>Remove Product</Button>}
+          </Card.Title>
             <div class="position-absolute top-0 end-0">
               <Link to="/">
                 <Button className="m-3 fw-bold text-danger" variant="light">X</Button>
