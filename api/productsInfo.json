@@ -1333,7 +1333,7 @@
   {
     "name": "Amazfit Bip U",
     "image": "https://tecnocompro.com/pub/media/wysiwyg/contenido_Smartwatch_Amazfit_Bip_U_.png",
-    "description": "Amazfit smartwatches are going strong: modern design and functionality combine for a great experience. The screen stands out against other watches for its quality and good visualization. In addition, they have very useful sports modalities for all types of training.",
+    "description": "Amazfit smartwatches are going strong: modern design and functionality combine for a great experience. The screen stands out against other watches for its quality and good visualization.",
     "price": 350,
     "category": "smartwatches",
     "discountPercentage": 0,
@@ -1353,6 +1353,94 @@
     "brand": "Garmin"
   },
   {
+    "name": "Forerunner 45s",
+    "image": "https://tecnocompro.com/pub/media/wysiwyg/contenido_Smartwatch_Forerunner_45s_GPS_Small_Negro.png",
+    "description": "As well as being a small-sized GPS running watch packed with all the running features you need, the Forerunner 45S is also a sleek, lightweight smartwatch you'll want to wear day or night.",
+    "price": 500,
+    "category": "smartwatches",
+    "discountPercentage": 0,
+    "rating": 4.7,
+    "stock": 21,
+    "brand": "Garmin"
+  },
+  {
+    "name": "Colmi Land 1",
+    "image": "https://tecnocompro.com/pub/media/wysiwyg/contenido_Smartwatch_Colmi_Land_1_Colores_Varios.png",
+    "description": "This sports smartwatch features an ultra-long battery life, making it ideal for reaching your fitness goals.",
+    "price": 630,
+    "category": "smartwatches",
+    "discountPercentage": 0,
+    "rating": 4.4,
+    "stock": 30,
+    "brand": "Colmi"
+  },
+  {
+    "name": "Colmi Land 2",
+    "image": "https://tecnocompro.com/pub/media/wysiwyg/300_colmi.jpg",
+    "description": "COLMI LAND 2 is a business-style stainless steel smartwatch that combines health and fitness monitoring functions that inspire you to keep moving.",
+    "price": 570,
+    "category": "smartwatches",
+    "discountPercentage": 0,
+    "rating": 4.3,
+    "stock": 20,
+    "brand": "Colmi"
+  },
+  {
+    "name": "Colmi P10",
+    "image": "https://tecnocompro.com/pub/media/wysiwyg/contenido_Smartwatch_Colmi_P10.png",
+    "description": "The Colmi P10 Smartwatch is not just a watch, it is a fitness tracker that has a unique design and is equipped with a heart rate monitor, blood pressure monitor, 8 sports modes, IP67 waterproof and more.",
+    "price": 400,
+    "category": "smartwatches",
+    "discountPercentage": 0,
+    "rating": 4.5,
+    "stock": 30,
+    "brand": "Colmi"
+  },
+  {
+    "name": "Colmi Sky 5",
+    "image": "https://tecnocompro.com/pub/media/wysiwyg/contenido_Smartwatch_Colmi_Sky_5.png",
+    "description": "The COLMI SKY 5 is a new smart watch from COLMI that can track sports activities and manage health status in real time.",
+    "price": 410,
+    "category": "smartwatches",
+    "discountPercentage": 0,
+    "rating": 4.6,
+    "stock": 33,
+    "brand": "Colmi"
+  },
+  {
+    "name": "Venu",
+    "image": "https://tecnocompro.com/pub/media/catalog/product/cache/f2fda30fa08589bc3d50957538fec3cf/s/m/smartwatch_gps_garmin_venu_sq_nfc_shadow_grayslate_3.jpg",
+    "description": "With its bright color display, the Venu® Sq GPS Smartwatch combines journaling style with fitness and health tracking features to inspire you to keep moving.",
+    "price": 710,
+    "category": "smartwatches",
+    "discountPercentage": 0,
+    "rating": 4.8,
+    "stock": 35,
+    "brand": "Garmin"
+  },
+  {
+    "name": "Forerunner 45s Iris",
+    "image": "https://tecnocompro.com/pub/media/catalog/product/cache/f2fda30fa08589bc3d50957538fec3cf/r/e/reloj_smart_garmin_forerunner_45_3.jpg",
+    "description": "Easy-to-use running watch that tracks heart rate on the wrist and uses GPS to track your pace, distance, intervals and more",
+    "price": 700,
+    "category": "smartwatches",
+    "discountPercentage": 0,
+    "rating": 4.5,
+    "stock": 36,
+    "brand": "Garmin"
+  },
+  {
+    "name": "Colmi P8 Plus",
+    "image": "https://tecnocompro.com/pub/media/catalog/product/cache/f2fda30fa08589bc3d50957538fec3cf/p/8/p8_plus_gold.jpg",
+    "description": "Screen: Upgrade from 1.4 inch to 1.69 inch. Screen Resolution: Upgrade from 240*240 resolution to 240*280 resolution. Battery: Upgrade from 170mAh to 190mAh. Waterproof: Upgrade from IPX7 to IP67",
+    "price": 380,
+    "category": "smartwatches",
+    "discountPercentage": 0,
+    "rating": 4.3,
+    "stock": 30,
+    "brand": "Colmi"
+    },
+    {
     "name": "SMART TV LED LG FHD 43",
     "image": "https://tecnocompro.com/pub/media/catalog/product/cache/f2fda30fa08589bc3d50957538fec3cf/s/m/smart_lg_led_tv_43_1.jpg",
     "description": "LG's smart TV with webOS lets you enjoy your favorite Netflix movies, YouTube videos, and more with ease. The new design and various features deliver smarter and simpler viewing experiences.",
