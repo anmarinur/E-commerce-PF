@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DETAILS = "GET_DETAILS";
+export const DELETE_PRODUCT = "DELETE_PRODUCT"
 
 
 
@@ -33,6 +34,24 @@ export const getDetails = (id) => {
                 type: GET_DETAILS,
                 payload: json.data
             })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export const deleteProduct = (id) => {
+
+    return async function (dispatch) {
+
+        try {
+            await axios.delete(`/product/${id}`)
+
+            return dispatch({
+                type: DELETE_PRODUCT,
+                payload: id,
+            })
+
         } catch (error) {
             console.log(error)
         }
