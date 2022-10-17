@@ -9,15 +9,18 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import store from './redux/store';
 
-const { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
-console.log(REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID)
+const { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID, REACT_APP_AUTH0_AUDIENCE } = process.env;
 
 axios.defaults.baseURL = process.env.REACT_APP_API;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Auth0Provider domain={REACT_APP_AUTH0_DOMAIN} clientId={REACT_APP_AUTH0_CLIENT_ID} redirectUri={window.location.origin}>
+    <Auth0Provider 
+    domain={REACT_APP_AUTH0_DOMAIN} 
+    clientId={REACT_APP_AUTH0_CLIENT_ID}
+    audience={REACT_APP_AUTH0_AUDIENCE} 
+    redirectUri={window.location.origin}>
       <Provider store={store}>
         <Router>
           <App />
