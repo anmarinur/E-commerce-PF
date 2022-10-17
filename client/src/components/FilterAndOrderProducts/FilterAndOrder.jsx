@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 
-const FilterAndOrder = () => {
+const FilterAndOrder = (props) => {
 
 
     return (
@@ -12,25 +12,20 @@ const FilterAndOrder = () => {
                     <p className='text-start fs-6 m-0 mx-3 fw-semibold'>Categories</p>
                     <div className='mx-5 my-2'>
                         <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                            <label className="form-check-label fw-semibold"  for="flexRadioDefault1">
-                                TV
+                            <input className="form-check-input" type="radio" name="category" id="laptops" onChange={ (e) => {props.setCategory(e.target.id)} } />
+                            <label className="form-check-label fw-semibold"  htmlFor="laptops">
+                                Laptops
                             </label>
                         </div>
 
                         <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                            <label className="form-check-label fw-semibold" for="flexRadioDefault2">
-                                Smartphone
+                            <input className="form-check-input" type="radio" name="category" id="smartphones" onChange={ (e) => {props.setCategory(e.target.id)} } />
+                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                                Smartphones
                             </label>
                         </div>
 
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
-                            <label className="form-check-label fw-semibold" for="flexRadioDefault3">
-                                Smartwatch
-                            </label>
-                        </div>
+                        
 
                     </div>
 
@@ -41,7 +36,7 @@ const FilterAndOrder = () => {
                     <div className='mx-5 my-2'>
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="radioOrderBy" id="orderByPrice" />
-                            <label className="form-check-label fw-semibold" for="orderByPrice">
+                            <label className="form-check-label fw-semibold" htmlFor="orderByPrice">
                                 Price
                             </label>
                         </div>
