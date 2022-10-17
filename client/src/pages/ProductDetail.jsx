@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails, deleteProduct, flagUpdate } from "../redux/actions";
+import { getDetails, flagUpdate } from "../redux/actions";
 import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -9,6 +9,7 @@ import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import CloseButton from 'react-bootstrap/CloseButton';
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 
 
@@ -24,9 +25,18 @@ export default function ProductDetail(props) {
 
   const { isAuthenticated, getAccessTokenSilently } = useAuth0()
 
-  const deleteP = (id) => {
-    dispatch(deleteProduct(id, getAccessTokenSilently))
-    alert("Product Removed")
+  const deleteP = async (id) => {
+    const token =  await getAccessTokenSilently();
+    try {
+        await axios.delete(`/product/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        alert("Product Removed")
+    } catch (error) {
+        console.log(error)
+    }
     history.push("/")
   }
 
@@ -36,7 +46,6 @@ export default function ProductDetail(props) {
   }
 
   const productDetail = useSelector((state) => state.details)
-
 
   return (
     <>
