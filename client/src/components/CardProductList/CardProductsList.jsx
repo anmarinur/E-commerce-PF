@@ -48,8 +48,8 @@ const CardProductsList = () => {
                             <Row>
                                 {
                                     products ? products.map(product => (
-                                        <Col sm={6} md={6} lg={4} xl={3} className='mb-4'>
-                                            <CardProduct product={product} />
+                                        <Col key={product.id} sm={6} md={6} lg={4} xl={3} className='mb-4'>
+                                            <CardProduct  key={product.id} product={product} />
                                         </Col>
                                     )) : (<p>Cargando . . .</p>)
                                 }
