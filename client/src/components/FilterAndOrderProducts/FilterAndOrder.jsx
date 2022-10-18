@@ -64,19 +64,19 @@ const FilterAndOrder = (props) => {
                 </div>
 
                 <div id="order">
-                    <p className="text-start fs-6 m-0 mx-3 fw-semibold">Order By</p>
+                    {/* <p className="text-start fs-6 m-0 mx-3 fw-semibold">Order By</p> */}
                     <div className='mx-5 my-2'>
-                        <div className="form-check">
-                            <input disabled className="form-check-input" type="radio" name="radioOrderBy" id="orderByPrice" />
-                            <label className="form-check-label fw-semibold" htmlFor="orderByPrice">
+                        {/* <div className="form-check"> */}
+                            {/* <input disabled className="form-check-input" type="radio" name="radioOrderBy" id="orderByPrice" /> */}
+                            {/* <label className="form-check-label fw-semibold" htmlFor="orderByPrice">
                                 Price
-                            </label>
-                        </div>
+                            </label> */}
+                        {/* </div> */}
                     </div>
-                    <div className=" mx-2 my-2 row g-3 align-items-center">
+                    <div className="  my-2 row g-3 align-items-center">
                         <div className="col-auto">
                             <label className="form-check-label fw-semibold" htmlFor="sortByPrice">
-                                Sort By
+                             Sort By Price
                                 {props.sort === 'ASC' && <i className="mx-2 fa-solid fa-arrow-up-short-wide"></i>}
                                 {props.sort === 'DESC' && <i className="mx-2 fa-solid fa-arrow-up-wide-short"></i>}
 
