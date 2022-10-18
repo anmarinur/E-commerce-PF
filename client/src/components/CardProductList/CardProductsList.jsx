@@ -36,7 +36,7 @@ const CardProductsList = () => {
 
     useEffect(() => {
         dispatch(getAllProducts(size, page,categoryFilter,sort,productNameSearch));
-    }, [dispatch, size, page, categoryFilter,sort])
+    }, [dispatch, size, page, categoryFilter, sort])
 
     return (
         <>
@@ -53,7 +53,7 @@ const CardProductsList = () => {
                                         <Col key={product.id} sm={6} md={6} lg={4} xl={3} className='mb-4'>
                                             <CardProduct  key={product.id} product={product} />
                                         </Col>
-                                    )) : (<p>Cargando . . .</p>)
+                                    )) : (<p>Loading . . .</p>)
                                 }
                             </Row>
 

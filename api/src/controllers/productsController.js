@@ -24,7 +24,7 @@ const getProducts = async (req, res) => {
        
        if (products.count) return res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
        else 
-        return res.status(404).json({ error: "search empty" });
+        return res.status(404).json({ error: "Product not found" });
     }
 
     try {
@@ -71,8 +71,8 @@ const getProducts = async (req, res) => {
 
 const getProductById = async (req, res) => {
     const { id } = req.params;
-    console.log(id)
     const product = await Product.findByPk(id);
+    
     if(product) return res.status(200).json(product);
     res.status(404).json({ error: "product ID not found or invalid" });
 }
@@ -121,7 +121,7 @@ const updateProduct = async (req, res) => {
             id
         }
     })
-    .then( (data) => res.status(200).json("Product update successfully") )
+    .then( (data) => res.status(200).json("Product updated successfully") )
     .catch( (error) => res.status(400).json({error: error.message}) )
 }
 
