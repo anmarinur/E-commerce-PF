@@ -9,7 +9,7 @@ export default function Footer(){
                     <li className="nav-item "><a href={window.location.href} className="nav-link px-2 text-white">Features</a></li>
                     <li className="nav-item "><a href={window.location.href} className="nav-link px-2 text-white">Pricing</a></li>
                     <li className="nav-item "><a href={window.location.href} className="nav-link px-2 text-white">FAQs</a></li>
-                    <li className="nav-item "><a href={window.location.href} className="nav-link px-2 text-white">About</a></li>
+                    <li className="nav-item "><a href="http://localhost:3000/about" className="nav-link px-2 text-white">About</a></li> {/*HREF HARDCODEADO!!! */}
                 </ul>
                 <p className="text-center text-white">© 2022 Tecnoshop</p>
             </footer>
