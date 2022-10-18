@@ -33,28 +33,28 @@ const FilterAndOrder = (props) => {
 
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="category" id="tablets" onChange={(e) => { props.setCategory(e.target.id) }} />
-                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                            <label className="form-check-label fw-semibold" htmlFor="tablets">
                                 Tablets
                             </label>
                         </div>
 
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="category" id="smartwatches" onChange={(e) => { props.setCategory(e.target.id) }} />
-                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                            <label className="form-check-label fw-semibold" htmlFor="smartwatches">
                                 Smartwatches
                             </label>
                         </div>
 
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="category" id="speakers" onChange={(e) => { props.setCategory(e.target.id) }} />
-                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                            <label className="form-check-label fw-semibold" htmlFor="speakers">
                                 Speakers
                             </label>
                         </div>
 
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="category" id="tv" onChange={(e) => { props.setCategory(e.target.id) }} />
-                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                            <label className="form-check-label fw-semibold" htmlFor="tv">
                                 Tv
                             </label>
                         </div>
