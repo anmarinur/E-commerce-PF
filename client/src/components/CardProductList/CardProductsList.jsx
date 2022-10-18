@@ -7,6 +7,7 @@ import CardProduct from './CardProduct';
 import FilterAndOrder from "../FilterAndOrderProducts/FilterAndOrder";
 import { getAllProducts } from '../../redux/actions';
 import PaginationProducts from './Pagination';
+import SearchBarProducts from './SearchBarProducts'
 
 
 
@@ -16,13 +17,13 @@ const CardProductsList = () => {
     const dispatch = useDispatch();
     const totalPages = useSelector(state => state.products.totalPages);
     const products = useSelector(state => state.products.products);
-    const productNameSearch = useSelector(state => state.productNameSearch);
 
 
     const [size, setSize] = useState(8);
     const [page, setPage] = useState(0);
     const [categoryFilter, setCategoryFilter] = useState(undefined);
     const [sort, setSort] = useState(undefined);
+    const [search, setSearch] = useState(undefined);
     
     function setPagePagination(n) {
         setPage(n)
@@ -35,8 +36,8 @@ const CardProductsList = () => {
     }
 
     useEffect(() => {
-        dispatch(getAllProducts(size, page,categoryFilter,sort,productNameSearch));
-    }, [dispatch, size, page, categoryFilter, sort])
+        dispatch(getAllProducts(size, page,categoryFilter,sort,search));
+    }, [dispatch, size, page, categoryFilter, sort,search])
 
     return (
         <>
@@ -46,6 +47,9 @@ const CardProductsList = () => {
                         <FilterAndOrder setPage={setSize} sort={sort} setSortOrder={setSortOrder} setCategory = {setCategory}/>
                     </div>
                     <div className="col-lg-9 col-md-12">
+                        <div className='container bg-light border shadow p-3 mb-3 '>
+                            <SearchBarProducts  setSearch={setSearch} />
+                        </div>
                         <Container className="bg-light border shadow p-3">
                             <Row>
                                 {
@@ -54,6 +58,10 @@ const CardProductsList = () => {
                                             <CardProduct  key={product.id} product={product} />
                                         </Col>
                                     )) : (<p>Loading . . .</p>)
+                                }
+
+                                {
+                                    totalPages===0 && ( <p> {`The product with the name '${search}' does not exist in the category '${categoryFilter}'`} </p>) 
                                 }
                             </Row>
 
