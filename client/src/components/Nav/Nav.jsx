@@ -18,25 +18,24 @@ export default function Nav() {
     const products = useSelector(state => state.products);
     
     useEffect(()=>{
-        if(products?.error==="Product not found") {
+        if(products.totalPages===0) {
             dispatch(getAllProducts());
-            alert(products.error)
+            dispatch(setSearchNameProduct(search));
+            alert("Product not found")
         }
     },[products]);
-    
+
     const handleSearch= ()=>{
         if(search?.length > 0) {
-            dispatch(searchProduct(search));
             dispatch(setSearchNameProduct(search));
+            dispatch(searchProduct(search));
             setSearch("");
-        }else {
+        }else{
+            setSearch("");
             dispatch(getAllProducts());
-        }
-        if(products?.error) {
-            dispatch(getAllProducts());
-            alert(products.error)
         }
     }
+    
     return (
         <nav className="navbar d-inline">
             <div className="row mx-0 py-2 d-flex justify-content-between align-items-center " style={{ backgroundColor: "#a52323" }}>
