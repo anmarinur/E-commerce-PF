@@ -56,11 +56,11 @@ export default function Nav() {
                 <div className="d-flex col-4 align-items-center text-center">
                     <div className="text-white mx-5 col">
                         <img src={favoriteIcon} alt="favoriteIcon" className="w-25 col"></img>
-                        <p className="col">Favoritos</p>
+                        <p className="col">Favs</p>
                     </div>
                     <div className="text-white mx-5 col">
                         <img src={orderIcon} alt="orderIcon" className="w-25 col" />
-                        <p className="col">Carrito</p>
+                        <p className="col">Cart</p>
                     </div>
                 </div>
             </div>

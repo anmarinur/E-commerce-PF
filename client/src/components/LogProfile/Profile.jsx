@@ -8,7 +8,7 @@ export const Profile = () => {
 
     if (isLoading) {
         return (
-            <p>Cargando...</p>
+            <p>Loading...</p>
         )
     }
     return (

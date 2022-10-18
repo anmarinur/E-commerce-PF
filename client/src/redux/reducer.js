@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, FLAG_UPDATE,SET_SEARCH } from "./actions";
+import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, FLAG_UPDATE, SET_SEARCH } from "./actions";
 
 const stateInitial = {
     products: {},
@@ -10,7 +10,6 @@ const stateInitial = {
 export default function rootReducer(state= stateInitial, action){
     switch(action.type){
         case GET_PRODUCTS :
-         console.log(action.payload)
          return {
              ...JSON.parse(JSON.stringify(state)),
              products: action.payload

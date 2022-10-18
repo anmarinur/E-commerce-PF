@@ -31,7 +31,33 @@ const FilterAndOrder = (props) => {
                             </label>
                         </div>
 
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="category" id="tablets" onChange={(e) => { props.setCategory(e.target.id) }} />
+                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                                Tablets
+                            </label>
+                        </div>
 
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="category" id="smartwatches" onChange={(e) => { props.setCategory(e.target.id) }} />
+                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                                Smartwatches
+                            </label>
+                        </div>
+
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="category" id="speakers" onChange={(e) => { props.setCategory(e.target.id) }} />
+                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                                Speakers
+                            </label>
+                        </div>
+
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="category" id="tv" onChange={(e) => { props.setCategory(e.target.id) }} />
+                            <label className="form-check-label fw-semibold" htmlFor="smartphones">
+                                Tv
+                            </label>
+                        </div>
 
                     </div>
 

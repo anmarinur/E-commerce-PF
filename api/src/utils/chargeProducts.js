@@ -6,7 +6,7 @@ const chargeProducts = () =>{
 //const products = JSON.parse(data);
     try {
         let dataBD = data.map((e) => Product.create(e));
-        PromiseAll(dataBD).then(()=> console.log('Se creó'));
+        PromiseAll(dataBD).then(()=> console.log('Products successfully charged'));
     } catch (error) {
         return error.message;
     }
