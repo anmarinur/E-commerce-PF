@@ -171,6 +171,10 @@ export default function FormCreate(){
                         <option>Select a category</option>
                         <option value="smartphones">Smartphones</option>
                         <option value="laptops">PC Laptops</option>
+                        <option value="tablets">Tablets</option>
+                        <option value="smartwatches">Smartwatches</option>
+                        <option value="speakers">Speakers</option>
+                        <option value="tv">TVs</option>
                     </Form.Control>
                     {errors.category && <Form.Text className="text-muted">Select one category</Form.Text>}
                 </Form.Group>
