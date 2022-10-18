@@ -10,64 +10,30 @@ const getProducts = async (req, res) => {
         
     let page = 0;
     let size = 12;
+    let where={};
+    let order;
 
     if(!Number.isNaN(pageNumber) && pageNumber > 0) page = pageNumber;
     if(!Number.isNaN(sizeNumber) && sizeNumber > 0 && sizeNumber < 12) size = sizeNumber;
+    if(cat) where.category=cat;
+    if(orderPrice) order = [["price", orderPrice]];
+    if(search?.length>0) where.name = {[Op.iLike]: `%${search}%`};
 
-    //si el endpoint es llamado x search, buscar en el catalogo de productos las coincidencias mas alla de la categoria
-    //el criterio sera los names que contengan la palabra enviada en search seal al final, principio o enmedio
-    if (search) {
+    try{
         const products = await Product.findAndCountAll({
-            where : { name: {[Op.iLike]: `%${search}%` }}, 
-           limit: size, offset: page * size,  
-       });  
-       
-       if (products.count) return res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
-       else 
-        return res.status(404).json({ error: "Product not found" });
+            where,
+            order,
+            limit: size,
+            offset: page * size
+        });
+        return res.status(200).json({
+            totalPages: Math.ceil(products.count / size), 
+            products: products.rows
+        })
+    }catch{
+        res.status(404).json({ error: "Product not found" });
     }
-
-    try {
-        if (cat) { //si hay categoria se asume deseo de filtro
-            if (orderPrice) { //si hay criterio de ordenacion tomalo en cuenta
-                const products = await Product.findAndCountAll({
-                     where : { category: {[Op.eq]: cat} }, 
-                    order: [ ['price', orderPrice] ],  
-                    limit: size, offset: page * size,  
-         
-                });   
-                return res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
-            } else  {
-                const products = await Product.findAndCountAll({
-                    where : { category: {[Op.eq]: cat} }, 
-                    limit: size, offset: page * size, 
-                });      
-                return res.status(200).json({ totalPages: Math.ceil(products.count / size),products: products.rows }); 
-            }
-        } else 
-            { //Cat en blanco se asume no desea filtro
-                if (orderPrice) { //si hay criterio de ordenacion tomalo en cuenta
-                    const products = await Product.findAndCountAll({  //Busco todo y cuenta registros
-                    order: [ ['price', orderPrice] ],  
-                    limit: size,
-                    offset: page * size,
-                });
-                return res.status(200).json({ totalPages: Math.ceil(products.count / size), products: products.rows});
-                } else 
-                {
-                    const products = await Product.findAndCountAll({  //Busco todo y cuenta registros
-                        order: [ ['id', "ASC"]],
-                        limit: size,
-                        offset: page * size,
-                    });
-                    return res.status(200).json({ totalPages: Math.ceil(products.count / size), products: products.rows});
-                }
-            } //del else de Cat en blanco
-    } catch (error) {
-       res.status(404).json({error: error.message}); 
-    }
-};
-
+}
 
 const getProductById = async (req, res) => {
     const { id } = req.params;
