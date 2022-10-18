@@ -18,7 +18,7 @@ export default function Nav() {
     const products = useSelector(state => state.products);
     
     useEffect(()=>{
-        if(products?.error) {
+        if(products?.error==="Product not found") {
             dispatch(getAllProducts());
             alert(products.error)
         }
@@ -27,6 +27,7 @@ export default function Nav() {
     const handleSearch= ()=>{
         if(search?.length > 0) {
             dispatch(searchProduct(search));
+            dispatch(setSearchNameProduct(search));
             setSearch("");
         }else {
             dispatch(getAllProducts());
@@ -49,7 +50,7 @@ export default function Nav() {
                     TECNOSHOP
                 </Link>
                 <div className="input-group w-25" role="search">
-                    <input className="form-control me-0 bg-light" type="search" value={search} onChange={(e)=>setSearch(e.target.value)} placeholder="Buscar" aria-label="Search" />
+                    <input className="form-control me-0 bg-light" type="search" value={search} onChange={(e)=>setSearch(e.target.value)} placeholder="Search a product" aria-label="Search" />
                     <button className="btn  text-white border-0 px-4 btn-danger" onClick={handleSearch}>{search.length>0? "Search": "All"} </button>
                 </div>
 
@@ -61,7 +62,7 @@ export default function Nav() {
                     <div className="text-white mx-5 col">
                         <img src={orderIcon} alt="orderIcon" className="w-25 col" />
                         <p className="col">Cart</p>
-                    </div>
+                        </div>
                 </div>
             </div>
         </nav>
