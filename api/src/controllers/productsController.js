@@ -8,10 +8,10 @@ const getProducts = async (req, res) => {
     const orderPrice = req.query.ordprice; // Se recibe por query el criterio de ordenacion EJ: &ordprice=ASC
     const search     = req.query.search; // en caso de llamar este endpoint para search x query enviar EJ: &search=iPhone
         
-    let page = 0;
-    let size = 12;
-    let where={};
-    let order;
+    let page  = 0;
+    let size  = 12;
+    let where = {};
+    let order = [["id", "ASC"]];
 
     if(!Number.isNaN(pageNumber) && pageNumber > 0) page = pageNumber;
     if(!Number.isNaN(sizeNumber) && sizeNumber > 0 && sizeNumber < 12) size = sizeNumber;
