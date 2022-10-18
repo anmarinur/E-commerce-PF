@@ -61,7 +61,7 @@ export const searchProduct = (product) => {
             const result = await axios.get(`/product?search=${product}`);
             return dispatch({ type: GET_PRODUCTS, payload: result.data });
         } catch (error) {
-            console.log(error);
+            return dispatch({ type: GET_PRODUCTS, payload: error.response.data })
         }
     }
 }

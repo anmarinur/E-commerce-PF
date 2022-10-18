@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoginButton } from "../LogProfile/Login";
 import favoriteIcon from "./images/favorite.png"
 import orderIcon from "./images/orderIcon.png"
@@ -12,10 +12,30 @@ import { searchProduct, setSearchNameProduct, getAllProducts } from '../../redux
 
 
 export default function Nav() {
+    const [search, setSearch] = useState("");
     const dispatch = useDispatch();
     const { isAuthenticated } = useAuth0();
-    const productNameSearch = useSelector(state => state.productNameSearch);
-
+    const products = useSelector(state => state.products);
+    
+    useEffect(()=>{
+        if(products?.error) {
+            dispatch(getAllProducts());
+            alert(products.error)
+        }
+    },[products]);
+    
+    const handleSearch= ()=>{
+        if(search?.length > 0) {
+            dispatch(searchProduct(search));
+            setSearch("");
+        }else {
+            dispatch(getAllProducts());
+        }
+        if(products?.error) {
+            dispatch(getAllProducts());
+            alert(products.error)
+        }
+    }
     return (
         <nav className="navbar d-inline">
             <div className="row mx-0 py-2 d-flex justify-content-between align-items-center " style={{ backgroundColor: "#a52323" }}>
@@ -29,8 +49,8 @@ export default function Nav() {
                     TECNOSHOP
                 </Link>
                 <div className="input-group w-25" role="search">
-                    <input className="form-control me-0 bg-light" type="search" value={productNameSearch} onChange={ e => dispatch(setSearchNameProduct(e.target.value)) } placeholder="Buscar" aria-label="Search" />
-                    <button className="btn  text-white border-0 px-4 btn-danger" onClick={ () => {  if(productNameSearch !== ''){ dispatch(searchProduct(productNameSearch)); }else{ dispatch (getAllProducts())}  }}>Buscar</button>
+                    <input className="form-control me-0 bg-light" type="search" value={search} onChange={(e)=>setSearch(e.target.value)} placeholder="Buscar" aria-label="Search" />
+                    <button className="btn  text-white border-0 px-4 btn-danger" onClick={handleSearch}>{search.length>0? "Search": "All"} </button>
                 </div>
 
                 <div className="d-flex col-4 align-items-center text-center">
