@@ -53,32 +53,32 @@ export default function ProductDetail(props) {
       <div className="container mt-4">
 
         <Card className="border border-danger shadow" >
-          <Card.Header className="text-center text-uppercase py-3 bg-danger text-white fw-semibold">
-          <Card.Title className="text-start fs-3"> 
+          <Card.Header className="text-center align-items-center text-uppercase py-0 px-3 bg-danger text-white fw-semibold">
+          <Card.Title className="d-flex justify-content-between fs-3 align-items-center"> 
             {productDetail.name} 
-            {isAuthenticated && <Button type="button" class="btn text-white" variant="danger" onClick={() => deleteP(id)}>Remove Product</Button>}
-            {isAuthenticated && <Button type="button" class="btn text-white" variant="danger" onClick={() => updateProduct()}>Update Product</Button>}
-          </Card.Title>
-            <div class="position-absolute top-0 end-0">
+            {isAuthenticated && <Button type="button" class="btn text-danger" variant="light" onClick={() => deleteP(id)}>Remove Product</Button>}
+            {isAuthenticated && <Button type="button" class="btn text-white" variant="light" onClick={() => updateProduct()}>Update Product</Button>}
+            <div>
               <Link to="/">
                 <Button className="m-3 fw-bold text-danger" variant="light">X</Button>
               </Link>
             </div>
+          </Card.Title>
 
 
           </Card.Header>
           <Card.Body className="text-center">
             
-            <Card.Img  style={ {width : '25em',height : '30em', maxWidth : '100%'} } className=" rounded " src={productDetail.image} />
-            <Card.Subtitle className="my-2 text-muted fs-5">
-              Description:{productDetail.description}
+            <Card.Img  style={ {width : 'auto', maxHeight : '25em', marginTop: '2em', marginBottom:'2em'} } className="rounded" src={productDetail.image} />
+            <Card.Subtitle className="mt-3 mb-3 text-muted fs-5 w-70 mx-auto">
+              <b className="text-danger">Description:</b> {productDetail.description}
             </Card.Subtitle>
-            <p className="text-center fw-light text-muted start lh-1">
-              Category: {productDetail.category}
+            <p className="text-center text-muted start lh-1 mb-4">
+              <b className="text-danger">Category: </b>{productDetail.category}
 
             </p>
-            <p className="text-center fw-light text-muted start lh-1 fw-semibold">
-              In Stock: {productDetail.stock}
+            <p className="text-center text-muted start lh-1 fw-semibold mb-4">
+              <b className="text-danger">In Stock:</b> {productDetail.stock}
             </p>
 
             <p className="text-center  text-danger fs-4">Price: ${productDetail.price}</p>
