@@ -9,17 +9,17 @@ import { Link } from 'react-router-dom';
 const CardProduct = ({ product }) => {
 
     return (
-        <Card className='h-100' >
-            <div className="row h-50">
+        <Link to={`/product/${product.id}`} className='card h-100 text-decoration-none shadow-sm ' >
+            <div className="row h-100 align-items-center">
                 <div className="col mx-auto align-middle"  >
-                    <Card.Img variant="top" src={product.image} className="img-fluid w-50  mx-auto d-block " />
+                    <Card.Img variant="top" src={product.image} style={{ maxWidth:'90%', minWidth:'100%', minHeight : '100%' }} className="img-fluid w-50  mx-auto d-block p-3" />
                 </div>
             </div>
 
             <Card.Body>
-                <Link to={`/product/${product.id}`} className="text-decoration-none text-center text-danger">
-                    <Card.Title className="text-center"> {product.name} </Card.Title>
-                </Link>
+
+                <Card.Title className="text-center text-danger"> {product.name} </Card.Title>
+
                 <p className="card-text text-center fw-light text-muted start lh-1" >{product.category}</p>
                 <p className="card-text text-center  text-danger fs-4">${product.price}</p>
                 <p className="card-text text-center fw-light text-muted start lh-1" >{product.brand}</p>
@@ -33,7 +33,7 @@ const CardProduct = ({ product }) => {
                 </div>
 
             </Card.Body>
-        </Card>
+        </Link>
     )
 }
 
