@@ -8,7 +8,7 @@ const checkPermissions = async (getToken, history)=>{
                 Authorization: `Bearer ${token}`
             }
         })
-        if(response.data.message="authorized") return;   
+        if(response.data.message === "authorized") return;   
     } catch (error) {
         history.goBack();
         alert("You dont have the necessary permissions");

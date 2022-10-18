@@ -29,18 +29,18 @@ export default function Nav() {
                     TECNOSHOP
                 </Link>
                 <div className="input-group w-25" role="search">
-                    <input className="form-control me-0 bg-light" type="search" value={productNameSearch} onChange={ e => dispatch(setSearchNameProduct(e.target.value)) } placeholder="Buscar" aria-label="Search" />
-                    <button className="btn  text-white border-0 px-4 btn-danger" onClick={ () => {  if(productNameSearch !== ''){ dispatch(searchProduct(productNameSearch)); }else{ dispatch (getAllProducts())}  }}>Buscar</button>
+                    <input className="form-control me-0 bg-light" type="search" value={productNameSearch} onChange={ e => dispatch(setSearchNameProduct(e.target.value)) } placeholder="Search a product" aria-label="Search" />
+                    <button className="btn  text-white border-0 px-4 btn-danger" onClick={ () => {  if(productNameSearch !== ''){ dispatch(searchProduct(productNameSearch)); }else{ dispatch (getAllProducts())}  }}>Search</button>
                 </div>
 
                 <div className="d-flex col-4 align-items-center text-center">
                     <div className="text-white mx-5 col">
                         <img src={favoriteIcon} alt="favoriteIcon" className="w-25 col"></img>
-                        <p className="col">Favoritos</p>
+                        <p className="col">Favs</p>
                     </div>
                     <div className="text-white mx-5 col">
                         <img src={orderIcon} alt="orderIcon" className="w-25 col" />
-                        <p className="col">Carrito</p>
+                        <p className="col">Cart</p>
                     </div>
                 </div>
             </div>
