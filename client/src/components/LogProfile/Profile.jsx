@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { LogoutButton } from "./Logout";
+import { Link } from 'react-router-dom'
 
 
 export const Profile = () => {
@@ -19,9 +20,9 @@ export const Profile = () => {
             </button>
 
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-        
-                <p className="p-2 m-0 fw-semibold" >{user.email}</p>
-                <a className="btn btn-sm btn-secondary w-75 text-center ms-2 mb-2 " href={window.location.origin + "/create"}> <i className="fa-solid fa-circle-plus"></i>  Create product </a>
+                {/* <p className="p-2 m-0 fw-semibold" >{user.email}</p> */}
+                <Link to={'/Dashboard'} className=' dropdown-item'><i className="fa-solid fa-table-columns"></i> Dashboard </Link>
+                <Link className="dropdown-item" to={'/create'}> <i className="fa-solid fa-circle-plus"></i>  Create product </Link>
                 <LogoutButton />
             </div>
         </div>
