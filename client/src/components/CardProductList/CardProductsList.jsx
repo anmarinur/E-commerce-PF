@@ -7,7 +7,9 @@ import CardProduct from './CardProduct';
 import FilterAndOrder from "../FilterAndOrderProducts/FilterAndOrder";
 import { getAllProducts } from '../../redux/actions';
 import PaginationProducts from './Pagination';
-import SearchBarProducts from './SearchBarProducts'
+import SearchBarProducts from './SearchBarProducts';
+import spinner from '../spinner.gif';
+
 
 
 
@@ -24,7 +26,7 @@ const CardProductsList = () => {
     const [categoryFilter, setCategoryFilter] = useState(undefined);
     const [sort, setSort] = useState(undefined);
     const [search, setSearch] = useState(undefined);
-    
+
     function setPagePagination(n) {
         setPage(n)
     }
@@ -57,7 +59,7 @@ const CardProductsList = () => {
                                         <Col key={product.id} sm={6} md={6} lg={4} xl={3} className='mb-4'>
                                             <CardProduct  key={product.id} product={product} />
                                         </Col>
-                                    )) : (<p>Loading . . .</p>)
+                                    )) : ( <img className='mx-auto my-5' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' /> )
                                 }
 
                                 {

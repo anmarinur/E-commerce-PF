@@ -4,8 +4,7 @@ export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DETAILS = "GET_DETAILS";
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const FLAG_UPDATE = "FLAG_UPDATE";
-export const SET_SEARCH = "SET_SEARCH";
-
+export const ALERT = 'ALERT';
 
 
 
@@ -55,19 +54,14 @@ export const flagUpdate = (flag, id) => {
     }
 }
 
-export const searchProduct = (product) => {
-    return async function (dispatch) {
-        try {
-            const result = await axios.get(`/product?search=${product}`);
-            return dispatch({ type: GET_PRODUCTS, payload: result.data });
-        } catch (error) {
-            return dispatch({ type: GET_PRODUCTS, payload: error.response.data })
+export const setAlert = (data) =>{
+    return{
+        type: ALERT,
+        payload: {
+            type: data.type,
+            show : data.show,
+            title : data.title,
+            body : data.body
         }
-    }
-}
-
-export const setSearchNameProduct = (name) =>{
-    return  function (dispatch) {
-        return dispatch({ type: SET_SEARCH, payload:name });
     }
 }

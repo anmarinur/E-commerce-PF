@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import checkPermissions from '../utils/checkPermissions';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { flagUpdate } from '../redux/actions';
+import { flagUpdate, setAlert } from '../redux/actions';
 
 export default function FormCreate(){
 
@@ -111,17 +111,32 @@ export default function FormCreate(){
                         Authorization: `Bearer ${token}`
                     }
                 });
-                alert('Product updated successfully');
+                dispatch(setAlert({
+                    type:'success',
+                    show :true,
+                    title : 'Product Updated',
+                    body : 'the product has been successfully updated.'
+                }))
             } else {
                 await axios.post('/product', input, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                alert('Product created successfully');
+                dispatch(setAlert({
+                    type:'success',
+                    show :true,
+                    title : 'Product created',
+                    body : 'the product has been successfully created.'
+                }))
             }
         } catch (error) {
-            alert(error.response.data.error);
+            dispatch(setAlert({
+                type:'error',
+                show :true,
+                title : 'Error!!! ',
+                body : 'An error occurred while creating or updating the product'
+            }))
         }
         dispatch(flagUpdate(false, null))
         setInput({
