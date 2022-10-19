@@ -7,8 +7,12 @@ import About from './pages/About'
 import * as bootstrap from 'bootstrap'; // do not delete this line - is for the navBar !!
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import { useSelector } from "react-redux";
+import Alert from './components/Alert';
 
 export default function App() {
+
+  const alertData =useSelector((state) => state.AlertInfo)
   return (
     <div className="App">      
       <Switch>
@@ -26,7 +30,9 @@ export default function App() {
           <PageNotFound />         
         </Route>
         
-      </Switch>      
+      </Switch> 
+      <Alert   data={alertData} />
+     
     </div>
   );
 };

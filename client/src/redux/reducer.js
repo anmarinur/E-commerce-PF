@@ -1,10 +1,10 @@
-import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, FLAG_UPDATE, SET_SEARCH } from "./actions";
+import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, FLAG_UPDATE, ALERT } from "./actions";
 
 const stateInitial = {
     products: {},
     details: {},
     flagUpdate: {},
-    productNameSearch : ''
+    AlertInfo : { show:false },
 };
 
 export default function rootReducer(state= stateInitial, action){
@@ -32,10 +32,15 @@ export default function rootReducer(state= stateInitial, action){
                     id: action.payload.id
                 }
             }
-        case SET_SEARCH :
+        case ALERT :
             return {
                 ...JSON.parse(JSON.stringify(state)),
-                productNameSearch : action.payload
+                AlertInfo: {
+                    type: action.payload.type,
+                    show: action.payload.show,
+                    title: action.payload.title,
+                    body: action.payload.body,
+                }
             }
         default: 
          return state;
