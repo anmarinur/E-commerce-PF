@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import { useSelector } from "react-redux";
 import Alert from './components/Alert';
+import Dashboard from './layouts/Dashboard';
 
 export default function App() {
 
@@ -26,10 +27,12 @@ export default function App() {
         <Route exact path="/about">
           <About/>
         </Route>
+        <Route path="/Dashboard">
+          <Dashboard />
+        </Route>
         <Route>
           <PageNotFound />         
         </Route>
-        
       </Switch> 
       <Alert   data={alertData} />
      
