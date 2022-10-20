@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getAllProducts, setAlert } from '../../../redux/actions';
 import { useAuth0 } from '@auth0/auth0-react'
-import axios from "axios"
-import FormCreate from '../../../pages/FormCreate';
+import axios from "axios";
 
 const ProductsTable = () => {
 
@@ -43,9 +42,9 @@ const ProductsTable = () => {
       }
 
 
-      const updateProduct = (props) => {
-        console.log(props)
-        }
+    const updateProduct = (props) => {
+        history.push({pathname:'/create', state: props})
+    }
 
     return (
         <>
@@ -80,19 +79,12 @@ const ProductsTable = () => {
                                                 category: p.category,
                                                 stock: p.stock,
                                             })
-                                            }><i className="fa-solid fa-pen-to-square"></i></button> 
+                                            }><i className="fa-solid fa-pen-to-square"></i></button>   
                                     </div>
                                 </td>
                             </tr>
 
                         ))}
-                        {/* <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr> */}
-
                     </tbody>
                 </table>
             </div>
