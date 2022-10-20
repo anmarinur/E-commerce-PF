@@ -35,7 +35,7 @@ export default function Nav() {
                                 99+                         
                             </span>
                         </Link>
-                        <Link  to="/" className="text-white text-decoration-none bg-danger position-relative my-2 mx-5 p-1  ">
+                        <Link  to="/cart" className="text-white text-decoration-none bg-danger position-relative my-2 mx-5 p-1  ">
                             <i className="fa-solid fa-cart-shopping  fa-2x"></i>
                             <p className="fw-normal fs-6 lh-1 ">Cart</p>
                             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
