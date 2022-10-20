@@ -1,14 +1,12 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails, flagUpdate,setAlert } from "../redux/actions";
+import { getDetails } from "../redux/actions";
 import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
-import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
 
 
 
@@ -22,38 +20,6 @@ export default function ProductDetail(props) {
     dispatch(getDetails(id))
   }, [dispatch, id])
 
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0()
-
-  const deleteP = async (id) => {
-    const token =  await getAccessTokenSilently();
-    try {
-        await axios.delete(`/product/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        dispatch(setAlert({
-          type:'success',
-          show :true,
-          title : 'Product Removed',
-          body : 'product has been successfully deleted'
-        }))
-    } catch (error) {
-      dispatch(setAlert({
-        type:'error',
-        show :true,
-        title : 'ERROR!!',
-        body : `${error.name} : ${error.message}`
-      }))
-    }
-    history.push("/")
-  }
-
-  const updateProduct = () => {
-    dispatch(flagUpdate(true, id))
-    history.push('/create');
-  }
-
   const productDetail = useSelector((state) => state.details)
 
   return (
@@ -64,9 +30,7 @@ export default function ProductDetail(props) {
         <Card className="border border-danger shadow" >
           <Card.Header className="text-center align-items-center text-uppercase py-0 px-3 bg-danger text-white fw-semibold">
           <Card.Title className="d-flex justify-content-between fs-3 align-items-center"> 
-            {productDetail.name} 
-            {isAuthenticated && <Button type="button" class="btn text-danger" variant="light" onClick={() => deleteP(id)}>Remove Product</Button>}
-            {isAuthenticated && <Button type="button" class="btn text-white" variant="light" onClick={() => updateProduct()}>Update Product</Button>}
+            {productDetail.name}
             <div>
               <Link to="/">
                 <Button className="m-3 fw-bold text-danger" variant="light">X</Button>
