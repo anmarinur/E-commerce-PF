@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const checkPermissions = async (getToken, history)=>{
+const isAdmin = async (getToken)=>{
     try {
         const token = await getToken();
         const response = await axios("/authorization",{
@@ -8,11 +8,11 @@ const checkPermissions = async (getToken, history)=>{
                 Authorization: `Bearer ${token}`
             }
         })
-        if(response.data.message === "authorized") return;   
+        if(response.data.message === "authorized") return true;
+        return false;   
     } catch (error) {
-        history.goBack();
-        alert("You dont have the necessary permissions");
+        return false
     }
 }
 
-export default checkPermissions;
+export default isAdmin;
