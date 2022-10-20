@@ -10,6 +10,7 @@ import Footer from "../components/Footer/Footer";
 
 
 
+
 export default function ProductDetail(props) {
 
   const dispatch = useDispatch();
@@ -57,10 +58,12 @@ export default function ProductDetail(props) {
             <p className="text-center  text-danger fs-4">Price: ${productDetail.price}</p>
             <div className="row text-center">
               <div className="col-6">
-                <Button className="px-5 py-2" variant="danger"> <i class="fa-solid fa-heart-circle-plus fa-5x"></i> </Button>
+                <Button className="px-5 py-2" variant="danger"> <i class="fa-solid fa-heart-circle-plus"></i> </Button>
               </div>
               <div className="col-6">
-                <Button className="px-5 py-2" variant="danger"> <i class="fa-solid fa-cart-plus fa-5x"></i> </Button>
+                <Link to='/cart'>
+                <Button className="px-5 py-2" variant="danger"> <i class="fa-solid fa-cart-plus"></i> </Button>
+                </Link>
               </div>
             </div>
           </Card.Body>

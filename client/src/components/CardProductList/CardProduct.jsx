@@ -43,7 +43,9 @@ const CardProduct = ({ product }) => {
                         <Button variant="danger" onClick={addFavorite}> <i className="fa-solid fa-heart-circle-plus fa-xl"></i> </Button>
                     </div>
                     <div className="col-6">
+                        <Link to='/cart'>
                         <Button variant="danger"> <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
+                        </Link>
                     </div>
                 </div>
 
