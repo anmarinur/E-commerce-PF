@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { getAllProducts, setAlert } from '../../../redux/actions';
+import { getAllProducts } from '../../../redux/actions';
 import { useAuth0 } from '@auth0/auth0-react'
 import axios from "axios";
 
@@ -24,19 +24,10 @@ const ProductsTable = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            dispatch(setAlert({
-              type:'success',
-              show :true,
-              title : 'Product Removed',
-              body : 'product has been successfully deleted'
-            }))
+            //Toast 
+            
         } catch (error) {
-          dispatch(setAlert({
-            type:'error',
-            show :true,
-            title : 'ERROR!!',
-            body : `${error.name} : ${error.message}`
-          }))
+          //Toast Error
         }
         dispatch(getAllProducts());
       }

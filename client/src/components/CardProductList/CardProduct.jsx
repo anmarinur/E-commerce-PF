@@ -3,8 +3,9 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { setAlert } from '../../redux/actions';
-
+import { addToCart } from '../../redux/actions';
+import {  toast } from 'react-toastify';
+  
 
 
 
@@ -15,12 +16,13 @@ const CardProduct = ({ product }) => {
     const addFavorite = (e)=>{
         e.preventDefault();
         console.log('add Fav');
-        dispatch(setAlert({
-            type : 'success',
-            show : true,
-            title : 'Added Favorite Product',
-            body : 'The product was successfully added to the list of favorites'
-        }))
+        
+    }
+
+    const addCart = (e) =>{
+        e.preventDefault();
+        dispatch (addToCart(e, product, product.id));;
+        toast.success('Added to Cart')
     }
 
     return (
@@ -44,7 +46,7 @@ const CardProduct = ({ product }) => {
                     </div>
                     <div className="col-6">
                         <Link to='/cart'>
-                        <Button variant="danger"> <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
+                        <Button variant="danger" onClick={ addCart } > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
                         </Link>
                     </div>
                 </div>
