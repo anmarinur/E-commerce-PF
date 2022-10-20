@@ -4,15 +4,17 @@ import Button from 'react-bootstrap/Button';
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import isAdmin from '../utils/isAdmin';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function FormCreate({id, name, image, description, price, category, stock, brand}){
-
+export default function FormCreate(){
+   
+    const location = useLocation();
     const history = useHistory();
+    const {id, name, image, description, price, category, stock, brand} = location.state;
 
     const [input, setInput]= useState({
         name: id ? name : '',
