@@ -10,6 +10,7 @@ import './App.css'
 import { useSelector } from "react-redux";
 import Alert from './components/Alert';
 import Dashboard from './layouts/Dashboard';
+import ProfilePage from './pages/ProfilePage';
 
 export default function App() {
 
@@ -27,8 +28,11 @@ export default function App() {
         <Route exact path="/about">
           <About/>
         </Route>
-        <Route path="/Dashboard">
+        <Route path="/dashboard">
           <Dashboard />
+        </Route>
+        <Route path="/profile">
+          <ProfilePage />
         </Route>
         <Route>
           <PageNotFound />         
