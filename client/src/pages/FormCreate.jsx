@@ -7,24 +7,21 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import checkPermissions from '../utils/checkPermissions';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { flagUpdate, setAlert } from '../redux/actions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function FormCreate(){
+export default function FormCreate({id, name, image, description, price, category, stock, brand}){
 
     const history = useHistory();
-    const dispatch = useDispatch();
-    const flag = useSelector((state) => state.flagUpdate);
-    let inputDetail = useSelector((state) => state.details);
 
     const [input, setInput]= useState({
-        name: flag.flag ? inputDetail.name : '',
-        image: flag.flag ? inputDetail.image : '',
-        description: flag.flag ? inputDetail.description : '',
-        price: flag.flag ? inputDetail.price: 0,
-        category: flag.flag ? inputDetail.category : '',
-        stock: flag.flag ? inputDetail.stock : 0,
-        brand: flag.flag ? inputDetail.brand : '',
+        name: id ? name : '',
+        image: id ? image : '',
+        description: id ? description : '',
+        price: id ? price: 0,
+        category: id ? category : '',
+        stock: id ? stock : 0,
+        brand: id ? brand : '',
     });
 
     const [errors, setErrors] = useState({
@@ -105,40 +102,24 @@ export default function FormCreate(){
     async function handleClick(e) {
         try {
             const token = await getAccessTokenSilently();
-            if (flag.flag) {
-                await axios.put(`/product/${flag.id}`,input, {
+            if (id) {
+                await axios.put(`/product/${id}`,input, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                dispatch(setAlert({
-                    type:'success',
-                    show :true,
-                    title : 'Product Updated',
-                    body : 'the product has been successfully updated.'
-                }))
+                toast.success("Product updated successfully");
             } else {
                 await axios.post('/product', input, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                dispatch(setAlert({
-                    type:'success',
-                    show :true,
-                    title : 'Product created',
-                    body : 'the product has been successfully created.'
-                }))
+                toast.success("Product created successfully");
             }
         } catch (error) {
-            dispatch(setAlert({
-                type:'error',
-                show :true,
-                title : 'Error!!! ',
-                body : 'An error occurred while creating or updating the product'
-            }))
+            toast.error("Error, please enter valid information")
         }
-        dispatch(flagUpdate(false, null))
         setInput({
             name: '',
             image: '',
@@ -148,13 +129,12 @@ export default function FormCreate(){
             stock: 0,
             brand: ''
         })
-        history.push('/');
     }
 
     return (
         <div>
          <Nav />
-            {flag.flag ? <h1 className="text-center py-5 text-danger">Update product</h1> : <h1 className="text-center py-5 text-danger">Create new product</h1>}
+            {id ? <h1 className="text-center py-5 text-danger">Update product</h1> : <h1 className="text-center py-5 text-danger">Create new product</h1>}
             <Form className="w-50 mx-auto">
                 <Form.Group className="mb-3" controlId="productName">
                     <Form.Label>Name</Form.Label>        
@@ -213,6 +193,7 @@ export default function FormCreate(){
                 disabled={(errors.name || errors.image || errors.description || errors.price || errors.category || errors.stock || errors.brand) ? true : ''}
                 >Submit</Button>{' '}
             </div>
+            <ToastContainer/>
           <Footer />
         </div>
     )
