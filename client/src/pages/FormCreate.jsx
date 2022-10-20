@@ -14,7 +14,7 @@ export default function FormCreate(){
    
     const location = useLocation();
     const history = useHistory();
-    const {id, name, image, description, price, category, stock, brand} = location.state;
+    const {id, name, image, description, price, category, stock, brand} = location.state ? location.state : '';
 
     const [input, setInput]= useState({
         name: id ? name : '',
