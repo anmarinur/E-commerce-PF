@@ -5,7 +5,7 @@ import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import checkPermissions from '../utils/checkPermissions';
+import isAdmin from '../utils/isAdmin';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,11 +34,17 @@ export default function FormCreate({id, name, image, description, price, categor
         brand: 'Enter a valid brand name'
     })
 
+    const [admin, setAdmin] = useState();
     const { getAccessTokenSilently } = useAuth0();
     
     useEffect(()=>{
-        checkPermissions(getAccessTokenSilently, history);
-    },[]);
+        isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch(()=>setAdmin(false));
+        if(admin===false){
+            history.goBack();
+            alert("You dont have the necesary permissions");
+            return;
+        }
+    },[admin]);
 
     function validate(input) {
         if(!input.name || input.name.length < 3) {

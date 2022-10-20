@@ -5,7 +5,7 @@ const cors = require('cors');
 const productRouter = require('./routes/productRouter.js');
 const userRouter = require('./routes/userRouter.js');
 const login = require("./middlewares/login.js");
-const authorization = require("./middlewares/authorization.js");
+const admin = require("./middlewares/admin.js");
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 app.use('/product', productRouter);
 app.use('/user', userRouter);
 
-app.get("/authorization", login, authorization, (req, res)=>{
+app.get("/authorization", login, admin, (req, res)=>{
   res.json({message: "authorized"});
 })
 
