@@ -29,13 +29,9 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM("received", "in process", "sent", "delivered"),
         allowNull: false,
       },
-      date: {
-       type: DataTypes.DATE,
-       allowNull: false
-      }
     },
     {
-      timestamps: false,
+      timestamps: true,
     }
   );  
  }
