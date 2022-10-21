@@ -21,6 +21,11 @@ modelOrderDetail(sequelize);
 const { Product, User, Order, OrderDetail } = sequelize.models;
 
 // relaciones pendientes y mas modelos
+Product.hasOne(OrderDetail); //agrego el product_id a la tabla de OrderDetail
+OrderDetail.belongsTo(Product);
+
+Order.hasOne(OrderDetail); //agrego el order_id a la tabla de OrderDetail
+OrderDetail.belongsTo(Order);
 
 module.exports = {
   Product,

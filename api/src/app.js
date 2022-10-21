@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const productRouter = require('./routes/productRouter.js');
 const userRouter = require('./routes/userRouter.js');
+const orderRouter = require('./routes/orderRouter.js');
 const login = require("./middlewares/login.js");
 const admin = require("./middlewares/admin.js");
 
@@ -17,6 +18,7 @@ app.use(morgan('dev'));
 //routes
 app.use('/product', productRouter);
 app.use('/user', userRouter);
+app.use('/order', orderRouter);
 
 app.get("/authorization", login, admin, (req, res)=>{
   res.json({message: "authorized"});
