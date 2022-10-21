@@ -59,7 +59,7 @@ const getOrdersByEmail = async (req, res) => {
 
     order
       ? res.status(200).json(order)
-      : res.json("Order not found or ID invalid");
+      : res.json("Order not found or email invalid");
   } catch (error) {
     res.json(error.message);
   }
@@ -81,7 +81,7 @@ const postOrder = async (req, res) => {
 
     return res.status(200).json("Order created successfully");
   } catch (error) {
-    res.status(400).json(error.message);
+    res.json(error.message);
   }
 };
 
