@@ -4,6 +4,7 @@ import Sidebar from '../components/Dashboard/Sidebar';
 import './dashboard.css';
 import { Route, Switch } from 'react-router-dom';
 import ProductsTable from '../components/Dashboard/Products/ProductsTable';
+import OrderContainer from '../components/Dashboard/Orders/OrderContainer';
 const Dashboard = () => {
 
 
@@ -19,6 +20,10 @@ const Dashboard = () => {
                         <Switch>
                             <Route path="/Dashboard/Products">
                                 <ProductsTable />
+                            </Route>
+
+                            <Route path="/Dashboard/Orders">
+                                <OrderContainer />
                             </Route>
 
                         </Switch>
