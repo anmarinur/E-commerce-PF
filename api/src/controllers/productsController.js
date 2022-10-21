@@ -79,7 +79,7 @@ const deleteProduct = (req, res) => {
     .catch( (error) => res.status(400).json(error.message) )
 }
 
-const updateProduct = async (req, res) => {
+const updateProduct = (req, res) => {
     const { id } = req.params;
     const updateData = req.body;
     Product.update({...updateData},{
