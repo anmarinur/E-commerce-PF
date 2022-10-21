@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Container, Table, Row, Button } from "react-bootstrap";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
@@ -94,9 +94,9 @@ export const Cart = () => {
                 <h6>Total Price :</h6>
                 <span>#</span>
               </div>
-              <Button variant="dark" size="md" className="mt-4 w-100">
-                pay now
-              </Button>
+              <NavLink  to={'/Order'} variant="dark" size="md" className="btn btn-dark mt-4 w-100">
+                Pay Now
+              </NavLink>
             </div>
           </Row>
         </Container>

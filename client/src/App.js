@@ -11,6 +11,7 @@ import './App.css'
 import Dashboard from './layouts/Dashboard';
 import ProfilePage from './pages/ProfilePage';
 import {Cart} from './components/Cart/Cart';
+import Order from './components/Order/Order';
 
 export default function App() {
 
@@ -35,6 +36,9 @@ export default function App() {
         </Route>
         <Route path="/cart">
           <Cart />
+        </Route>
+        <Route path="/order">
+          <Order />
         </Route>
         <Route>
           <PageNotFound />         
