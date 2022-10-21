@@ -1,4 +1,4 @@
-const { Order, OrderDetail, Product } = require("../db");
+const { Order, Product } = require("../db");
 const { Op } = require("sequelize");
 
 const getOrders = async (req, res) => {
@@ -37,7 +37,7 @@ const getOrdersById = async (req, res) => {
     const { id } = req.params;
     const order = await Order.findOne({
       where: {id},
-      include: OrderDetail
+      include: Product
     });
 
     order
@@ -74,9 +74,7 @@ const postOrder = async (req, res) => {
 
     products?.map(async (e) => {
       let productDB = await Product.findByPk(e.id);
-      let orderDetailDB = await OrderDetail.create({ units: e.cuantity });
-      await orderDetailDB.setProduct(productDB);
-      await orderDetailDB.setOrder(orderDB);
+      await orderDB.addProduct(productDB, { through : { units: e.cuantity}});
     });
 
     return res.status(200).json("Order created successfully");
