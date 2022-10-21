@@ -1,30 +1,31 @@
-const { User } = require('../db.js');
+const axios = require("axios").default;
+const { ACCESS_TOKEN, AUTH0_FIND_USER } = process.env;
 
-const getUsers = async ( req, res) => {
-    try {
-        const newUser = await User.create({
-            name: "client",
-            email: "client@mail.com",
-            role: "user",
-            billing_address: "city 1720",
-            country: "Argentina",
-            phone: 542654512321
+const getUser = ( req, res) => {
+    const { email } = req.query;
+    const options = {
+        method: 'GET',
+        url: AUTH0_FIND_USER,
+        params: {email},
+        headers: {authorization: `Bearer ${ACCESS_TOKEN}`}
+        };
+        
+        axios.request(options).then(function (response) {
+        const data = response.data[0];
+        const user = {
+            user_id: data.user_id.split("|")[1],
+            email: data.email,
+            name: data.name,
+            nickname: data.nickname,
+            email_verified: data.email_verified
+        }
+        res.json(user);
+    }).catch(function (error) {
+        console.error(error);
+        res.json(error);
         });
-        res.json(newUser);
-    } catch (error) {
-        res.json({error: error.message});
-    }
 }
 
-const getUserId = () => {}
-const postUser = () => {}
-const deleteUser = () => {}
-const updateUser = () => {}
-
 module.exports = {
-    getUsers,
-    getUserId,
-    postUser,
-    deleteUser,
-    updateUser,
+    getUser,
 }

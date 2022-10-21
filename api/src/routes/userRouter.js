@@ -1,17 +1,10 @@
 const { Router } = require('express');
-const { getUsers, getUserId, postUser, deleteUser, updateUser } = require('../controllers/usersController.js');
+const { getUser } = require('../controllers/usersController.js');
+const login = require('../middlewares/login.js');
+const admin = require('../middlewares/admin.js');
 
 const userRouter = Router();
 
-userRouter.get('/', getUsers);
-
-userRouter.get('/:id', getUserId);
-
-userRouter.post('/', postUser);
-
-userRouter.delete("/:id", deleteUser);
-
-userRouter.put("/:id", updateUser);
-
+userRouter.get('/', login, admin, getUser);
 
 module.exports = userRouter;
