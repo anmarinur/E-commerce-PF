@@ -7,6 +7,7 @@ const userRouter = require('./routes/userRouter.js');
 const orderRouter = require('./routes/orderRouter.js');
 const login = require("./middlewares/login.js");
 const admin = require("./middlewares/admin.js");
+const mercadoPagoRouter = require('./routes/mercadoPagoRouter.js');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(morgan('dev'));
 app.use('/product', productRouter);
 app.use('/user', userRouter);
 app.use('/order', orderRouter);
+app.use('/checkout', mercadoPagoRouter);
 
 app.get("/authorization", login, admin, (req, res)=>{
   res.json({message: "authorized"});
