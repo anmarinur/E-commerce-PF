@@ -20,7 +20,9 @@
     "express-jwt": "^7.7.5",
     "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "^2.1.5",
+    "mercadopago": "^1.5.14",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.8.0",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5"
   },

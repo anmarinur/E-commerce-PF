@@ -1,5 +1,7 @@
 const { Op } = require('sequelize');
 const { User } = require('../db.js');
+const emailNotifications = require('../utils/emailNotifications.js');
+const message = require('../utils/emailMessages');
 
 const getUsers = async (req, res) => {
 
@@ -33,6 +35,7 @@ const postUser = async (req, res)=>{
     try {
         const user = req.body;
         await User.create(user);
+        //emailNotifications(user.email,"Registration on Tecnoshop 💌",message.registration);
         res.json("New User created");
     } catch (error) {
         res.json(error.message);
