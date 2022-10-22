@@ -14,7 +14,7 @@ export const Profile = () => {
     useEffect(()=>{
         isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
         isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch((error)=>setAdmin(error));
-        if(client) {
+        if(!client) {
             logout({returnTo: window.location.origin});
             alert("you user is blocked");
         }
