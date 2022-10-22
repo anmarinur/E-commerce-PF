@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 require("dotenv").config();
-const { USER_MAIL, USER_PASS }= process.env;
+const { USER_MAIL, USER_PASS } = process.env;
 
 const emailNotifications = async (email, subject, message) => {
   try{
