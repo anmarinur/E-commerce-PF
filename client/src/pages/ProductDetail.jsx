@@ -7,8 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
-
-
+import { ToastContainer } from 'react-toastify';
+import  {toast}  from 'react-toastify';
+import { useLocalStorage } from "../utils/localStore";
 
 
 export default function ProductDetail(props) {
@@ -16,12 +17,36 @@ export default function ProductDetail(props) {
   const dispatch = useDispatch();
   const id = props.match.params.id;
   const history = useHistory()
-
+  const [cart,setCart] = useLocalStorage ('cart','')
   useEffect(() => {
     dispatch(getDetails(id))
   }, [dispatch, id])
 
   const productDetail = useSelector((state) => state.details)
+
+
+  const addCart = (e, prod) => {
+    e.preventDefault();
+    let existingProdInCart=cart.find(x=> x.id===prod.id);
+    if(existingProdInCart){
+        existingProdInCart.cant++;
+        existingProdInCart.subTotal+=prod.price;
+        setCart([...cart])
+    }
+    else
+        setCart([...cart, Object.assign(prod, { cant: 1, subTotal: prod.price })])
+        
+    toast.success('Added to Car!', {
+        position: "top-right",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+      }
 
   return (
     <>
@@ -62,7 +87,7 @@ export default function ProductDetail(props) {
               </div>
               <div className="col-6">
                 <Link to='/cart'>
-                <Button className="px-5 py-2" variant="danger"> <i class="fa-solid fa-cart-plus"></i> </Button>
+                <Button className="px-5 py-2" variant="danger" onClick={(e) => addCart(e, productDetail)}> <i class="fa-solid fa-cart-plus"></i> </Button>
                 </Link>
               </div>
             </div>
@@ -72,6 +97,7 @@ export default function ProductDetail(props) {
 
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 }
