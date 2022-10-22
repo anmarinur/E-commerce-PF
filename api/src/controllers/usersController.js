@@ -1,7 +1,10 @@
 const { Op } = require('sequelize');
 const { User } = require('../db.js');
+const emailNotifications = require('../utils/emailNotifications.js');
+const message = require('../utils/emailMessages');
 const { uploadImage } = require('../utils/cloudinary.js');
 const fs = require('fs-extra');
+
 
 const getUsers = async (req, res) => {
 
@@ -35,6 +38,7 @@ const postUser = async (req, res)=>{
     try {
         const user = req.body;
         await User.create(user);
+        //emailNotifications(user.email,"Registration on Tecnoshop 💌",message.registration);
         res.json("New User created");
     } catch (error) {
         res.status(400).json(error.message);
