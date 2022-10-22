@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { addToCart } from '../../redux/actions';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
   
 
 

@@ -6,6 +6,7 @@ import {
     addToCart,
     adjustQuantity,
     deleteFromCart,
+    LoadCurrentItem,
 } from "../../redux/actions";
 
 function ProductTrElement(props) {
@@ -15,6 +16,7 @@ function ProductTrElement(props) {
     let adjustQuantity = props.adjustQuantity;
     let deleteFromCart = props.deleteFromCart;
     let deleteFromWish = props.deleteFromWish;
+    const LoadCurrentItem = props.LoadCurrentItem;
 
     const [inputQty, setinputQty] = useState(props.product.qty);
     const [subTotal, setsubTotal] = useState(0);
@@ -25,12 +27,14 @@ function ProductTrElement(props) {
         setsubTotal(subTotal + subTotalll);
         let subTotShow = input.parentNode.parentNode.children[4];
         subTotShow.innerHTML = `${subTotalll}`;
+
     }, [inputQty, setsubTotal, props.product.price])
 
     const onChangeQuantity = (event) => {
         event.preventDefault();
         let btn = event.currentTarget;
         setinputQty(btn.value);
+        LoadCurrentItem(props.product)
         adjustQuantity(props.product.id, btn.value);
         if (btn.value === btn.max) {
             alert("This is the last quantity for this product");
@@ -48,11 +52,12 @@ function ProductTrElement(props) {
                     <img
                         src={props.product.image}
                         alt="productImg"
+                        onClick={() => LoadCurrentItem(props.product)}
                         style={{ maxHeight: '5em' }}
                     />
                 </Link>
             </td>
-            <td className="align-middle">
+            <td className="align-middle" onClick={() => LoadCurrentItem(props.product)}>
                 <Link className="text-nowrap fs-6 " to={`/product/${props.product.id}`}>{props.product.name}</Link>
             </td>
             <td className="price-new align-middle" >$ {props.product.price}</td>
@@ -64,6 +69,7 @@ function ProductTrElement(props) {
                         id="qty"
                         name="qty"
                         min="1"
+                        max={props.product.maxQuantity}
                         step="1"
                         // defaultValue="1"
                         value={inputQty}
@@ -114,13 +120,20 @@ function ProductTrElement(props) {
     );
 }
 
+const mapStatetoProps = (state) => {
+    return {
+      currentItem: state.cart.currentItem,
+    };
+  };
+
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addToCart: (e, product, id) => dispatch(addToCart(e, product, id)),
         adjustQuantity: (id, value) => dispatch(adjustQuantity(id, value)),
         deleteFromCart: (e, id) => dispatch(deleteFromCart(e, id)),
+        LoadCurrentItem: (product) => dispatch(LoadCurrentItem(product)),
     };
 };
-
-export default connect( null, mapDispatchToProps)(ProductTrElement);
+export default connect(mapStatetoProps, mapDispatchToProps)(ProductTrElement);
+//export default connect( null, mapDispatchToProps)(ProductTrElement);

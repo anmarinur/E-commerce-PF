@@ -3,13 +3,15 @@ import { Link, NavLink } from "react-router-dom";
 import { Container, Table, Row, Button } from "react-bootstrap";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
 import { useEffect, useState } from "react";
 import ProductTrElement from './ProductTrElement';
 
 
 export const Cart = () => {
-
+  
+// function Cart() {
+// let cart= props.cart
   const cart = useSelector(state => state.cart);
 
   const [subTotalPrice, setsubTotalPrice] = useState(0);
@@ -55,14 +57,16 @@ export const Cart = () => {
                   </tr>
                 </thead>
                 <tbody>
+               
                   {cart && cart.map((product, idx) => (
                     <>
                       <ProductTrElement
                         product={product}
+                        key={idx}
                         isWish={false}
                         isCart={true}
                       />
-
+{console.log(product)}
                       {/* <tr>
                         <td className="align-middle text-center"> <img className="align-middle" src={product.image} alt="IMG_PRODUCT" style={{ maxHeight: '5em' }} /> </td>
                         <td className="align-middle fs-6">{product.name}</td>
@@ -88,11 +92,11 @@ export const Cart = () => {
               </div>
               <div className="d-flex justify-content-between mb-4">
                 <h6 className="fw-normal">SubTotal Price :</h6>
-                <span>#</span>
+                <span>{subTotalPrice}</span>
               </div>
               <div className="d-flex justify-content-between fw-bold">
                 <h6>Total Price :</h6>
-                <span>#</span>
+                <span>{totalPrice}</span>
               </div>
               <NavLink  to={'/Order'} variant="dark" size="md" className="btn btn-dark mt-4 w-100">
                 Pay Now
@@ -104,7 +108,7 @@ export const Cart = () => {
 
 
 
-      <Link to={'/'} className=' dropdown-item'> Volver </Link>
+      <Link to={'/'} className=' dropdown-item'> Home </Link>
       <Footer />
     </div>
 
@@ -112,13 +116,13 @@ export const Cart = () => {
   )
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     cart: state.rCart.cart,
-//   };
-// };
+//  const mapStateToProps = (state) => {
+//    return {
+//      cart: state.rCart.cart,
+//    };
+//  };
 
-// export default connect(mapStateToProps)(Cart);
+//  export default connect(mapStateToProps)(Cart);
 
 
 
