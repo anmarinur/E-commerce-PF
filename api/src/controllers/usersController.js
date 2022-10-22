@@ -1,5 +1,7 @@
 const { Op } = require('sequelize');
 const { User } = require('../db.js');
+const { uploadImage } = require('../utils/cloudinary.js');
+const fs = require('fs-extra');
 
 const getUsers = async (req, res) => {
 
@@ -35,7 +37,7 @@ const postUser = async (req, res)=>{
         await User.create(user);
         res.json("New User created");
     } catch (error) {
-        res.json(error.message);
+        res.status(400).json(error.message);
     }
 }
 
@@ -73,16 +75,20 @@ const blockUser = async (req, res)=>{
     }
 }
 
-const updateUser = (req, res)=>{
-
+const updateUser = async (req, res)=>{
     const { email } = req.params;
     const updateData = req.body;
+    // if(req.files?.image) {
+    //     let imageUploaded = await uploadImage(req.files.image.tempFilePath)
+    //     updateData.image  = imageUploaded.secure_url;
+    // }
+    // await fs.unlink(req.files.image.tempFilePath);
     User.update(updateData,{
         where: {
             email
         }
     })
-    .then( (data) => res.status(200).json("Product updated successfully") )
+    .then( (data) => res.status(200).json("Updated successfully") )
     .catch( (error) => res.status(400).json({error: error.message}) )
 
 }
