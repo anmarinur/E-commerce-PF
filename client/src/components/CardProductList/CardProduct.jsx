@@ -2,34 +2,41 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { addToCart } from '../../redux/actions';
 import { toast } from 'react-toastify';
-  
 
 
 
-const CardProduct = ({ product }) => {
 
-    const dispatch = useDispatch();
-    
-    const addFavorite = (e)=>{
+
+
+
+const CardProduct = ({ product, setCart, cart }) => {
+    const prod = product;
+    const addFavorite = (e) => {
         e.preventDefault();
         console.log('add Fav');
-        
     }
 
-    const addCart = (e) =>{
+    const addCart = (e, product) => {
         e.preventDefault();
-        dispatch (addToCart(e, product, product.id));;
-        toast.success('Added to Cart')
+        setCart([...cart, Object.assign(prod, { cant: 1, subTotal: prod.price })])
+        toast.success('Added to Car!', {
+            position: "top-right",
+            autoClose: 1200,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
     }
 
     return (
         <Link to={`/product/${product.id}`} className='card h-100 text-decoration-none shadow-sm ' >
             <div className="row h-100 align-items-center">
                 <div className="col mx-auto align-middle"  >
-                    <Card.Img variant="top" src={product.image} style={{ maxWidth:'90%', minWidth:'100%', minHeight : '100%' }} className="img-fluid w-50  mx-auto d-block p-3" />
+                    <Card.Img variant="top" src={product.image} style={{ maxWidth: '90%', minWidth: '100%', minHeight: '100%' }} className="img-fluid w-50  mx-auto d-block p-3" />
                 </div>
             </div>
 
@@ -46,7 +53,7 @@ const CardProduct = ({ product }) => {
                     </div>
                     <div className="col-6">
                         <Link to='/cart'>
-                        <Button variant="danger" onClick={ addCart } > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
+                            <Button variant="danger" onClick={(e) => addCart(e)} > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
                         </Link>
                     </div>
                 </div>
