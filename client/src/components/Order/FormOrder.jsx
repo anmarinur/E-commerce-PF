@@ -1,12 +1,14 @@
+
 import React, { useState } from 'react'
+import { useAuth0 } from '@auth0/auth0-react';
 
+const FormOrder = (props) => {
 
-const FormOrder = () => {
+    const { user } = useAuth0();
+
 
 
     const [inputOrder, setinputOrder] = useState({
-        email: '',
-        contactName: '',
         city: '',
         department: '',
         streetAddress: '',
@@ -96,12 +98,12 @@ const FormOrder = () => {
         <>
             <form autoComplete='off' >
                 <div className="form-floating mb-3">
-                    <input type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' value={inputOrder.email} onChange={handleChange} />
+                    <input type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' defaultValue={user.email } value={inputOrder.email} onChange={handleChange} />
                     <label htmlFor="email">Email</label>
                     {errors.email && <span className="ms-2 text-danger">{errors.email}</span>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input type="text" className={errors.contactName ? "form-control border border-danger" : "form-control"} id="contactName" name='contactName' value={inputOrder.contactName} onChange={handleChange} />
+                    <input type="text" className={errors.contactName ? "form-control border border-danger" : "form-control"} id="contactName" name='contactName' defaultValue={user.name } value={inputOrder.contactName} onChange={handleChange} />
                     <label htmlFor="contactName">Contact Name</label>
                     {errors.contactName && <span className="ms-2 text-danger">{errors.contactName}</span>}
                 </div>
