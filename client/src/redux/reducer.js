@@ -41,6 +41,7 @@ export default function rootReducer(state = stateInitial, action) {
             const inCart = state.cart.find((item) =>
                 item.id === action.payload.id ? true : false
             );
+            
             return {
                 ...state,
                 cart: inCart
@@ -57,6 +58,7 @@ export default function rootReducer(state = stateInitial, action) {
                 cart: state.cart.filter((item) => item.id !== action.payload.id),
             };
         case ADJUST_QUANTITY:
+            
             return {
                 ...state,
                 cart: state.cart.map((item) =>
@@ -68,8 +70,10 @@ export default function rootReducer(state = stateInitial, action) {
                     state.currentItem.id === action.payload.id
                         ? { ...state.currentItem, qty: action.payload.qty }
                         : { ...state.currentItem, qty: 1 },
+
             };
         case LOAD_CURRENT_ITEM:
+           
             return {
                 ...state,
                 currentItem: action.payload,

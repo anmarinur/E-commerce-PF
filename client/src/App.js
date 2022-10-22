@@ -7,7 +7,6 @@ import About from './pages/About'
 import * as bootstrap from 'bootstrap'; // do not delete this line - is for the navBar !!
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-
 import Dashboard from './layouts/Dashboard';
 import ProfilePage from './pages/ProfilePage';
 import {Cart} from './components/Cart/Cart';
