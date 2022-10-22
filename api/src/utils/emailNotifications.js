@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer');
+require("dotenv").config();
+const { USER_MAIL, USER_PASS }= process.env;
 
 const emailNotifications = async (email, subject, message) => {
   try{
@@ -7,8 +9,8 @@ const emailNotifications = async (email, subject, message) => {
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: "tecnoshop.pf@gmail.com", // generated ethereal user
-        pass: "pxoehajwpkapqlkz", // generated ethereal password
+        user: USER_MAIL, // generated ethereal user
+        pass: USER_PASS, // generated ethereal password
       },
       tls: {
         // do not fail on invalid certs
