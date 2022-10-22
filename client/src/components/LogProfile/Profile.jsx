@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import isAdmin from "../../utils/isAdmin";
 import isClient from "../../utils/isClient";
 
-
 export const Profile = () => {
 
     const [ admin, setAdmin ] = useState(false);
@@ -13,12 +12,13 @@ export const Profile = () => {
     const { user, isLoading, isAuthenticated, getAccessTokenSilently, logout } = useAuth0();
     
     useEffect(()=>{
-
         isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
         isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch((error)=>setAdmin(error));
-        if(!client) logout({returnTo: window.location.origin});
-        
-    }, [client]);
+        if(client) {
+            logout({returnTo: window.location.origin});
+            alert("you user is blocked");
+        }
+    }, []);
 
     if (isLoading) {
         return (
