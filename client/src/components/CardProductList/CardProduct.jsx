@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
@@ -7,11 +7,9 @@ import { toast } from 'react-toastify';
 
 
 
-
-
-
 const CardProduct = ({ product, setCart, cart }) => {
     const prod = product;
+    const [ countCart, setCountCart ] = useState(0);
     const addFavorite = (e) => {
         e.preventDefault();
         console.log('add Fav');
@@ -19,7 +17,15 @@ const CardProduct = ({ product, setCart, cart }) => {
 
     const addCart = (e, product) => {
         e.preventDefault();
-        setCart([...cart, Object.assign(prod, { cant: 1, subTotal: prod.price })])
+        let existingProdInCart=cart.find(x=> x.id===prod.id);
+        if(existingProdInCart){
+            existingProdInCart.cant++;
+            existingProdInCart.subTotal+=prod.price;
+            setCart([...cart])
+        }
+        else
+            setCart([...cart, Object.assign(prod, { cant: 1, subTotal: prod.price })])
+        
         toast.success('Added to Car!', {
             position: "top-right",
             autoClose: 1200,

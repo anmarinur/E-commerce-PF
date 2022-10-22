@@ -14,7 +14,7 @@ export default function Nav() {
     useEffect(() => {
         let count = cart.length;
         setCountCart(count)
-    },[cart])
+    },[cart, countCart])
 
     return (
         <>
