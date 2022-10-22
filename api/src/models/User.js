@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-module.exports= (sequelize) => {
-    
+module.exports= (sequelize) => {    
     sequelize.define('User', {
         id: {
             type: DataTypes.INTEGER,
@@ -20,11 +19,7 @@ module.exports= (sequelize) => {
                 isEmail: true,
             }
         },
-        role:{
-            type: DataTypes.ENUM("guest", "user", "admin"),
-            defaultValue: "guest",
-        },
-        billing_address: {
+        shipping_address: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -42,4 +37,4 @@ module.exports= (sequelize) => {
     },{
         timestamps: false
     });
-}
+};
