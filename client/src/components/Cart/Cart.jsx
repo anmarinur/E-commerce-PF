@@ -83,6 +83,7 @@ export const Cart = () => {
                       </tr>
                     </>)}
                 </tbody>
+               {/* {console.log(cart)} */}
               </Table>
             </div>
             <CardPrice totalPrice={totalPrice} />
@@ -92,7 +93,7 @@ export const Cart = () => {
 
 
 
-      <Link to={'/'} className=' dropdown-item'> Home </Link>
+     {/* <Link to={'/'} className=' dropdown-item'> Home </Link> */}
       <Footer />
     </div>
 
