@@ -10,7 +10,7 @@ const Sidebar = () => {
             <div className="position-sticky pt-3 sidebar-sticky">
                 <ul className="nav flex-column">
                     <li className="nav-item">
-                        <NavLink className="nav-link" aria-current="page" to={'/Dashboard/'}>
+                        <NavLink activeClassName="active" className="nav-link" aria-current="page" to={'/Dashboard/'}>
                             <i className="me-2 fa-solid fa-table-columns"></i>
                             Dashboard
                         </NavLink>
@@ -26,16 +26,16 @@ const Sidebar = () => {
                 </h6>
                 <ul className="nav flex-column mb-2">
                     <li className="nav-item">
-                        <Link className="nav-link" to={'/Dashboard/Products'}>
+                        <NavLink activeClassName="active" className="nav-link" to={'/Dashboard/Products'}>
                             <i className="me-2 fa-solid fa-store"></i>
                             Products
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to={'/Dashboard/Orders'}>
+                        <NavLink activeClassName="active" className="nav-link" to={'/Dashboard/Orders'}>
                             <i className="me-2 fa-solid fa-receipt"></i>
                             Orders
-                        </Link>
+                        </NavLink>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to={'/Dashboard/Users'}>

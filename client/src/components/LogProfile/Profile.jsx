@@ -14,11 +14,8 @@ export const Profile = () => {
     useEffect(()=>{
         isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
         isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch((error)=>setAdmin(error));
-        if(!client) {
-            logout({returnTo: window.location.origin});
-            alert("you user is blocked");
-        }
-    }, []);
+        console.log(user)
+    }, [getAccessTokenSilently,client,logout,user]);
 
     if (isLoading) {
         return (
@@ -34,6 +31,7 @@ export const Profile = () => {
         {isAuthenticated && admin?
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 {/* <p className="p-2 m-0 fw-semibold" >{user.email}</p> */}
+                <Link to={'/profile'} className=' dropdown-item'><i className="fa-solid fa-table-columns"></i> Profile </Link>
                 <Link to={'/dashboard'} className=' dropdown-item'><i className="fa-solid fa-table-columns"></i> Dashboard </Link>
                 <Link className="dropdown-item" to={'/create'}> <i className="fa-solid fa-circle-plus"></i>  Create product </Link>
                 <LogoutButton />
