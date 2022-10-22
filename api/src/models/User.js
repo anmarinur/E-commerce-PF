@@ -19,13 +19,15 @@ module.exports= (sequelize) => {
                 isEmail: true,
             }
         },
+        block: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         shipping_address: {
             type: DataTypes.STRING,
-            allowNull: false,
         },
         country: {
             type: DataTypes.STRING,
-            allowNull: false,
         },
         phone: {
             type: DataTypes.BIGINT,

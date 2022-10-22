@@ -1,10 +1,20 @@
 const { Router } = require('express');
-const { getUser } = require('../controllers/usersController.js');
+const { postUser, getUserCheck, blockUser, updateUser, getUserByEmail, getUsers } = require('../controllers/usersController.js');
 const login = require('../middlewares/login.js');
 const admin = require('../middlewares/admin.js');
 
 const userRouter = Router();
 
-userRouter.get('/', login, admin, getUser);
+userRouter.post('/', postUser);
+
+userRouter.get('/', login, admin, getUsers);
+
+userRouter.get('/:email', login, getUserByEmail);
+
+userRouter.get('/check/:email', getUserCheck);
+
+userRouter.put('/block/:email/:block', login, admin, blockUser);
+
+userRouter.put('/:email', login, updateUser);
 
 module.exports = userRouter;
