@@ -5,12 +5,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CardProduct from './CardProduct';
 import FilterAndOrder from "../FilterAndOrderProducts/FilterAndOrder";
-import { addCartGlobal, getAllProducts } from '../../redux/actions';
+import { getAllProducts } from '../../redux/actions';
 import PaginationProducts from './Pagination';
 import SearchBarProducts from './SearchBarProducts';
 import spinner from '../spinner.gif';
-import {useLocalStorage} from '../../utils/useLocalStorage';
-import getCartLocalStorage from '../../utils/getCartLocalStorage';
 
 
 const CardProductsList = () => {

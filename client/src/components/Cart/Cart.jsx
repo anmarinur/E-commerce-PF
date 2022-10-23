@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Container, Table, Row } from "react-bootstrap";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
@@ -9,7 +8,7 @@ import { useLocalStorage } from '../../utils/useLocalStorage';
 import CardPrice from "./CartPrice";
 import { useDispatch, useSelector } from "react-redux";
 import getCartLocalStorage from "../../utils/getCartLocalStorage";
-import { addCartGlobal, clearCart, deleteCartGlobal } from "../../redux/actions";
+import { clearCart, deleteCartGlobal, getItemsLocal } from "../../redux/actions";
 import Button from "react-bootstrap/Button";
 
 
@@ -21,6 +20,10 @@ export const Cart = () => {
 
   const [cart, setCart] = useLocalStorage('cart', []);
   const [order, setOrder] = useState({});
+
+  useEffect(()=>{
+    getCartLocalStorage(products.map(i=>i.id)).then((data)=>dispatch(getItemsLocal(data)));
+  },[])
 
   function removeCart(id) {
     dispatch(deleteCartGlobal(id));

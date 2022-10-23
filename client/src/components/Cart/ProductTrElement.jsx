@@ -3,8 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { deleteCartGlobal, orderDetail } from '../../redux/actions';
-import { useLocalStorage } from '../../utils/useLocalStorage';
+import { deleteCartGlobal } from '../../redux/actions';
 
 
 function ProductTrElement(props) {

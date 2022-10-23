@@ -1,17 +1,11 @@
-import React, {useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
 import { addCartGlobal } from '../../redux/actions';
-import { propTypes } from 'react-bootstrap/esm/Image';
-import getCartLocalStorage from '../../utils/getCartLocalStorage';
-import { useLocalStorage } from '../../utils/useLocalStorage';
 
-
-
-const CardProduct = ({ product, setItems/* setCart, cart */}) => {
+const CardProduct = ({ product }) => {
 
     const dispatch = useDispatch();
     const cartGlobal = useSelector((state)=>state.cart);

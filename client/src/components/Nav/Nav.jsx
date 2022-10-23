@@ -6,8 +6,8 @@ import { Profile } from "../LogProfile/Profile";
 import { Link } from 'react-router-dom';
 import { useLocalStorage } from '../../utils/useLocalStorage';
 import { useDispatch, useSelector } from "react-redux";
-import { addCartGlobal, getItemsLocal } from "../../redux/actions";
-import axios from "axios";
+import { getItemsLocal } from "../../redux/actions";
+import getCartLocalStorage from "../../utils/getCartLocalStorage";
 
 
 export default function Nav() {
@@ -21,7 +21,7 @@ export default function Nav() {
     
     useEffect(()=>{
         if(items.length>0 && cart.length ===0 && isFirstTime){
-            dispatch(getItemsLocal(items))
+            getCartLocalStorage(items.map(i=>i.id)).then((data)=>dispatch(getItemsLocal(data)))
         }else{
             setItems(cart); 
         }
