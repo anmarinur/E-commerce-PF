@@ -3,14 +3,19 @@ const mercadopago = require("mercadopago");
 const postMercadoPago = (req, res) => {
 
   let preference = {
-    items: req.body.map((product) => {
+    "items": req.body.map((product) => {
       return({
         title: product.name,
-        unit_price: product.price,
-        quantity: 1,
+        unit_price: Number(product.price),
+        quantity: Number(product.qty),
         picture_url: product.image
       })
-    })
+    }),
+    "back_urls": {
+      "success": "http://localhost:3000/profile",
+      "failure": "http://localhost:3000/order",
+      "pending": "http://localhost:3000/order"
+    }
   };
 
   mercadopago.preferences
