@@ -11,6 +11,7 @@ import Dashboard from './layouts/Dashboard';
 import ProfilePage from './pages/ProfilePage';
 import {Cart} from './components/Cart/Cart';
 import Order from './components/Order/Order';
+import { ToastContainer } from 'react-toastify';
 
 export default function App() {
 
@@ -43,6 +44,7 @@ export default function App() {
           <PageNotFound />         
         </Route>
       </Switch> 
+      <ToastContainer/>
     </div>
   );
 };
