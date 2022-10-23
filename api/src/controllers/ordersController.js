@@ -27,7 +27,7 @@ const getOrders = async (req, res) => {
         console.log(orders)
         return res.status(200).json({
             totalPages: Math.ceil(orders.count / size), 
-            products: orders.rows
+            orders: orders.rows
         })
     }catch{
         res.status(404).json({ error: "Product not found" });
