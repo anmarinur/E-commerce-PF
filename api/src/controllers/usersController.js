@@ -97,15 +97,16 @@ const updateUser = async (req, res)=>{
 
 }
 
-const getUserByEmail = async ()=>{
+const getUserByEmail = async ( req, res)=>{
 
+    const email = req.params.email;
     try {
         const user = await User.findOne({
             where:{
-                email
+                email: email
             }
         })
-        return res.json(user)
+        return res.json(user);
     } catch (error) {
         res.json(error.message);
     }

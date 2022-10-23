@@ -42,6 +42,12 @@ module.exports= (sequelize) => {
                 isNumeric: true
             }
         },
+        postal_code: {
+            type: DataTypes.BIGINT,
+        },
+        region: {
+            type: DataTypes.STRING,
+        }
     },{
         timestamps: false
     });
