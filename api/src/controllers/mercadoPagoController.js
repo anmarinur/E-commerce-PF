@@ -1,4 +1,5 @@
 const mercadopago = require("mercadopago"); 
+const { Product } = require("../db");
 
 const postMercadoPago = (req, res) => {
 
@@ -7,11 +8,16 @@ const postMercadoPago = (req, res) => {
       return({
         title: product.name,
         unit_price: product.price,
-        quantity: 1,
+        quantity: product.quantity,
         picture_url: product.image
       })
     })
   };
+
+  req.body.map(async p => {
+   await Product.increment({stock: -p.quantity}, {where:{ name: p.name }});
+   })  
+   
 
   mercadopago.preferences
   .create(preference)
