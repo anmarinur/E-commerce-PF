@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from "react";
+import React,{ useCallback, useEffect, useState } from "react";
 import { LoginButton } from "../LogProfile/Login";
 import logo from "./images/Logo.png"
 import { useAuth0 } from "@auth0/auth0-react";
@@ -6,7 +6,7 @@ import { Profile } from "../LogProfile/Profile";
 import { Link } from 'react-router-dom';
 import { useLocalStorage } from '../../utils/useLocalStorage';
 import { useDispatch, useSelector } from "react-redux";
-import { addCartGlobal } from "../../redux/actions";
+import { addCartGlobal, getItemsLocal } from "../../redux/actions";
 import axios from "axios";
 
 
@@ -16,10 +16,18 @@ export default function Nav() {
     const cart = useSelector(state=>state.cart);
     const [items, setItems] = useLocalStorage("cart", []);
     const dispatch = useDispatch();
+    const [isFirstTime, setIsFirstTime] = useState(true);
 
+    
     useEffect(()=>{
-        setItems(cart);
+        if(items.length>0 && cart.length ===0 && isFirstTime){
+            dispatch(getItemsLocal(items))
+        }else{
+            setItems(cart); 
+        }
     },[cart])
+
+    useEffect(()=>{setIsFirstTime(false)},[])
 
     return (
         <>

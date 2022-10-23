@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { setTotalPayment } from '../../redux/actions';
 
 const CardPrice = ({ order }) => {
-
+    const dispatch = useDispatch();
     const total = Object.values(order)?.reduce((acc, text)=>{
        return acc += Number(text.split("|")[1]);
     }, 0);
-    console.log(total)
+    
+    useEffect(()=>{
+        dispatch(setTotalPayment(total));
+    },[order])
 
     return (
         <>

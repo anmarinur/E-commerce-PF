@@ -1,10 +1,10 @@
-import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART , DELETE_CART, ORDER_DETAIL, CLEAR_CART} from "./actions";
+import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART , DELETE_CART, ORDER_DETAIL, CLEAR_CART, GET_ITEMS_LOCAL, SET_TOTAL_PAYMENT} from "./actions";
 
 const stateInitial = {
     products: {},
     details: {},
     cart: [],
-    totalOrder: 0,
+    totalPayment: 0,
     currentItem: null,
 };
 
@@ -35,15 +35,20 @@ export default function rootReducer(state = stateInitial, action) {
                 ...JSON.parse(JSON.stringify(state)),
                 cart: state.cart.filter((p) => p.id !== action.payload)
             }
-        case ORDER_DETAIL:
+        case SET_TOTAL_PAYMENT:
             return {
                 ...JSON.parse(JSON.stringify(state)),
-                totalOrder: state.totalOrder + action.payload
+                totalPayment: action.payload
             }
         case CLEAR_CART:
             return {
                 ...JSON.parse(JSON.stringify(state)),
                 cart: []
+            }
+        case GET_ITEMS_LOCAL:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                cart: action.payload,
             }
         default:
             return state;

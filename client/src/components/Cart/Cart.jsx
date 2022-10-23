@@ -19,7 +19,7 @@ export const Cart = () => {
   const products = useSelector(state=>state.cart);
   const dispatch = useDispatch();
 
-  const [cart, setCart] = useLocalStorage('cart', '');
+  const [cart, setCart] = useLocalStorage('cart', []);
   const [order, setOrder] = useState({});
   console.log(order)
 
@@ -78,7 +78,8 @@ export const Cart = () => {
                     size="sm"
                     className="ms-1"
                     onClick={() => {
-                      dispatch(clearCart())
+                      dispatch(clearCart());
+                      setCart([]);
                       setOrder({});
                     }}
                     >

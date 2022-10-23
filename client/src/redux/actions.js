@@ -7,6 +7,9 @@ export const ADD_CART = "ADD_CART";
 export const DELETE_CART = "DELETE_CART";
 export const ORDER_DETAIL = "ORDER_DETAIL";
 export const CLEAR_CART = "CLEAR_CART";
+export const GET_ITEMS_LOCAL = "GET_ITEMS_LOCAL";
+export const SET_TOTAL_PAYMENT = "SET_TOTAL_PAYMENT";
+
 
 
 
@@ -14,6 +17,20 @@ export const addCartGlobal = (item)=>{
     return { 
         type: ADD_CART,
         payload: item
+    }
+}
+
+export const setTotalPayment = (total)=>{
+    return { 
+        type: SET_TOTAL_PAYMENT,
+        payload: total
+    }
+}
+
+export const getItemsLocal = (items)=>{
+    return { 
+        type: GET_ITEMS_LOCAL,
+        payload: items
     }
 }
 
