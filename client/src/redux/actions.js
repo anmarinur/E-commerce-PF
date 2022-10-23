@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DETAILS = "GET_DETAILS";
+export const GET_USER_ORDERS = "GET_USER_ORDERS";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const ADD_CART = "ADD_CART";
 export const DELETE_CART = "DELETE_CART";
@@ -9,8 +10,6 @@ export const ORDER_DETAIL = "ORDER_DETAIL";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_ITEMS_LOCAL = "GET_ITEMS_LOCAL";
 export const SET_TOTAL_PAYMENT = "SET_TOTAL_PAYMENT";
-
-
 
 
 export const addCartGlobal = (item)=>{
@@ -82,6 +81,21 @@ export const getDetails = (id) => {
 
             return dispatch({
                 type: GET_DETAILS,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+
+export const getUserOrders = (email) => {
+    return async function (dispatch) {
+        try {
+            var json = await axios.get(`/order/email/${email}`);
+            return dispatch({
+                type: GET_USER_ORDERS,
                 payload: json.data
             })
         } catch (error) {

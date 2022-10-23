@@ -1,4 +1,4 @@
-const { Order, Product } = require("../db");
+const { Order, Product, OrderDetail } = require("../db");
 const { Op } = require("sequelize");
 const emailNotifications = require("../utils/emailNotifications.js");
 const message = require("../utils/emailMessages");
@@ -56,11 +56,12 @@ const getOrdersByEmail = async (req, res) => {
     const order = await Order.findAll({
       where: {
         user_email: email
-      }
+      },
+      include: Product,
     });
 
-    order
-      ? res.status(200).json(order)
+    order.length !== 0
+      ? res.status(200).send(order)
       : res.json("Order not found or email invalid");
   } catch (error) {
     res.json(error.message);
