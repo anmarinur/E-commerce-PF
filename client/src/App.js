@@ -1,6 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
 import PageNotFound from './pages/PageNotFound';
-import FormCreate from './pages/FormCreate';
 import ProductDetail from './pages/ProductDetail';
 import Home from './pages/Home';
 import About from './pages/About'
@@ -20,9 +19,6 @@ export default function App() {
       <Switch>
         <Route exact path="/">
           <Home />
-        </Route>
-        <Route exact path="/create">
-          <FormCreate />
         </Route>
         <Route exact path="/product/:id" component={ProductDetail}></Route>
         <Route exact path="/about">
