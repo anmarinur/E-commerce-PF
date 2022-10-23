@@ -1,16 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from "react-bootstrap/Button";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
+import { deleteCartGlobal, orderDetail } from '../../redux/actions';
+import { useLocalStorage } from '../../utils/useLocalStorage';
 
 
 function ProductTrElement(props) {
+    const { id, price, stock } = props.product;
+    
+    const [unit, setUnit] = useState(1);
+    const cart = useSelector(state=>state.cart);
+    const dispatch = useDispatch();
 
-    const [render, setRender] = useState(false);
+    useEffect(()=>{
+        props.setOrder(state=>{ return {...state, [id]: `${unit}|${price*unit}`}})
+    }, [unit]);
+    
+    function removeCart(id) {
+        dispatch(deleteCartGlobal(id));
+        props.setOrder(state=>{ return {...state, [id]: `${0}|${price*0}`}})
+    }
+    
+    function handleClick ( e ){
+        
+        const cuantity = e.target.value
+        if(cuantity <= stock) {
+            setUnit(cuantity);
+        }else{
+            toast.error('Insufficient Stock!', {
+                position: "top-right",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                }); 
+        }
 
-
-    function handleClick ( e ,id ){
-        setRender(!render)
-        props.editCart(e.target.value ,id )
+        // setRender(!render)
+        // props.editCart(e.target.value ,id )
     }
 
     return (
@@ -36,14 +68,15 @@ function ProductTrElement(props) {
                     id="qty"
                     name="qty"
                     min={1}
-                    onChange={(e,id) => handleClick(e,props.product.id) }
-                    defaultValue={props.product.cant}
+                    max={props.product.stock}
+                    onChange={(e) => handleClick( e, props.product.id ) }
+                    defaultValue={unit}
 
                 />
             </td>
 
             {!props.isWish ? (
-                <td className="subTotalShow align-middle fw-semibold">$ {props.product.subTotal}</td>
+                <td className="subTotalShow align-middle fw-semibold">$ {props.product.price * unit}</td>
             ) : (
                 ""
             )}
@@ -53,7 +86,7 @@ function ProductTrElement(props) {
                     variant="dark"
                     size="sm"
                     className="ms-2"
-                    onClick={(id) => props.removeCart( props.product.id) }
+                    onClick={() => removeCart(props.product.id) }
                 >
                     <i className="fa-solid fa-xmark"></i>
                 </Button>

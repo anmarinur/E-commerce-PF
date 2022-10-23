@@ -5,43 +5,27 @@ import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import { useEffect, useState } from "react";
 import ProductTrElement from './ProductTrElement';
-import { useLocalStorage } from '../../utils/localStore';
+import { useLocalStorage } from '../../utils/useLocalStorage';
 import CardPrice from "./CartPrice";
+import { useDispatch, useSelector } from "react-redux";
+import getCartLocalStorage from "../../utils/getCartLocalStorage";
+import { addCartGlobal, clearCart, deleteCartGlobal } from "../../redux/actions";
+import Button from "react-bootstrap/Button";
+
 
 
 export const Cart = () => {
 
-  // function Cart() {
+  const products = useSelector(state=>state.cart);
+  const dispatch = useDispatch();
 
-  const [cart, setCart] = useLocalStorage('cart', '')
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [cart, setCart] = useLocalStorage('cart', '');
+  const [order, setOrder] = useState({});
+  console.log(order)
 
-
-  useEffect(() => {
-    let total = 0;
-    cart.forEach((item) => {
-      total += item.subTotal;
-    });
-    setTotalPrice(total);
-  }, [totalPrice, setTotalPrice, cart])
-
-
-  function editCart(cant, id) {
-    const producEdit = cart.find(p => p.id === id);
-    producEdit.cant = cant;
-    producEdit.subTotal = cant * producEdit.price;
-    setCart(cart);
-    setTotalPrice();
-  }
   function removeCart(id) {
-    console.log(id);
-    setCart(
-      cart.filter(p => p.id !== id)
-    )
-
+    dispatch(deleteCartGlobal(id));
   }
-
-
 
   return (
     <div>
@@ -64,14 +48,15 @@ export const Cart = () => {
                 </thead>
                 <tbody>
 
-                  {cart.length ? cart.map((product, idx) => (
+                  {products.length ? products.map((product, idx) => (
                     <>
                       <ProductTrElement
                         product={product}
                         key={idx}
                         isCart={true}
-                        editCart={editCart}
+                        // editCart={editCart}
                         removeCart={removeCart}
+                        setOrder={setOrder}
                       />
                     </>
                   )) :
@@ -83,15 +68,28 @@ export const Cart = () => {
                       </tr>
                     </>)}
                 </tbody>
+
+                 
                {/* {console.log(cart)} */}
               </Table>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="dark"
+                    size="sm"
+                    className="ms-1"
+                    onClick={() => {
+                      dispatch(clearCart())
+                      setOrder({});
+                    }}
+                    >
+                    Clear Cart
+                  </Button>
+                </div>
             </div>
-            <CardPrice totalPrice={totalPrice} />
+            <CardPrice order={order} />
           </Row>
         </Container>
       </div>
-
-
 
      {/* <Link to={'/'} className=' dropdown-item'> Home </Link> */}
       <Footer />

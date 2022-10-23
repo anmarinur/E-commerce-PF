@@ -1,30 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from "react-redux";
+import { addCartGlobal } from '../../redux/actions';
+import { propTypes } from 'react-bootstrap/esm/Image';
+import getCartLocalStorage from '../../utils/getCartLocalStorage';
+import { useLocalStorage } from '../../utils/useLocalStorage';
 
 
 
+const CardProduct = ({ product, setItems/* setCart, cart */}) => {
 
-const CardProduct = ({ product, setCart, cart }) => {
-    const prod = product;
-    const [ countCart, setCountCart ] = useState(0);
+    const dispatch = useDispatch();
+    const cartGlobal = useSelector((state)=>state.cart);
+
     const addFavorite = (e) => {
-        e.preventDefault();
         console.log('add Fav');
     }
 
-    const addCart = (e, product) => {
+    const addCart = (e) => {
         e.preventDefault();
-        let existingProdInCart=cart.find(x=> x.id===prod.id);
-        if(existingProdInCart){
-            existingProdInCart.cant++;
-            existingProdInCart.subTotal+=prod.price;
-            setCart([...cart])
-        }
-        else
-            setCart([...cart, Object.assign(prod, { cant: 1, subTotal: prod.price })])
+        const exist = cartGlobal.find(i=>i.id===product.id)
+        if(!exist) {
+            dispatch(addCartGlobal(product));
         
         toast.success('Added to Car!', {
             position: "top-right",
@@ -36,6 +36,18 @@ const CardProduct = ({ product, setCart, cart }) => {
             progress: undefined,
             theme: "light",
             });
+        }else{
+            toast.error('Already added!', {
+                position: "top-right",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                }); 
+        }
     }
 
     return (
@@ -58,9 +70,7 @@ const CardProduct = ({ product, setCart, cart }) => {
                         <Button variant="danger" onClick={addFavorite}> <i className="fa-solid fa-heart-circle-plus fa-xl"></i> </Button>
                     </div>
                     <div className="col-6">
-                        <Link to='/cart'>
-                            <Button variant="danger" onClick={(e) => addCart(e)} > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
-                        </Link>
+                            <Button variant="danger" onClick={(e)=>addCart(e)} > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
                     </div>
                 </div>
 
