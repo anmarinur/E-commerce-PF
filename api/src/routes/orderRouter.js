@@ -9,9 +9,9 @@ orderRouter.get("/", login, admin, getOrders);
 
 orderRouter.get("/id/:id", login, getOrdersById);
 
-orderRouter.get("/email/:email", getOrdersByEmail);// RECORDAR COLOCAR LOGIN
+orderRouter.get("/email/:email", login, getOrdersByEmail);
 
-orderRouter.post("/", postOrder);// RECORDAR COLOCAR LOGIN
+orderRouter.post("/", login, postOrder);
 
 orderRouter.put("/:id", login, admin, updateOrder);
 
