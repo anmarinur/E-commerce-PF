@@ -1,4 +1,5 @@
 const mercadopago = require("mercadopago"); 
+const { Product } = require("../db");
 
 const postMercadoPago = (req, res) => {
 
@@ -17,6 +18,11 @@ const postMercadoPago = (req, res) => {
       "pending": "http://localhost:3000/order"
     }
   };
+
+  req.body.map(async p => {
+   await Product.increment({stock: -p.qty}, {where:{ name: p.name }});
+   })  
+   
 
   mercadopago.preferences
   .create(preference)
