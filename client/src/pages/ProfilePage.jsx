@@ -15,9 +15,10 @@ export default function ProfilePage() {
     const { user, isAuthenticated } = useAuth0();
     const history = useHistory()
     useEffect( ()=>{
-        isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
-        axios.get('http://localhost:3001/user/')   
-        console.log(isAuthenticated)
+        isClient(user)
+        .then((data)=>setClient(data))
+        .catch((error)=>setClient(error));
+        axios.get('http://localhost:3001/user/')
     }, []);
 
     return (

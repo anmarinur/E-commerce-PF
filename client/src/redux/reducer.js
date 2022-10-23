@@ -1,10 +1,11 @@
-import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT } from "./actions";
+import { GET_PRODUCTS, GET_DETAILS, GET_USER_ORDERS } from "./actions";
 
 const stateInitial = {
     products: {},
     details: {},
     cart: [],
     currentItem: null,
+    userOrders:[]
 };
 
 export default function rootReducer(state = stateInitial, action) {
@@ -19,11 +20,11 @@ export default function rootReducer(state = stateInitial, action) {
                 ...JSON.parse(JSON.stringify(state)),
                 details: action.payload
             }
-        case DELETE_PRODUCT:
-            return {
-                ...JSON.parse(JSON.stringify(state)),
-                products: state.products.filter((p) => p.id !== action.payload),
-            }
+        case GET_USER_ORDERS:
+        return {
+            ...JSON.parse(JSON.stringify(state)),
+            details: action.payload
+        }
         default:
             return state;
     }

@@ -14,7 +14,6 @@ export const Profile = () => {
     useEffect(()=>{
         isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
         isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch((error)=>setAdmin(error));
-        console.log(user)
     }, [getAccessTokenSilently,client,logout,user]);
 
     if (isLoading) {
