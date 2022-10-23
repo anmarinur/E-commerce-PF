@@ -21,7 +21,6 @@ export const Cart = () => {
 
   const [cart, setCart] = useLocalStorage('cart', []);
   const [order, setOrder] = useState({});
-  console.log(order)
 
   function removeCart(id) {
     dispatch(deleteCartGlobal(id));
