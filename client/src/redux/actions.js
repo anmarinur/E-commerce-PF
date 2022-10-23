@@ -3,10 +3,55 @@ import axios from 'axios';
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DETAILS = "GET_DETAILS";
 export const GET_USER_ORDERS = "GET_USER_ORDERS";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const ADD_CART = "ADD_CART";
+export const DELETE_CART = "DELETE_CART";
+export const ORDER_DETAIL = "ORDER_DETAIL";
+export const CLEAR_CART = "CLEAR_CART";
+export const GET_ITEMS_LOCAL = "GET_ITEMS_LOCAL";
+export const SET_TOTAL_PAYMENT = "SET_TOTAL_PAYMENT";
 
 
+export const addCartGlobal = (item)=>{
+    return { 
+        type: ADD_CART,
+        payload: item
+    }
+}
 
+export const setTotalPayment = (total)=>{
+    return { 
+        type: SET_TOTAL_PAYMENT,
+        payload: total
+    }
+}
 
+export const getItemsLocal = (items)=>{
+    return { 
+        type: GET_ITEMS_LOCAL,
+        payload: items
+    }
+}
+
+export const clearCart = ()=>{
+    return { 
+        type: CLEAR_CART,
+    }
+}
+
+export const deleteCartGlobal = (id)=>{
+    return { 
+        type: DELETE_CART,
+        payload: id
+    }
+}
+
+export const orderDetail = (total)=>{
+    return { 
+        type: ORDER_DETAIL,
+        payload: total
+    }
+}
 
 export const getAllProducts = (size, page, filterCategory,sort,search) => {
     var queryCat = '';

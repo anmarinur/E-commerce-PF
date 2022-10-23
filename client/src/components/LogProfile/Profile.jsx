@@ -30,7 +30,7 @@ export const Profile = () => {
         {isAuthenticated && admin?
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 {/* <p className="p-2 m-0 fw-semibold" >{user.email}</p> */}
-                <Link to={'/profile'} className=' dropdown-item'><i className="fa-solid fa-table-columns"></i> Profile </Link>
+                <Link to={'/profile/myInformation'} className=' dropdown-item'><i class="fa-solid fa-id-card"></i> Profile </Link>
                 <Link to={'/dashboard'} className=' dropdown-item'><i className="fa-solid fa-table-columns"></i> Dashboard </Link>
                 <Link className="dropdown-item" to={'/create'}> <i className="fa-solid fa-circle-plus"></i>  Create product </Link>
                 <LogoutButton />

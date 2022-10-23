@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails } from "../redux/actions";
+import { addCartGlobal, getDetails } from "../redux/actions";
 import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -9,15 +9,19 @@ import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import { ToastContainer } from 'react-toastify';
 import  {toast}  from 'react-toastify';
-import { useLocalStorage } from "../utils/localStore";
-
+import { useLocalStorage } from "../utils/useLocalStorage";
+import Star from '../components/Reviews/Star';
+import Comment from '../components/Reviews/Comment';
+import AddComment from "../components/Reviews/AddComment";
 
 export default function ProductDetail(props) {
 
   const dispatch = useDispatch();
+  const cartGlobal = useSelector((state)=>state.cart);
   const id = props.match.params.id;
   const history = useHistory()
   const [cart,setCart] = useLocalStorage ('cart','')
+  
   useEffect(() => {
     dispatch(getDetails(id))
   }, [dispatch, id])
@@ -25,28 +29,35 @@ export default function ProductDetail(props) {
   const productDetail = useSelector((state) => state.details)
 
 
-  const addCart = (e, prod) => {
+  const addCart = (e, product) => {
     e.preventDefault();
-    let existingProdInCart=cart.find(x=> x.id===prod.id);
-    if(existingProdInCart){
-        existingProdInCart.cant++;
-        existingProdInCart.subTotal+=prod.price;
-        setCart([...cart])
-    }
-    else
-        setCart([...cart, Object.assign(prod, { cant: 1, subTotal: prod.price })])
+    const exist = cartGlobal.find(i=>i.id===product.id)
+        if(!exist) {
+            dispatch(addCartGlobal(product));
         
-    toast.success('Added to Car!', {
-        position: "top-right",
-        autoClose: 1200,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });
-      }
+        toast.success('Added to Car!', {
+            position: "top-right",
+            autoClose: 1200,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }else{
+            toast.error('Already added!', {
+                position: "top-right",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                }); 
+        }
+    }
 
   return (
     <>
@@ -81,6 +92,12 @@ export default function ProductDetail(props) {
             </p>
 
             <p className="text-center  text-danger fs-4">Price: ${productDetail.price}</p>
+            <div>
+              <div class="d-flex flex-row justify-content-center">
+                <Star state={true} size='big'/> <Star state={true} size='big'/> <Star state={true} size='big'/> <Star state={false} size='big'/> <Star state={false} size='big'/>
+              </div>
+              <div>3 de 5</div>
+            </div>
             <div className="row text-center">
               <div className="col-6">
                 <Button className="px-5 py-2" variant="danger"> <i class="fa-solid fa-heart-circle-plus"></i> </Button>
@@ -91,10 +108,18 @@ export default function ProductDetail(props) {
                 </Link>
               </div>
             </div>
-          </Card.Body>
+            <Card.Subtitle className="mt-5 mb-3 text-muted fs-5 w-70 mx-auto">Customer reviews</Card.Subtitle>
+            </Card.Body>
+          <div className="w-70 mx-auto">
+            <Comment rating={4} comment='Buen producto' name='Pedro Perez'/>
+            <Comment rating={2} comment='No me gustó' name='Nerón Navarrete'/>
+            <Comment rating={3} comment='Se ve bueno' name='Pablo Payares'/>
+          </div>
+          <div className="w-70 mx-auto">
+            <AddComment/>
+          </div>
+          
         </Card>
-
-
       </div>
       <Footer />
       <ToastContainer />

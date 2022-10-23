@@ -15,10 +15,7 @@ export default function ProfilePage() {
     const { user, isAuthenticated } = useAuth0();
     const history = useHistory()
     useEffect( ()=>{
-        isClient(user)
-        .then((data)=>setClient(data))
-        .catch((error)=>setClient(error));
-        axios.get('http://localhost:3001/user/')
+        isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
     }, []);
 
     return (
@@ -47,6 +44,7 @@ export default function ProfilePage() {
                     <div className='col-9'>
                         <Route path={'/profile/myInformation'}>
                             <FormOrder user={ user} />
+                            
                         </Route>
                         <Route path={'/profile/myOrders'}>
                             <OrderContainer />
