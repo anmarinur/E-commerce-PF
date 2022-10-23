@@ -5,6 +5,7 @@ import './dashboard.css';
 import { Route, Switch } from 'react-router-dom';
 import ProductsTable from '../components/Dashboard/Products/ProductsTable';
 import OrderContainer from '../components/Dashboard/Orders/OrderContainer';
+import FormCreate from '../components/Dashboard/Products/FormCreate';
 const Dashboard = () => {
 
 
@@ -18,8 +19,12 @@ const Dashboard = () => {
                     <Sidebar />
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         <Switch>
-                            <Route path="/Dashboard/Products">
+                            <Route exact path="/Dashboard/Products">
                                 <ProductsTable />
+                            </Route>
+
+                            <Route exact strict path="/Dashboard/Products/Create">
+                                <FormCreate />
                             </Route>
 
                             <Route path="/Dashboard/Orders">
