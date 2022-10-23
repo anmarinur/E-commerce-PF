@@ -1,5 +1,7 @@
 const { Order, Product } = require("../db");
 const { Op } = require("sequelize");
+const emailNotifications = require("../utils/emailNotifications.js");
+const message = require("../utils/emailMessages");
 
 const getOrders = async (req, res) => {
     const pageNumber = Number.parseInt(req.query.page);
@@ -74,7 +76,7 @@ const postOrder = async (req, res) => {
 
     products?.map(async (e) => {
       let productDB = await Product.findByPk(e.id);
-      await orderDB.addProduct(productDB, { through : { units: e.cuantity}});
+      await orderDB.addProduct(productDB, { through : { units: e.quantity}});
     });
 
     return res.status(200).json("Order created successfully");
@@ -97,6 +99,19 @@ const updateOrder = async (req, res) => {
       }
     );
 
+    /* let orderDB = await Order.findByPk(id);
+
+    let msg =
+      orderDB.status === "in process"
+        ? message.statusInProcess
+        : orderDB.status === "sent"
+        ? message.statusSent
+        : orderDB.status === "delivered"
+        ? message.statusDelivered
+        : message.statusCancelled 
+
+    emailNotifications(orderDB.user_email, 'Information about your purchase', msg); */
+    
     res.status(200).json("Order updated successfully");
   } catch (error) {
     res.json(error.message);
