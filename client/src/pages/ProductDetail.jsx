@@ -12,6 +12,7 @@ import  {toast}  from 'react-toastify';
 import { useLocalStorage } from "../utils/localStore";
 import Star from '../components/Reviews/Star';
 import Comment from '../components/Reviews/Comment';
+import AddComment from "../components/Reviews/AddComment";
 
 
 export default function ProductDetail(props) {
@@ -105,6 +106,9 @@ export default function ProductDetail(props) {
             <Comment rating={4} comment='Buen producto' name='Pedro Perez'/>
             <Comment rating={2} comment='No me gustó' name='Nerón Navarrete'/>
             <Comment rating={3} comment='Se ve bueno' name='Pablo Payares'/>
+          </div>
+          <div className="w-70 mx-auto">
+            <AddComment/>
           </div>
           
         </Card>
