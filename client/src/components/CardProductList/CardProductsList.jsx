@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,7 +9,6 @@ import { getAllProducts } from '../../redux/actions';
 import PaginationProducts from './Pagination';
 import SearchBarProducts from './SearchBarProducts';
 import spinner from '../spinner.gif';
-import {useLocalStorage} from '../../utils/localStore';
 
 
 const CardProductsList = () => {
@@ -17,7 +16,6 @@ const CardProductsList = () => {
     const dispatch = useDispatch();
     const totalPages = useSelector(state => state.products.totalPages);
     const products = useSelector(state => state.products.products);
-    const [cart,setCart] = useLocalStorage ('cart','')
 
 
     const [size, setSize] = useState(8);
@@ -56,7 +54,7 @@ const CardProductsList = () => {
                                 {
                                     products ? products.map(product => (
                                         <Col key={product.id} sm={6} md={6} lg={4} xl={3} className='mb-4'>
-                                            <CardProduct setCart={setCart} cart={cart}  key={product.id} product={product} />
+                                            <CardProduct key={product.id} product={product} />
                                         </Col>
                                     )) : ( <img className='mx-auto my-5' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' /> )
                                 }

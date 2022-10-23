@@ -1,20 +1,33 @@
-import React,{ useEffect, useState } from "react";
+import React,{ useCallback, useEffect, useState } from "react";
 import { LoginButton } from "../LogProfile/Login";
 import logo from "./images/Logo.png"
 import { useAuth0 } from "@auth0/auth0-react";
 import { Profile } from "../LogProfile/Profile";
 import { Link } from 'react-router-dom';
-import { useLocalStorage } from '../../utils/localStore';
+import { useLocalStorage } from '../../utils/useLocalStorage';
+import { useDispatch, useSelector } from "react-redux";
+import { getItemsLocal } from "../../redux/actions";
+import getCartLocalStorage from "../../utils/getCartLocalStorage";
 
 
 export default function Nav() {
+
     const { isAuthenticated } = useAuth0();
-    const [cart] = useLocalStorage('cart', '')
-    const [ countCart, setCountCart ] = useState(0);
-    useEffect(() => {
-        let count = cart.length;
-        setCountCart(count)
-    },[cart, countCart])
+    const cart = useSelector(state=>state.cart);
+    const [items, setItems] = useLocalStorage("cart", []);
+    const dispatch = useDispatch();
+    const [isFirstTime, setIsFirstTime] = useState(true);
+
+    
+    useEffect(()=>{
+        if(items.length>0 && cart.length ===0 && isFirstTime){
+            getCartLocalStorage(items.map(i=>i.id)).then((data)=>dispatch(getItemsLocal(data)))
+        }else{
+            setItems(cart); 
+        }
+    },[cart])
+
+    useEffect(()=>{setIsFirstTime(false)},[])
 
     return (
         <>
@@ -46,7 +59,7 @@ export default function Nav() {
                             <i className="fa-solid fa-cart-shopping  fa-2x"></i>
                             <p className="fw-normal fs-6 lh-1 ">Cart</p>
                             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-                                { countCart !==0 ? countCart : 0 }
+                                { cart?.length || 0 }
                             </span>
                         </Link>
                     </div>

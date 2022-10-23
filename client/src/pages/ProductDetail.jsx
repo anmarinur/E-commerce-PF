@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails } from "../redux/actions";
+import { addCartGlobal, getDetails } from "../redux/actions";
 import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -9,18 +9,19 @@ import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import { ToastContainer } from 'react-toastify';
 import  {toast}  from 'react-toastify';
-import { useLocalStorage } from "../utils/localStore";
+import { useLocalStorage } from "../utils/useLocalStorage";
 import Star from '../components/Reviews/Star';
 import Comment from '../components/Reviews/Comment';
 import AddComment from "../components/Reviews/AddComment";
 
-
 export default function ProductDetail(props) {
 
   const dispatch = useDispatch();
+  const cartGlobal = useSelector((state)=>state.cart);
   const id = props.match.params.id;
   const history = useHistory()
   const [cart,setCart] = useLocalStorage ('cart','')
+  
   useEffect(() => {
     dispatch(getDetails(id))
   }, [dispatch, id])
@@ -28,28 +29,35 @@ export default function ProductDetail(props) {
   const productDetail = useSelector((state) => state.details)
 
 
-  const addCart = (e, prod) => {
+  const addCart = (e, product) => {
     e.preventDefault();
-    let existingProdInCart=cart.find(x=> x.id===prod.id);
-    if(existingProdInCart){
-        existingProdInCart.cant++;
-        existingProdInCart.subTotal+=prod.price;
-        setCart([...cart])
-    }
-    else
-        setCart([...cart, Object.assign(prod, { cant: 1, subTotal: prod.price })])
+    const exist = cartGlobal.find(i=>i.id===product.id)
+        if(!exist) {
+            dispatch(addCartGlobal(product));
         
-    toast.success('Added to Car!', {
-        position: "top-right",
-        autoClose: 1200,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });
-      }
+        toast.success('Added to Car!', {
+            position: "top-right",
+            autoClose: 1200,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }else{
+            toast.error('Already added!', {
+                position: "top-right",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                }); 
+        }
+    }
 
   return (
     <>
