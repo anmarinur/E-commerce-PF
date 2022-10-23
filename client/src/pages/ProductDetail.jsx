@@ -10,6 +10,8 @@ import Footer from "../components/Footer/Footer";
 import { ToastContainer } from 'react-toastify';
 import  {toast}  from 'react-toastify';
 import { useLocalStorage } from "../utils/localStore";
+import Star from '../components/Reviews/Star';
+import Comment from '../components/Reviews/Comment';
 
 
 export default function ProductDetail(props) {
@@ -81,6 +83,12 @@ export default function ProductDetail(props) {
             </p>
 
             <p className="text-center  text-danger fs-4">Price: ${productDetail.price}</p>
+            <div>
+              <div class="d-flex flex-row justify-content-center">
+                <Star state={true} size='big'/> <Star state={true} size='big'/> <Star state={true} size='big'/> <Star state={false} size='big'/> <Star state={false} size='big'/>
+              </div>
+              <div>3 de 5</div>
+            </div>
             <div className="row text-center">
               <div className="col-6">
                 <Button className="px-5 py-2" variant="danger"> <i class="fa-solid fa-heart-circle-plus"></i> </Button>
@@ -91,10 +99,15 @@ export default function ProductDetail(props) {
                 </Link>
               </div>
             </div>
-          </Card.Body>
+            <Card.Subtitle className="mt-5 mb-3 text-muted fs-5 w-70 mx-auto">Customer reviews</Card.Subtitle>
+            </Card.Body>
+          <div className="w-70 mx-auto">
+            <Comment rating={4} comment='Buen producto' name='Pedro Perez'/>
+            <Comment rating={2} comment='No me gustó' name='Nerón Navarrete'/>
+            <Comment rating={3} comment='Se ve bueno' name='Pablo Payares'/>
+          </div>
+          
         </Card>
-
-
       </div>
       <Footer />
       <ToastContainer />
