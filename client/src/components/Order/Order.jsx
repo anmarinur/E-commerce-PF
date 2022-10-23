@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import Nav from '../Nav/Nav';
 import FormOrder from './FormOrder';
 import OrderDetailsProduct from './OrderDetailsProduct';
+import { Alert } from 'react-bootstrap';
 
 const Order = () => {
 
