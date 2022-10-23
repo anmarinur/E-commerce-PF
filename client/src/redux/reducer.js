@@ -23,7 +23,7 @@ export default function rootReducer(state = stateInitial, action) {
         case GET_USER_ORDERS:
         return {
             ...JSON.parse(JSON.stringify(state)),
-            details: action.payload
+            userOrders: action.payload
         }
         default:
             return state;
