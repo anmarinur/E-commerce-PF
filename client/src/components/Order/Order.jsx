@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Footer from '../Footer/Footer';
@@ -8,6 +9,26 @@ import OrderDetailsProduct from './OrderDetailsProduct';
 const Order = () => {
 
     const productsCart = useSelector( state => state.cart);
+    const quantityOrder = useSelector(state => state.currentOrder);
+    console.log('cantidades', quantityOrder)
+
+    const totalProducts = productsCart.map((product) => {
+        return {
+            ...product,
+            qty: quantityOrder[product.id]
+        }
+    })
+
+    console.log(totalProducts)
+
+    async function mercadopago() {
+        try {
+            let checkoutURL = await axios.post('/checkout', totalProducts);
+            window.location.replace(`${checkoutURL.data}`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     return (
@@ -52,12 +73,12 @@ const Order = () => {
                             </div>
 
                             <div className="col-12 mt-4 text-end">
-                                <button type="button" className="btn btn-success px-5 py-3 fw-semibold fs-5" >Make the payment</button>
+                                <button type="button" className="btn btn-success px-5 py-3 fw-semibold fs-5" onClick={mercadopago}>Place your order</button>
                             </div>
                         </div>
                     </div>
                     <div className="col-xl-4 col-md-3  border border-secondary rounded bg-light shadow p-4">
-                        <OrderDetailsProduct products={productsCart} totalPay={4} />
+                        <OrderDetailsProduct products={productsCart} totalPay={productsCart.length} />
 
                     </div>
                 </div>

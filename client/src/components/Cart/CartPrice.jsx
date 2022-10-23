@@ -1,13 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { setTotalPayment } from '../../redux/actions';
+import { NavLink, useHistory } from 'react-router-dom';
+import { setCurrentOrder, setTotalPayment } from '../../redux/actions';
 
 const CardPrice = ({ order }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const total = Object.values(order)?.reduce((acc, text)=>{
        return acc += Number(text.split("|")[1]);
     }, 0);
+    const currentOrder = {};
+    Object.keys(order)?.map((key) => {
+        currentOrder[key] = order[key].split('|')[0]
+    })
+
+    function handleClick(e) {
+        e.preventDefault();
+        dispatch(setCurrentOrder(currentOrder));
+        history.push('/Order')
+    }
     
     useEffect(()=>{
         dispatch(setTotalPayment(total));
@@ -23,11 +34,11 @@ const CardPrice = ({ order }) => {
                     <span className="fw-bold fs-4"> $ {total}</span>
                 </div>
                 
-                { total === 0 ? <>  <button disabled size="md" className="btn btn-dark mt-4 w-100 disable" >  Pay Now  </button> </> :
+                { total === 0 ? <>  <button disabled size="md" className="btn btn-dark mt-4 w-100 disable" >Proceed to checkout</button> </> :
                     <>
-                        <NavLink disabled={total === 0} to={'/Order'} variant="dark" size="md" className="btn btn-success mt-4 w-100">
-                            Pay Now
-                        </NavLink>
+                        <button disabled={total === 0} variant="dark" size="md" className="btn btn-success mt-4 w-100" onClick={handleClick}>
+                                Proceed to checkout
+                        </button>
                     </>
                 }
 

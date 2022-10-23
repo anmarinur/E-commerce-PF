@@ -10,7 +10,7 @@ export const ORDER_DETAIL = "ORDER_DETAIL";
 export const CLEAR_CART = "CLEAR_CART";
 export const GET_ITEMS_LOCAL = "GET_ITEMS_LOCAL";
 export const SET_TOTAL_PAYMENT = "SET_TOTAL_PAYMENT";
-
+export const SET_CURRENT_ORDER = "SET_CURRENT_ORDER";
 
 export const addCartGlobal = (item)=>{
     return { 
@@ -23,6 +23,13 @@ export const setTotalPayment = (total)=>{
     return { 
         type: SET_TOTAL_PAYMENT,
         payload: total
+    }
+}
+
+export const setCurrentOrder = (currentOrder)=> {
+    return {
+        type: SET_CURRENT_ORDER,
+        payload: currentOrder
     }
 }
 
