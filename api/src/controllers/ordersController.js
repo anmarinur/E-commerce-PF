@@ -119,10 +119,35 @@ const updateOrder = async (req, res) => {
   }
 };
 
+const updateStatus = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const updateStatus = req.body;
+
+    await Order.update(
+      { ...updateStatus },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    /* let orderDB = await Order.findByPk(id);
+
+    emailNotifications(orderDB.user_email, 'Information about your purchase', message.statusCancelled); */ 
+
+    res.status(200).json("Status updated successfully");
+  } catch (error) {
+    res.json(error.message);
+  }
+};
+
 module.exports = {
   getOrders,
   getOrdersByEmail,
   postOrder,
   updateOrder,
-  getOrdersById
+  getOrdersById,
+  updateStatus
 };
