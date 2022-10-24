@@ -1,18 +1,26 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../Footer/Footer';
 import Nav from '../Nav/Nav';
 import FormOrder from './FormOrder';
 import OrderDetailsProduct from './OrderDetailsProduct';
-import { Alert } from 'react-bootstrap';
+import { useAuth0 } from '@auth0/auth0-react';
+import { clearCart } from '../../redux/actions';
 
 const Order = () => {
 
+    const { user } = useAuth0();
+    const { getAccessTokenSilently } = useAuth0()
+    const token = getAccessTokenSilently();
+
+    const dispatch = useDispatch();
     const productsCart = useSelector( state => state.cart);
     const quantityOrder = useSelector(state => state.currentOrder);
+    const totalCart = useSelector(state => state.totalPayment)
     const [shippingCheck, setShippingCheck] = useState('');
     console.log('cantidades', quantityOrder)
+    console.log('dirección', shippingCheck)
 
     const totalProducts = productsCart.map((product) => {
         return {
@@ -21,10 +29,23 @@ const Order = () => {
         }
     })
 
-    console.log(totalProducts)
+    const finalOrder = {
+        user_email: user.email,
+        total_payment: totalCart,
+        shipping_address: shippingCheck,
+        status: "in process"
+    }
+
+    console.log(finalOrder)
 
     async function mercadopago() {
         try {
+            await axios.post('/order', finalOrder, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            dispatch(clearCart());
             let checkoutURL = await axios.post('/checkout', totalProducts);
             window.location.replace(`${checkoutURL.data}`)
         } catch (error) {
@@ -53,7 +74,7 @@ const Order = () => {
                                 <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div className="accordion-body">
 
-                                        <FormOrder />
+                                        <FormOrder setShippingCheck={setShippingCheck}/>
 
                                     </div>
                                 </div>
@@ -75,7 +96,7 @@ const Order = () => {
                             </div>
 
                             <div className="col-12 mt-4 text-end">
-                                <button type="button" className="btn btn-success px-5 py-3 fw-semibold fs-5" onClick={mercadopago}>Place your order</button>
+                                <button disabled={shippingCheck === ''} type="button" className="btn btn-success px-5 py-3 fw-semibold fs-5" onClick={mercadopago}>Place your order</button>
                             </div>
                         </div>
                     </div>

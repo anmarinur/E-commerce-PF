@@ -12,15 +12,17 @@ const FormOrder = (props) => {
     useEffect(() => {
         try {
             const token = getAccessTokenSilently();
-            const response = axios.get(`/user/${user.email}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            const response = axios.get(`/user/${user.email}`, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
             });
             response.then(response => {
                 setinputOrder(response.data)
             })
-        } catch (error) {
+            console.log('usuario', response)
+        } catch (error) {   
             console.log(error)
         }
     }, [user,getAccessTokenSilently])
@@ -39,6 +41,7 @@ const FormOrder = (props) => {
         } catch (error) {
             console.log(error);
         }
+        props.setShippingCheck(inputOrder.shipping_address)
     }
 
     const [inputOrder, setinputOrder] = useState({
@@ -118,7 +121,6 @@ const FormOrder = (props) => {
                 [e.target.name]: e.target.value
             })
         )
-        console.log(inputOrder)
     }
 
     return (
@@ -172,7 +174,7 @@ const FormOrder = (props) => {
                             {errors.phone && <span className="ms-2 text-danger">{errors.phone}</span>}
                         </div>
                     </div>
-                    <input onClick={saveUser} className='col btn btn-success mt-2 text-center mx-5' type="submit" value="Guardar" />
+                    <input onClick={saveUser} className='col btn btn-success mt-2 text-center mx-5' type="submit" value="Confirm information" />
                 </div>
 
 
