@@ -7,21 +7,21 @@ import { toast } from 'react-toastify';
 const FormOrder = (props) => {
 
     const { user } = useAuth0();
-    const { getAccessTokenSilently } = useAuth0()
+    const { getAccessTokenSilently } = useAuth0();
+    async function getUserByEmail() {
+        const token = await getAccessTokenSilently();
+        const response = await axios.get(`/user/${user.email}`, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        setinputOrder(response.data)
+    }
 
     useEffect(() => {
         try {
-            const token = getAccessTokenSilently();
-            const response = axios.get(`/user/${user.email}`, 
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-            });
-            response.then(response => {
-                setinputOrder(response.data)
-            })
-            console.log('usuario', response)
+            getUserByEmail();       
         } catch (error) {   
             console.log(error)
         }
@@ -127,12 +127,12 @@ const FormOrder = (props) => {
         <>
             <form autoComplete='off' >
                 <div className="form-floating mb-3">
-                    <input type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' value={inputOrder.email} onChange={handleChange} />
+                    <input disabled={true} type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' value={inputOrder.email} onChange={handleChange} />
                     <label htmlFor="email">Email</label>
                     {errors.email && <span className="ms-2 text-danger">{errors.email}</span>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input type="text" className={errors.contactName ? "form-control border border-danger" : "form-control"} id="contactName" name='contactName' value={inputOrder.name} onChange={handleChange} />
+                    <input disabled={true} type="text" className={errors.contactName ? "form-control border border-danger" : "form-control"} id="contactName" name='contactName' value={inputOrder.name} onChange={handleChange} />
                     <label htmlFor="contactName"> Name</label>
                     {errors.name && <span className="ms-2 text-danger">{errors.name}</span>}
                 </div>
@@ -140,14 +140,14 @@ const FormOrder = (props) => {
                     <div className="col-6">
                         <div className="form-floating ">
                             <input type="text" className={errors.country ? "form-control border border-danger" : "form-control"} id="country" name='country' value={inputOrder.country} onChange={handleChange} />
-                            <label htmlFor="floatingPassword">country</label>
+                            <label htmlFor="floatingPassword">Country</label>
                             {errors.country && <span className="ms-2 text-danger">{errors.country}</span>}
                         </div>
                     </div>
                     <div className="col-6">
                         <div className="form-floating" >
                             <input type="text" className={errors.region ? "form-control border border-danger" : "form-control"} id="region" name='region' value={inputOrder.region} onChange={handleChange} />
-                            <label htmlFor="floatingPassword">region or Region</label>
+                            <label htmlFor="floatingPassword">State/Province/Department</label>
                             {errors.region && <span className="ms-2 text-danger">{errors.region}</span>}
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../Footer/Footer';
 import Nav from '../Nav/Nav';
@@ -11,16 +11,14 @@ import { clearCart } from '../../redux/actions';
 const Order = () => {
 
     const { user } = useAuth0();
-    const { getAccessTokenSilently } = useAuth0()
-    const token = getAccessTokenSilently();
+    const { getAccessTokenSilently } = useAuth0();
 
     const dispatch = useDispatch();
     const productsCart = useSelector( state => state.cart);
     const quantityOrder = useSelector(state => state.currentOrder);
     const totalCart = useSelector(state => state.totalPayment)
     const [shippingCheck, setShippingCheck] = useState('');
-    console.log('cantidades', quantityOrder)
-    console.log('dirección', shippingCheck)
+    const [check, setCheck] = useState(false);
 
     const totalProducts = productsCart.map((product) => {
         return {
@@ -36,10 +34,13 @@ const Order = () => {
         status: "in process"
     }
 
-    console.log(finalOrder)
+    function handleCheck(e) {
+        setCheck(true);
+    }
 
     async function mercadopago() {
         try {
+            const token = await getAccessTokenSilently();
             await axios.post('/order', finalOrder, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -87,16 +88,16 @@ const Order = () => {
                             <div className="col">
                                 <div className="border rounded mt-4 py-4 px-4">
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" />
+                                        <input className="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" onChange={handleCheck}/>
                                         <label className="form-check-label fs-6 fw-bold" htmlFor="flexCheckIndeterminate">
-                                            I confirm my personal information is updated
+                                            I have read and accept store polices
                                         </label>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="col-12 mt-4 text-end">
-                                <button disabled={shippingCheck === ''} type="button" className="btn btn-success px-5 py-3 fw-semibold fs-5" onClick={mercadopago}>Place your order</button>
+                                <button disabled={shippingCheck === '' || check === false} type="button" className="btn btn-success px-5 py-3 fw-semibold fs-5" onClick={mercadopago}>Place your order</button>
                             </div>
                         </div>
                     </div>
