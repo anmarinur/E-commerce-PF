@@ -12,15 +12,17 @@ const FormOrder = (props) => {
     useEffect(() => {
         try {
             const token = getAccessTokenSilently();
-            const response = axios.get(`/user/${user.email}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            const response = axios.get(`/user/${user.email}`, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
             });
             response.then(response => {
                 setinputOrder(response.data)
             })
-        } catch (error) {
+            console.log('usuario', response)
+        } catch (error) {   
             console.log(error)
         }
     }, [user,getAccessTokenSilently])
@@ -39,6 +41,7 @@ const FormOrder = (props) => {
         } catch (error) {
             console.log(error);
         }
+        props.setShippingCheck(inputOrder.shipping_address)
     }
 
     const [inputOrder, setinputOrder] = useState({
@@ -124,26 +127,26 @@ const FormOrder = (props) => {
         <>
             <form autoComplete='off' >
                 <div className="form-floating mb-3">
-                    <input type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' defaultValue={user && user.email} value={inputOrder.email} onChange={handleChange} />
+                    <input type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' value={inputOrder.email} onChange={handleChange} />
                     <label htmlFor="email">Email</label>
                     {errors.email && <span className="ms-2 text-danger">{errors.email}</span>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input type="text" className={errors.contactName ? "form-control border border-danger" : "form-control"} id="contactName" name='contactName' defaultValue={user && user.name} value={inputOrder.name} onChange={handleChange} />
+                    <input type="text" className={errors.contactName ? "form-control border border-danger" : "form-control"} id="contactName" name='contactName' value={inputOrder.name} onChange={handleChange} />
                     <label htmlFor="contactName"> Name</label>
                     {errors.name && <span className="ms-2 text-danger">{errors.name}</span>}
                 </div>
                 <div className="row mb-3">
                     <div className="col-6">
                         <div className="form-floating ">
-                            <input type="text" className={errors.country ? "form-control border border-danger" : "form-control"} id="country" name='country' defaultValue={inputOrder.country} value={inputOrder.country} onChange={handleChange} />
+                            <input type="text" className={errors.country ? "form-control border border-danger" : "form-control"} id="country" name='country' value={inputOrder.country} onChange={handleChange} />
                             <label htmlFor="floatingPassword">country</label>
                             {errors.country && <span className="ms-2 text-danger">{errors.country}</span>}
                         </div>
                     </div>
                     <div className="col-6">
                         <div className="form-floating" >
-                            <input type="text" className={errors.region ? "form-control border border-danger" : "form-control"} id="region" name='region' defaultValue={inputOrder.region} value={inputOrder.region} onChange={handleChange} />
+                            <input type="text" className={errors.region ? "form-control border border-danger" : "form-control"} id="region" name='region' value={inputOrder.region} onChange={handleChange} />
                             <label htmlFor="floatingPassword">region or Region</label>
                             {errors.region && <span className="ms-2 text-danger">{errors.region}</span>}
                         </div>
@@ -171,7 +174,7 @@ const FormOrder = (props) => {
                             {errors.phone && <span className="ms-2 text-danger">{errors.phone}</span>}
                         </div>
                     </div>
-                    <input onClick={saveUser} className='col btn btn-success mt-2 text-center mx-5' type="submit" value="Guardar" />
+                    <input onClick={saveUser} className='col btn btn-success mt-2 text-center mx-5' type="submit" value="Confirm information" />
                 </div>
 
 

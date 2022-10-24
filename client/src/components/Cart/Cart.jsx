@@ -11,8 +11,6 @@ import getCartLocalStorage from "../../utils/getCartLocalStorage";
 import { clearCart, deleteCartGlobal, getItemsLocal } from "../../redux/actions";
 import Button from "react-bootstrap/Button";
 
-
-
 export const Cart = () => {
 
   const products = useSelector(state=>state.cart);
@@ -64,7 +62,7 @@ export const Cart = () => {
                   )) :
                     (<>
                       <tr >
-                        <td colspan={6}>
+                        <td colSpan={6}>
                           <p className="text-center fs-5 my-2">You have no product in the Cart;</p>
                         </td>
                       </tr>

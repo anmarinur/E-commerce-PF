@@ -11,7 +11,7 @@ userRouter.post('/', postUser);
 
 userRouter.get('/', login, admin, getUsers);
 
-userRouter.get('/:email', login, getUserByEmail);
+userRouter.get('/:email', getUserByEmail);
 
 userRouter.get('/check/:email', getUserCheck);
 
