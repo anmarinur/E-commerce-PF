@@ -91,23 +91,10 @@ export const Cart = () => {
           </Row>
         </Container>
       </div>
-
-     {/* <Link to={'/'} className=' dropdown-item'> Home </Link> */}
       <Footer />
     </div>
 
 
   )
 }
-
-//  const mapStateToProps = (state) => {
-//    return {
-//      cart: state.rCart.cart,
-//    };
-//  };
-
-//  export default connect(mapStateToProps)(Cart);
-
-
-
 
