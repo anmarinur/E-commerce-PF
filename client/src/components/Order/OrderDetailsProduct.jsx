@@ -1,6 +1,8 @@
 import React from 'react'
 
-const OrderDetailsProduct = ({ products, totalPay }) => {
+const OrderDetailsProduct = ({ products,totalPay }) => {
+
+    
 
     return (
         <>
@@ -10,12 +12,13 @@ const OrderDetailsProduct = ({ products, totalPay }) => {
                         <p className="text-center m-0">{p.name}</p>
                         <p className="text-center m-0 text-danger fw-bold"> {p.qty}</p>
                         <p className="text-center m-0">  $ {p.price} </p>
-                    </div>                   
+                    </div>
                 ))}
 
 
-                <div className='text-center mt-4 fs-4'>
-                    Pay <span className='text-danger fw-bold'>{totalPay}</span>
+                <div className='text-center mt-3 fs-4'>
+                   <span className='text-danger fs-6 fw-semibold d-block '> <span className='text-dark fs-6'> Total Products : </span>   { products ?  products.map(p =>  parseInt(p.qty)).reduce((acc,p ) => acc +p ) : 0}</span>
+                    Pay : <span className='text-danger fw-bold'>$ { products ? products.map(p => p.price * p.qty).reduce((acc,p ) => acc +p ) : 0 }</span>
                 </div>
             </div>
         </>

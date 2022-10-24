@@ -62,10 +62,10 @@ const CardProduct = ({ product }) => {
                 <p className="card-text text-center fw-light text-muted start lh-1" >{product.brand}</p>
                 <div className="row text-center">
                     <div className="col-6">
-                        <Button variant="danger" onClick={addFavorite}> <i className="fa-solid fa-heart-circle-plus fa-xl"></i> </Button>
+                        <Button variant="danger" onClick={addFavorite}  className='btns-card-product'> <i className="fa-solid fa-heart-circle-plus fa-xl"></i> </Button>
                     </div>
                     <div className="col-6">
-                            <Button variant="danger" onClick={(e)=>addCart(e)} > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
+                            <Button variant="danger" onClick={(e)=>addCart(e)}  className='btns-card-product' > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
                     </div>
                 </div>
 
