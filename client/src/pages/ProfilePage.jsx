@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import FormOrder from '../components/Order/FormOrder.jsx';
 import { Link, Route } from 'react-router-dom';
 import axios from 'axios';
-import OrderContainer from '../components/Dashboard/Orders/OrderContainer.jsx';
+import OrderContainer from '../components/Profile/Orders/OrderContainer';
 import { useHistory } from "react-router-dom";
 
 export default function ProfilePage() {
