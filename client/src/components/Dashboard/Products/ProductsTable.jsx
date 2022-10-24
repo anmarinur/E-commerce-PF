@@ -16,9 +16,10 @@ const ProductsTable = ({ itemsPerPage }) => {
     const dispatch = useDispatch();
     const products = useSelector(state => state.products.products);
     const totalPages = useSelector(state => state.products.totalPages);
-    const [size] = useState(12);
+    const [size, setSize] = useState(12);
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState(undefined);
+    const [sort, setSort] = useState(undefined);
     const { getAccessTokenSilently } = useAuth0()
     const history = useHistory()
     const [show, setShow] = useState(false);
@@ -30,8 +31,8 @@ const ProductsTable = ({ itemsPerPage }) => {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getAllProducts(size, page,null,null,search));
-    }, [size, page, dispatch,search])
+        dispatch(getAllProducts(size, page,null,sort,search));
+    }, [size, page, dispatch,search,sort])
 
     const handlePageClick = (event) => {
         setPage(event.selected)
@@ -60,18 +61,21 @@ const ProductsTable = ({ itemsPerPage }) => {
 
     return (
         <>
-            <div className="container mt-4 mx-auto bg-light">
+            <div className="container-fluid mt-4 mx-auto ">
                 <div className="row p-2">
-                    <div className="col-8 py-2"><SearchBarProducts setSearch={setSearch} /> </div>
+                    <div className="col-8 py-2"><SearchBarProducts  sort={sort} setSortOrder={setSort} setPage={setSize}  setSearch={setSearch} /> </div>
                     <div className="col-4 py-2"> <Link to={'/Dashboard/Products/Create'} className="btn btn-primary">  <i className="fa-solid fa-cart-plus me-2"></i> Create Product</Link> </div>
 
                 </div>
-                <table className="table">
+                <table className="table align-middle table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col"></th>
                             <th scope="col">Name</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Stock</th>                          
                             <th scope="col"> </th>
                         </tr>
                     </thead>
