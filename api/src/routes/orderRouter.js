@@ -5,15 +5,15 @@ const admin = require("../middlewares/admin.js");
 
 const orderRouter = Router();
 
-orderRouter.get("/", getOrders);//RECORDAR AGREGAR LOGIN Y ADMIN
+orderRouter.get("/", getOrders);//RECORDAR AGREGAR LOGIN Y ADMIN //
 
 orderRouter.get("/id/:id", login, getOrdersById);
 
 orderRouter.get("/email/:email", login, getOrdersByEmail);
 
-orderRouter.post("/", login, postOrder);
+orderRouter.post("/", postOrder);//RECORDAR AGREGAR LOGIN Y ADMIN //
 
-orderRouter.put("/:id", login, admin, updateOrder);
+orderRouter.put("/:id", updateOrder);//RECORDAR AGREGAR LOGIN Y ADMIN //
 
 orderRouter.put('/status/:status', updateStatus);
 

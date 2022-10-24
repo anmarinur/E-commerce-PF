@@ -89,10 +89,10 @@ const postOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
   try {
     const { id } = req.params;
-    const updateStatus = req.body;
+    const { updateStatus } = req.body;
 
     await Order.update(
-      { ...updateStatus },
+      { status : updateStatus },
       {
         where: {
           id,

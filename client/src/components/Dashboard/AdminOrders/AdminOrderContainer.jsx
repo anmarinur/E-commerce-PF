@@ -3,6 +3,8 @@ import axios from 'axios'
 import useLoginEmail from '../../../utils/useLoginEmail'
 import { useAuth0 } from '@auth0/auth0-react'
 import ReactPaginate from 'react-paginate';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 
 const AdminOrderContainer = () => {
@@ -10,6 +12,7 @@ const AdminOrderContainer = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0)
     const [orders, setOrders]=useState([])
+    const [show, setShow] = useState(false);
     
     async function getAllOrders(page){
             const result = await axios.get(`/order?size=12&page=${page}`);
@@ -24,6 +27,15 @@ const AdminOrderContainer = () => {
     const handlePageClick = (event) => {
         setPage(event.selected)
     };
+
+    const handleShow = () => {
+        show == false ?  setShow(true): setShow(false)
+    };
+
+    async function updateStatus(e, id){
+        const body = { "updateStatus": e.target.value}
+        const result = await axios.put(`/order/${id}`, body);
+    }
 
     return (
         <>
@@ -61,12 +73,13 @@ const AdminOrderContainer = () => {
                                             <td>{order.user_email}</td>
                                             <td>{order.total_payment}</td>
                                             <td>
-                                                <select class="form-select mb-4 w-50">
+                                                <select onChange={(e)=> updateStatus(e, order.id)} class="form-select mb-4 w-50">
                                                     <option selected>{order.status}</option>
-                                                    <option value="1">status1</option>
-                                                    <option value="2">status2</option>
-                                                    <option value="3">status3</option>
-                                                    <option value="4">status4</option>
+                                                    <option value="received">received</option>
+                                                    <option value="in process">in process</option>
+                                                    <option value="sent">sent</option>
+                                                    <option value="delivered">delivered</option>
+                                                    <option value="cancelled">cancelled</option>
                                                 </select>
                                             </td>
                                             <td>{order.shipping_address}</td>
@@ -102,6 +115,7 @@ const AdminOrderContainer = () => {
                     </nav>
                 </div>
             </div>
+
         </>
     )
 }
