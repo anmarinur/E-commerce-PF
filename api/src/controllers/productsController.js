@@ -89,6 +89,23 @@ const updateProduct = (req, res) => {
     })
     .then( (data) => res.status(200).json("Product updated successfully") )
     .catch( (error) => res.status(400).json({error: error.message}) )
+};
+
+const getBrands = async (req, res) => {
+
+ try {
+  let brandsDB = await Product.aggregate('brand', "DISTINCT", {
+    plain: false,
+  });
+
+  let brands = brandsDB?.map((e) => e.DISTINCT);
+  
+  res.status(200).json(brands);
+
+ } catch (error) {
+  res.status(404).json({ error: error.message });
+ }
+
 }
 
 
@@ -97,5 +114,6 @@ module.exports = {
     getProductById,
     postProduct,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    getBrands
 }
