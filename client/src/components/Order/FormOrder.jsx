@@ -23,7 +23,7 @@ const FormOrder = (props) => {
         } catch (error) {
             console.log(error)
         }
-    }, [user,getAccessTokenSilently])
+    }, [])
 
     async function saveUser(e) {
         e.preventDefault();

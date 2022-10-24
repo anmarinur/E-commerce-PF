@@ -26,16 +26,16 @@ export default function ProfilePage() {
                     <div className="col-3 border-secondary border-end ">
                         <div className=" text-center">
                             
-                            <img src={user ? user.picture : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em'}} class="text-center rounded-circle" alt="Avatar" />
+                            <img src={user ? user.picture : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em'}} className="text-center rounded-circle" alt="Avatar" />
                             <p className='m-0 p-0 fw-bold'>{user && user.name}</p>
                             <span className='m-0 p-0 fw-bold fs-15'>{user && user.email}</span>
 
                         </div>
                         <div className=" p-2 mt-3">
-                            <div class="row">
-                                <Link to={'/profile/myInformation'} ><span class="btn btn-sm btn-secondary" aria-current="true">My Infomation</span></Link>
-                                <Link to={'/profile/myOrders'} ><span class="btn btn-sm btn-secondary mt-2">My Orders</span></Link>
-                                <Link to={'/profile/myFavorites'} ><span class="btn btn-sm btn-secondary mt-2">My Favorites</span></Link>
+                            <div className="row">
+                                <Link to={'/profile/myInformation'} ><span className="btn btn-sm btn-secondary" aria-current="true">My Infomation</span></Link>
+                                <Link to={'/profile/myOrders'} ><span className="btn btn-sm btn-secondary mt-2">My Orders</span></Link>
+                                <Link to={'/profile/myFavorites'} ><span className="btn btn-sm btn-secondary mt-2">My Favorites</span></Link>
                             </div>
 
                         </div>
