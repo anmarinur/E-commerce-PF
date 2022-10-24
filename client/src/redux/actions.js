@@ -60,18 +60,21 @@ export const orderDetail = (total)=>{
     }
 }
 
-export const getAllProducts = (size, page, filterCategory,sort,search) => {
+export const getAllProducts = (size, page, filterCategory,sort,search,brands) => {
     var queryCat = '';
     var querySortPrice ='';
     var querySearch = '';
+    var queryBrands = '';
+
+
     if (filterCategory) queryCat = `&cat=${filterCategory}`;
     if (sort)  querySortPrice = `&ordprice=${sort}`;
     if (search)  querySearch = `&search=${search}`;
-
+    if (brands)  queryBrands = `&brand=${brands}`;
     
     return async function (dispatch) {
         try {
-            const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}`);
+            const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}${queryBrands}`);
             return dispatch({ type: GET_PRODUCTS, payload: result.data });
         } catch (error) {
             console.log(error);

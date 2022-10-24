@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
 import { addCartGlobal } from '../../redux/actions';
+import './CardProduct.css';
 
 const CardProduct = ({ product }) => {
 
@@ -45,10 +46,10 @@ const CardProduct = ({ product }) => {
     }
 
     return (
-        <Link to={`/product/${product.id}`} className='card h-100 text-decoration-none shadow-sm ' >
+        <Link to={`/product/${product.id}`} className='card cardProduct h-100 text-decoration-none shadow-sm ' >
             <div className="row h-100 align-items-center">
                 <div className="col mx-auto align-middle"  >
-                    <Card.Img variant="top" src={product.image} style={{ maxWidth: '90%', minWidth: '100%', minHeight: '100%' }} className="img-fluid w-50  mx-auto d-block p-3" />
+                    <Card.Img variant="top" src={product.image} style={{ maxWidth: '90%', minWidth: '100%', minHeight: '100%' }} className="img-product img-fluid w-50  mx-auto d-block p-3" />
                 </div>
             </div>
 
