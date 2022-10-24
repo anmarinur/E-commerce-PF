@@ -38,7 +38,7 @@ const postUser = async (req, res)=>{
     try {
         const user = req.body;
         await User.create(user);
-        //emailNotifications(user.email,"Registration on Tecnoshop 💌",message.registration);
+        emailNotifications(user.email,"Registration on Tecnoshop 💌",message.registration);
         res.json("New User created");
     } catch (error) {
         res.status(400).json(error.message);

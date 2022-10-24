@@ -100,7 +100,7 @@ const updateOrder = async (req, res) => {
       }
     );
 
-    /* let orderDB = await Order.findByPk(id);
+    let orderDB = await Order.findByPk(id);
 
     let msg =
       orderDB.status === "in process"
@@ -111,7 +111,7 @@ const updateOrder = async (req, res) => {
         ? message.statusDelivered
         : message.statusCancelled 
 
-    emailNotifications(orderDB.user_email, 'Information about your purchase', msg); */
+    emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
     
     res.status(200).json("Order updated successfully");
   } catch (error) {
@@ -133,9 +133,9 @@ const updateStatus = async (req, res) => {
       }
     );
 
-    /* let orderDB = await Order.findByPk(id);
+    let orderDB = await Order.findByPk(id);
 
-    emailNotifications(orderDB.user_email, 'Information about your purchase', message.statusCancelled); */ 
+    emailNotifications(orderDB.user_email, 'Information about your purchase', message.statusCancelled); 
 
     res.status(200).json("Status updated successfully");
   } catch (error) {
