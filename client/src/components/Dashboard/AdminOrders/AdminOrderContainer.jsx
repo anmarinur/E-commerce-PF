@@ -15,10 +15,19 @@ const AdminOrderContainer = () => {
 
     
     async function getAllOrders(page){
-            const result = await axios.get(`/order?size=12&page=${page}`);
+        const token = await getAccessTokenSilently()
+        try {
+            const result = await axios.get(`/order?size=12&page=${page}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setOrders(result.data.orders)
             setTotalPages(result.data.totalPages)
+        } catch (error) {
+            console.log("getAllOrders Error:", error)
         }
+    }
 
 
 
@@ -33,9 +42,14 @@ const AdminOrderContainer = () => {
 
 
     async function updateStatus(e, id){
+        const token = await getAccessTokenSilently()
         const body = { "updateStatus": e.target.value}
         try {
-            await axios.put(`/order/${id}`, body);
+            await axios.put(`/order/${id}`, body, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
         } catch (error) {
             console.log("Error update status:", error)
         }
