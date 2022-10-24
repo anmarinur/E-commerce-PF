@@ -27,11 +27,19 @@ const Order = () => {
         }
     })
 
+    const orderProducts = totalProducts.map((product) => {
+        return {
+            id: product.id,
+            quantity: product.qty
+        }
+    })
+
     const finalOrder = {
         user_email: user ? user.email : '',
         total_payment: totalCart,
         shipping_address: shippingCheck,
-        status: "in process"
+        status: "in process",
+        products: orderProducts
     }
 
     function handleCheck(e) {
