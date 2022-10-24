@@ -9,8 +9,7 @@ import { deleteCartGlobal } from '../../redux/actions';
 function ProductTrElement(props) {
     const { id, price, stock } = props.product;
     
-    const [unit, setUnit] = useState(1);
-    const cart = useSelector(state=>state.cart);
+    const [unit, setUnit] = useState(Number(props.order[id]?.split("|")[0])||1);
     const dispatch = useDispatch();
 
     useEffect(()=>{

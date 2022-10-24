@@ -17,11 +17,16 @@ export const Cart = () => {
   const dispatch = useDispatch();
 
   const [cart, setCart] = useLocalStorage('cart', []);
-  const [order, setOrder] = useState({});
+  const [units, setUnits] = useLocalStorage('units', {});
+  const [order, setOrder] = useState(units || {});
 
   useEffect(()=>{
     getCartLocalStorage(products.map(i=>i.id)).then((data)=>dispatch(getItemsLocal(data)));
   },[])
+
+  useEffect(()=>{
+      setUnits(order);
+  }, [order]);
 
   function removeCart(id) {
     dispatch(deleteCartGlobal(id));
@@ -57,6 +62,7 @@ export const Cart = () => {
                         // editCart={editCart}
                         removeCart={removeCart}
                         setOrder={setOrder}
+                        order={order}
                       />
                     </>
                   )) :
