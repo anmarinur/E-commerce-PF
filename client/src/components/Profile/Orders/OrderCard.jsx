@@ -32,8 +32,6 @@ const OrderCard = () => {
         getUserOrders()
       },[])
 
-      console.log(userOrders)
-
     return (
         <div>
             <div className='col-12 mb-3'>
