@@ -92,11 +92,19 @@ const updateProduct = (req, res) => {
 };
 
 const getBrands = async (req, res) => {
-
+const {category} = req.query
  try {
-  let brandsDB = await Product.aggregate('brand', "DISTINCT", {
+  if(category){
+   var brandsDB = await Product.aggregate("brand", "DISTINCT", {
+     plain: false,
+     where: {category: category}
+   });
+   
+  } else {
+   brandsDB = await Product.aggregate('brand', "DISTINCT", {
     plain: false,
   });
+  }
 
   let brands = brandsDB?.map((e) => e.DISTINCT);
   
