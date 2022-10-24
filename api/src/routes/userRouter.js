@@ -7,7 +7,7 @@ const fileUpload = require('../middlewares/fileUpload.js');
 
 const userRouter = Router();
 
-userRouter.post('/', login, postUser);
+userRouter.post('/', postUser);
 
 userRouter.get('/', login, admin, getUsers);
 

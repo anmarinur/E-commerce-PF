@@ -2,7 +2,7 @@ const app = require('./src/app.js');
 const { db } = require('./src/db.js');
 const chargeProducts = require('./src/utils/chargeProducts.js');
 
-db.sync({ force: false })
+db.sync({ force: true })
   .then(()=>{
     chargeProducts();
     console.log("Database sync");

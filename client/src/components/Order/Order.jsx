@@ -28,7 +28,7 @@ const Order = () => {
     })
 
     const finalOrder = {
-        user_email: user.email,
+        user_email: user ? user.email : '',
         total_payment: totalCart,
         shipping_address: shippingCheck,
         status: "in process"
