@@ -35,7 +35,7 @@ const OrderCard = () => {
     return (
         <div>
             <div className='col-12 mb-3'>
-                { userOrders.length !== 0 ? userOrders.map(order =>
+                { typeof userOrders === 'object' ? userOrders.map(order =>
                     <div key={order.id} className="card border-secondary p-2 shadow-sm mb-3">
                         <div className="row">
                             {/* Order ID */}
