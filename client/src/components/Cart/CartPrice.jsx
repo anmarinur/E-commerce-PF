@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import { setCurrentOrder, setTotalPayment } from '../../redux/actions';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CardPrice = ({ order }) => {
     const dispatch = useDispatch();
@@ -13,6 +14,8 @@ const CardPrice = ({ order }) => {
     Object.keys(order)?.map((key) => {
         currentOrder[key] = order[key].split('|')[0]
     })
+
+    const { isAuthenticated } = useAuth0();
 
     function handleClick(e) {
         e.preventDefault();
@@ -36,7 +39,7 @@ const CardPrice = ({ order }) => {
                 
                 { total === 0 ? <>  <button disabled size="md" className="btn btn-dark mt-4 w-100 disable" >Proceed to checkout</button> </> :
                     <>
-                        <button disabled={total === 0} variant="dark" size="md" className="btn btn-success mt-4 w-100" onClick={handleClick}>
+                        <button disabled={total === 0 || !isAuthenticated } variant="dark" size="md" className="btn btn-success mt-4 w-100" onClick={handleClick}>
                                 Proceed to checkout
                         </button>
                     </>

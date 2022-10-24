@@ -23,7 +23,7 @@ const FormOrder = (props) => {
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }, [user,getAccessTokenSilently])
 
     async function saveUser(e) {
         e.preventDefault();
@@ -124,12 +124,12 @@ const FormOrder = (props) => {
         <>
             <form autoComplete='off' >
                 <div className="form-floating mb-3">
-                    <input type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' defaultValue={user.email} value={inputOrder.email} onChange={handleChange} />
+                    <input type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' defaultValue={user && user.email} value={inputOrder.email} onChange={handleChange} />
                     <label htmlFor="email">Email</label>
                     {errors.email && <span className="ms-2 text-danger">{errors.email}</span>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input type="text" className={errors.contactName ? "form-control border border-danger" : "form-control"} id="contactName" name='contactName' defaultValue={user.name} value={inputOrder.contactName} onChange={handleChange} />
+                    <input type="text" className={errors.contactName ? "form-control border border-danger" : "form-control"} id="contactName" name='contactName' defaultValue={user && user.name} value={inputOrder.name} onChange={handleChange} />
                     <label htmlFor="contactName"> Name</label>
                     {errors.name && <span className="ms-2 text-danger">{errors.name}</span>}
                 </div>
