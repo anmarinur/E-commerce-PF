@@ -12,7 +12,6 @@ function ProductTrElement(props) {
     const [unit, setUnit] = useState(1);
     const cart = useSelector(state=>state.cart);
     const dispatch = useDispatch();
-    console.log(unit)
 
     useEffect(()=>{
         props.setOrder(state=>{ return {...state, [id]: `${unit}|${price*unit}`}})

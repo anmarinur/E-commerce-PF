@@ -12,7 +12,6 @@ export default function Home(){
     const status = searchParams.get('status');
     const payment_id = searchParams.get('payment_id')
     const order_id = searchParams.get('merchant_order_id')
-    console.log(status)
 
   // ---------------------------
     return (

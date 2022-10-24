@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Footer from '../Footer/Footer';
 import Nav from '../Nav/Nav';
@@ -11,6 +11,7 @@ const Order = () => {
 
     const productsCart = useSelector( state => state.cart);
     const quantityOrder = useSelector(state => state.currentOrder);
+    const [shippingCheck, setShippingCheck] = useState('');
     console.log('cantidades', quantityOrder)
 
     const totalProducts = productsCart.map((product) => {
@@ -46,7 +47,7 @@ const Order = () => {
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingOne">
                                     <button className="accordion-button text-dark     fw-bold " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Shipping
+                                        Check your personal information
                                     </button>
                                 </h2>
                                 <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -66,8 +67,8 @@ const Order = () => {
                                 <div className="border rounded mt-4 py-4 px-4">
                                     <div className="form-check">
                                         <input className="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" />
-                                        <label className="form-check-label fs-6 fw-bold" for="flexCheckIndeterminate">
-                                            Agreement with the seller.
+                                        <label className="form-check-label fs-6 fw-bold" htmlFor="flexCheckIndeterminate">
+                                            I confirm my personal information is updated
                                         </label>
                                     </div>
                                 </div>
