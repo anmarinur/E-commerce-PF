@@ -15,6 +15,6 @@ orderRouter.post("/", login, postOrder);
 
 orderRouter.put("/:id", login, admin, updateOrder);
 
-orderRouter.put('/', updateStatus);
+orderRouter.put('/status/:status', updateStatus);
 
 module.exports = orderRouter;

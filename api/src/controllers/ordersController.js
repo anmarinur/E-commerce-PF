@@ -122,10 +122,10 @@ const updateOrder = async (req, res) => {
 const updateStatus = async (req, res) => {
   try {
     const { id } = req.query;
-    const updateStatus = req.body;
+    const {status} = req.params;
 
     await Order.update(
-      { ...updateStatus },
+      { status: status },
       {
         where: {
           id,
