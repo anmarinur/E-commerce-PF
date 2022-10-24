@@ -7,6 +7,7 @@ import FormOrder from './FormOrder';
 import OrderDetailsProduct from './OrderDetailsProduct';
 import { useAuth0 } from '@auth0/auth0-react';
 import { clearCart } from '../../redux/actions';
+import { useLocalStorage } from '../../utils/useLocalStorage';
 
 const Order = () => {
 
@@ -20,6 +21,8 @@ const Order = () => {
     const totalCart = useSelector(state => state.totalPayment)
     const [shippingCheck, setShippingCheck] = useState('');
     const [check, setCheck] = useState(false);
+    const [units, setUnits] = useLocalStorage('units', {});
+    const [cart, setCart] = useLocalStorage('cart', []);
 
     const totalProducts = productsCart.map((product) => {
         return {
@@ -56,6 +59,8 @@ const Order = () => {
                 }
             })
             dispatch(clearCart());
+            setUnits({});
+            setCart([]);
             let checkoutURL = await axios.post('/checkout', totalProducts);
             window.location.replace(`${checkoutURL.data}`)
         } catch (error) {
