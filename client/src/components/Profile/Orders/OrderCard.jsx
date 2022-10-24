@@ -2,20 +2,35 @@ import React from 'react'
 import axios from 'axios'
 import useLoginEmail from '../../../utils/useLoginEmail'
 import { useEffect } from 'react'
-import { getUserOrders } from "../../../redux/actions"
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
+
 
 
 
 const OrderCard = () => {
-    const dispatch = useDispatch()
+    const { getAccessTokenSilently } = useAuth0()
     const userEmail = useLoginEmail()
+    const [userOrders, setUserOrders] = useState([])
+
+
+    async function getUserOrders() {
+        const token = await getAccessTokenSilently()
+        try {
+            var result = await axios.get(`/order/email/${userEmail}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUserOrders(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
-        dispatch(getUserOrders(userEmail))
-      },[dispatch])
-
-      const userOrders = useSelector((state) => state.userOrders)
+        getUserOrders()
+      },[])
 
     return (
         <div>
