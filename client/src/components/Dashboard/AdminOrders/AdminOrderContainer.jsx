@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import useLoginEmail from '../../../utils/useLoginEmail'
 import { useAuth0 } from '@auth0/auth0-react'
 import ReactPaginate from 'react-paginate';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 
 
 const AdminOrderContainer = () => {
+
+
     const { getAccessTokenSilently } = useAuth0()
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0)
     const [orders, setOrders]=useState([])
-    const [show, setShow] = useState(false);
+
+
     
     async function getAllOrders(page){
             const result = await axios.get(`/order?size=12&page=${page}`);
             setOrders(result.data.orders)
             setTotalPages(result.data.totalPages)
         }
+
+
 
     useEffect(() =>{ 
         getAllOrders(page)
@@ -28,14 +30,19 @@ const AdminOrderContainer = () => {
         setPage(event.selected)
     };
 
-    const handleShow = () => {
-        show == false ?  setShow(true): setShow(false)
-    };
+
 
     async function updateStatus(e, id){
         const body = { "updateStatus": e.target.value}
-        const result = await axios.put(`/order/${id}`, body);
+        try {
+            await axios.put(`/order/${id}`, body);
+        } catch (error) {
+            console.log("Error update status:", error)
+        }
     }
+
+
+
 
     return (
         <>
@@ -43,15 +50,16 @@ const AdminOrderContainer = () => {
                 <div className='row justify-content-around'>
                     <select class="form-select mb-4 w-25">
                         <option selected>Order By</option>
-                        <option value="Older">Older</option>
-                        <option value="Recent">Recent</option>
+                        <option value="ASC">Older</option>
+                        <option value="DESC">Recent</option>
                     </select>
                     <select class="form-select mb-4 w-25">
                         <option selected>Filter By Status</option>
-                        <option value="1">status1</option>
-                        <option value="2">status2</option>
-                        <option value="3">status3</option>
-                        <option value="4">status4</option>
+                        <option value="received">received</option>
+                        <option value="in process">in process</option>
+                        <option value="sent">sent</option>
+                        <option value="delivered">delivered</option>
+                        <option value="cancelled">cancelled</option>
                     </select>
                 </div>
                 <div className="row">
