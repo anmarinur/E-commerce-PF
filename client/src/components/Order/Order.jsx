@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../Footer/Footer';
 import Nav from '../Nav/Nav';
@@ -15,6 +15,7 @@ const Order = () => {
 
     const dispatch = useDispatch();
     const productsCart = useSelector( state => state.cart);
+    
     const quantityOrder = useSelector(state => state.currentOrder);
     const totalCart = useSelector(state => state.totalPayment)
     const [shippingCheck, setShippingCheck] = useState('');
@@ -88,7 +89,7 @@ const Order = () => {
                             <div className="col">
                                 <div className="border rounded mt-4 py-4 px-4">
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" onChange={handleCheck}/>
+                                        <input className="form-check-input" type="checkbox" value={check} id="flexCheckIndeterminate" onChange={handleCheck}/>
                                         <label className="form-check-label fs-6 fw-bold" htmlFor="flexCheckIndeterminate">
                                             I have read and accept store polices
                                         </label>
@@ -102,7 +103,7 @@ const Order = () => {
                         </div>
                     </div>
                     <div className="col-xl-4 col-md-3  border border-secondary rounded bg-light shadow p-4">
-                        <OrderDetailsProduct products={productsCart} totalPay={productsCart.length} />
+                        <OrderDetailsProduct products={totalProducts ? totalProducts : [] } totalPay={ productsCart ? productsCart.length : 0}  />
 
                     </div>
                 </div>
