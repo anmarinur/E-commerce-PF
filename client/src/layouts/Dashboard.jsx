@@ -4,14 +4,11 @@ import Sidebar from '../components/Dashboard/Sidebar';
 import './dashboard.css';
 import { Route, Switch } from 'react-router-dom';
 import ProductsTable from '../components/Dashboard/Products/ProductsTable';
-import OrderContainer from '../components/Dashboard/Orders/OrderContainer';
+import AdminOrderContainer from '../components/Dashboard/AdminOrders/AdminOrderContainer';
 import FormCreate from '../components/Dashboard/Products/FormCreate';
 const Dashboard = () => {
 
-
-
     return (
-
         <>
             <Navbar />
             <div className="container-fluid">
@@ -28,7 +25,7 @@ const Dashboard = () => {
                             </Route>
 
                             <Route path="/Dashboard/Orders">
-                                <OrderContainer />
+                                <AdminOrderContainer />
                             </Route>
 
                         </Switch>

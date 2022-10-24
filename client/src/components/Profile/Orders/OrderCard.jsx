@@ -87,7 +87,7 @@ const OrderCard = () => {
                             </div>
                         </div>
                     </div>
-                    ) : <p>Ordenes inexsitentes</p>
+                    ) : <p>Without Orders</p>
                 }
             </div>
         </div>

@@ -5,7 +5,7 @@ const admin = require("../middlewares/admin.js");
 
 const orderRouter = Router();
 
-orderRouter.get("/", login, admin, getOrders);
+orderRouter.get("/",login, admin, getOrders);
 
 orderRouter.get("/id/:id", login, getOrdersById);
 

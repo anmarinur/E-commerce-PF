@@ -8,18 +8,18 @@ const getOrders = async (req, res) => {
     const sizeNumber = Number.parseInt(req.query.size);
     let orderBy      = req.query.orderBy;
     let orderAs      = req.query.orderAs;
-    const filtro     = req.body;
+    const { filter } = req.body;
 
     let page  = 0;
     let size  = 12;
     if(!Number.isNaN(pageNumber) && pageNumber > 0) page = pageNumber;
     if(!Number.isNaN(sizeNumber) && sizeNumber > 0 && sizeNumber < 12) size = sizeNumber;
-    if(!orderBy) orderBy="updatedAt";
+    if(!orderBy) orderBy="createdAt";
     if(!orderAs) orderAs="DESC";
 
     try{
         const orders = await Order.findAndCountAll({
-            where: filtro,
+            where: filter,
             order: [[orderBy, orderAs]],
             limit: size,
             offset: page * size
@@ -89,10 +89,10 @@ const postOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
   try {
     const { id } = req.params;
-    const updateStatus = req.body;
+    const { updateStatus } = req.body;
 
     await Order.update(
-      { ...updateStatus },
+      { status : updateStatus },
       {
         where: {
           id,
