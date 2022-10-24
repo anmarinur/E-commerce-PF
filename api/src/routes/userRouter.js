@@ -7,13 +7,13 @@ const fileUpload = require('../middlewares/fileUpload.js');
 
 const userRouter = Router();
 
-userRouter.post('/', postUser);
+userRouter.post('/', login, postUser);
 
 userRouter.get('/', login, admin, getUsers);
 
 userRouter.get('/:email', getUserByEmail);
 
-userRouter.get('/check/:email', getUserCheck);
+userRouter.get('/check/:email', login, getUserCheck);
 
 userRouter.put('/block/:email/:block', login, admin, blockUser);
 
