@@ -6,6 +6,8 @@ import { Route, Switch } from 'react-router-dom';
 import ProductsTable from '../components/Dashboard/Products/ProductsTable';
 import AdminOrderContainer from '../components/Dashboard/AdminOrders/AdminOrderContainer';
 import FormCreate from '../components/Dashboard/Products/FormCreate';
+import Update from '../components/Dashboard/Products/Update';
+
 const Dashboard = () => {
 
     return (
@@ -22,6 +24,10 @@ const Dashboard = () => {
 
                             <Route exact strict path="/Dashboard/Products/Create">
                                 <FormCreate />
+                            </Route>
+
+                            <Route exact strict path="/Dashboard/Products/Update">
+                                <Update />
                             </Route>
 
                             <Route path="/Dashboard/Orders">
