@@ -34,22 +34,28 @@ const OrderCard = () => {
 
     return (
         <div>
-            <div className='col-12 mb-3'>
+            <div className='col-12 mb-3 '>
                 { typeof userOrders === 'object' ? userOrders.map(order =>
-                    <div key={order.id} className="card border-secondary p-2 shadow-sm mb-3">
+                    <div key={order.id} className="card border-secondary p-2 shadow-md mb-3">
                         <div className="row">
                             {/* Order ID */}
                             <div className="col-8">
-                                <p className=' text-sm fw-semibold  bg-danger text-white px-2 w-25 text-center rounded rounded-pill'>Order ID: {order.id} </p>
+                                <p className=' text-sm fw-semibold  bg-danger text-white px-2 w-25 text-center rounded'>Order ID: {order.id} </p>
                             </div>
                             {/* Order Status */}
                             <div className="col-4 text-danger fs-6 fw-bold">
-                                <p> Order status: {order.status}  </p>
+                                <p> Order status: 
+                                    { order.status==='in process' && ( <> <span style={ {backgroundColor : '#BB612C'} } className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-spinner"></i> { order.status }</span> </> )}
+                                    { order.status==='sent' && ( <> <span style={ {backgroundColor : '#B4B922'} }  className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-parachute-box"></i> { order.status }</span> </> )}
+                                    { order.status==='received' && ( <> <span style={ {backgroundColor : '#128305'} } className="text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-house-circle-check"></i> { order.status }</span> </> )}
+                                    { order.status==='cancelled' && ( <> <span style={ {backgroundColor : '#830505'} } className="text-white text-uppercase  py-1 px-2 rounded"><i className="fa-solid fa-ban"></i> { order.status }</span> </> )}
+                        
+                                  </p>
                             </div>
                             {/* shipping information */}  
-                            <div className="col-6 mb-3">
+                            <div className="col-12 mb-3">
                                 <div className=' card position-relative mx-3 border border-danger'>
-                                    <span class="position-absolute mx-5  top-0 start-0 translate-middle badge rounded-pill bg-danger">
+                                    <span class="position-absolute mx-5  top-0 start-0 translate-middle badge rounded bg-danger">
                                         Shipping Information
                                     </span>
                                     <div className="row m-2">
@@ -60,19 +66,20 @@ const OrderCard = () => {
                             {/* Products */}
                                 <div className="col-12 pb-2">
                                     <div className=' card position-relative mx-3 border border-danger'>
-                                        <span class="position-absolute mx-3 mb-2 top-0 start-0 translate-middle badge rounded-pill bg-danger">
+                                        <span class="position-absolute mx-3 mb-2 top-0 start-0 translate-middle badge rounded bg-danger">
                                         Products
                                         </span>
-                                        <span class="position-absolute mx-3 fs-6 px-3 top-100 start-50 translate-middle badge rounded-pill bg-danger">
+                                        <span class="position-absolute mx-3 fs-6 px-3 top-100 start-50 translate-middle badge rounded bg-danger">
                                             $ {order.total_payment}
                                         </span>
                                         <div className='m-2'>
                                             {order.Products.map(product =>
-                                                <div key={product.id} className="row text-center">
-                                                    <div className="col"><span className='fw-bold'>{product.name}</span> </div>
-                                                    <div className="col"><span className='fw-bold'>{product.price}</span></div>
-                                                    <div className="col"><span className='fw-bold'>{product.OrderDetail.units}</span></div>
-                                                    <div className="col"><span className='fw-bold'>$ {product.OrderDetail.units * product.price}</span> </div>
+                                                <div key={product.id} className="row text-center mb-2">
+                                                    <div className="col-2"> <img style={{ maxHeight : '3em', maxWidth : '3em' , minHeight : '1em', minWidth:'2em'}} src={product.image} alt="" /> </div>
+                                                    <div className="col-4"><span className='fw-bold text-wrap'>{product.name}</span> </div>
+                                                    <div className="col-2"><span className='fw-bold'>{product.price}</span></div>
+                                                    <div className="col-2"><span className='fw-bold'>{product.OrderDetail.units}</span></div>
+                                                    <div className="col-2"><span className='fw-bold'>$ {product.OrderDetail.units * product.price}</span> </div>
                                                 </div>
                                             )}
                                         </div>
