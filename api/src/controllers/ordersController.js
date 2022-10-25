@@ -128,9 +128,9 @@ const updateStatus = async (req, res) => {
     const { id } = req.query;
     let {status} = req.params;
     
-    if(status==="null") status="cancelled"
+    if(status==="rejected") status="cancelled"
     if(status==="approved") status="in process"
-    if(status==="pending") status="received"
+    if(status==="in_process") status="received"
 
     await Order.update(
       { status: status },
