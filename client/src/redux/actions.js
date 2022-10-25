@@ -10,11 +10,22 @@ export const CLEAR_CART = "CLEAR_CART";
 export const GET_ITEMS_LOCAL = "GET_ITEMS_LOCAL";
 export const SET_TOTAL_PAYMENT = "SET_TOTAL_PAYMENT";
 export const SET_CURRENT_ORDER = "SET_CURRENT_ORDER";
+export const SET_PROFILE_IMG = "SET_PROFILE_IMG";
+export const GET_USER = "GET_USER";
+
+
 
 export const addCartGlobal = (item)=>{
     return { 
         type: ADD_CART,
         payload: item
+    }
+}
+
+export const setProfileImg = (img)=>{
+    return { 
+        type: SET_PROFILE_IMG,
+        payload: img
     }
 }
 
@@ -90,6 +101,25 @@ export const getDetails = (id) => {
 
             return dispatch({
                 type: GET_DETAILS,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+export const getUser = (email, token) => {
+
+    return async function (dispatch) {
+        try {
+            const json = await axios.get(`/user/${email}`,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            return dispatch({
+                type: GET_USER,
                 payload: json.data
             })
         } catch (error) {
