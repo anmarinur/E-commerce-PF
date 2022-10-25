@@ -1,9 +1,22 @@
-import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, Link, useHistory } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import isAdmin from '../../utils/isAdmin';
 
 const Sidebar = () => {
 
+    const [admin, setAdmin] = useState();
+    const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+    const history = useHistory();
 
+    useEffect(()=>{
+        isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch(()=>setAdmin(false));
+        if(!isAuthenticated && admin===false){
+            history.replace("/");
+            alert("You dont have the necesary permissions");
+            return;
+        }
+    },[admin]);
 
     return (
         <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">

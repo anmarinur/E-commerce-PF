@@ -14,9 +14,18 @@ export default function ProfilePage() {
     const [ client, setClient] = useState(true);
     const { user, isAuthenticated } = useAuth0();
     const history = useHistory()
+
     useEffect( ()=>{
         isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
     }, []);
+    
+    useEffect( ()=>{
+        console.log(client)
+        if(!isAuthenticated) {
+            alert("You need login");
+            history.replace("/");
+        }
+    }, [client]);
 
     return (
         <>
