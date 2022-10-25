@@ -1,6 +1,8 @@
 const mercadopago = require("mercadopago"); 
 const { Product } = require("../db");
 
+const { REACT_APP } = process.env;
+
 const postMercadoPago = (req, res) => {
   const { totalProducts, id } = req.body
   let preference = {
@@ -13,9 +15,9 @@ const postMercadoPago = (req, res) => {
       })
     }),
     "back_urls": {
-      "success": `http://localhost:3000/?id=${id}`,
-      "failure": `http://localhost:3000/?id=${id}`,
-      "pending": `http://localhost:3000/?id=${id}`
+      "success": `${REACT_APP}/?id=${id}`,
+      "failure": `${REACT_APP}/?id=${id}`,
+      "pending": `${REACT_APP}/?id=${id}`
     }
   };
 
