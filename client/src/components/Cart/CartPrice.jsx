@@ -39,6 +39,7 @@ const CardPrice = ({ order }) => {
                 
                 { total === 0 ? <>  <button disabled size="md" className="btn btn-dark mt-4 w-100 disable" >Proceed to checkout</button> </> :
                     <>
+                        {!isAuthenticated ? <h4 className='text-danger'>Please loggin to coninue...</h4> : ''}
                         <button disabled={total === 0 || !isAuthenticated } variant="dark" size="md" className="btn btn-success mt-4 w-100" onClick={handleClick}>
                                 Proceed to checkout
                         </button>
