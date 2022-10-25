@@ -39,11 +39,11 @@ const OrderCard = () => {
                     <div key={order.id} className="card border-secondary p-2 shadow-md mb-3">
                         <div className="row">
                             {/* Order ID */}
-                            <div className="col-8">
+                            <div className="col-7">
                                 <p className=' text-sm fw-semibold  bg-danger text-white px-2 w-25 text-center rounded'>Order ID: {order.id} </p>
                             </div>
                             {/* Order Status */}
-                            <div className="col-4 text-danger fs-6 fw-bold">
+                            <div className="col-5 text-danger fs-6 fw-bold">
                                 <p> Order status: 
                                     { order.status==='in process' && ( <> <span style={ {backgroundColor : '#BB612C'} } className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-spinner"></i> { order.status }</span> </> )}
                                     { order.status==='sent' && ( <> <span style={ {backgroundColor : '#B4B922'} }  className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-parachute-box"></i> { order.status }</span> </> )}
