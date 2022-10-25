@@ -80,7 +80,11 @@ const postOrder = async (req, res) => {
       await orderDB.addProduct(productDB, { through : { units: e.quantity}});
     });
 
-    return res.status(200).json(orderDB.id);
+
+    emailNotifications(orderDB.user_email,"Information about your purchase", message.purchase);
+
+    return res.status(200).json("Order created successfully");
+    
   } catch (error) {
     res.json(error.message);
   }
