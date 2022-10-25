@@ -53,15 +53,17 @@ const Order = () => {
     async function mercadopago() {
         try {
             const token = await getAccessTokenSilently();
-            await axios.post('/order', finalOrder, {
+            const response = await axios.post('/order', finalOrder, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
+            const id = response.data;
+            console.log(response.data)
             dispatch(clearCart());
             setUnits({});
             setCart([]);
-            let checkoutURL = await axios.post('/checkout', totalProducts);
+            let checkoutURL = await axios.post('/checkout', { totalProducts, id });
             window.location.replace(`${checkoutURL.data}`)
         } catch (error) {
             console.log(error)

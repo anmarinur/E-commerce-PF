@@ -2,9 +2,9 @@ const mercadopago = require("mercadopago");
 const { Product } = require("../db");
 
 const postMercadoPago = (req, res) => {
-
+  const { totalProducts, id } = req.body
   let preference = {
-    "items": req.body.map((product) => {
+    "items": totalProducts.map((product) => {
       return({
         title: product.name,
         unit_price: Number(product.price),
@@ -13,13 +13,13 @@ const postMercadoPago = (req, res) => {
       })
     }),
     "back_urls": {
-      "success": "http://localhost:3000/",
-      "failure": "http://localhost:3000/",
-      "pending": "http://localhost:3000/"
+      "success": `http://localhost:3000/?id=${id}`,
+      "failure": `http://localhost:3000/?id=${id}`,
+      "pending": `http://localhost:3000/?id=${id}`
     }
   };
 
-  req.body.map(async p => {
+  totalProducts.map(async p => {
    await Product.increment({stock: -p.qty}, {where:{ name: p.name }});
    })  
    

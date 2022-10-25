@@ -80,9 +80,11 @@ const postOrder = async (req, res) => {
       await orderDB.addProduct(productDB, { through : { units: e.quantity}});
     });
 
+
     emailNotifications(orderDB.user_email,"Information about your purchase", message.purchase);
 
     return res.status(200).json("Order created successfully");
+    
   } catch (error) {
     res.json(error.message);
   }
@@ -124,13 +126,17 @@ const updateOrder = async (req, res) => {
 const updateStatus = async (req, res) => {
   try {
     const { id } = req.query;
-    const {status} = req.params;
+    let {status} = req.params;
+    
+    if(status==="null") status="cancelled"
+    if(status==="approved") status="in process"
+    if(status==="pending") status="received"
 
     await Order.update(
       { status: status },
       {
         where: {
-          id,
+          id: Number(id),
         },
       }
     );
