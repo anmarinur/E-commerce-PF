@@ -41,7 +41,8 @@ const FormOrder = (props) => {
         } catch (error) {
             console.log(error);
         }
-        props.setShippingCheck(inputOrder.shipping_address)
+        // props.setShippingCheck(inputOrder.shipping_address)
+        props.setShippingCheck(`${inputOrder.shipping_address}, ${inputOrder.region}, ${inputOrder.country}, ${inputOrder.postal_code}`)
     }
 
     const [inputOrder, setinputOrder] = useState({
