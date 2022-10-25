@@ -8,16 +8,29 @@ import { Link, NavLink, Route } from 'react-router-dom';
 import axios from 'axios';
 import OrderContainer from '../components/Profile/Orders/OrderContainer';
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../redux/actions.js';
 
 export default function ProfilePage() {
 
     const [ client, setClient] = useState(true);
-    const { user, isAuthenticated } = useAuth0();
-    const history = useHistory()
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const history = useHistory();
+    const profileImg = useSelector(state=>state.profileImg);
+    const dispatch = useDispatch();
+    const userLocal = useSelector(state=>state.user);
+
+    const setUser= async()=>{
+        const token = await getAccessTokenSilently();
+        dispatch(getUser(user.email, token))
+    }
 
     useEffect( ()=>{
         isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
-    }, []);
+        if(user){
+            setUser()
+        }
+    }, [user]);
     
     useEffect( ()=>{
         if(!isAuthenticated) {
@@ -33,7 +46,7 @@ export default function ProfilePage() {
                     <div className="col-3 border-secondary border-end ">
                         <div className=" text-center">
                             
-                            <img src={user ? user.picture : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em'}} className="text-center rounded-circle" alt="Avatar" />
+                            <img src={profileImg ? profileImg : userLocal.image ? userLocal.image : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em', height: "6em"}} className="text-center rounded-circle" alt="Avatar" />
                             <p className='m-0 p-0 fw-bold'>{user && user.name}</p>
                             <span className='m-0 p-0 fw-bold fs-15'>{user && user.email}</span>
                         </div>

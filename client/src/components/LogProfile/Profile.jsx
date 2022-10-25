@@ -4,17 +4,29 @@ import { LogoutButton } from "./Logout";
 import { Link } from 'react-router-dom'
 import isAdmin from "../../utils/isAdmin";
 import isClient from "../../utils/isClient";
+import { getUser } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Profile = () => {
 
     const [ admin, setAdmin ] = useState(false);
     const [ client, setClient] = useState(true);
     const { user, isLoading, isAuthenticated, getAccessTokenSilently, logout } = useAuth0();
+    const dispatch = useDispatch();
+    const userLocal = useSelector(state=>state.user);
+
+    const setUser= async()=>{
+        const token = await getAccessTokenSilently();
+        dispatch(getUser(user.email, token))
+    }
     
     useEffect(()=>{
         isClient(user).then((data)=>setClient(data)).catch((error)=>setClient(error));
         isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch((error)=>setAdmin(error));
-    }, [getAccessTokenSilently,client,logout,user]);
+        if(user){
+            setUser()
+        }
+    }, [user]);
 
     if (isLoading) {
         return (
