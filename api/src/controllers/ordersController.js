@@ -83,7 +83,7 @@ const postOrder = async (req, res) => {
 
     emailNotifications(orderDB.user_email,"Information about your purchase", message.purchase);
 
-    return res.status(200).json("Order created successfully");
+    return res.status(200).json(orderDB.id);
     
   } catch (error) {
     res.json(error.message);
