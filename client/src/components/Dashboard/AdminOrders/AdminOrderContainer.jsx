@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
 import ReactPaginate from 'react-paginate';
+import AdminOrderCard from './AdminOrderCard';
 
 
 const AdminOrderContainer = () => {
@@ -78,7 +79,7 @@ const AdminOrderContainer = () => {
                     </select>
                 </div>
                 <div className="row">
-                    <table className="table">
+                    {/* <table className="table">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -109,12 +110,16 @@ const AdminOrderContainer = () => {
                                 ) : <p>Orders not Found</p>
                                 }
                         </tbody>
-                    </table>
+                    </table> */}
+                    {orders.length !== 0 ? orders.map(order =>
+                            <AdminOrderCard availableStatus={availableStatus}  updateStatus={updateStatus} order={order} />
+                    ) : <p>Orders not Found</p>
+                    }
                     
                     <nav aria-label="navigation">
                     { totalPages !==0 ?
                         <ReactPaginate
-                        breakLabel="..."
+                        breakLabel=" . . ."
                         breakLinkClassName='page-link'
                         nextLabel=">"
                         onPageChange={handlePageClick}
