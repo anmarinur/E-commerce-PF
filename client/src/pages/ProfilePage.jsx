@@ -4,7 +4,7 @@ import Nav from '../components/Nav/Nav.jsx';
 import isClient from "../utils/isClient";
 import { useAuth0 } from "@auth0/auth0-react";
 import FormOrder from '../components/Order/FormOrder.jsx';
-import { Link, Route } from 'react-router-dom';
+import { Link, NavLink, Route } from 'react-router-dom';
 import axios from 'axios';
 import OrderContainer from '../components/Profile/Orders/OrderContainer';
 import { useHistory } from "react-router-dom";
@@ -21,7 +21,7 @@ export default function ProfilePage() {
     return (
         <>
             <Nav />
-            <div className="container mt-2 border border-secondary rounded">
+            <div className="container mt-4 border border-secondary rounded">
                 <div className="row my-3 ">
                     <div className="col-3 border-secondary border-end ">
                         <div className=" text-center">
@@ -29,13 +29,12 @@ export default function ProfilePage() {
                             <img src={user ? user.picture : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em'}} className="text-center rounded-circle" alt="Avatar" />
                             <p className='m-0 p-0 fw-bold'>{user && user.name}</p>
                             <span className='m-0 p-0 fw-bold fs-15'>{user && user.email}</span>
-
                         </div>
                         <div className=" p-2 mt-3">
                             <div className="row">
-                                <Link to={'/profile/myInformation'} ><span className="btn btn-sm btn-secondary" aria-current="true">My Infomation</span></Link>
-                                <Link to={'/profile/myOrders'} ><span className="btn btn-sm btn-secondary mt-2">My Orders</span></Link>
-                                <Link to={'/profile/myFavorites'} ><span className="btn btn-sm btn-secondary mt-2">My Favorites</span></Link>
+                                <NavLink to={'/profile/myInformation'}  activeClassName="btn btn-danger" className="btn btn-sm btn-secondary w-100"  ><span className="text-start"  aria-current="true"> <i className="me-2 fa-solid fa-circle-user"></i>My Infomation</span></NavLink>
+                                <NavLink to={'/profile/myOrders' }  activeClassName="btn btn-danger" className="btn btn-sm btn-secondary mt-2 w-100" ><span className="text-start"><i className="me-2 fa-solid fa-newspaper"></i> My Orders</span></NavLink>
+                                <NavLink to={'/profile/myFavorites'} activeClassName="btn btn-danger" className="btn btn-sm btn-secondary mt-2 w-100 px-4" ><span className="text-start"><i class="me-2 fa-solid fa-heart"></i>My Favorites</span></NavLink>
                             </div>
 
                         </div>
