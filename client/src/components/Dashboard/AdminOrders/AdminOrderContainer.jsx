@@ -11,6 +11,7 @@ const AdminOrderContainer = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0)
     const [orders, setOrders]=useState([])
+    const availableStatus =["received", "in process", "sent", "delivered", "cancelled"]
 
 
     
@@ -97,11 +98,9 @@ const AdminOrderContainer = () => {
                                             <td>
                                                 <select onChange={(e)=> updateStatus(e, order.id)} class="form-select mb-4 w-50">
                                                     <option selected>{order.status}</option>
-                                                    <option value="received">received</option>
-                                                    <option value="in process">in process</option>
-                                                    <option value="sent">sent</option>
-                                                    <option value="delivered">delivered</option>
-                                                    <option value="cancelled">cancelled</option>
+                                                    {availableStatus.map(status=> !(status == order.status) ?
+                                                    <option value={status}>{status}</option> : null
+                                                        )}
                                                 </select>
                                             </td>
                                             <td>{order.shipping_address}</td>

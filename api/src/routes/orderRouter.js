@@ -11,7 +11,7 @@ orderRouter.get("/id/:id", login, getOrdersById);
 
 orderRouter.get("/email/:email", login, getOrdersByEmail);
 
-orderRouter.post("/", login, postOrder);
+orderRouter.post("/", /* login, */ postOrder);
 
 orderRouter.put("/:id", login, admin, updateOrder);
 
