@@ -40,7 +40,7 @@ export default function FormCreate(){
     useEffect(()=>{
         isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch(()=>setAdmin(false));
         if(admin===false){
-            history.goBack();
+            history.replace("/");
             alert("You dont have the necesary permissions");
             return;
         }
