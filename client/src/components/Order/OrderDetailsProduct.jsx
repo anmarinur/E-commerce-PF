@@ -5,12 +5,11 @@ import { useHistory } from 'react-router-dom';
 
 const OrderDetailsProduct = ({ products,totalPay }) => {
 
-    const { user } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
     const history = useHistory();
     
     useEffect(()=>{
-        if(!user){
-            alert("You need login");
+        if(!isAuthenticated){
             history.replace("/");
             return;
         }

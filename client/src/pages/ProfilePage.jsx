@@ -20,9 +20,7 @@ export default function ProfilePage() {
     }, []);
     
     useEffect( ()=>{
-        console.log(client)
         if(!isAuthenticated) {
-            alert("You need login");
             history.replace("/");
         }
     }, [client]);
