@@ -80,7 +80,7 @@ const postOrder = async (req, res) => {
       await orderDB.addProduct(productDB, { through : { units: e.quantity}});
     });
 
-    return res.status(200).json("Order created successfully");
+    return res.status(200).json(orderDB.id);
   } catch (error) {
     res.json(error.message);
   }
@@ -122,13 +122,17 @@ const updateOrder = async (req, res) => {
 const updateStatus = async (req, res) => {
   try {
     const { id } = req.query;
-    const {status} = req.params;
+    let {status} = req.params;
+    
+    if(status==="null") status="cancelled"
+    if(status==="approved") status="in process"
+    if(status==="pending") status="received"
 
     await Order.update(
       { status: status },
       {
         where: {
-          id,
+          id: Number(id),
         },
       }
     );
