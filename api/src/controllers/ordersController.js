@@ -109,10 +109,10 @@ const updateOrder = async (req, res) => {
     let msg =
       orderDB.status === "in process"
         ? message.statusInProcess
-        : orderDB.status === "sent"
-        ? message.statusSent
         : orderDB.status === "delivered"
         ? message.statusDelivered
+        : orderDB.status === "received"
+        ? message.statusReceived
         : message.statusCancelled 
 
     emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
