@@ -82,19 +82,22 @@ const blockUser = async (req, res)=>{
 const updateUser = async (req, res)=>{
     const { email } = req.params;
     const { image, ...updateData } = req.body;
-    if(image) {
-        let imageUploaded = await uploadImage(image)
-        updateData.image  = imageUploaded.secure_url;
-    }
-    //await fs.unlink(req.files.image.tempFilePath);
-    User.update(updateData,{
-        where: {
-            email
+    try {
+        if(image) {
+            let imageUploaded = await uploadImage(image)
+            updateData.image  = imageUploaded.secure_url;
         }
-    })
-    .then( (data) => res.status(200).json("Updated successfully") )
-    .catch( (error) => res.status(400).json({error: error.message}) )
-
+        //await fs.unlink(`./src/uploads/${image}`);
+        User.update(updateData,{
+            where: {
+                email
+            }
+        })
+        .then( (data) => res.status(200).json("Updated successfully") )
+        .catch( (error) => res.status(400).json({error: error.message}) )
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
 const getUserByEmail = async ( req, res)=>{
