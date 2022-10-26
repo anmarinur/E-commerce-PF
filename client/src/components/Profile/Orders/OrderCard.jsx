@@ -45,8 +45,10 @@ const OrderCard = () => {
                             {/* Order Status */}
                             <div className="col-5 text-danger fs-6 fw-bold">
                                 <p> Order status: 
-                                    { order.status==='in process' && ( <> <span style={ {backgroundColor : '#BB612C'} } className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-spinner"></i> { order.status }</span> </> )}
-                                    { order.status==='sent' && ( <> <span style={ {backgroundColor : '#B4B922'} }  className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-parachute-box"></i> { order.status }</span> </> )}
+                                    { order.status==='created' && ( <> <span style={ {backgroundColor : '#000000'} } className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-cart-shopping"></i> { order.status }</span> </> )}
+                                    { order.status==='pending' && ( <> <span style={ {backgroundColor : '#facc25'} }  className=" text-black text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-spinner"></i> { order.status }</span> </> )}
+                                    { order.status==='in process' && ( <> <span style={ {backgroundColor : '#2967e3'} }  className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-box-open"></i> { order.status }</span> </> )}
+                                    { order.status==='delivered' && ( <> <span style={ {backgroundColor : '#de7f12'} }  className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-truck"></i> { order.status }</span> </> )}
                                     { order.status==='received' && ( <> <span style={ {backgroundColor : '#128305'} } className="text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-house-circle-check"></i> { order.status }</span> </> )}
                                     { order.status==='cancelled' && ( <> <span style={ {backgroundColor : '#830505'} } className="text-white text-uppercase  py-1 px-2 rounded"><i className="fa-solid fa-ban"></i> { order.status }</span> </> )}
                         

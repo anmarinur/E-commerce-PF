@@ -109,10 +109,12 @@ const updateOrder = async (req, res) => {
     let msg =
       orderDB.status === "in process"
         ? message.statusInProcess
-        : orderDB.status === "sent"
-        ? message.statusSent
         : orderDB.status === "delivered"
         ? message.statusDelivered
+        : orderDB.status === "received"
+        ? message.statusReceived
+        : orderDB.status === "pending"
+        ? message.statusPending
         : message.statusCancelled 
 
     emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
@@ -130,7 +132,8 @@ const updateStatus = async (req, res) => {
     
     if(status==="rejected") status="cancelled"
     if(status==="approved") status="in process"
-    if(status==="in_process") status="received"
+    if(status==="in_process") status="pending"
+    if(status==="pending") status="pending"
 
     await Order.update(
       { status: status },
@@ -143,7 +146,18 @@ const updateStatus = async (req, res) => {
 
     let orderDB = await Order.findByPk(id);
 
-    emailNotifications(orderDB.user_email, 'Information about your purchase', message.statusCancelled); 
+    let msg =
+      orderDB.status === "in process"
+        ? message.statusInProcess
+        : orderDB.status === "delivered"
+        ? message.statusDelivered
+        : orderDB.status === "received"
+        ? message.statusReceived
+        : orderDB.status === "pending"
+        ? message.statusPending
+        : message.statusCancelled 
+
+    emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
 
     res.status(200).json("Status updated successfully");
   } catch (error) {
