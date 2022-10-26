@@ -42,7 +42,7 @@ const Order = () => {
         user_email: user ? user.email : '',
         total_payment: totalCart,
         shipping_address: shippingCheck,
-        status: "in process",
+        status: "received",
         products: orderProducts
     }
 
