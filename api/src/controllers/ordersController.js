@@ -113,6 +113,8 @@ const updateOrder = async (req, res) => {
         ? message.statusDelivered
         : orderDB.status === "received"
         ? message.statusReceived
+        : orderDB.status === "pending"
+        ? message.statusPending
         : message.statusCancelled 
 
     emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
