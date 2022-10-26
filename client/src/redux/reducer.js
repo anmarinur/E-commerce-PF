@@ -1,43 +1,74 @@
-import { GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, FLAG_UPDATE, SET_SEARCH } from "./actions";
+import { GET_USER, GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART , DELETE_CART, CLEAR_CART, GET_ITEMS_LOCAL, SET_TOTAL_PAYMENT, SET_CURRENT_ORDER, SET_PROFILE_IMG} from "./actions";
 
 const stateInitial = {
     products: {},
     details: {},
-    flagUpdate: {},
-    productNameSearch : ''
+    cart: [],
+    totalPayment: 0,
+    currentItem: null,
+    currentOrder: {},
+    profileImg: null,
+    user: {}
 };
 
-export default function rootReducer(state= stateInitial, action){
-    switch(action.type){
-        case GET_PRODUCTS :
-         return {
-             ...JSON.parse(JSON.stringify(state)),
-             products: action.payload
-         }
-        case GET_DETAILS :
-         return {
-          ...JSON.parse(JSON.stringify(state)),
-          details: action.payload
-        }
+export default function rootReducer(state = stateInitial, action) {
+    switch (action.type) {
+        case GET_PRODUCTS:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                products: action.payload
+            }
+        case GET_DETAILS:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                details: action.payload
+            }
         case DELETE_PRODUCT:
             return {
                 ...JSON.parse(JSON.stringify(state)),
                 products: state.products.filter((p) => p.id !== action.payload),
             }
-        case FLAG_UPDATE:
+        case ADD_CART:
+            return {   
+                ...JSON.parse(JSON.stringify(state)),
+                cart: [...JSON.parse(JSON.stringify(state.cart)), action.payload]
+            }
+        case DELETE_CART:
             return {
                 ...JSON.parse(JSON.stringify(state)),
-                flagUpdate: {
-                    flag: action.payload.flag,
-                    id: action.payload.id
-                }
+                cart: state.cart.filter((p) => p.id !== action.payload)
             }
-        case SET_SEARCH :
+        case SET_TOTAL_PAYMENT:
             return {
                 ...JSON.parse(JSON.stringify(state)),
-                productNameSearch : action.payload
+                totalPayment: action.payload
             }
-        default: 
-         return state;
+        case CLEAR_CART:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                cart: []
+            }
+        case GET_ITEMS_LOCAL:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                cart: action.payload,
+            }
+        case SET_CURRENT_ORDER:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                currentOrder: action.payload,
+            }
+        case SET_PROFILE_IMG:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                profileImg: action.payload,
+            }
+        case GET_USER:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                user: action.payload,
+            }
+        default:
+            return state;
     }
 }

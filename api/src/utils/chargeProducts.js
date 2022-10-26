@@ -3,7 +3,6 @@ const { Product } = require('../db.js');
 
 
 const chargeProducts = () =>{
-//const products = JSON.parse(data);
     try {
         let dataBD = data.map((e) => Product.create(e));
         PromiseAll(dataBD).then(()=> console.log('Products successfully charged'));

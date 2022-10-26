@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,9 +7,9 @@ import CardProduct from './CardProduct';
 import FilterAndOrder from "../FilterAndOrderProducts/FilterAndOrder";
 import { getAllProducts } from '../../redux/actions';
 import PaginationProducts from './Pagination';
-import SearchBarProducts from './SearchBarProducts'
-
-
+import SearchBarProducts from './SearchBarProducts';
+import spinner from '../spinner.gif';
+import axios from 'axios';
 
 
 const CardProductsList = () => {
@@ -21,10 +21,12 @@ const CardProductsList = () => {
 
     const [size, setSize] = useState(8);
     const [page, setPage] = useState(0);
-    const [categoryFilter, setCategoryFilter] = useState(undefined);
+    const [categoryFilter, setCategoryFilter] = useState('');
     const [sort, setSort] = useState(undefined);
     const [search, setSearch] = useState(undefined);
-    
+    const [brandsSelected, setBrandsSelected] = useState();
+    const [brands, setBrands] = useState();
+
     function setPagePagination(n) {
         setPage(n)
     }
@@ -36,28 +38,36 @@ const CardProductsList = () => {
     }
 
     useEffect(() => {
-        dispatch(getAllProducts(size, page,categoryFilter,sort,search));
-    }, [dispatch, size, page, categoryFilter, sort,search])
+        dispatch(getAllProducts(size, page,categoryFilter,sort,search,brandsSelected));
+    }, [dispatch, size, page, categoryFilter, sort,search,brandsSelected])
+
+    
+
+
+    useEffect(() => {
+        axios.get(`/product/brand?category=${categoryFilter ? categoryFilter :''}`)
+            .then(response => setBrands(response.data))
+    }, [categoryFilter])
 
     return (
         <>
             <div className="container mt-4">
                 <div className="row g-4">
                     <div className="col-lg-3 col-md-12">
-                        <FilterAndOrder setPage={setSize} sort={sort} setSortOrder={setSortOrder} setCategory = {setCategory}/>
+                        { brands !== undefined &&<FilterAndOrder brands={brands} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
                     </div>
                     <div className="col-lg-9 col-md-12">
                         <div className='container bg-light border shadow p-3 mb-3 '>
-                            <SearchBarProducts  setSearch={setSearch} />
+                            <SearchBarProducts sort={sort}  setPage={setSize} setSortOrder={setSortOrder} setSearch={setSearch} />
                         </div>
                         <Container className="bg-light border shadow p-3">
                             <Row>
                                 {
                                     products ? products.map(product => (
                                         <Col key={product.id} sm={6} md={6} lg={4} xl={3} className='mb-4'>
-                                            <CardProduct  key={product.id} product={product} />
+                                            <CardProduct key={product.id} product={product} />
                                         </Col>
-                                    )) : (<p>Loading . . .</p>)
+                                    )) : ( <img className='mx-auto my-5' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' /> )
                                 }
 
                                 {

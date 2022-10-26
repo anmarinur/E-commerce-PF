@@ -1,30 +1,27 @@
 import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Nav from "../components/Nav/Nav";
-import Footer from "../components/Footer/Footer";
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import checkPermissions from '../utils/checkPermissions';
+import { useHistory, useLocation } from 'react-router-dom';
+import isAdmin from '../../../utils/isAdmin';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { flagUpdate } from '../redux/actions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function FormCreate(){
-
+export default function Update(){
+   
+    const location = useLocation();
     const history = useHistory();
-    const dispatch = useDispatch();
-    const flag = useSelector((state) => state.flagUpdate);
-    let inputDetail = useSelector((state) => state.details);
+    const {id, name, image, description, price, category, stock, brand} = location.state ? location.state : '';
 
     const [input, setInput]= useState({
-        name: flag.flag ? inputDetail.name : '',
-        image: flag.flag ? inputDetail.image : '',
-        description: flag.flag ? inputDetail.description : '',
-        price: flag.flag ? inputDetail.price: 0,
-        category: flag.flag ? inputDetail.category : '',
-        stock: flag.flag ? inputDetail.stock : 0,
-        brand: flag.flag ? inputDetail.brand : '',
+        name: id ? name : '',
+        image: id ? image : '',
+        description: id ? description : '',
+        price: id ? price: 0,
+        category: id ? category : '',
+        stock: id ? stock : 0,
+        brand: id ? brand : '',
     });
 
     const [errors, setErrors] = useState({
@@ -37,11 +34,17 @@ export default function FormCreate(){
         brand: 'Enter a valid brand name'
     })
 
+    const [admin, setAdmin] = useState();
     const { getAccessTokenSilently } = useAuth0();
     
     useEffect(()=>{
-        checkPermissions(getAccessTokenSilently, history);
-    },[]);
+        isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch(()=>setAdmin(false));
+        if(admin===false){
+            history.goBack();
+            alert("You dont have the necesary permissions");
+            return;
+        }
+    },[admin]);
 
     function validate(input) {
         if(!input.name || input.name.length < 3) {
@@ -105,25 +108,24 @@ export default function FormCreate(){
     async function handleClick(e) {
         try {
             const token = await getAccessTokenSilently();
-            if (flag.flag) {
-                await axios.put(`/product/${flag.id}`,input, {
+            if (id) {
+                await axios.put(`/product/${id}`,input, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                alert('Product updated successfully');
+                toast.success("Product updated successfully");
             } else {
                 await axios.post('/product', input, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                alert('Product created successfully');
+                toast.success("Product created successfully");
             }
         } catch (error) {
-            alert(error.response.data.error);
+            toast.error("Error, please enter valid information")
         }
-        dispatch(flagUpdate(false, null))
         setInput({
             name: '',
             image: '',
@@ -133,14 +135,13 @@ export default function FormCreate(){
             stock: 0,
             brand: ''
         })
-        history.push('/');
+        history.push("/Dashboard/Products")
     }
 
     return (
         <div>
-         <Nav />
-            {flag.flag ? <h1 className="text-center py-5 text-danger">Update product</h1> : <h1 className="text-center py-5 text-danger">Create new product</h1>}
-            <Form className="w-50 mx-auto">
+            {id ? <h1 className="text-center py-2  text-danger">Update product</h1> : <h1 className="text-center py-5 text-danger">Create new product</h1>}
+            <Form className="w-75 mx-auto">
                 <Form.Group className="mb-3" controlId="productName">
                     <Form.Label>Name</Form.Label>        
                     <Form.Control type="text" name="name" value={input.name} onChange={(e) => handleChange(e)} placeholder="Enter a name"/>
@@ -193,12 +194,12 @@ export default function FormCreate(){
             </Form>
 
             <div className="d-flex justify-content-around py-3 w-50 mx-auto">
-                <Button variant="danger" type="submit"  onClick={(e) => history.push('/')}>Home</Button>{' '}
+                <Button variant="danger" type="submit"  onClick={(e) => history.push('/Dashboard/Products')}><i className="fa-solid fa-left-long"></i></Button>{' '}
                 <Button variant="danger" type="submit"  onClick={(e) => handleClick(e)} 
                 disabled={(errors.name || errors.image || errors.description || errors.price || errors.category || errors.stock || errors.brand) ? true : ''}
                 >Submit</Button>{' '}
             </div>
-          <Footer />
+            <ToastContainer/>
         </div>
     )
 }

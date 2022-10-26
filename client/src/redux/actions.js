@@ -2,25 +2,89 @@ import axios from 'axios';
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DETAILS = "GET_DETAILS";
-export const DELETE_PRODUCT = "DELETE_PRODUCT"
-export const FLAG_UPDATE = "FLAG_UPDATE";
-export const SET_SEARCH = "SET_SEARCH";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const ADD_CART = "ADD_CART";
+export const DELETE_CART = "DELETE_CART";
+export const ORDER_DETAIL = "ORDER_DETAIL";
+export const CLEAR_CART = "CLEAR_CART";
+export const GET_ITEMS_LOCAL = "GET_ITEMS_LOCAL";
+export const SET_TOTAL_PAYMENT = "SET_TOTAL_PAYMENT";
+export const SET_CURRENT_ORDER = "SET_CURRENT_ORDER";
+export const SET_PROFILE_IMG = "SET_PROFILE_IMG";
+export const GET_USER = "GET_USER";
 
 
 
+export const addCartGlobal = (item)=>{
+    return { 
+        type: ADD_CART,
+        payload: item
+    }
+}
 
-export const getAllProducts = (size, page, filterCategory,sort,search) => {
+export const setProfileImg = (img)=>{
+    return { 
+        type: SET_PROFILE_IMG,
+        payload: img
+    }
+}
+
+export const setTotalPayment = (total)=>{
+    return { 
+        type: SET_TOTAL_PAYMENT,
+        payload: total
+    }
+}
+
+export const setCurrentOrder = (currentOrder)=> {
+    return {
+        type: SET_CURRENT_ORDER,
+        payload: currentOrder
+    }
+}
+
+export const getItemsLocal = (items)=>{
+    return { 
+        type: GET_ITEMS_LOCAL,
+        payload: items
+    }
+}
+
+export const clearCart = ()=>{
+    return { 
+        type: CLEAR_CART,
+    }
+}
+
+export const deleteCartGlobal = (id)=>{
+    return { 
+        type: DELETE_CART,
+        payload: id
+    }
+}
+
+export const orderDetail = (total)=>{
+    return { 
+        type: ORDER_DETAIL,
+        payload: total
+    }
+}
+
+export const getAllProducts = (size, page, filterCategory,sort,search,brands) => {
     var queryCat = '';
     var querySortPrice ='';
     var querySearch = '';
+    var queryBrands = '';
+
+
     if (filterCategory) queryCat = `&cat=${filterCategory}`;
     if (sort)  querySortPrice = `&ordprice=${sort}`;
     if (search)  querySearch = `&search=${search}`;
-
+    if (brands)  queryBrands = `&brand=${brands}`;
     
     return async function (dispatch) {
         try {
-            const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}`);
+            const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}${queryBrands}`);
             return dispatch({ type: GET_PRODUCTS, payload: result.data });
         } catch (error) {
             console.log(error);
@@ -44,30 +108,22 @@ export const getDetails = (id) => {
         }
     }
 }
+export const getUser = (email, token) => {
 
-export const flagUpdate = (flag, id) => {
-    return {
-        type: FLAG_UPDATE,
-        payload: {
-            flag,
-            id
-        }
-    }
-}
-
-export const searchProduct = (product) => {
     return async function (dispatch) {
         try {
-            const result = await axios.get(`/product?search=${product}`);
-            return dispatch({ type: GET_PRODUCTS, payload: result.data });
-        } catch (error) {
-            return dispatch({ type: GET_PRODUCTS, payload: error.response.data })
-        }
-    }
-}
+            const json = await axios.get(`/user/${email}`,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-export const setSearchNameProduct = (name) =>{
-    return  function (dispatch) {
-        return dispatch({ type: SET_SEARCH, payload:name });
+            return dispatch({
+                type: GET_USER,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }

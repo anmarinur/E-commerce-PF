@@ -7,6 +7,8 @@ const getProducts = async (req, res) => {
     const cat        = req.query.cat //recibo la categoria x query en la variable cat
     const orderPrice = req.query.ordprice; // Se recibe por query el criterio de ordenacion EJ: &ordprice=ASC
     const search     = req.query.search; // en caso de llamar este endpoint para search x query enviar EJ: &search=iPhone
+    const brand     = req.query.brand; // en caso de llamar este endpoint para brands x query enviar EJ: &brand=Apple
+
         
     let page  = 0;
     let size  = 12;
@@ -16,6 +18,7 @@ const getProducts = async (req, res) => {
     if(!Number.isNaN(pageNumber) && pageNumber > 0) page = pageNumber;
     if(!Number.isNaN(sizeNumber) && sizeNumber > 0 && sizeNumber < 12) size = sizeNumber;
     if(cat) where.category=cat;
+    if(brand) where.brand=brand;
     if(orderPrice) order = [["price", orderPrice]];
     if(search?.length>0) where.name = {[Op.iLike]: `%${search}%`};
 
@@ -79,7 +82,7 @@ const deleteProduct = (req, res) => {
     .catch( (error) => res.status(400).json(error.message) )
 }
 
-const updateProduct = async (req, res) => {
+const updateProduct = (req, res) => {
     const { id } = req.params;
     const updateData = req.body;
     Product.update({...updateData},{
@@ -89,6 +92,31 @@ const updateProduct = async (req, res) => {
     })
     .then( (data) => res.status(200).json("Product updated successfully") )
     .catch( (error) => res.status(400).json({error: error.message}) )
+};
+
+const getBrands = async (req, res) => {
+const {category} = req.query
+ try {
+  if(category){
+   var brandsDB = await Product.aggregate("brand", "DISTINCT", {
+     plain: false,
+     where: {category: category}
+   });
+   
+  } else {
+   brandsDB = await Product.aggregate('brand', "DISTINCT", {
+    plain: false,
+  });
+  }
+
+  let brands = brandsDB?.map((e) => e.DISTINCT);
+  
+  res.status(200).json(brands);
+
+ } catch (error) {
+  res.status(404).json({ error: error.message });
+ }
+
 }
 
 
@@ -97,5 +125,6 @@ module.exports = {
     getProductById,
     postProduct,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    getBrands
 }
