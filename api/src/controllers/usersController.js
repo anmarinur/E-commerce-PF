@@ -81,12 +81,12 @@ const blockUser = async (req, res)=>{
 
 const updateUser = async (req, res)=>{
     const { email } = req.params;
-    const updateData = req.body;
-    // if(req.files?.image) {
-    //     let imageUploaded = await uploadImage(req.files.image.tempFilePath)
-    //     updateData.image  = imageUploaded.secure_url;
-    // }
-    // await fs.unlink(req.files.image.tempFilePath);
+    const { image, ...updateData } = req.body;
+    if(image) {
+        let imageUploaded = await uploadImage(image)
+        updateData.image  = imageUploaded.secure_url;
+    }
+    //await fs.unlink(`./src/uploads/${image}`);
     User.update(updateData,{
         where: {
             email

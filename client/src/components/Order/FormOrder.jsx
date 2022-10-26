@@ -1,14 +1,35 @@
-
 import React, { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setProfileImg } from '../../redux/actions';
+import { useLocation } from 'react-router-dom';
 
 const FormOrder = (props) => {
 
     const { user } = useAuth0();
     const { getAccessTokenSilently } = useAuth0();
+    const dispatch = useDispatch();
+    const location = useLocation();
+
+    const [inputOrder, setinputOrder] = useState({
+        email: user ? user.email : '',
+        name: user ? user.name : '',
+        country: '',
+        region: '',
+        shipping_address: '',
+        postal_code: '',
+        phone: ''
+    });
+    
+    const [errors, setErrors] = useState({
+    
+    })
+
+
     async function getUserByEmail() {
+        if(!user) return
         const token = await getAccessTokenSilently();
         const response = await axios.get(`/user/${user.email}`, 
         {
@@ -45,19 +66,6 @@ const FormOrder = (props) => {
         props.setShippingCheck(`${inputOrder.shipping_address}, ${inputOrder.region}, ${inputOrder.country}, ${inputOrder.postal_code}`)
     }
 
-    const [inputOrder, setinputOrder] = useState({
-        email: user ? user.email : '',
-        name: user ? user.name : '',
-        country: '',
-        region: '',
-        shipping_address: '',
-        postal_code: '',
-        phone: ''
-    });
-
-    const [errors, setErrors] = useState({
-
-    })
 
 
     function validate(input) {
@@ -123,10 +131,57 @@ const FormOrder = (props) => {
             })
         )
     }
+    
+    const [preview, setPreview] = useState();
+
+    const handleInputImg= (e)=>{
+        const file= e.target.files[0]
+        previewFile(file);
+
+    }
+
+    const previewFile=(file)=>{
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend= ()=>{
+            setPreview(reader.result)
+            dispatch(setProfileImg(reader.result)) 
+        }
+    }
+
+    const handleSubmitImg= (e)=>{
+        e.preventDefault();
+        if(!preview) return;
+        uploadImage(preview);
+    }
+
+    const uploadImage = async (preview)=>{
+        try {
+            const token = await getAccessTokenSilently();
+            const response = await axios.post(`/user/${user.email}`, JSON.stringify({image: preview}),
+                {
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+            if (response.status === 200) toast.success('Updated successfully');
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>
+            {location.pathname==="/profile/myInformation" ? 
+                <form onSubmit={handleSubmitImg} encType='multipart/form-data'>
+                    <label for="image">Change you profile picture: </label><br/>
+                    <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image"/><br/>
+                    <input className='col btn btn-success text-center mt-1' type="submit" value="Save" />
+                </form>
+            :<></>}
             <form autoComplete='off' >
+                <br/>
                 <div className="form-floating mb-3">
                     <input disabled={true} type="email" className={errors.email ? "form-control border border-danger" : "form-control"} id="email" name='email' value={inputOrder.email} onChange={handleChange} />
                     <label htmlFor="email">Email</label>
