@@ -12,7 +12,7 @@ const AdminOrderContainer = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0)
     const [orders, setOrders]=useState([])
-    const availableStatus =["received", "in process", "sent", "delivered", "cancelled"]
+    const availableStatus =["created", "pending", "in process", "delivered", "received", "cancelled"]
 
 
     
