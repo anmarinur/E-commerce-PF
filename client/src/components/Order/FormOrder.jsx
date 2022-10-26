@@ -12,7 +12,6 @@ const FormOrder = (props) => {
     const { getAccessTokenSilently } = useAuth0();
     const dispatch = useDispatch();
     const location = useLocation();
-    console.log(location)
 
     const [inputOrder, setinputOrder] = useState({
         email: user ? user.email : '',
@@ -157,8 +156,6 @@ const FormOrder = (props) => {
     }
 
     const uploadImage = async (preview)=>{
-        //const form = new FormData();
-        //form.append("files", e.target.files)
         try {
             const token = await getAccessTokenSilently();
             const response = await axios.post(`/user/${user.email}`, JSON.stringify({image: preview}),
@@ -180,10 +177,7 @@ const FormOrder = (props) => {
                 <form onSubmit={handleSubmitImg} encType='multipart/form-data'>
                     <label for="image">Change you profile picture: </label><br/>
                     <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image"/><br/>
-                    <input onClick={"saveImg"} className='col btn btn-success text-center mt-1' type="submit" value="Save" />
-                    {/* {preview && (
-                        <img src={preview} alt="profile picture" style={{height: "100px", width: "100px", borderRadius: "50%", margin:"10px"}} />
-                    )} */}
+                    <input className='col btn btn-success text-center mt-1' type="submit" value="Save" />
                 </form>
             :<></>}
             <form autoComplete='off' >

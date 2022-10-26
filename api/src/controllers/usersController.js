@@ -86,7 +86,7 @@ const updateUser = async (req, res)=>{
         let imageUploaded = await uploadImage(image)
         updateData.image  = imageUploaded.secure_url;
     }
-    //await fs.unlink(req.files.image.tempFilePath);
+    //await fs.unlink(`./src/uploads/${image}`);
     User.update(updateData,{
         where: {
             email
