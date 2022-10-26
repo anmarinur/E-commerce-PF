@@ -21,7 +21,6 @@ export default function Home(){
     if(id && status) axios.put(`order/status/${status}?id=${id}`);
     id = '';
     status = '';
-    history.replace("/")
   },[]);
 
     return (
