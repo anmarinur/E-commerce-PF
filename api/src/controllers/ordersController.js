@@ -130,7 +130,8 @@ const updateStatus = async (req, res) => {
     
     if(status==="rejected") status="cancelled"
     if(status==="approved") status="in process"
-    if(status==="in_process") status="received"
+    if(status==="in_process") status="pending"
+    if(status==="pending") status="pending"
 
     await Order.update(
       { status: status },
