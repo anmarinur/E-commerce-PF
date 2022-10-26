@@ -8,7 +8,7 @@ const getOrders = async (req, res) => {
     const sizeNumber = Number.parseInt(req.query.size);
     let orderBy      = req.query.orderBy;
     let orderAs      = req.query.orderAs;
-    const { filter } = req.body;
+    const filter     = req.query.filter;
 
     let page  = 0;
     let size  = 12;
@@ -17,14 +17,30 @@ const getOrders = async (req, res) => {
     if(!orderBy) orderBy="createdAt";
     if(!orderAs) orderAs="DESC";
 
-    try{
+    if(filter !== "all"){
+      try{
         const orders = await Order.findAndCountAll({
-            where: filter,
+            where: {
+              status: filter
+            },
             order: [[orderBy, orderAs]],
             limit: size,
             offset: page * size
         });
-        console.log(orders)
+        return res.status(200).json({
+            totalPages: Math.ceil(orders.count / size), 
+            orders: orders.rows
+        })
+    }catch{
+        res.status(404).json({ error: "Product not found" });
+    }}
+    else{
+      try{
+        const orders = await Order.findAndCountAll({
+            order: [[orderBy, orderAs]],
+            limit: size,
+            offset: page * size
+        });
         return res.status(200).json({
             totalPages: Math.ceil(orders.count / size), 
             orders: orders.rows
@@ -32,6 +48,8 @@ const getOrders = async (req, res) => {
     }catch{
         res.status(404).json({ error: "Product not found" });
     }
+    }
+    
 };
 
 const getOrdersById = async (req, res) => {

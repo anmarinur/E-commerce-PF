@@ -22,6 +22,7 @@
     "express-jwt": "^7.7.5",
     "express-jwt-authz": "^2.4.1",
     "fs-extra": "^10.1.0",
+    "googleapis": "^108.0.1",
     "jwks-rsa": "^2.1.5",
     "mercadopago": "^1.5.14",
     "morgan": "^1.10.0",
