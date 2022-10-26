@@ -12,14 +12,16 @@ const AdminOrderContainer = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0)
     const [orders, setOrders]=useState([])
+    const [orderAs, setOrderAs] = useState("DESC")
+    const [statusFilter, setStatusFilter] = useState("all")
     const availableStatus =["created", "pending", "in process", "delivered", "received", "cancelled"]
 
 
     
-    async function getAllOrders(page){
+    async function getAllOrders(page, orderAs, statusFilter){
         const token = await getAccessTokenSilently()
         try {
-            const result = await axios.get(`/order?size=12&page=${page}`, {
+            const result = await axios.get(`/order?size=12&page=${page}&orderAs=${orderAs}&filter=${statusFilter}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -34,8 +36,8 @@ const AdminOrderContainer = () => {
 
 
     useEffect(() =>{ 
-        getAllOrders(page)
-    },[page])
+        getAllOrders(page, orderAs, statusFilter)
+    },[page, orderAs, statusFilter])
 
     const handlePageClick = (event) => {
         setPage(event.selected)
@@ -45,7 +47,7 @@ const AdminOrderContainer = () => {
 
     async function updateStatus(e, id){
         const token = await getAccessTokenSilently()
-        const body = { "updateStatus": e.target.value}
+        const body = { "updateStatus": e.target.value }
         try {
             await axios.put(`/order/${id}`, body, {
                 headers: {
@@ -64,18 +66,19 @@ const AdminOrderContainer = () => {
         <>
             <div className='container  p-2 mt-4'>
                 <div className='row justify-content-around'>
-                    <select class="form-select mb-4 w-25">
+                    <select  onChange={(e) => setOrderAs(e.target.value)}class="form-select mb-4 w-25">
                         <option selected>Order By</option>
                         <option value="ASC">Older</option>
                         <option value="DESC">Recent</option>
                     </select>
-                    <select class="form-select mb-4 w-25">
-                        <option selected>Filter By Status</option>
-                        <option value="received">received</option>
-                        <option value="in process">in process</option>
-                        <option value="sent">sent</option>
-                        <option value="delivered">delivered</option>
-                        <option value="cancelled">cancelled</option>
+                    <select onChange={(e) => setStatusFilter(e.target.value)} class="form-select mb-4 w-25">
+                        <option selected value="all">Filter By Status (Default All)</option>
+                        <option value="received">Received</option>
+                        <option value="in process">In process</option>
+                        <option value="created">Created</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="pending">Pending</option>
                     </select>
                 </div>
                 <div className="row">
