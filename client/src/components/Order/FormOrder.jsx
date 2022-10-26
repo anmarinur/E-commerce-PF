@@ -174,6 +174,7 @@ const FormOrder = (props) => {
             
         } catch (error) {
             console.log(error);
+            toast.success('Something wrong');
         }
     }
 
