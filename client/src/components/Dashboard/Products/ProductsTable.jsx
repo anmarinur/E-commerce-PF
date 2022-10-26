@@ -107,7 +107,7 @@ const ProductsTable = ({ itemsPerPage }) => {
                         previousLinkClassName="page-link"
                         nextLinkClassName="page-link"
                     />  
-                    : ( <> Articulo no Encontrado </>)} 
+                    : ( <>  {`The product '${search}' doesn' t exist`}  </>)} 
                     
                     </nav>
             </div>
