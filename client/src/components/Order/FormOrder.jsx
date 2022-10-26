@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setProfileImg } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
+import spinner from '../spinner.gif';
+
 
 const FormOrder = (props) => {
 
@@ -133,6 +135,7 @@ const FormOrder = (props) => {
     }
     
     const [preview, setPreview] = useState();
+    const [loading, setLoading] = useState(false);
 
     const handleInputImg= (e)=>{
         const file= e.target.files[0]
@@ -152,6 +155,7 @@ const FormOrder = (props) => {
     const handleSubmitImg= (e)=>{
         e.preventDefault();
         if(!preview) return;
+        setLoading(true);
         uploadImage(preview);
     }
 
@@ -165,21 +169,27 @@ const FormOrder = (props) => {
                         Authorization: `Bearer ${token}`
                     }
                 })
+            setLoading(false);
             if (response.status === 200) toast.success('Updated successfully');
+            
         } catch (error) {
             console.log(error);
+            toast.success('Something wrong');
         }
     }
 
     return (
         <>
-            {location.pathname==="/profile/myInformation" ? 
+            {loading ?
+            <img className='mx-0 my-0' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' />
+            : location.pathname==="/profile/myInformation" ? 
                 <form onSubmit={handleSubmitImg} encType='multipart/form-data'>
                     <label for="image">Change you profile picture: </label><br/>
                     <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image"/><br/>
                     <input className='col btn btn-success text-center mt-1' type="submit" value="Save" />
                 </form>
-            :<></>}
+            : <></>
+            }
             <form autoComplete='off' >
                 <br/>
                 <div className="form-floating mb-3">
