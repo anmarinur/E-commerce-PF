@@ -3,7 +3,7 @@ import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import {  ToastContainer, toast } from 'react-toastify';
 import { useHistory, useLocation } from "react-router-dom";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
 export default function Home(){
@@ -12,13 +12,15 @@ export default function Home(){
     const location = useLocation();
     const history  = useHistory();
     const searchParams = new URLSearchParams(location.search);
-    const status = searchParams.get('status');
-    const id = searchParams.get('id');
+    let status = searchParams.get('status');
+    let id = searchParams.get('id');
 
   // ---------------------------
 
-  useCallback(()=>{
+  useEffect(()=>{
     if(id && status) axios.put(`order/status/${status}?id=${id}`);
+    id = '';
+    status = '';
     history.replace("/")
   },[]);
 
