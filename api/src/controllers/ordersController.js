@@ -146,7 +146,18 @@ const updateStatus = async (req, res) => {
 
     let orderDB = await Order.findByPk(id);
 
-    emailNotifications(orderDB.user_email, 'Information about your purchase', message.statusCancelled); 
+    let msg =
+      orderDB.status === "in process"
+        ? message.statusInProcess
+        : orderDB.status === "delivered"
+        ? message.statusDelivered
+        : orderDB.status === "received"
+        ? message.statusReceived
+        : orderDB.status === "pending"
+        ? message.statusPending
+        : message.statusCancelled 
+
+    emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
 
     res.status(200).json("Status updated successfully");
   } catch (error) {
