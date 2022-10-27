@@ -183,10 +183,12 @@ const FormOrder = (props) => {
             {loading ?
             <img className='mx-0 my-0' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' />
             : location.pathname==="/profile/myInformation" ? 
-                <form onSubmit={handleSubmitImg} encType='multipart/form-data'>
-                    <label for="image">Change you profile picture: </label><br/>
-                    <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image"/><br/>
-                    <input className='col btn btn-success text-center mt-1' type="submit" value="Save" />
+                <form onSubmit={handleSubmitImg} encType='multipart/form-data' className='row align-items-center'>
+                    <h4 className='col-4'>Change you profile picture:</h4>
+                    <label for="image" className='btn btn-secondary col-3'>Select and Upload Image</label>
+                    <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
+                    <div className='col-1'></div>
+                    <input className='col-2 btn btn-success text-center' type="submit" value="Save"/>
                 </form>
             : <></>
             }

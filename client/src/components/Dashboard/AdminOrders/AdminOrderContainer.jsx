@@ -116,7 +116,7 @@ const AdminOrderContainer = () => {
                     </table> */}
                     {orders.length !== 0 ? orders.map(order =>
                             <AdminOrderCard availableStatus={availableStatus}  updateStatus={updateStatus} order={order} />
-                    ) : <p>Orders not Found</p>
+                    ) : <h4 className='text-danger'>Orders not Found</h4>
                     }
                     
                     <nav aria-label="navigation">
@@ -139,7 +139,7 @@ const AdminOrderContainer = () => {
                         previousLinkClassName="page-link"
                         nextLinkClassName="page-link"
                     />  
-                    : ( <> Order not Found </>)} 
+                    : null} 
                     
                     </nav>
                 </div>
