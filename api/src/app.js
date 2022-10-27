@@ -5,6 +5,7 @@ const cors = require('cors');
 const productRouter = require('./routes/productRouter.js');
 const userRouter = require('./routes/userRouter.js');
 const orderRouter = require('./routes/orderRouter.js');
+const favRouter   = require('./routes/favRouter.js');
 const login = require("./middlewares/login.js");
 const admin = require("./middlewares/admin.js");
 const mercadoPagoRouter = require('./routes/mercadoPagoRouter.js');
@@ -20,6 +21,7 @@ app.use(morgan('dev'));
 app.use('/product', productRouter);
 app.use('/user', userRouter);
 app.use('/order', orderRouter);
+app.use('/favorites',favRouter);
 app.use('/checkout', mercadoPagoRouter);
 
 app.get("/authorization", login, admin, (req, res)=>{
