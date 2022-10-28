@@ -27,9 +27,9 @@ const getFavorites = async (req, res) => {
         }
     } else return res.status(200).json('Email not valid')
 }
-//-*-*-*-*-*-*-*-*-*-*-*
+
 const postFavorites = async(req,res)=> {
-    const { email, favs} = req.body;   
+    const { email, favs } = req.body;   
     try {
      const user = await User.findOne({ where: { email } }); 
          
@@ -47,10 +47,29 @@ const postFavorites = async(req,res)=> {
         return res.json(error.message);
     }
 }
- //-*-*-*-*-*
 
+const deleteFavorites = async (req,res)=>{
+const { email, id } = req.query; //email del usuario y id del producto a sacar de favs
+
+try {
+  const user = await User.findOne({ where: { email }, attributes: ["id"] });
+
+  await Fav.destroy({
+    where: { 
+     UserId: user.id,
+     ProductId: Number(id)
+    }
+  });
+
+  res.status(200).json('Fav deleted successfully');
+
+} catch (error) {
+ return res.json(error.message);
+}
+}
 
 module.exports = {
     getFavorites,
     postFavorites,
+    deleteFavorites
 }
