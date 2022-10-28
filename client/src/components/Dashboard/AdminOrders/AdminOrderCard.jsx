@@ -19,6 +19,15 @@ const AdminOrderCard = ({ order,updateStatus,availableStatus }) => {
                                     <p class="card-text"><small class=""> date created :{new Date(order.createdAt).toLocaleString()}    -    last update : {new Date(order.updatedAt).toLocaleString()} </small></p>
                                 </div>
                                 <div className="col">
+                                <p> Order status: 
+                                    { order.status==='created' && ( <> <span style={ {backgroundColor : '#000000'} } className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-cart-shopping"></i> { order.status }</span> </> )}
+                                    { order.status==='pending' && ( <> <span style={ {backgroundColor : '#facc25'} }  className=" text-black text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-spinner"></i> { order.status }</span> </> )}
+                                    { order.status==='in process' && ( <> <span style={ {backgroundColor : '#2967e3'} }  className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-box-open"></i> { order.status }</span> </> )}
+                                    { order.status==='delivered' && ( <> <span style={ {backgroundColor : '#de7f12'} }  className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-truck"></i> { order.status }</span> </> )}
+                                    { order.status==='received' && ( <> <span style={ {backgroundColor : '#128305'} } className="text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-house-circle-check"></i> { order.status }</span> </> )}
+                                    { order.status==='cancelled' && ( <> <span style={ {backgroundColor : '#830505'} } className="text-white text-uppercase  py-1 px-2 rounded"><i className="fa-solid fa-ban"></i> { order.status }</span> </> )}
+                        
+                                  </p>
                                 <select onChange={(e)=> updateStatus(e, order.id)} class="form-select text-uppercase w-75">
                                                     <option selected>{order.status}</option>
                                                     {availableStatus.map(status=> !(status == order.status) ?

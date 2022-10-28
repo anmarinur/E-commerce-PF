@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
 import ReactPaginate from 'react-paginate';
 import AdminOrderCard from './AdminOrderCard';
-
+import  {toast}  from 'react-toastify';
 
 const AdminOrderContainer = () => {
 
@@ -47,16 +47,32 @@ const AdminOrderContainer = () => {
 
     async function updateStatus(e, id){
         const token = await getAccessTokenSilently()
-        const body = { "updateStatus": e.target.value }
-        try {
-            await axios.put(`/order/${id}`, body, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-        } catch (error) {
-            console.log("Error update status:", error)
+        const orderById = orders.find((order) => order.id === id)
+        if (orderById.status === 'cancelled') {
+            toast.error('The order is currently cancelled', {
+                position: "top-right",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                }); 
+        } else {
+            const body = { "updateStatus": e.target.value }
+            try {
+                await axios.put(`/order/${id}`, body, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                getAllOrders(page, orderAs, statusFilter);
+            } catch (error) {
+                console.log("Error update status:", error)
+            }
         }
+        
     }
 
 
