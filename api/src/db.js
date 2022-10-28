@@ -29,8 +29,8 @@ const { Product, User, Order, OrderDetail, Fav, Review, Category } = sequelize.m
 Order.belongsToMany(Product, { through : OrderDetail})
 Product.belongsToMany(Order, { through: OrderDetail})
 
-User.belongsToMany(Product, { through: "Fav" });
-Product.belongsToMany(User, { through: "Fav" });
+User.belongsToMany(Product, { through: Fav });
+Product.belongsToMany(User, { through: Fav });
 
 User.belongsToMany(Product, { through: Review });
 Product.belongsToMany(User, { through: Review });
