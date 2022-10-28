@@ -9,7 +9,7 @@ const isClient = async (user)=>{
         const response = await axios(`/user/check/${user.email}`);
         if(response.data.block===true) return false;
         if(response.data.block===null) await axios.post('/user', data);
-        return true; 
+        return true;   
     } catch (error) {
         return false
     }

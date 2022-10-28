@@ -8,7 +8,7 @@ const userRouter = Router();
 
 userRouter.post('/', postUser);
 
-userRouter.get('/', /* login, admin, */ getUsers);
+userRouter.get('/', login, admin, getUsers);
 
 userRouter.get('/:email', login, getUserByEmail);
 
