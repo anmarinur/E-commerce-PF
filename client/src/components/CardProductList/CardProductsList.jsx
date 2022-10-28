@@ -52,7 +52,7 @@ const CardProductsList = () => {
             <div className="container mt-4">
                 <div className="row g-4">
                     <div className="col-lg-3 col-md-12">
-                        { brands !== undefined &&<FilterAndOrder brands={brands} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
+                        { brands !== undefined &&<FilterAndOrder brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
                     </div>
                     <div className="col-lg-9 col-md-12">
                         <div className='container bg-light border shadow p-3 mb-3 '>
