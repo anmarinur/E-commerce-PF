@@ -8,7 +8,7 @@ const admin = require("../middlewares/admin.js");
 
 const favRouter = Router();
 
-favRouter.get("/", /* login, */ getFavorites);
-favRouter.post("/", /* login, */ postFavorites);
+favRouter.get("/",  login, getFavorites);
+favRouter.post("/", login, postFavorites);
 
 module.exports = favRouter;
