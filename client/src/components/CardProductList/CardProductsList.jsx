@@ -10,6 +10,7 @@ import PaginationProducts from './Pagination';
 import SearchBarProducts from './SearchBarProducts';
 import spinner from '../spinner.gif';
 import axios from 'axios';
+import { nameCategory } from '../../utils/nameCategory';
 
 
 const CardProductsList = () => {
@@ -17,7 +18,7 @@ const CardProductsList = () => {
     const dispatch = useDispatch();
     const totalPages = useSelector(state => state.products.totalPages);
     const products = useSelector(state => state.products.products);
-
+    const categories = useSelector(state => state.categories);
 
     const [size, setSize] = useState(8);
     const [page, setPage] = useState(0);
@@ -40,9 +41,6 @@ const CardProductsList = () => {
     useEffect(() => {
         dispatch(getAllProducts(size, page,categoryFilter,sort,search,brandsSelected));
     }, [dispatch, size, page, categoryFilter, sort,search,brandsSelected])
-
-    
-
 
     useEffect(() => {
         axios.get(`/product/brand?category=${categoryFilter ? categoryFilter :''}`)
@@ -71,7 +69,7 @@ const CardProductsList = () => {
                                 }
 
                                 {
-                                    totalPages===0 && ( <p> {`The product with the name '${search}' does not exist in the category '${categoryFilter}'`} </p>) 
+                                    totalPages===0 && ( <p> {`The product with the name '${search}' does not exist in the category '${nameCategory(categories, categoryFilter) || ""}'`} </p>) 
                                 }
                             </Row>
 

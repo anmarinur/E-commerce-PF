@@ -8,6 +8,7 @@ const orderRouter = require('./routes/orderRouter.js');
 const login = require("./middlewares/login.js");
 const admin = require("./middlewares/admin.js");
 const mercadoPagoRouter = require('./routes/mercadoPagoRouter.js');
+const categoryRouter = require('./routes/categoryRouter.js');
 const favRouter = require("./routes/favRouter.js");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/product', productRouter);
 app.use('/user', userRouter);
 app.use('/order', orderRouter);
 app.use('/checkout', mercadoPagoRouter);
+app.use('/category', categoryRouter);
 app.use("/favourites", favRouter);
 
 app.get("/authorization", login, admin, (req, res)=>{

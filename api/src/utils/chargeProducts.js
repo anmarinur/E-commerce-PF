@@ -1,13 +1,16 @@
 const data = require('./../../productsInfo.json');
-const { Product } = require('../db.js');
+const { Product, Category } = require('../db.js');
 
 
 const chargeProducts = () =>{
     try {
+        const categories = ["laptops", "smartphones", "tablets", "smartwatches", "speakers", "tv"];
+        const CategoryDB = categories.map(name=>Category.create({category: name}));
+        Promise.all(CategoryDB).then(()=>console.log('Categories successfully charged'));
         let dataBD = data.map((e) => Product.create(e));
-        PromiseAll(dataBD).then(()=> console.log('Products successfully charged'));
+        Promise.all(dataBD).then(()=> console.log('Products successfully charged'));
     } catch (error) {
-        return error.message;
+        console.log(error.message);
     }
 }
 

@@ -34,10 +34,6 @@ module.exports = (sequelize) => {
           min: 0.01,
         },
       },
-      category: {
-        type: DataTypes.ENUM("laptops", "smartphones", "tablets", "smartwatches", "speakers", "tv"),
-        allowNull: false,
-      },
       stock: {
         type: DataTypes.INTEGER,
         allowNull: false,

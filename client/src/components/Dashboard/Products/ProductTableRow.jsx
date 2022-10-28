@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories } from '../../../redux/actions';
+import { nameCategory } from '../../../utils/nameCategory';
 
 
 export default function ProductsTableRow({ p, deleteP, updateProduct, setShow, setId }) {
 
+    const categories = useSelector(state=>state.categories);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        if(categories.length===0) dispatch(getCategories()); 
+    },[]);
 
     function delPro() {
         setShow(true);
@@ -19,7 +28,7 @@ export default function ProductsTableRow({ p, deleteP, updateProduct, setShow, s
                 </td>
                 <th className=''>{p.name}</th>
                 <td className='fw-semibold'>{p.price}</td>
-                <td className='fw-semibold'>{p.category}</td>
+                <td className='fw-semibold'>{nameCategory(categories, p.CategoryId)}</td>
                 <td className='fw-semibold'>{p.brand}</td>
                 <td className='fw-semibold'>
                     <span className='bg-secondary p-1 rounded-pill fw-bold text-white'> {p.stock} </span> 
@@ -38,7 +47,7 @@ export default function ProductsTableRow({ p, deleteP, updateProduct, setShow, s
                                 brand: p.brand,
                                 description: p.description,
                                 price: p.price,
-                                category: p.category,
+                                CategoryId: p.CategoryId,
                                 stock: p.stock,
                             })
                         }><i className="fa-solid fa-pen-to-square"></i></button>
