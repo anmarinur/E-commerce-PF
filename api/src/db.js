@@ -1,10 +1,11 @@
 const { Sequelize } = require('sequelize');
-const modelProduct = require('./models/Product.js')
-const modelUser = require('./models/User.js')
-const modelOrder = require('./models/Order.js')
-const modelOrderDetail = require('./models/OrderDetail')
-const modelFav = require('./models/Fav')
-const modelReview = require('./models/Review')
+const modelProduct = require('./models/Product.js');
+const modelUser = require('./models/User.js');
+const modelOrder = require('./models/Order.js');
+const modelOrderDetail = require('./models/OrderDetail');
+const modelFav = require('./models/Fav');
+const modelReview = require('./models/Review');
+const modelCategory = require('./models/Category');
 require('dotenv').config();
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
@@ -21,8 +22,9 @@ modelOrder(sequelize);
 modelOrderDetail(sequelize);
 modelFav(sequelize);
 modelReview(sequelize);
+modelCategory(sequelize);
 
-const { Product, User, Order, OrderDetail, Fav, Review } = sequelize.models;
+const { Product, User, Order, OrderDetail, Fav, Review, Category } = sequelize.models;
 
 Order.belongsToMany(Product, { through : OrderDetail})
 Product.belongsToMany(Order, { through: OrderDetail})
@@ -33,6 +35,8 @@ Product.belongsToMany(User, { through: "Fav" });
 User.belongsToMany(Product, { through: Review });
 Product.belongsToMany(User, { through: Review });
 
+Category.hasMany(Product);
+Product.belongsTo(Category);
 
 module.exports = {
   Product,
@@ -40,5 +44,6 @@ module.exports = {
   Order,
   OrderDetail,
   Fav,
+  Category,
   db: sequelize,
 };

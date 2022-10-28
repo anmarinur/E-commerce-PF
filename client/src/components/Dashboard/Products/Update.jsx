@@ -7,19 +7,22 @@ import isAdmin from '../../../utils/isAdmin';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories } from '../../../redux/actions';
 
 export default function Update(){
    
     const location = useLocation();
     const history = useHistory();
-    const {id, name, image, description, price, category, stock, brand} = location.state ? location.state : '';
+    const categories = useSelector(state=>state.categories);
+    const {id, name, image, description, price, CategoryId, stock, brand} = location.state ? location.state : '';
 
     const [input, setInput]= useState({
         name: id ? name : '',
         image: id ? image : '',
         description: id ? description : '',
         price: id ? price: 0,
-        category: id ? category : '',
+        CategoryId: id ? CategoryId : '',
         stock: id ? stock : 0,
         brand: id ? brand : '',
     });
@@ -29,12 +32,13 @@ export default function Update(){
         image: 'Enter a valid url',
         description: 'Enter a description',
         price: 'Enter a value higher than 0',
-        category: 'Select one category',
+        CategoryId: 'Select one category',
         stock: 'Enter a value higher than 0',
         brand: 'Enter a valid brand name'
     })
 
     const [admin, setAdmin] = useState();
+    const dispatch = useDispatch();
     const { getAccessTokenSilently } = useAuth0();
     
     useEffect(()=>{
@@ -44,6 +48,7 @@ export default function Update(){
             alert("You dont have the necesary permissions");
             return;
         }
+        if(categories.length===0) dispatch(getCategories()); 
     },[admin]);
 
     function validate(input) {
@@ -71,8 +76,8 @@ export default function Update(){
             errors.price = '';
         }
 
-        if(!input.category) {
-            errors.category = 'Select one category'
+        if(!input.CategoryId) {
+            errors.CategoryId = 'Select one category'
         } else {
             errors.category = '';
         }
@@ -131,7 +136,7 @@ export default function Update(){
             image: '',
             description: '',
             price: 0,
-            category: '',
+            CategoryId: '',
             stock: 0,
             brand: ''
         })
@@ -168,16 +173,21 @@ export default function Update(){
 
                 <Form.Group className="mb-3" controlId="productCategory">
                     <Form.Label>Category</Form.Label>
-                    <Form.Control as="select" name="category" onChange={(e) => handleChange(e)}>
+                    <Form.Control as="select" name="CategoryId" onChange={(e) => handleChange(e)}>
                         <option>Select a category</option>
-                        <option value="smartphones">Smartphones</option>
+                        {categories.map(c=>{
+                            return(
+                                <option value={c.id}>{c.category}</option>
+                            )
+                        })}
+                        {/* <option value="smartphones">Smartphones</option>
                         <option value="laptops">PC Laptops</option>
                         <option value="tablets">Tablets</option>
                         <option value="smartwatches">Smartwatches</option>
                         <option value="speakers">Speakers</option>
-                        <option value="tv">TVs</option>
+                        <option value="tv">TVs</option> */}
                     </Form.Control>
-                    {errors.category && <Form.Text className="text-muted">Select one category</Form.Text>}
+                    {errors.CategoryId && <Form.Text className="text-muted">Select one category</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="productStock">

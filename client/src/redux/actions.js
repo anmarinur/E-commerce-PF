@@ -12,8 +12,21 @@ export const SET_TOTAL_PAYMENT = "SET_TOTAL_PAYMENT";
 export const SET_CURRENT_ORDER = "SET_CURRENT_ORDER";
 export const SET_PROFILE_IMG = "SET_PROFILE_IMG";
 export const GET_USER = "GET_USER";
+export const GET_CATEGORIES = "GET_CATEGORIES";
 
 
+
+export const getCategories = ()=>{
+
+    return async function (dispatch) {
+        try {
+            const result = await axios.get(`/category`);
+            return dispatch({ type: GET_CATEGORIES, payload: result.data });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
 export const addCartGlobal = (item)=>{
     return { 
