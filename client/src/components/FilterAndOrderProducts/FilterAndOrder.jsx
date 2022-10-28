@@ -10,8 +10,12 @@ const FilterAndOrder = (props) => {
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(getCategories());
-    },[])
+        dispatch(getCategories(""));
+    },[]);
+    
+    useEffect(()=>{
+        if(!props.brands.find(brand=>brand===props.brandsSelected)) props.setBrandsSelected('')
+    },[props.brands]);
 
     return (
         <Card className='shadow w-100 p-0 rounded-0 border bg-light' >
