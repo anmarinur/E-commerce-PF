@@ -72,7 +72,7 @@ const OrderCard = () => {
                             {/* shipping information */}  
                             <div className="col-12 mb-3">
                                 <div className=' card position-relative mx-3 border border-danger'>
-                                    <span class="position-absolute mx-5  top-0 start-0 translate-middle badge rounded bg-danger">
+                                    <span className="position-absolute mx-5  top-0 start-0 translate-middle badge rounded bg-danger">
                                         Shipping Information
                                     </span>
                                     <div className="row m-2">
@@ -83,7 +83,7 @@ const OrderCard = () => {
                             {/* Products */}
                                 <div className="col-12 pb-2">
                                     <div className=' card position-relative mx-3 border border-danger'>
-                                        <span class="position-absolute mx-3 mb-2 top-0 start-0 translate-middle badge rounded bg-danger">
+                                        <span className="position-absolute mx-3 mb-2 top-0 start-0 translate-middle badge rounded bg-danger">
                                         Products
                                         </span>
                                         <span className="position-absolute mx-3 fs-6 px-3 top-100 start-50 translate-middle badge rounded bg-danger">
