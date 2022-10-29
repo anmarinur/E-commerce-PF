@@ -2,6 +2,7 @@ import React from 'react';
 
 
 const UsersCard = ({user, blockUnblock}) => {
+
     return(
         <tr>
             <td className='fw-semibold col-1'>{user.id}</td>
@@ -11,8 +12,8 @@ const UsersCard = ({user, blockUnblock}) => {
             <th className='col-2 ps-4'>{user.name}</th>
             <td className='fw-semibold col-2'>{user.email}</td>
             <td className="col-1">{user.phone}</td>
-            {user.block == false ? <td className='col-1'>No</td> : <td className='col-1'>Yes</td>}
-            {user.block == false ? 
+            {user.block === false ? <td className='col-1'>No</td> : <td className='col-1'>Yes</td>}
+            {user.block === false ? 
                 <td className='col-1'>
                     <button className='btn btn-danger' onClick={() => blockUnblock(user.email, true)}>Block</button>
                 </td> 
