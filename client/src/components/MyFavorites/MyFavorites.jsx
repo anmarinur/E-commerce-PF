@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import {getTotalFav} from '../../redux/actions';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function MyFavorites() {
     const { user, getAccessTokenSilently } = useAuth0();
@@ -31,7 +32,8 @@ export default function MyFavorites() {
         }
     }
 
-    const deleteFav = async(email,id) => {
+    const deleteFav = async(e,email,id) => {
+        e.preventDefault();
         const token = await getAccessTokenSilently()
         try {
             const result = await axios.delete(`/favourites?email=${email}&id=${id}`,{
@@ -56,8 +58,8 @@ export default function MyFavorites() {
                     <div className="col-12">
 
                         {products.length !==0 ? products.map(product =>(
-                            <div  key={product.id} className="card mb-3">
-                                <div className="row g-0">
+                            <Link  to={`/product/${product.id}`} key={product.id} className="card mb-3 text-decoration-none text-dark p-2">
+                                <div className="row g-0 justify-content">
                                     <div className="col-md-3">
                                         <img style={{ maxWidth: '9em', maxHeight : '9em' }} src={product.image} className="img-fluid rounded-start" alt="..." />
                                     </div>
@@ -68,11 +70,11 @@ export default function MyFavorites() {
                                             <p className="card-text m-0 p-0 fw-semibold"><small className="text-muted fs-6 text-danger">Stock  : {product.stock}</small></p>
                                         </div>
                                     </div>
-                                    <div className="col-2">
-                                        <button onClick={ () => deleteFav(user.email,product.id)} className='mx-auto  btn btn-secondary' ><i className="fa-solid fa-trash"></i></button>
+                                    <div className="col-2 p-4">
+                                        <button onClick={ (e) => deleteFav(e,user.email,product.id)} className='mx-auto  btn btn-secondary' ><i className="fa-solid fa-trash"></i></button>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         )) : (<p> NO FAVORITES </p>)}
                         
                     </div>
