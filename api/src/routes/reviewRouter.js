@@ -12,7 +12,7 @@ const reviewRouter = Router();
 
 reviewRouter.get("/:id", getComments);
 
-reviewRouter.post("/", /* login,  */postComments);
+reviewRouter.post("/", login, postComments);
 
 reviewRouter.put('/:id', login, updateComments);
 
