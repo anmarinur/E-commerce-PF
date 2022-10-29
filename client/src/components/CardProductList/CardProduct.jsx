@@ -26,12 +26,25 @@ const CardProduct = ({ product }) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        try {
-            const token2 = await getAccessTokenSilently();
-            dispatch(getTotalFav(user.email, token2))
-        } catch (error) {
-            console.log(error)
+        if (result.status === 200) {
+            try {
+                const token2 = await getAccessTokenSilently();
+                dispatch(getTotalFav(user.email, token2))
+                toast.success('Added to Fav!', {
+                    position: "top-right",
+                    autoClose: 1200,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            } catch (error) {
+                console.log(error)
+            }
         }
+        
 
 
     }
