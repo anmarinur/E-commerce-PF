@@ -3,35 +3,56 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
-import { addCartGlobal } from '../../redux/actions';
+import { addCartGlobal, getTotalFav } from '../../redux/actions';
 import './CardProduct.css';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
 const CardProduct = ({ product }) => {
 
     const dispatch = useDispatch();
-    const cartGlobal = useSelector((state)=>state.cart);
+    const cartGlobal = useSelector((state) => state.cart);
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
-    const addFavorite = (e) => {
-        console.log('add Fav');
+    const addFavorite = async (e, id) => {
+        e.preventDefault();
+        const token = await getAccessTokenSilently();
+        const result = await axios.post('/favourites',
+            {
+                "email": user.email,
+                "favs": [id]
+            }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        try {
+            const token2 = await getAccessTokenSilently();
+            dispatch(getTotalFav(user.email, token2))
+        } catch (error) {
+            console.log(error)
+        }
+
+
     }
 
-    const addCart = (e) => {
+    const addCart = (e, id) => {
         e.preventDefault();
-        const exist = cartGlobal.find(i=>i.id===product.id)
-        if(!exist) {
+        const exist = cartGlobal.find(i => i.id === product.id)
+        if (!exist) {
             dispatch(addCartGlobal(product));
-        
-        toast.success('Added to Car!', {
-            position: "top-right",
-            autoClose: 1200,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
+
+            toast.success('Added to Car!', {
+                position: "top-right",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
             });
-        }else{
+        } else {
             toast.error('Already added!', {
                 position: "top-right",
                 autoClose: 1200,
@@ -41,9 +62,10 @@ const CardProduct = ({ product }) => {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                }); 
+            });
         }
     }
+
 
     return (
         <Link to={`/product/${product.id}`} className='card cardProduct h-100 text-decoration-none shadow-sm ' >
@@ -62,10 +84,10 @@ const CardProduct = ({ product }) => {
                 <p className="card-text text-center fw-light text-muted start lh-1" >{product.brand}</p>
                 <div className="row text-center">
                     <div className="col-6">
-                        <Button variant="danger" onClick={addFavorite}  className='btns-card-product'> <i className="fa-solid fa-heart-circle-plus fa-xl"></i> </Button>
+                        <Button variant="danger" disabled={!isAuthenticated} onClick={(e) => addFavorite(e, product.id)} className='btns-card-product'> <i className="fa-solid fa-heart-circle-plus fa-xl"></i> </Button>
                     </div>
                     <div className="col-6">
-                            <Button variant="danger" onClick={(e)=>addCart(e)}  className='btns-card-product' > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
+                        <Button variant="danger" onClick={(e) => addCart(e)} className='btns-card-product' > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
                     </div>
                 </div>
 

@@ -10,6 +10,7 @@ import OrderContainer from '../components/Profile/Orders/OrderContainer';
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../redux/actions.js';
+import MyFavorites from '../components/MyFavorites/MyFavorites.jsx';
 
 export default function ProfilePage() {
 
@@ -54,7 +55,7 @@ export default function ProfilePage() {
                             <div className="row">
                                 <NavLink to={'/profile/myInformation'}  activeClassName="btn btn-danger" className="btn btn-sm btn-secondary w-100"  ><span className="text-start"  aria-current="true"> <i className="me-2 fa-solid fa-circle-user"></i>My Infomation</span></NavLink>
                                 <NavLink to={'/profile/myOrders' }  activeClassName="btn btn-danger" className="btn btn-sm btn-secondary mt-2 w-100" ><span className="text-start"><i className="me-2 fa-solid fa-newspaper"></i> My Orders</span></NavLink>
-                                <NavLink to={'/profile/myFavorites'} activeClassName="btn btn-danger" className="btn btn-sm btn-secondary mt-2 w-100 px-4" ><span className="text-start"><i class="me-2 fa-solid fa-heart"></i>My Favorites</span></NavLink>
+                                <NavLink to={'/profile/myFavorites'} activeClassName="btn btn-danger" className="btn btn-sm btn-secondary mt-2 w-100 px-4" ><span className="text-start"><i className="me-2 fa-solid fa-heart"></i>My Favorites</span></NavLink>
                             </div>
 
                         </div>
@@ -69,7 +70,7 @@ export default function ProfilePage() {
                             <OrderContainer />
                         </Route>
                         <Route path={'/profile/myFavorites'}>
-                            <></>
+                            <MyFavorites></MyFavorites>
                         </Route>
                         
                        
