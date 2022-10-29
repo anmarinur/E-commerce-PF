@@ -7,6 +7,7 @@ import ProductsTable from '../components/Dashboard/Products/ProductsTable';
 import AdminOrderContainer from '../components/Dashboard/AdminOrders/AdminOrderContainer';
 import FormCreate from '../components/Dashboard/Products/FormCreate';
 import Update from '../components/Dashboard/Products/Update';
+import UsersList from '../components/Dashboard/UsersList/UsersList'
 
 const Dashboard = () => {
 
@@ -32,6 +33,10 @@ const Dashboard = () => {
 
                             <Route path="/Dashboard/Orders">
                                 <AdminOrderContainer />
+                            </Route>
+
+                            <Route path="/Dashboard/Users">
+                                <UsersList />
                             </Route>
 
                         </Switch>
