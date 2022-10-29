@@ -7,6 +7,7 @@ import UsersCard from './UsersCard';
 
 
 const GetAllUsers = () =>{
+
     const { getAccessTokenSilently } = useAuth0();
     const [page, setPage] = useState("0");
     const [totalPages, setTotalPages] = useState(0);
@@ -40,17 +41,16 @@ const GetAllUsers = () =>{
     async function blockUnblock (email, boolean){
         try {
             const token = await getAccessTokenSilently()
-            await axios.put(`/user/block/${email}/${boolean}`, {
+            await axios.put(`/user/block/${email}`, {block: boolean},  {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
+            getUsersFromDb(page, search);
         } catch (error) {
             console.log("blockUnblock Error:", error)
         }
     }
-    
-
 
     return(
         <div>

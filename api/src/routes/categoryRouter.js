@@ -7,7 +7,7 @@ const categoryRouter = Router();
 
 categoryRouter.get('/', getCategories);
 
-categoryRouter.post('/:category', /* login, admin, */ postCategory);
+categoryRouter.post('/:category', login, admin, postCategory);
 
 categoryRouter.put('/', /* login, admin, */ updateCategory);
 

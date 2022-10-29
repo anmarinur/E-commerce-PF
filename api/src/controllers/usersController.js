@@ -64,7 +64,7 @@ const getUserCheck = async (req, res)=>{
 
 const blockUser = async (req, res)=>{
     const email = req.params.email
-    const block = req.params.block
+    const block = req.body.block
 
     try {
         const user = await User.update({block},{

@@ -14,7 +14,7 @@ userRouter.get('/:email', login, getUserByEmail);
 
 userRouter.get('/check/:email', getUserCheck);
 
-userRouter.put('/block/:email/:block', login, admin, blockUser);
+userRouter.put('/block/:email', login, admin, blockUser);
 
 userRouter.post('/:email', login, fileUpload, updateUser);
 
