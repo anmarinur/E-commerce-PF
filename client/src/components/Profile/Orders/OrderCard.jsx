@@ -36,7 +36,7 @@ const OrderCard = () => {
         <div>
             <div className='col-12 mb-3 '>
                 { typeof userOrders === 'object' ? userOrders.map(order =>
-                    <div key={order.id} className="card border-secondary p-2 shadow-md mb-3">
+                    <div key={order.id} className="card border-secondary p-2 shadow-md mb-5">
                         <div className="row">
                             {/* Order ID */}
                             <div className="col-7">
@@ -74,6 +74,9 @@ const OrderCard = () => {
                                         <span class="position-absolute mx-3 fs-6 px-3 top-100 start-50 translate-middle badge rounded bg-danger">
                                             $ {order.total_payment}
                                         </span>
+                                        {order.status==='created' && <span class="position-absolute mx-3 fs-6 px-3 top-100 end-0 translate-middle badge rounded bg-warning text-dark">
+                                            Continue payment process!
+                                        </span>}
                                         <div className='m-2'>
                                             {order.Products.map(product =>
                                                 <div key={product.id} className="row text-center mb-2">
