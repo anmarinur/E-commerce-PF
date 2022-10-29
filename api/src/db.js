@@ -32,8 +32,8 @@ Product.belongsToMany(Order, { through: OrderDetail})
 User.belongsToMany(Product, { through: Fav });
 Product.belongsToMany(User, { through: Fav });
 
-User.belongsToMany(Product, { through: Review });
-Product.belongsToMany(User, { through: Review });
+Product.hasMany(Review);
+Review.belongsTo(Product);
 
 Category.hasMany(Product);
 Product.belongsTo(Category);
@@ -45,5 +45,6 @@ module.exports = {
   OrderDetail,
   Fav,
   Category,
+  Review,
   db: sequelize,
 };
