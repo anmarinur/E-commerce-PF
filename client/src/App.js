@@ -11,7 +11,9 @@ import ProfilePage from './pages/ProfilePage';
 import {Cart} from './components/Cart/Cart';
 import Order from './components/Order/Order';
 import { ToastContainer } from 'react-toastify';
-
+import FAQs from './pages/Faqs';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
 
 export default function App() {
 
@@ -24,6 +26,15 @@ export default function App() {
         <Route exact path="/product/:id" component={ProductDetail}></Route>
         <Route exact path="/about">
           <About/>
+        </Route>
+        <Route exact path="/faqs">
+          <FAQs/>
+        </Route>
+        <Route exact path="/contact">
+          <Contact/>
+        </Route>
+        <Route exact path="/privacy">
+          <Privacy/>
         </Route>
         <Route path="/dashboard">
           <Dashboard />

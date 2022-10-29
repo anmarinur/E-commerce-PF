@@ -1,10 +1,21 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories } from '../../redux/actions';
 
 const FilterAndOrder = (props) => {
 
+    const categories = useSelector(state=>state.categories);
+    const dispatch = useDispatch();
 
+    useEffect(()=>{
+        dispatch(getCategories(""));
+    },[]);
+    
+    useEffect(()=>{
+        if(!props.brands.find(brand=>brand===props.brandsSelected)) props.setBrandsSelected('')
+    },[props.brands]);
 
     return (
         <Card className='shadow w-100 p-0 rounded-0 border bg-light' >
@@ -14,12 +25,23 @@ const FilterAndOrder = (props) => {
                     <p className='text-start fs-6 m-0 mx-3 fw-semibold'>Categories</p>
                     <div className='mx-5 my-2'>
                         <div className="form-check">
-                            <input className="form-check-input" type="radio" name="category" id="all" onChange={(e) => { props.setCategory('') }} />
+                            <input className="form-check-input" type="radio" name="category" id="all" onChange={(e) => { props.setCategory(0) }} />
                             <label className="form-check-label fw-semibold" htmlFor="all">
                                 All
                             </label>
                         </div>
-                        <div className="form-check">
+
+                        { categories.map(element=>{
+                            return(
+                                <div key={element.id} className="form-check">
+                                    <input className="form-check-input" type="radio" name="category" id={element.id} onChange={(e) => { props.setCategory(element.id) }} />
+                                    <label className="form-check-label fw-semibold" htmlFor={element.id}>
+                                        {`${element.category[0].toUpperCase()}${element.category.slice(1)} `}
+                                    </label>
+                                </div>
+                            )
+                        })}
+                        {/*<div className="form-check">
                             <input className="form-check-input" type="radio" name="category" id="laptops" onChange={(e) => { props.setCategory(e.target.id) }} />
                             <label className="form-check-label fw-semibold" htmlFor="laptops">
                                 Laptops
@@ -60,7 +82,7 @@ const FilterAndOrder = (props) => {
                                 Tv
                             </label>
                         </div>
-
+                    */}
                     </div>
 
                 </div>

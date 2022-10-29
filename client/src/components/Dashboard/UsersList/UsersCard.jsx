@@ -3,7 +3,8 @@ import axios from "axios";
 import { useAuth0 } from '@auth0/auth0-react';
 
 
-const UsersCard = ({user}) => {
+const UsersCard = ({user, blockUnblock}) => { => {
+
     const { getAccessTokenSilently } = useAuth0();
     const [userOrders, setUserOrders] = useState([])
 
@@ -18,19 +19,6 @@ const UsersCard = ({user}) => {
             setUserOrders(result.data)
         } catch (error) {
             console.log("getUserOrders Error:", error)
-        }
-    }
-
-    async function blockUnblock (email, boolean){
-        try {
-            const token = await getAccessTokenSilently()
-            await axios.put(`/user/block/${email}/${boolean}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-        } catch (error) {
-            console.log("blockUnblock Error:", error)
         }
     }
 

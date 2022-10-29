@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DETAILS = "GET_DETAILS";
@@ -12,76 +13,90 @@ export const SET_TOTAL_PAYMENT = "SET_TOTAL_PAYMENT";
 export const SET_CURRENT_ORDER = "SET_CURRENT_ORDER";
 export const SET_PROFILE_IMG = "SET_PROFILE_IMG";
 export const GET_USER = "GET_USER";
+export const GET_CATEGORIES = "GET_CATEGORIES";
+export const GET_TOTAL_FAV = "GET_TOTAL_FAV";
 
 
 
-export const addCartGlobal = (item)=>{
-    return { 
+export const getCategories = () => {
+
+    return async function (dispatch) {
+        try {
+            const result = await axios.get(`/category`);
+            return dispatch({ type: GET_CATEGORIES, payload: result.data });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const addCartGlobal = (item) => {
+    return {
         type: ADD_CART,
         payload: item
     }
 }
 
-export const setProfileImg = (img)=>{
-    return { 
+export const setProfileImg = (img) => {
+    return {
         type: SET_PROFILE_IMG,
         payload: img
     }
 }
 
-export const setTotalPayment = (total)=>{
-    return { 
+export const setTotalPayment = (total) => {
+    return {
         type: SET_TOTAL_PAYMENT,
         payload: total
     }
 }
 
-export const setCurrentOrder = (currentOrder)=> {
+export const setCurrentOrder = (currentOrder) => {
     return {
         type: SET_CURRENT_ORDER,
         payload: currentOrder
     }
 }
 
-export const getItemsLocal = (items)=>{
-    return { 
+export const getItemsLocal = (items) => {
+    return {
         type: GET_ITEMS_LOCAL,
         payload: items
     }
 }
 
-export const clearCart = ()=>{
-    return { 
+export const clearCart = () => {
+    return {
         type: CLEAR_CART,
     }
 }
 
-export const deleteCartGlobal = (id)=>{
-    return { 
+export const deleteCartGlobal = (id) => {
+    return {
         type: DELETE_CART,
         payload: id
     }
 }
 
-export const orderDetail = (total)=>{
-    return { 
+export const orderDetail = (total) => {
+    return {
         type: ORDER_DETAIL,
         payload: total
     }
 }
 
-export const getAllProducts = (size, page, filterCategory,sort,search,brands) => {
+export const getAllProducts = (size, page, filterCategory, sort, search, brands) => {
     var queryCat = '';
-    var querySortPrice ='';
+    var querySortPrice = '';
     var querySearch = '';
     var queryBrands = '';
 
 
     if (filterCategory) queryCat = `&cat=${filterCategory}`;
-    if (sort)  querySortPrice = `&ordprice=${sort}`;
-    if (search)  querySearch = `&search=${search}`;
-    if (brands)  queryBrands = `&brand=${brands}`;
-    
+    if (sort) querySortPrice = `&ordprice=${sort}`;
+    if (search) querySearch = `&search=${search}`;
+    if (brands) queryBrands = `&brand=${brands}`;
+
     return async function (dispatch) {
         try {
             const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}${queryBrands}`);
@@ -112,8 +127,8 @@ export const getUser = (email, token) => {
 
     return async function (dispatch) {
         try {
-            const json = await axios.get(`/user/${email}`,{
-                headers:{
+            const json = await axios.get(`/user/${email}`, {
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
@@ -126,4 +141,27 @@ export const getUser = (email, token) => {
             console.log(error)
         }
     }
+}
+
+
+export function getTotalFav(email,token) {
+
+    return async function (dispatch) {
+        try {
+           
+            const result = await axios.get(`/favourites?email=${email}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return dispatch({
+                type: GET_TOTAL_FAV,
+                payload: result.data.length 
+            })
+        } catch (error) {
+            console.log( ' : error : '+error)
+        }
+    }
+
+
 }

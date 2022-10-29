@@ -33,6 +33,7 @@ export const Profile = () => {
             <p>Loading...</p>
         )
     }
+    
     return (
         <div className="dropdown">
             <button className="btn btn-sm  btn btn-outline-light px-2 py-0 mx-0 dropdown-toggle" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
