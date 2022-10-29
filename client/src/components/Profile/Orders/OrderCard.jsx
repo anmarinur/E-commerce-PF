@@ -32,6 +32,21 @@ const OrderCard = () => {
         getUserOrders()
       },[])
 
+    async function payment(orderId){
+        const order = userOrders.find((el) => el.id === Number(orderId));
+        const id = orderId;
+        const totalProducts = order.Products.map((product) => {
+            return ({
+                name: product.name,
+                price: product.price,
+                qty: product.OrderDetail.units,
+                image: product.image
+            })
+        });
+        let checkoutURL = await axios.post('/checkout', { totalProducts, id });
+        window.location.replace(`${checkoutURL.data}`)
+    }
+
     return (
         <div>
             <div className='col-12 mb-3 '>
@@ -71,12 +86,12 @@ const OrderCard = () => {
                                         <span class="position-absolute mx-3 mb-2 top-0 start-0 translate-middle badge rounded bg-danger">
                                         Products
                                         </span>
-                                        <span class="position-absolute mx-3 fs-6 px-3 top-100 start-50 translate-middle badge rounded bg-danger">
+                                        <span className="position-absolute mx-3 fs-6 px-3 top-100 start-50 translate-middle badge rounded bg-danger">
                                             $ {order.total_payment}
                                         </span>
-                                        {order.status==='created' && <span class="position-absolute mx-3 fs-6 px-3 top-100 end-0 translate-middle badge rounded bg-warning text-dark">
+                                        {order.status==='created' && <button value={order.id} className="position-absolute mx-3 fs-6 px-3 top-100 end-0 translate-middle badge rounded bg-warning text-dark" onClick={(e) => payment(e.target.value)}>
                                             Continue payment process!
-                                        </span>}
+                                        </button>}
                                         <div className='m-2'>
                                             {order.Products.map(product =>
                                                 <div key={product.id} className="row text-center mb-2">
