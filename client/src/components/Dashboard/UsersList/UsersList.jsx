@@ -8,7 +8,7 @@ import UsersCard from './UsersCard';
 
 const GetAllUsers = () =>{
     const { getAccessTokenSilently } = useAuth0();
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState("0");
     const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [users, setUsers] = useState([]);
@@ -16,13 +16,13 @@ const GetAllUsers = () =>{
     async function getUsersFromDb (page, search){
         try {
             const token = await getAccessTokenSilently()
-            const result = await axios.get(`/user?size=12&page=${page}&search=${search}`, {
+            const result = await axios.get(`/user?page=${page}&search=${search}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
             setTotalPages(result.data.totalPages)
-            setUsers(result.data.products)
+            setUsers(result.data.users)
         } catch (error) {
             console.log("getAllOrders Error:", error)
         }
@@ -37,13 +37,45 @@ const GetAllUsers = () =>{
         setPage(event.selected)
     };
 
+    async function blockUnblock (email, boolean){
+        try {
+            const token = await getAccessTokenSilently()
+            await axios.put(`/user/block/${email}/${boolean}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+        } catch (error) {
+            console.log("blockUnblock Error:", error)
+        }
+    }
+    
+
 
     return(
         <div>
-            {users.length !== 0 ? users.map(user =>
-                            <UsersCard key={user.id} user={user} />
-                    ) : <h4 className='text-danger'>Users not Found</h4>
-                    }
+            <table className="table align-middle table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" className="col-1">ID</th>
+                        <th scope="col" className="col-1">Image</th>
+                        <th scope="col" className="col-1 ps-4">Name</th>
+                        <th scope="col" className="col-2">Email</th>
+                        <th scope="col" className="col-1">Phone</th>
+                        <th scope="col" className="col-1">Is Blocked</th>
+                        <th scope="col" className="col-1">Block/Unblock</th>
+                        <th scope="col" className="col-2">See orders</th>                    
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.length !== 0 ? users.map(user =>
+                                                <UsersCard key={user.id} user={user} blockUnblock={blockUnblock}/>
+                                        ) : <tr className='text-danger'><th>Users not Found</th></tr>
+                                        }
+                </tbody>
+            </table>
+            
             <nav aria-label="navigation">
                 { totalPages !==0 ?
                     <ReactPaginate

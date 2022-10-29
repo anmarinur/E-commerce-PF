@@ -7,10 +7,9 @@ const fs = require('fs-extra');
 
 
 const getUsers = async (req, res) => {
-
-    const { page, size, search } = req.query;
-    const offset = page || 0;
-    const limit  = size || 12;
+    const limit  = 12;
+    const { page, search } = req.query;
+    const offset = page * limit;
     let where    = {};
 
     if(search) where.email = {[Op.iLike]: `%${search}%`};
@@ -25,7 +24,7 @@ const getUsers = async (req, res) => {
 
         return res.json({
             totalPages: Math.ceil(users.count / limit), 
-            products: users.rows
+            users: users.rows
         });
             
     } catch (error) {
@@ -64,7 +63,8 @@ const getUserCheck = async (req, res)=>{
 }
 
 const blockUser = async (req, res)=>{
-    const { email, block } = req.params
+    const email = req.params.email
+    const block = req.params.block
 
     try {
         const user = await User.update({block},{
