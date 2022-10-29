@@ -38,6 +38,7 @@ const GetAllUsers = () =>{
         setPage(event.selected)
     };
 
+
     async function blockUnblock (email, boolean){
         try {
             const token = await getAccessTokenSilently()
@@ -54,6 +55,7 @@ const GetAllUsers = () =>{
 
     return(
         <div>
+            <input className="form-control mt-2 mb-2 bg-light w-25" type="search" onChange={(e) => setSearch(e.target.value)} placeholder="Search by Email" aria-label="Search" />
             <table className="table align-middle table-hover">
                 <thead>
                     <tr>
@@ -70,7 +72,7 @@ const GetAllUsers = () =>{
                 </thead>
                 <tbody>
                     {users.length !== 0 ? users.map(user =>
-                                                <UsersCard key={user.id} user={user} blockUnblock={blockUnblock}/>
+                                                <UsersCard key={user.id} user={user}/>
                                         ) : <tr className='text-danger'><th>Users not Found</th></tr>
                                         }
                 </tbody>
