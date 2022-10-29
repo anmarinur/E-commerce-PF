@@ -72,7 +72,7 @@ const GetAllUsers = () =>{
                 </thead>
                 <tbody>
                     {users.length !== 0 ? users.map(user =>
-                                                <UsersCard key={user.id} user={user}/>
+                                                <UsersCard key={user.id} blockUnblock={blockUnblock} user={user} block/>
                                         ) : <tr className='text-danger'><th>Users not Found</th></tr>
                                         }
                 </tbody>

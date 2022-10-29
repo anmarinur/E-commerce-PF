@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuth0 } from '@auth0/auth0-react';
 
 
-const UsersCard = ({user, blockUnblock}) => { => {
+const UsersCard = ({user, blockUnblock}) => {
 
     const { getAccessTokenSilently } = useAuth0();
     const [userOrders, setUserOrders] = useState([])
