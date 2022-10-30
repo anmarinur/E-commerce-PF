@@ -105,7 +105,7 @@ const OrderCard = () => {
                                         {order.status==='created' && <button value={order.id} className="mx-3 mt-3 fs-6 px-3 badge rounded bg-warning text-dark" onClick={(e) => payment(e.target.value)}>
                                             Continue payment process
                                         </button>}
-                                        {order.status==='received' && <AddComment products={order.Products} email={userEmail}/>}
+                                        {order.status==='received' && <AddComment products={order.Products} email={userEmail} idOrder={order.id}/>}
                             </div>
                         </div>
                     </div>

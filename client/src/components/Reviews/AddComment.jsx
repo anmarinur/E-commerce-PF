@@ -2,9 +2,11 @@ import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useState } from 'react';
-import Starv2 from './Starv2'
+import Starv2 from './Starv2';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
-export default function AddComment({products, email}) {
+export default function AddComment({products, email, idOrder}) {
   const [star, setStar] = useState({
     star1: false,
     star2: false,
@@ -13,13 +15,23 @@ export default function AddComment({products, email}) {
     star5: false
   })
 
+  const rating = Object.values(star).filter((el) => el === true).length
+  const { getAccessTokenSilently } = useAuth0();
+  let comments = [];
+
   const [input, setInput] = useState({
-    email: '',
-    id: '',
+    productId: '',
     comment: '',
-    rating: 0
+    orderId: ''
   })
-  console.log(input)
+
+  const commentRate = {
+    email,
+    comment: input.comment,
+    rating,
+    idOrder,
+    idProduct: input.productId
+  }
 
   function handleChange(e) {
     console.log('name: ', e.target.name, 'value: ', e.target.value)
@@ -29,19 +41,20 @@ export default function AddComment({products, email}) {
     })
   }
 
-  function onSubmit() {
-    const rating = Object.values(star).filter((el) => el === true).length
-    console.log(rating)
-    setInput({
-      ...input,
-      email,
-      rating
-    })
-
+  async function onSubmit() {
+    const token = await getAccessTokenSilently();
+    console.log('comentario', commentRate)
+    const response = await axios.post('/review', commentRate,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    console.log(response)
+    comments = await (await axios.get('review/' + 3)).data[0].Reviews;
+    console.log(comments)
   }
 
-
-  
   return(
     <div>
       <Card style={{margin: '30px' }}>
@@ -50,7 +63,7 @@ export default function AddComment({products, email}) {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Select product</Form.Label>
-              <Form.Control as="select" name="id" onChange={(e) => handleChange(e)}>
+              <Form.Control as="select" name="productId" onChange={(e) => handleChange(e)}>
                 <option>Select a product</option>
                 {products ? products.map((product) => {
                   return (
