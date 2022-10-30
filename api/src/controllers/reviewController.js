@@ -4,6 +4,10 @@ var newComment = false;
 
 const getComments = async (req, res) => {
  const {id} = req.params;
+ const {order} = req.query;
+
+ let orderBy = 'DESC';
+
   try {
    if(newComment){
    newComment = false;
@@ -20,7 +24,16 @@ const getComments = async (req, res) => {
    await Product.update({rating: newRating.toFixed(2)}, {where:{id}});
    }  
 
-   const product = await Product.findAll({where:{id}, attributes:['rating'], include: {model: Review, attributes: {exclude: ['email']} }});
+   if(order) orderBy = order;
+   const product = await Product.findAll({
+     where: { id },
+     attributes: ["rating"],
+     include: {
+       model: Review,
+       attributes: { exclude: ["email", "id"] },
+     },
+     order: [[Review, "createdAt", orderBy]]
+   });
 
    product.length !== 0 ? res.status(200).json(product) : res.status(200).json('Product not found');
    
@@ -30,20 +43,15 @@ const getComments = async (req, res) => {
 };
 
 const postComments = async (req, res) => {
-  const { email, comments } = req.body;
+  const { email, comment, rating, id } = req.body;
   try {
 
-   let commentsDB = await Review.findOne({where:{email: email}})
-
-   if(commentsDB){
-    return res.status(200).json('Users can only make one comment per product');
-   }
-   comments.map(async (e) => await Review.create({
-    email, 
-    comment: e.comment,
-    rating: e.rating,
-    ProductId: e.id
-   }));
+   await Review.create({
+    email: email, 
+    comment: comment,
+    rating: rating,
+    ProductId: id
+   });
 
    newComment = true;
    res.status(200).json('Review added successfully')
