@@ -48,22 +48,22 @@ const getProductById = async (req, res) => {
 
 const postProduct = async ( req, res ) => {
  try {
-  const { name, image, description, price, category, CategoryId, stock, brand } = req.body; 
-
+  const { name, image, description, price, CategoryId, stock, brand } = req.body; 
+    console.log(req.body)
   if( !name || !image || !description || !price || !CategoryId || !stock || !brand) throw(Error('Invalid inputs'));
 
   let productData = await Product.findAll({
     where:{
     name,
     brand,
-    CategoryId, 
+    CategoryId: Number(CategoryId),
     stock,
    }
   });
 
   if(productData.length > 0) throw(Error('Product already in database'));
 
-  let product = await Product.create({ name, image, description, price, category, CategoryId, stock, brand });
+  let product = await Product.create({ name, image, description, price, CategoryId, stock, brand });
 
   res.status(200).json('Product created successfully');
 
