@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import { useAuth0 } from '@auth0/auth0-react';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import './UsersCard.css'
 
 
 const UsersCard = ({user, blockUnblock}) => {
 
     const { getAccessTokenSilently } = useAuth0();
     const [userOrders, setUserOrders] = useState([])
+    const [open, setOpen] = useState(false);
+    const closeModal = () => setOpen(false);
 
     async function getUserOrders(userEmail) {
         const token = await getAccessTokenSilently()
         try {
+            setOpen(o => !o)
             var result = await axios.get(`/order/email/${userEmail}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -40,12 +46,31 @@ const UsersCard = ({user, blockUnblock}) => {
                     <button className='btn btn-danger' onClick={() => blockUnblock(user.email, false)}>Unblock</button>
                     </td>
                 }
-                <td className='col-2'>
-                    <button className='btn btn-success' onClick={() => getUserOrders(user.email)}>See client Orders</button>
+                <td className='col-2' >
+                    <button type="button" className="btn btn-success" onClick={() => getUserOrders(user.email)}>See client Orders</button>
+                    <Popup open={open} closeOnDocumentClick onClose={closeModal}>
+                        <div className="modal d-block position-relative">
+                            <button type="button" className=" close btn btn-dark mb-2" onClick={closeModal}>Close
+                            </button>
+                                <tr className='mt-2'>
+                                    <th className='col-1'>Order id</th>
+                                    <th className='col-1'>Total Payment</th>
+                                    <th className='col-1'>Status</th>
+                                    <th className='col-2'>Shipping Address</th>
+                                    <th className='col-2'>Date Created</th>
+                                </tr>
+                                {typeof userOrders == "object" ? userOrders.map(order =>
+                                    <tr key={order.id}>
+                                        <td className='col-1'>{order.id}</td>
+                                        <td className='col-1'>{order.total_payment}</td>
+                                        <td className='col-1'>{order.status.charAt(0).toUpperCase() + order.status.slice(1, order.status.length)}</td>
+                                        <td className='col-2'>{order.shipping_address}</td>
+                                        <td className='col-2'>{new Date(order.createdAt).toLocaleString()}</td>
+                                    </tr>
+                                ): <h4 className="dropdown-item">No orders</h4>}
+                        </div>
+                    </Popup>
                 </td>
-            </tr>
-            <tr>
-                {userOrders}
             </tr>
         </>
     )
