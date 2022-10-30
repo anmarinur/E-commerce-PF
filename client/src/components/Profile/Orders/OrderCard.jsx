@@ -4,6 +4,7 @@ import useLoginEmail from '../../../utils/useLoginEmail'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
+import AddComment from '../../Reviews/AddComment'
 
 
 
@@ -51,7 +52,7 @@ const OrderCard = () => {
         <div>
             <div className='col-12 mb-3 '>
                 { typeof userOrders === 'object' ? userOrders.map(order =>
-                    <div key={order.id} className="card border-secondary p-2 shadow-md mb-5">
+                    <div key={order.id} style={ {backgroundColor : '#EAEAEA'} } className="card border-secondary p-2 shadow-md mb-5">
                         <div className="row">
                             {/* Order ID */}
                             <div className="col-7">
@@ -89,9 +90,6 @@ const OrderCard = () => {
                                         <span className="position-absolute mx-3 fs-6 px-3 top-100 start-50 translate-middle badge rounded bg-danger">
                                             $ {order.total_payment}
                                         </span>
-                                        {order.status==='created' && <button value={order.id} className="position-absolute mx-3 fs-6 px-3 top-100 end-0 translate-middle badge rounded bg-warning text-dark" onClick={(e) => payment(e.target.value)}>
-                                            Continue payment process!
-                                        </button>}
                                         <div className='m-2'>
                                             {order.Products.map(product =>
                                                 <div key={product.id} className="row text-center mb-2">
@@ -104,6 +102,10 @@ const OrderCard = () => {
                                             )}
                                         </div>
                                 </div>
+                                        {order.status==='created' && <button value={order.id} className="mx-3 mt-3 fs-6 px-3 badge rounded bg-warning text-dark" onClick={(e) => payment(e.target.value)}>
+                                            Continue payment process
+                                        </button>}
+                                        {order.status==='received' && <AddComment products={order.Products} email={userEmail}/>}
                             </div>
                         </div>
                     </div>

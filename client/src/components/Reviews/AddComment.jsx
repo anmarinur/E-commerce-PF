@@ -1,41 +1,75 @@
-import Star from './Star';
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { useState } from 'react';
+import Starv2 from './Starv2'
 
-export default function AddComment() {
+export default function AddComment({products, email}) {
+  const [star, setStar] = useState({
+    star1: false,
+    star2: false,
+    star3: false,
+    star4: false,
+    star5: false
+  })
 
-  const stars = []
+  const [input, setInput] = useState({
+    email: '',
+    id: '',
+    comment: '',
+    rating: 0
+  })
+  console.log(input)
 
-  for (let i = 0; i < 5; i++) {
-    stars.push(<Star state={false} size='small'/>)
+  function handleChange(e) {
+    console.log('name: ', e.target.name, 'value: ', e.target.value)
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    })
   }
 
+  function onSubmit() {
+    const rating = Object.values(star).filter((el) => el === true).length
+    console.log(rating)
+    setInput({
+      ...input,
+      email,
+      rating
+    })
+
+  }
+
+
+  
   return(
     <div>
-      <Card style={{ width: '500px', margin: '30px' }}>
+      <Card style={{margin: '30px' }}>
         <Card.Body>
-          <Card.Title>Add comment</Card.Title>
+          <Card.Title>Comment and rate your product(s)</Card.Title>
           <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Select product</Form.Label>
+              <Form.Control as="select" name="id" onChange={(e) => handleChange(e)}>
+                <option>Select a product</option>
+                {products.map((product) => {
+                  return (
+                  <option key={product.id} value={product.id} >{product.name}</option>
+                  )
+                })}
+              </Form.Control>
+            </Form.Group>
             <Form.Group className="mb-3" controlId="rate">
               <Form.Label>Rate</Form.Label>        
-              <Form.Control as="select" name="rating" onChange={(e) => console.log(e)}>
-                  <option>Select a rate</option>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-              </Form.Control>
+                <Starv2 star={star} setStar={setStar}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="review">
               <Form.Label>Review:</Form.Label>
-              <Form.Control as="textarea" rows={2} name="review" onChange={(e) => console.log(e)} placeholder="Enter a review"/>
+              <Form.Control as="textarea" rows={2} name="comment" value={input.comment} onChange={(e) => handleChange(e)} placeholder="Enter a review"/>
             </Form.Group>
           </Form>
           <div className="d-flex justify-content-around py-3 w-50 mx-auto">
-            <Button variant="danger" type="submit"  onClick={(e) => console.log(e)}>Submit</Button>{' '}
+            <Button variant="danger" type="submit"  onClick={onSubmit}>Submit</Button>{' '}
           </div>
 
         </Card.Body>
