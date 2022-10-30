@@ -113,6 +113,7 @@ const sendMessage = (to, message)=>{
 module.exports = {
     client,
     sendMedia,
-    sendMessage
+    sendMessage,
+    sendMediaURL
 };
  
