@@ -43,14 +43,15 @@ const getComments = async (req, res) => {
 };
 
 const postComments = async (req, res) => {
-  const { email, comment, rating, id } = req.body;
+  const { email, comment, rating, idProduct, idOrder } = req.body;
   try {
 
    await Review.create({
     email: email, 
     comment: comment,
     rating: rating,
-    ProductId: id
+    orderId: idOrder,
+    ProductId: idProduct
    });
 
    newComment = true;
