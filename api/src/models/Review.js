@@ -10,20 +10,24 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
       email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-           isEmail: true,
-      }
-     },
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: true,
+        },
+      },
       comment: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       rating: {
-       type: DataTypes.INTEGER,
-       allowNull: false
-      }
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      orderId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       timestamps: true,
