@@ -1,54 +1,14 @@
-2022/10/29-16:47:42.119 57dc Reusing MANIFEST E:\HENRY  PF E-commerce\main\E-commerce-PF\api\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2022/10/29-16:47:42.120 57dc Recovering log #66
-2022/10/29-16:47:42.400 57dc Reusing old log E:\HENRY  PF E-commerce\main\E-commerce-PF\api\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000066.log 
-2022/10/29-16:47:59.701 6798 Level-0 table #75: started
-2022/10/29-16:47:59.891 6798 Level-0 table #75: 1134498 bytes OK
-2022/10/29-16:47:59.928 6798 Delete type=0 #66
-2022/10/29-16:48:00.337 6798 Compacting 1@1 + 5@2 files
-2022/10/29-16:48:00.678 6798 Generated table #76@1: 16645 keys, 2204358 bytes
-2022/10/29-16:48:00.919 6798 Generated table #77@1: 3696 keys, 2159643 bytes
-2022/10/29-16:48:01.105 6798 Generated table #78@1: 18502 keys, 2203872 bytes
-2022/10/29-16:48:01.307 6798 Generated table #79@1: 36380 keys, 2246799 bytes
-2022/10/29-16:48:01.466 6798 Generated table #80@1: 56586 keys, 1264938 bytes
-2022/10/29-16:48:01.466 6798 Compacted 1@1 + 5@2 files => 10079610 bytes
-2022/10/29-16:48:01.564 6798 compacted to: files[ 0 0 5 0 0 0 0 ]
-2022/10/29-16:48:01.565 6798 Delete type=2 #68
-2022/10/29-16:48:01.565 6798 Delete type=2 #69
-2022/10/29-16:48:01.565 6798 Delete type=2 #70
-2022/10/29-16:48:01.565 6798 Delete type=2 #71
-2022/10/29-16:48:01.565 6798 Delete type=2 #72
-2022/10/29-16:48:01.565 6798 Delete type=2 #75
-2022/10/29-16:48:48.013 6798 Level-0 table #82: started
-2022/10/29-16:48:48.212 6798 Level-0 table #82: 1121721 bytes OK
-2022/10/29-16:48:48.274 6798 Delete type=0 #74
-2022/10/29-16:48:49.472 6798 Compacting 1@1 + 5@2 files
-2022/10/29-16:48:49.698 6798 Generated table #83@1: 17233 keys, 2206709 bytes
-2022/10/29-16:48:49.908 6798 Generated table #84@1: 3729 keys, 2164752 bytes
-2022/10/29-16:48:50.082 6798 Generated table #85@1: 18066 keys, 2202258 bytes
-2022/10/29-16:48:50.271 6798 Generated table #86@1: 36754 keys, 2248916 bytes
-2022/10/29-16:48:50.438 6798 Generated table #87@1: 73291 keys, 1744938 bytes
-2022/10/29-16:48:50.438 6798 Compacted 1@1 + 5@2 files => 10567573 bytes
-2022/10/29-16:48:50.464 6798 compacted to: files[ 0 0 5 0 0 0 0 ]
-2022/10/29-16:48:50.465 6798 Delete type=2 #76
-2022/10/29-16:48:50.465 6798 Delete type=2 #77
-2022/10/29-16:48:50.465 6798 Delete type=2 #78
-2022/10/29-16:48:50.465 6798 Delete type=2 #79
-2022/10/29-16:48:50.465 6798 Delete type=2 #80
-2022/10/29-16:48:50.465 6798 Delete type=2 #82
-2022/10/29-16:49:35.816 6798 Level-0 table #89: started
-2022/10/29-16:49:36.017 6798 Level-0 table #89: 1069586 bytes OK
-2022/10/29-16:49:36.108 6798 Delete type=0 #81
-2022/10/29-16:49:36.143 6798 Compacting 1@1 + 5@2 files
-2022/10/29-16:49:36.350 6798 Generated table #90@1: 17606 keys, 2207889 bytes
-2022/10/29-16:49:36.558 6798 Generated table #91@1: 3757 keys, 2162811 bytes
-2022/10/29-16:49:36.829 6798 Generated table #92@1: 17708 keys, 2200671 bytes
-2022/10/29-16:49:37.003 6798 Generated table #93@1: 35112 keys, 2249715 bytes
-2022/10/29-16:49:37.204 6798 Generated table #94@1: 88689 keys, 2168362 bytes
-2022/10/29-16:49:37.204 6798 Compacted 1@1 + 5@2 files => 10989448 bytes
-2022/10/29-16:49:37.239 6798 compacted to: files[ 0 0 5 0 0 0 0 ]
-2022/10/29-16:49:37.240 6798 Delete type=2 #83
-2022/10/29-16:49:37.240 6798 Delete type=2 #84
-2022/10/29-16:49:37.240 6798 Delete type=2 #85
-2022/10/29-16:49:37.240 6798 Delete type=2 #86
-2022/10/29-16:49:37.240 6798 Delete type=2 #87
-2022/10/29-16:49:37.240 6798 Delete type=2 #89
+2022/10/30-12:47:50.031 4a30 Reusing MANIFEST E:\HENRY  PF E-commerce\main\E-commerce-PF\api\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/10/30-12:47:50.032 4a30 Recovering log #535
+2022/10/30-12:47:50.095 4a30 Reusing old log E:\HENRY  PF E-commerce\main\E-commerce-PF\api\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000535.log 
+2022/10/30-12:47:50.096 4a30 Delete type=2 #521
+2022/10/30-12:47:50.096 4a30 Delete type=2 #522
+2022/10/30-12:47:50.096 4a30 Delete type=2 #523
+2022/10/30-12:47:50.096 4a30 Delete type=2 #524
+2022/10/30-12:47:50.096 4a30 Delete type=2 #525
+2022/10/30-12:47:50.096 4a30 Delete type=2 #526
+2022/10/30-12:47:50.096 4a30 Delete type=2 #527
+2022/10/30-12:47:50.097 4a30 Delete type=2 #528
+2022/10/30-12:47:50.097 4a30 Delete type=2 #529
+2022/10/30-12:47:50.097 4a30 Delete type=2 #530
+2022/10/30-12:47:50.097 4a30 Delete type=2 #537
