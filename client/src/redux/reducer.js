@@ -1,4 +1,4 @@
-import { GET_CATEGORIES, GET_USER, GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART, DELETE_CART, CLEAR_CART, GET_ITEMS_LOCAL, SET_TOTAL_PAYMENT, SET_CURRENT_ORDER, SET_PROFILE_IMG, GET_TOTAL_FAV } from "./actions";
+import { GET_CATEGORIES, GET_USER, GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART, DELETE_CART, CLEAR_CART, GET_ITEMS_LOCAL, SET_TOTAL_PAYMENT, SET_CURRENT_ORDER, SET_PROFILE_IMG, GET_TOTAL_FAV, GET_REVIEWS } from "./actions";
 
 const stateInitial = {
     products: {},
@@ -11,6 +11,7 @@ const stateInitial = {
     user: {},
     categories: [],
     totalFav: 0,
+    reviews: {},
 };
 
 export default function rootReducer(state = stateInitial, action) {
@@ -25,6 +26,11 @@ export default function rootReducer(state = stateInitial, action) {
                 ...JSON.parse(JSON.stringify(state)),
                 details: action.payload
             }
+            case GET_REVIEWS:
+                return {
+                    ...JSON.parse(JSON.stringify(state)),
+                    reviews: action.payload,
+                }
         case DELETE_PRODUCT:
             return {
                 ...JSON.parse(JSON.stringify(state)),
@@ -75,6 +81,7 @@ export default function rootReducer(state = stateInitial, action) {
                 ...JSON.parse(JSON.stringify(state)),
                 categories: action.payload,
             }
+            
         case GET_TOTAL_FAV:
             return {
                 ...JSON.parse(JSON.stringify(state)),

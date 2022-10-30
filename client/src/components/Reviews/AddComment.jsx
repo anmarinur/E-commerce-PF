@@ -52,11 +52,11 @@ export default function AddComment({products, email}) {
               <Form.Label>Select product</Form.Label>
               <Form.Control as="select" name="id" onChange={(e) => handleChange(e)}>
                 <option>Select a product</option>
-                {products.map((product) => {
+                {products ? products.map((product) => {
                   return (
                   <option key={product.id} value={product.id} >{product.name}</option>
                   )
-                })}
+                }):('')}
               </Form.Control>
             </Form.Group>
             <Form.Group className="mb-3" controlId="rate">

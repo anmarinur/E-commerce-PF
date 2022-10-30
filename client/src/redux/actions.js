@@ -15,6 +15,8 @@ export const SET_PROFILE_IMG = "SET_PROFILE_IMG";
 export const GET_USER = "GET_USER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_TOTAL_FAV = "GET_TOTAL_FAV";
+export const GET_REVIEWS = "GET_REVIEWS";
+
 
 
 
@@ -123,6 +125,21 @@ export const getDetails = (id) => {
         }
     }
 }
+
+export const getReviews = (id) => {
+
+    return async function (dispatch) {
+        try {
+           
+            const result = await axios.get("/review/" + id +'?order=DESC');
+            return dispatch({ type: GET_REVIEWS, payload: result.data });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
 export const getUser = (email, token) => {
 
     return async function (dispatch) {

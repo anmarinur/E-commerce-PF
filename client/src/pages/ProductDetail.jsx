@@ -13,6 +13,8 @@ import { useLocalStorage } from "../utils/useLocalStorage";
 import Star from '../components/Reviews/Star';
 import Comment from '../components/Reviews/Comment';
 import AddComment from "../components/Reviews/AddComment";
+import { getReviews } from "../redux/actions";
+
 
 export default function ProductDetail(props) {
 
@@ -22,11 +24,19 @@ export default function ProductDetail(props) {
   const history = useHistory()
   const [cart,setCart] = useLocalStorage ('cart','')
   
+
+
+
   useEffect(() => {
     dispatch(getDetails(id))
+    dispatch(getReviews(id))
   }, [dispatch, id])
+ 
 
   const productDetail = useSelector((state) => state.details)
+  const productReviews = useSelector((state) => state.reviews[0])
+
+
 
 
   const addCart = (e, product) => {
@@ -94,9 +104,13 @@ export default function ProductDetail(props) {
             <p className="text-center  text-danger fs-4">Price: ${productDetail.price}</p>
             <div>
               <div class="d-flex flex-row justify-content-center">
-                <Star state={true} size='big'/> <Star state={true} size='big'/> <Star state={true} size='big'/> <Star state={false} size='big'/> <Star state={false} size='big'/>
-              </div>
-              <div>3 de 5</div>
+              {productReviews ? ([...Array(Math.round(productReviews.rating))].map(( el,i)=> <Star state={true} size='big'/> )):("")}
+              {productReviews ? ([...Array(5-Math.round(productReviews.rating))].map(( el,i)=> <Star state={false} size='big'/> )):("")}
+             </div>
+             
+             {productReviews ? (<div>{Math.round(productReviews.rating)} of 5</div>) : (<div>0 of 5</div>)}
+
+              
             </div>
             <div className="row text-center">
               <div className="col-6">
@@ -111,9 +125,32 @@ export default function ProductDetail(props) {
             <Card.Subtitle className="mt-5 mb-3 text-muted fs-5 w-70 mx-auto">Customer reviews</Card.Subtitle>
             </Card.Body>
           <div className="w-70 mx-auto">
-            <Comment rating={4} comment='Buen producto' name='Pedro Perez'/>
-            <Comment rating={2} comment='No me gustó' name='Nerón Navarrete'/>
-            <Comment rating={3} comment='Se ve bueno' name='Pablo Payares'/>
+            {/* <Comment comment={productReviews.Reviews.comment}/> */}
+      
+
+            {/* <Comment rating={productReviews.rating}/> */}
+{/* 
+      {
+      
+        productReviews.Reviews ? productReviews.Reviews.map(review => (
+          rating = review.rating
+              
+            
+        )) : ( <p>no hay comentarios</p> )
+} */}
+
+{productReviews && productReviews.Reviews.length > 0 ? productReviews.Reviews.map(review => (
+  <>
+  <Comment rating={review.rating} comment={review.comment} ></Comment>
+  
+  </>
+         
+              
+            
+         
+)) : ( <p>There are no comments</p>)}
+
+
           </div>
           <div className="w-70 mx-auto">
             <AddComment/>
