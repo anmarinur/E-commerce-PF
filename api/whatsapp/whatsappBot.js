@@ -27,7 +27,9 @@ client.on('message', message => {
 
     switch(body){
         case('a'):
-        sendMessage(from, 'We have incredible discounts waiting for you on our website 🌐');
+        sendMessage(from, 'We have incredible discounts waiting for you on our website 🌐 \n https://e-commerce-pf-henna.vercel.app/');
+        sendMedia(from, 'discount.png');
+        sendMediaURL(from, "https://i.blogs.es/4bc9dc/moviles-baratos-a-plazos-con-movistar-vodafone-orange-y-yoigo-en-marzo-de-2021/500_333.jpg");
         break;
         case('b'):
         sendMessage(from, 'We need you to provide us with your shipment number and we will inform you of its status 🚚');
@@ -42,9 +44,10 @@ client.on('message', message => {
         sendMessage(from, 'Trained personnel will contact you in a few minutes 👩🏻‍💻👨🏻‍💻') ;
         break;
         default:
-            sendMessage(from,'Greetings from *TECNOSHOP* team \n\n i am a 🤖bot programmed to help you, what can i do for you? \n *A*: Discounts 🤑 \n *B*: Shipping 🚚 \n *C*: Returns 💱 \n *D*: Branches 🏙 \n *E*: Personalized attention 👩🏻‍💻👨🏻‍💻')
-            sendMediaURL(from, "https://i.gifer.com/origin/23/233d0ae0bb78c79932c61fc7609b1535.gif");
             sendMedia(from, 'logo.png');
+            setTimeout(()=>{
+                sendMessage(from,'Greetings from *TECNOSHOP* team \n\n i am a 🤖bot programmed to help you, what can i do for you? \n\n *A*: Discounts 🤑 \n *B*: Shipping 🚚 \n *C*: Returns 💱 \n *D*: Branches 🏙 \n *E*: Personalized attention 👩🏻‍💻👨🏻‍💻')
+            }, 3000)
         }
         saveHistorial(from, body);
  
