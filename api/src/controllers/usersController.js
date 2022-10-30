@@ -4,13 +4,16 @@ const emailNotifications = require('../utils/emailNotifications.js');
 const message = require('../utils/emailMessages');
 const { uploadImage } = require('../utils/cloudinary.js');
 const fs = require('fs-extra');
+const { sendMessage } = require('../../whatsapp/whatsappBot.js');
 
 
 const getUsers = async (req, res) => {
-    const limit  = 12;
     const { page, search } = req.query;
+    const limit  = 12;
     const offset = page * limit;
     let where    = {};
+    let order    = [["id", "ASC"]];
+
 
     if(search) where.email = {[Op.iLike]: `%${search}%`};
 
@@ -18,6 +21,7 @@ const getUsers = async (req, res) => {
 
         const users = await User.findAndCountAll({
             where,
+            order,
             limit,
             offset
         })
@@ -88,6 +92,7 @@ const updateUser = async (req, res)=>{
             updateData.image  = imageUploaded.secure_url;
         }
         //await fs.unlink(`./src/uploads/${image}`);
+        if(updateData.phone) sendMessage(`${updateData.phone}@c.us`, 'Thanks for updating 📝\n *TECNOSHOP*');
         User.update(updateData,{
             where: {
                 email

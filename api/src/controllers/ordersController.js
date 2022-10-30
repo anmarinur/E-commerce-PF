@@ -1,7 +1,8 @@
-const { Order, Product, OrderDetail } = require("../db");
+const { Order, Product, OrderDetail, User } = require("../db");
 const { Op } = require("sequelize");
 const emailNotifications = require("../utils/emailNotifications.js");
 const message = require("../utils/emailMessages");
+const { sendMessage } = require("../../whatsapp/whatsappBot");
 
 const getOrders = async (req, res) => {
     const pageNumber = Number.parseInt(req.query.page);
@@ -98,6 +99,8 @@ const postOrder = async (req, res) => {
       await orderDB.addProduct(productDB, { through : { units: e.quantity}});
     });
 
+    let user = await User.findOne({where:{email: orderDB.user_email}});
+    if(user.phone) sendMessage(`${user.phone}@c.us`, `${message.purchase} \n\n Order Number:  ${orderDB.id} \n Shipping address: _${orderDB.shipping_address}_ \n\n *TECNOSHOP*` )
 
     emailNotifications(orderDB.user_email,"Information about your purchase", message.purchase);
 
@@ -123,18 +126,21 @@ const updateOrder = async (req, res) => {
     );
 
     let orderDB = await Order.findByPk(id);
-
+    let user = await User.findOne({where:{email: orderDB.user_email}});
+    
+    
     let msg =
-      orderDB.status === "in process"
-        ? message.statusInProcess
-        : orderDB.status === "delivered"
-        ? message.statusDelivered
-        : orderDB.status === "received"
-        ? message.statusReceived
-        : orderDB.status === "pending"
-        ? message.statusPending
-        : message.statusCancelled 
-
+    orderDB.status === "in process"
+    ? message.statusInProcess
+    : orderDB.status === "delivered"
+    ? message.statusDelivered
+    : orderDB.status === "received"
+    ? message.statusReceived
+    : orderDB.status === "pending"
+    ? message.statusPending
+    : message.statusCancelled 
+    
+    if(user.phone) sendMessage(`${user.phone}@c.us`, `${msg} \n\n Order Number:  ${orderDB.id} \n Order Status:  ${orderDB.status} \n\n *TECNOSHOP*` )
     emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
 
     if(orderDB.status === 'cancelled'){
