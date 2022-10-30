@@ -92,7 +92,7 @@ const updateUser = async (req, res)=>{
             updateData.image  = imageUploaded.secure_url;
         }
         //await fs.unlink(`./src/uploads/${image}`);
-        if(updateData.phone) sendMessage(`${updateData.phone}@c.us`, 'Thanks for updating 📝\n *TECNOSHOP*');
+        //if(updateData.phone) sendMessage(`${updateData.phone}@c.us`, 'Thanks for updating 📝\n *TECNOSHOP*');
         User.update(updateData,{
             where: {
                 email

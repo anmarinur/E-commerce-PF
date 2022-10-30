@@ -100,7 +100,7 @@ const postOrder = async (req, res) => {
     });
 
     let user = await User.findOne({where:{email: orderDB.user_email}});
-    if(user.phone) sendMessage(`${user.phone}@c.us`, `${message.purchase} \n\n Order Number:  ${orderDB.id} \n Shipping address: _${orderDB.shipping_address}_ \n\n *TECNOSHOP*` )
+    //if(user.phone) sendMessage(`${user.phone}@c.us`, `${message.purchase} \n\n Order Number:  ${orderDB.id} \n Shipping address: _${orderDB.shipping_address}_ \n\n *TECNOSHOP*` )
 
     emailNotifications(orderDB.user_email,"Information about your purchase", message.purchase);
 
@@ -140,7 +140,7 @@ const updateOrder = async (req, res) => {
     ? message.statusPending
     : message.statusCancelled 
     
-    if(user.phone) sendMessage(`${user.phone}@c.us`, `${msg} \n\n Order Number:  ${orderDB.id} \n Order Status:  ${orderDB.status} \n\n *TECNOSHOP*` )
+    //if(user.phone) sendMessage(`${user.phone}@c.us`, `${msg} \n\n Order Number:  ${orderDB.id} \n Order Status:  ${orderDB.status} \n\n *TECNOSHOP*` )
     emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
 
     if(orderDB.status === 'cancelled'){
