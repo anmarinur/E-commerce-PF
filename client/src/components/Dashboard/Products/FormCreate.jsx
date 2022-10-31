@@ -9,6 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getCategories } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 export default function FormCreate(){
    
@@ -17,6 +19,14 @@ export default function FormCreate(){
     const dispatch = useDispatch();
     const categories = useSelector(state=>state.categories);
     const {id, name, image, description, price, category, stock, brand} = location.state ? location.state : '';
+
+    const [open, setOpen] = useState(false);
+
+    const closeModal = () =>{
+        history.replace("/");
+        setOpen(false)
+        return;
+    };
 
     useEffect(()=>{
         if(categories.length===0) dispatch(getCategories());
@@ -48,9 +58,7 @@ export default function FormCreate(){
     useEffect(()=>{
         isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch(()=>setAdmin(false));
         if(admin===false){
-            history.replace("/");
-            alert("You dont have the necesary permissions");
-            return;
+            setOpen(o => !o)
         }
     },[admin]);
 
@@ -213,6 +221,9 @@ export default function FormCreate(){
                 >Submit</Button>{' '}
             </div>
             <ToastContainer/>
+            <Popup open={open} closeOnDocumentClick onClose={closeModal}>
+                <h2 className="text-danger text-center font-weight-bold">"You dont have the necesary permissions"</h2>
+            </Popup>
         </div>
     )
 }
