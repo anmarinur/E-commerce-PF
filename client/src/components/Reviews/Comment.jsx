@@ -14,8 +14,8 @@ import { useSelector } from 'react-redux';
 
 export default function Coment({ id, rating, comment, name }) {
 
-  const [open, setOpen] = useState(false);
-  const reviews = useSelector(state => state.reviews[0].Reviews);
+  //const [open, setOpen] = useState(false);
+  //const reviews = useSelector(state => state.reviews[0].Reviews);
 
 
   const stars = []
@@ -27,22 +27,22 @@ export default function Coment({ id, rating, comment, name }) {
     stars.push(<Star state={false} size='small' />)
   }
 
-  const [admin, setAdmin] = useState();
+  //const [admin, setAdmin] = useState();
   const dispatch = useDispatch();
-  const { getAccessTokenSilently } = useAuth0();
+  //const { getAccessTokenSilently } = useAuth0();
 
 
-  useEffect(() => {
+  /* useEffect(() => {
     isAdmin(getAccessTokenSilently).then((res) => setAdmin(res)).catch(() => setAdmin(false));
     if (admin === false) {
       setOpen(o => !o)
     }
     if (reviews.length === 0) dispatch(getReviews());
-  }, [admin]);
+  }, [admin]); */
 
 
 
-  const deleteP = async (id) => {
+  /* const deleteP = async (id) => {
     const token = await getAccessTokenSilently();
     try {
       await axios.delete(`/review/${id}`, {
@@ -57,7 +57,7 @@ export default function Coment({ id, rating, comment, name }) {
     catch (error) {
     }
     dispatch(getReviews());
-  }
+  } */
 
 
 
@@ -75,9 +75,9 @@ export default function Coment({ id, rating, comment, name }) {
           <Card.Text>
             {comment}
           </Card.Text>
-          <div>
+          {/* <div>
             <Button className="m-3 fw-bold text-danger" variant="light" onClick={() => deleteP(id)}>X</Button>
-          </div>
+          </div> */}
         </Card.Body>
       </Card>
     </div>
