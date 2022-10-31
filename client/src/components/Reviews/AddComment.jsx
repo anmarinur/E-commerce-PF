@@ -2,9 +2,12 @@ import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useState } from 'react';
-import Starv2 from './Starv2'
+import Starv2 from './Starv2';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-export default function AddComment({products, email}) {
+export default function AddComment({products, email, idOrder}) {
   const [star, setStar] = useState({
     star1: false,
     star2: false,
@@ -13,35 +16,64 @@ export default function AddComment({products, email}) {
     star5: false
   })
 
+  const rating = Object.values(star).filter((el) => el === true).length
+  const { getAccessTokenSilently } = useAuth0();
+
   const [input, setInput] = useState({
-    email: '',
-    id: '',
-    comment: '',
-    rating: 0
+    idProduct: 0,
+    comment: ''
   })
-  console.log(input)
+
+  const commentRate = {
+    email,
+    comment: input.comment,
+    rating,
+    idOrder,
+    idProduct: Number(input.idProduct)
+  }
 
   function handleChange(e) {
-    console.log('name: ', e.target.name, 'value: ', e.target.value)
     setInput({
       ...input,
       [e.target.name]: e.target.value
     })
   }
 
-  function onSubmit() {
-    const rating = Object.values(star).filter((el) => el === true).length
-    console.log(rating)
-    setInput({
-      ...input,
-      email,
-      rating
-    })
+  async function onSubmit() {
+    const token = await getAccessTokenSilently();
 
+    const comments = await axios.get('/review/' + commentRate.idProduct);
+    const checkComment = comments.data[0].Reviews.length > 0 ? comments.data[0].Reviews.map((comment) => {
+      return comment.orderId === commentRate.idOrder && comment.ProductId === commentRate.idProduct ? true : false
+    }) : ''
+    const key = checkComment ? checkComment.find((el) => el === true) : ''
+    const response = !key ? await axios.post('/review', commentRate,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }) : '';
+    response ? toast.success('Review and rate added sueccesfully', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      }) : toast.error('You already rate this product', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
   }
 
-
-  
   return(
     <div>
       <Card style={{margin: '30px' }}>
@@ -50,7 +82,7 @@ export default function AddComment({products, email}) {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Select product</Form.Label>
-              <Form.Control as="select" name="id" onChange={(e) => handleChange(e)}>
+              <Form.Control as="select" name="idProduct" onChange={(e) => handleChange(e)}>
                 <option>Select a product</option>
                 {products ? products.map((product) => {
                   return (
