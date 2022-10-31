@@ -1,0 +1,113 @@
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import { useHistory, useParams } from 'react-router-dom';
+
+export default function FormCategory({ match }) {
+
+    const history = useHistory();
+
+
+    let { id, categorySelected } = useParams();
+    const { getAccessTokenSilently } = useAuth0();
+    const [category, setCategory] = useState(categorySelected ? categorySelected : '');
+    
+
+    const [open, setOpen] = useState(false);
+
+    const closeModal = () => {
+        setOpen(false)
+        return;
+    };
+
+    const [errors, setErrors] = useState(!id ? 'Category is Requerid' : '')
+
+    function validate(category) {
+        let letErrors;
+        if (category === "") {
+            letErrors = 'Category is Requerid';
+        } else if (!/^[A-Z]+$/i.test(category)) {
+            letErrors = 'Category is Invalid';
+        }
+        else {
+            letErrors = '';
+        }
+        return letErrors;
+    }
+
+
+    const saveCategory = async (e) => {
+        e.preventDefault();
+        const token = await getAccessTokenSilently()
+        if (!id) {
+            const result = await axios.post(`/category/${category}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (result.statusText === "OK") {
+                setCategory('');
+                setOpen(o => !o)
+            } else {
+                setCategory('');
+            }
+            
+        } else {
+            const result = await axios.put(`/category/${id}/${category}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (result.statusText === "OK") {
+                setCategory('');
+                setOpen(o => !o)
+                history.goBack();
+            } else {
+                setCategory('');
+            }
+            
+        }
+
+    }
+
+    const handleInputCategory = function (e) {
+        console.log(e.target.value);
+        setCategory(e.target.value);
+        setErrors(
+            validate(e.target.value)
+        )
+
+    }
+
+    return (
+        <>
+            <div className="container-fluid mt-4">
+                <h3 className="text-center"> {id ? 'Update category' : 'New Category'}</h3>
+                <form action="" className='text-center' onSubmit={saveCategory}>
+                    <div className="form-floating mb-3 mx-auto">
+                        <input type="text"
+                            className={errors ? 'form-control  mx-auto is-invalid' : 'form-control  mx-auto'}
+                            id="category" name="category"
+                            value={category}
+                            onChange={(e) => handleInputCategory(e)}
+                            placeholder='laptop'
+                        />
+                        <label htmlFor="categoryName" className="mx-auto">Category Name</label>
+                        {errors && (<p className="mt-2 text-danger fw-semibold"> {errors} </p>)}
+                    </div>
+                    <button disabled={errors && true} type="submit" className="btn btn-success text-center"  > <i className="me-2 fa-solid fa-floppy-disk"></i> Save</button>
+                </form>
+            </div>
+            <Popup open={open} closeOnDocumentClick onClose={closeModal} >
+                {!id ? (
+                    <h2 className="text-danger text-center font-weight-bold">The Category has been Registered</h2>
+                ) : (
+                    <h2 className="text-danger text-center font-weight-bold">The Category has been Updated</h2>
+                )}
+
+            </Popup>
+        </>
+    )
+}

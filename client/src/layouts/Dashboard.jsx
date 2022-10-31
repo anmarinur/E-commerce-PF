@@ -8,6 +8,8 @@ import AdminOrderContainer from '../components/Dashboard/AdminOrders/AdminOrderC
 import FormCreate from '../components/Dashboard/Products/FormCreate';
 import Update from '../components/Dashboard/Products/Update';
 import UsersList from '../components/Dashboard/UsersList/UsersList'
+import Categories from '../components/Dashboard/Categories/Categories';
+import FormCategory from '../components/Dashboard/Categories/FormCategory';
 
 const Dashboard = () => {
 
@@ -37,6 +39,15 @@ const Dashboard = () => {
 
                             <Route path="/Dashboard/Users">
                                 <UsersList />
+                            </Route>
+                            <Route exact path="/Dashboard/Categories">
+                                <Categories />
+                            </Route>
+                            <Route exact path="/Dashboard/Categories/Create">
+                                <FormCategory />
+                            </Route>
+                            <Route exact path="/Dashboard/Categories/Update/:id/:categorySelected">
+                                <FormCategory />
                             </Route>
 
                         </Switch>
