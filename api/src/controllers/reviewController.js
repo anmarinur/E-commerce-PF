@@ -30,7 +30,7 @@ const getComments = async (req, res) => {
      attributes: ["rating"],
      include: {
        model: Review,
-       attributes: { exclude: ["email", "id"] },
+       attributes: { exclude: ["email"] },
      },
      order: [[Review, "createdAt", orderBy]]
    });
@@ -62,13 +62,27 @@ const postComments = async (req, res) => {
   }
 };
 
-const updateComments = async (req, res) => {};
 
-const deleteComments = async (req, res) => {};
+const deleteComments = async (req, res) => {
+ const { id } = req.params; //id del review
+try {
+
+ const review = await Review.findByPk(id);
+ const newRating = await Product.findByPk(review.ProductId);
+
+ const rating = (newRating.rating * 2)-review.rating;
+ await Product.update({rating: rating.toFixed(2)}, {where:{id: review.ProductId}});    
+
+ await Review.destroy({where: {id}});
+
+ res.status(200).json("Comment deleted successfully");
+} catch (error) {
+ res.json(error.message);
+}
+};
 
 module.exports = {
   getComments,
   postComments,
-  updateComments,
   deleteComments,
 };
