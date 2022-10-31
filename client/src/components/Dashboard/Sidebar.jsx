@@ -2,19 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, Link, useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import isAdmin from '../../utils/isAdmin';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const Sidebar = () => {
 
     const [admin, setAdmin] = useState();
     const { getAccessTokenSilently, isAuthenticated } = useAuth0();
     const history = useHistory();
+    const [open, setOpen] = useState(false);
+
+    const closeModal = () =>{
+        history.replace("/");
+        setOpen(false)
+        return;
+    };
 
     useEffect(()=>{
         isAdmin(getAccessTokenSilently).then((res)=>setAdmin(res)).catch(()=>setAdmin(false));
         if(!isAuthenticated && admin===false){
-            history.replace("/");
-            alert("You dont have the necesary permissions");
-            return;
+            setOpen(o => !o)
         }
     },[admin]);
 
@@ -60,6 +67,9 @@ const Sidebar = () => {
                     
                 </ul>
             </div>
+            <Popup open={open} closeOnDocumentClick onClose={closeModal}>
+                <h2 className="text-danger text-center font-weight-bold">"You dont have the necesary permissions"</h2>
+            </Popup>
         </nav>
     )
 }
