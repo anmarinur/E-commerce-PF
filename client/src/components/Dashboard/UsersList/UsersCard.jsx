@@ -32,7 +32,7 @@ const UsersCard = ({user, blockUnblock}) => {
             <tr>
                 <td className='fw-semibold col-1'>{user.id}</td>
                 <td width={'6em'} className='text-center col-1'>
-                    <img style={{ maxWidth: '5em', maxHeight: '5em', minWidth: '3em', minHeight: '3em' }} src={user.image} alt="IMG_PRODUCT" />
+                    <img style={{ maxWidth: '4em', maxHeight: '4em', minWidth: '3em', minHeight: '3em', borderRadius: '50%'}} src={ user.image ||'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png' } alt="IMG_PRODUCT" />
                 </td>
                 <th className='col-2 ps-4'>{user.name}</th>
                 <td className='fw-semibold col-2'>{user.email}</td>
