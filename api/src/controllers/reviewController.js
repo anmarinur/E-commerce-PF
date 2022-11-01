@@ -11,15 +11,15 @@ const getComments = async (req, res) => {
   try {
    if(newComment){
    newComment = false;
-   const productDB = await Product.findAll({where: { id }, attributes: ["rating"]});
-   const ratingDB = await Review.findAll({
+   const ratingDB = await Review.findAndCountAll({
      where: { ProductId: id },
-     attributes: ["rating"],
-     order: [["createdAt", "DESC"]],
+     attributes: ["rating"]
    });
-   const rating = productDB.map(e => e.rating);
-   const rat = ratingDB.map(e => e.rating);
-   const newRating = (rating[0] + rat[0])/2
+
+   let sum = 0;   
+   ratingDB.rows.map(e => sum = sum + e.rating )
+   
+   const newRating = sum /ratingDB.count;
    
    await Product.update({rating: newRating.toFixed(2)}, {where:{id}});
    }  
@@ -66,14 +66,20 @@ const postComments = async (req, res) => {
 const deleteComments = async (req, res) => {
  const { id } = req.params; //id del review
 try {
-
+ 
  const review = await Review.findByPk(id);
- const newRating = await Product.findByPk(review.ProductId);
+ await Review.destroy({ where: { id } });
+ 
+ const ratingDB = await Review.findAndCountAll({
+   where: { id: review.ProductId },
+   attributes: ["rating"],
+ });
 
- const rating = (newRating.rating * 2)-review.rating;
- await Product.update({rating: rating.toFixed(2)}, {where:{id: review.ProductId}});    
+ let sum = 0;
+ ratingDB.rows.map((e) => (sum = sum + e.rating));
 
- await Review.destroy({where: {id}});
+ const newRating = sum / ratingDB.count;
+ await Product.update({rating: newRating.toFixed(2)}, {where:{id: review.ProductId}});     
 
  res.status(200).json("Comment deleted successfully");
 } catch (error) {
