@@ -4,6 +4,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getCategories } from '../../../redux/actions';
 
 export default function FormCategory({ match }) {
 
@@ -13,7 +15,7 @@ export default function FormCategory({ match }) {
     let { id, categorySelected } = useParams();
     const { getAccessTokenSilently } = useAuth0();
     const [category, setCategory] = useState(categorySelected ? categorySelected : '');
-    
+    const dispatch = useDispatch();
 
     const [open, setOpen] = useState(false);
 
@@ -50,6 +52,8 @@ export default function FormCategory({ match }) {
             if (result.statusText === "OK") {
                 setCategory('');
                 setOpen(o => !o)
+                dispatch(getCategories())
+                history.goBack();
             } else {
                 setCategory('');
             }
@@ -73,12 +77,10 @@ export default function FormCategory({ match }) {
     }
 
     const handleInputCategory = function (e) {
-        console.log(e.target.value);
         setCategory(e.target.value);
         setErrors(
             validate(e.target.value)
         )
-
     }
 
     return (
