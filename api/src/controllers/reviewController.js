@@ -71,14 +71,18 @@ try {
  await Review.destroy({ where: { id } });
  
  const ratingDB = await Review.findAndCountAll({
-   where: { id: review.ProductId },
+   where: { ProductId: review.ProductId },
    attributes: ["rating"],
  });
 
- let sum = 0;
- ratingDB.rows.map((e) => (sum = sum + e.rating));
+ let newRating = 0;
 
- const newRating = sum / ratingDB.count;
+ if(ratingDB.count > 0){
+   let sum = 0;
+   ratingDB.rows.map((e) => (sum = sum + e.rating));
+   newRating = sum / ratingDB.count;
+  }
+
  await Product.update({rating: newRating.toFixed(2)}, {where:{id: review.ProductId}});     
 
  res.status(200).json("Comment deleted successfully");
