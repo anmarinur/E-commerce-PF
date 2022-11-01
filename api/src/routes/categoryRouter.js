@@ -9,8 +9,8 @@ categoryRouter.get('/', getCategories);
 
 categoryRouter.post('/:category', login, admin, postCategory);
 
-categoryRouter.put('/', /* login, admin, */ updateCategory);
+categoryRouter.put('/:id/:category', /* login, admin, */ updateCategory);
 
-categoryRouter.delete('/', /* login, admin, */ deleteCategory);
+categoryRouter.delete('/:id', /* login, admin, */ deleteCategory);
 
 module.exports = categoryRouter;
