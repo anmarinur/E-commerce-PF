@@ -16,7 +16,7 @@ export const GET_USER = "GET_USER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_TOTAL_FAV = "GET_TOTAL_FAV";
 export const GET_REVIEWS = "GET_REVIEWS";
-
+//export const DELETE_REVIEWS = "DELETE_REVIEWS";
 
 
 
@@ -79,6 +79,12 @@ export const deleteCartGlobal = (id) => {
         payload: id
     }
 }
+// export const deleteReviews = (id) => {
+//     return {
+//         type: DELETE_REVIEWS,
+//         payload: id
+//     }
+// }
 
 export const orderDetail = (total) => {
     return {
