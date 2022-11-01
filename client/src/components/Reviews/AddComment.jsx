@@ -16,12 +16,18 @@ export default function AddComment({products, email, idOrder}) {
     star5: false
   })
 
+  
   const rating = Object.values(star).filter((el) => el === true).length
   const { getAccessTokenSilently } = useAuth0();
-
+  
   const [input, setInput] = useState({
-    idProduct: 0,
+    idProduct: '',
     comment: ''
+  })
+  
+  const [errors, setErrors] = useState({
+    comment: 'Enter a comment',
+    idProduct: 'Select one product'
   })
 
   const commentRate = {
@@ -32,11 +38,34 @@ export default function AddComment({products, email, idOrder}) {
     idProduct: Number(input.idProduct)
   }
 
+  function validate(input) {
+    if(input.comment === '' || input.comment.length < 3) {
+      errors.comment = 'Enter a comment'
+    } else {
+      errors.comment = ''
+    }
+
+    if(input.idProduct === '') {
+      errors.idProduct = 'Select one product'
+    } else {
+      errors.idProduct = ''
+    }
+
+    return errors;
+  }
+
   function handleChange(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value
     })
+
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value
+      })
+    )
   }
 
   async function onSubmit() {
@@ -82,7 +111,7 @@ export default function AddComment({products, email, idOrder}) {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Select product</Form.Label>
-              <Form.Control as="select" name="idProduct" onChange={(e) => handleChange(e)}>
+              <Form.Control as="select" className={errors.idProduct ? "form-control border border-danger" : "form-control"}name="idProduct" onChange={(e) => handleChange(e)}>
                 <option>Select a product</option>
                 {products ? products.map((product) => {
                   return (
@@ -90,6 +119,7 @@ export default function AddComment({products, email, idOrder}) {
                   )
                 }):('')}
               </Form.Control>
+              {errors.idProduct && <span className="ms-2 text-danger">{errors.idProduct}</span>}
             </Form.Group>
             <Form.Group className="mb-3" controlId="rate">
               <Form.Label>Rate</Form.Label>        
@@ -97,11 +127,12 @@ export default function AddComment({products, email, idOrder}) {
             </Form.Group>
             <Form.Group className="mb-3" controlId="review">
               <Form.Label>Review:</Form.Label>
-              <Form.Control as="textarea" rows={2} name="comment" value={input.comment} onChange={(e) => handleChange(e)} placeholder="Enter a review"/>
+              <Form.Control as="textarea" className={errors.comment ? "form-control border border-danger" : "form-control"} rows={2} name="comment" value={input.comment} onChange={(e) => handleChange(e)} placeholder="Enter a review"/>
+              {errors.comment && <span className="ms-2 text-danger">{errors.comment}</span>}
             </Form.Group>
           </Form>
           <div className="d-flex justify-content-around py-3 w-50 mx-auto">
-            <Button variant="danger" type="submit"  onClick={onSubmit}>Submit</Button>{' '}
+            <Button disabled={errors.comment || errors.idProduct ? true : false} variant="danger" type="submit"  onClick={onSubmit}>Submit</Button>{' '}
           </div>
 
         </Card.Body>
