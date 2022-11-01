@@ -11,6 +11,7 @@ const mercadoPagoRouter = require('./routes/mercadoPagoRouter.js');
 const categoryRouter = require('./routes/categoryRouter.js');
 const favRouter = require("./routes/favRouter.js");
 const reviewRouter = require('./routes/reviewRouter.js');
+const statsRouter = require('./routes/statsRouter.js');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/checkout', mercadoPagoRouter);
 app.use('/category', categoryRouter);
 app.use("/favourites", favRouter);
 app.use('/review', reviewRouter);
+app.use('/stats', statsRouter);
 
 app.get("/authorization", login, admin, (req, res)=>{
   res.json({message: "authorized"});
