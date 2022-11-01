@@ -5,6 +5,8 @@ const message = require('../utils/emailMessages');
 const { uploadImage } = require('../utils/cloudinary.js');
 const fs = require('fs-extra');
 const { sendMessage } = require('../../whatsapp/whatsappBot.js');
+const { client } = require('../../whatsapp/whatsappBot.js');
+
 
 
 const getUsers = async (req, res) => {
@@ -92,7 +94,7 @@ const updateUser = async (req, res)=>{
             updateData.image  = imageUploaded.secure_url;
         }
         //await fs.unlink(`./src/uploads/${image}`);
-        //if(updateData.phone) sendMessage(`${updateData.phone}@c.us`, 'Thanks for updating 📝\n *TECNOSHOP*');
+        if(client.authStrategy.clientId && updateData.phone) sendMessage(`${updateData.phone}@c.us`, 'Thanks for updating 📝\n *TECNOSHOP*');
         User.update(updateData,{
             where: {
                 email

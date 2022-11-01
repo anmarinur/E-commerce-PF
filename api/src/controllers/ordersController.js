@@ -3,6 +3,8 @@ const { Op } = require("sequelize");
 const emailNotifications = require("../utils/emailNotifications.js");
 const message = require("../utils/emailMessages");
 const { sendMessage } = require("../../whatsapp/whatsappBot");
+const { client } = require('../../whatsapp/whatsappBot.js');
+
 
 const getOrders = async (req, res) => {
     const pageNumber = Number.parseInt(req.query.page);
@@ -100,7 +102,7 @@ const postOrder = async (req, res) => {
     });
 
     let user = await User.findOne({where:{email: orderDB.user_email}});
-    //if(user.phone) sendMessage(`${user.phone}@c.us`, `${message.purchase} \n\n Order Number:  ${orderDB.id} \n Shipping address: _${orderDB.shipping_address}_ \n\n *TECNOSHOP*` )
+    if(client.authStrategy.clientId && updateData.phone) sendMessage(`${user.phone}@c.us`, `${message.purchase} \n\n Order Number:  ${orderDB.id} \n Shipping address: _${orderDB.shipping_address}_ \n\n *TECNOSHOP*` )
 
     emailNotifications(orderDB.user_email,"Information about your purchase", message.purchase);
 
