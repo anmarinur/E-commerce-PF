@@ -22,6 +22,24 @@ const getStatsCategories = async( req, res )=>{
     }
 }
 
+const getFiveProductsLowStock = async (req, res)=>{
+    try {
+        const products = await Product.findAll({
+            where:{
+                stock: {
+                    [Op.lt]: 10
+                }
+            },
+            order: [["stock", "ASC"]],
+            limit: 5
+        })
+        res.json(products);
+    } catch (error) {
+        res.json(error.message);
+    }
+}
+
 module.exports = {
     getStatsCategories,
+    getFiveProductsLowStock
 }
