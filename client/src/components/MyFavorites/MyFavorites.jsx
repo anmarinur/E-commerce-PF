@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {getTotalFav} from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function MyFavorites() {
     const { user, getAccessTokenSilently } = useAuth0();
@@ -56,26 +57,25 @@ export default function MyFavorites() {
                 <h3>MyFavorites</h3>
                 <div className="row">
                     <div className="col-12">
-
                         {products.length !==0 ? products.map(product =>(
                             <Link  to={`/product/${product.id}`} key={product.id} className="card mb-3 text-decoration-none text-dark p-2">
                                 <div className="row g-0 justify-content">
-                                    <div className="col-md-3">
+                                    <div className="col-xl-3 col-md-4 col-sm-4 col-4">
                                         <img style={{ maxWidth: '9em', maxHeight : '9em' }} src={product.image} className="img-fluid rounded-start" alt="..." />
                                     </div>
-                                    <div className="col-md-7">
+                                    <div className="col-xl-7 col-md-6 col-sm-6 col-5">
                                         <div className="card-body">
                                             <h5 className="card-title m-0 p-0">{product.name}</h5>
                                             <p className="card-text m-0 p-0 fw-semibold">Price : ${product.price}</p>
                                             <p className="card-text m-0 p-0 fw-semibold"><small className="text-muted fs-6 text-danger">Stock  : {product.stock}</small></p>
                                         </div>
                                     </div>
-                                    <div className="col-2 p-4">
+                                    <div className="col-xl-2 col-md-2 col-sm-2 col-2 p-4 ">
                                         <button onClick={ (e) => deleteFav(e,user.email,product.id)} className='mx-auto  btn btn-secondary' ><i className="fa-solid fa-trash"></i></button>
                                     </div>
                                 </div>
                             </Link>
-                        )) : (<p> NO FAVORITES </p>)}
+                        )) : (<Spinner className='text-center m-4' animation="border" />)}
                         
                     </div>
                 </div>
