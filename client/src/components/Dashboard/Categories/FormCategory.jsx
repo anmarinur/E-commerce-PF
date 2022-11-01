@@ -77,12 +77,10 @@ export default function FormCategory({ match }) {
     }
 
     const handleInputCategory = function (e) {
-        console.log(e.target.value);
         setCategory(e.target.value);
         setErrors(
             validate(e.target.value)
         )
-
     }
 
     return (
