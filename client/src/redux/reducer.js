@@ -1,4 +1,4 @@
-import { GET_USER, GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART , DELETE_CART, CLEAR_CART, GET_ITEMS_LOCAL, SET_TOTAL_PAYMENT, SET_CURRENT_ORDER, SET_PROFILE_IMG} from "./actions";
+import { GET_CATEGORIES, GET_USER, GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART, DELETE_CART, CLEAR_CART, GET_ITEMS_LOCAL, SET_TOTAL_PAYMENT, SET_CURRENT_ORDER, SET_PROFILE_IMG, GET_TOTAL_FAV, GET_REVIEWS,DELETE_REVIEWS } from "./actions";
 
 const stateInitial = {
     products: {},
@@ -8,7 +8,10 @@ const stateInitial = {
     currentItem: null,
     currentOrder: {},
     profileImg: null,
-    user: {}
+    user: {},
+    categories: [],
+    totalFav: 0,
+    reviews: {},
 };
 
 export default function rootReducer(state = stateInitial, action) {
@@ -23,13 +26,23 @@ export default function rootReducer(state = stateInitial, action) {
                 ...JSON.parse(JSON.stringify(state)),
                 details: action.payload
             }
+            case GET_REVIEWS:
+                return {
+                    ...JSON.parse(JSON.stringify(state)),
+                    reviews: action.payload,
+                }
+            //     case DELETE_REVIEWS:
+            // return {
+            //     ...JSON.parse(JSON.stringify(state)),
+            //     reviews: state.reviews.filter((r) => r.id !== action.payload),
+            // }
         case DELETE_PRODUCT:
             return {
                 ...JSON.parse(JSON.stringify(state)),
                 products: state.products.filter((p) => p.id !== action.payload),
             }
         case ADD_CART:
-            return {   
+            return {
                 ...JSON.parse(JSON.stringify(state)),
                 cart: [...JSON.parse(JSON.stringify(state.cart)), action.payload]
             }
@@ -67,6 +80,17 @@ export default function rootReducer(state = stateInitial, action) {
             return {
                 ...JSON.parse(JSON.stringify(state)),
                 user: action.payload,
+            }
+        case GET_CATEGORIES:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                categories: action.payload,
+            }
+            
+        case GET_TOTAL_FAV:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                totalFav: action.payload,
             }
         default:
             return state;

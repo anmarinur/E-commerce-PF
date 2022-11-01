@@ -9,13 +9,28 @@ module.exports = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      commet: {
-       type: DataTypes.STRING,
-       allowNull: false
-      }
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: true,
+        },
+      },
+      comment: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      rating: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      orderId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
-      timestamps: false,
+      timestamps: true,
     }
   );
 };

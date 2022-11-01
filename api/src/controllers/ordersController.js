@@ -1,7 +1,10 @@
-const { Order, Product, OrderDetail } = require("../db");
+const { Order, Product, OrderDetail, User } = require("../db");
 const { Op } = require("sequelize");
 const emailNotifications = require("../utils/emailNotifications.js");
 const message = require("../utils/emailMessages");
+const { sendMessage } = require("../../whatsapp/whatsappBot");
+const { client } = require('../../whatsapp/whatsappBot.js');
+
 
 const getOrders = async (req, res) => {
     const pageNumber = Number.parseInt(req.query.page);
@@ -98,6 +101,8 @@ const postOrder = async (req, res) => {
       await orderDB.addProduct(productDB, { through : { units: e.quantity}});
     });
 
+    let user = await User.findOne({where:{email: orderDB.user_email}});
+    if(client.authStrategy.clientId && updateData.phone) sendMessage(`${user.phone}@c.us`, `${message.purchase} \n\n Order Number:  ${orderDB.id} \n Shipping address: _${orderDB.shipping_address}_ \n\n *TECNOSHOP*` )
 
     emailNotifications(orderDB.user_email,"Information about your purchase", message.purchase);
 
@@ -123,19 +128,34 @@ const updateOrder = async (req, res) => {
     );
 
     let orderDB = await Order.findByPk(id);
-
+    let user = await User.findOne({where:{email: orderDB.user_email}});
+    
+    
     let msg =
-      orderDB.status === "in process"
-        ? message.statusInProcess
-        : orderDB.status === "delivered"
-        ? message.statusDelivered
-        : orderDB.status === "received"
-        ? message.statusReceived
-        : orderDB.status === "pending"
-        ? message.statusPending
-        : message.statusCancelled 
-
+    orderDB.status === "in process"
+    ? message.statusInProcess
+    : orderDB.status === "delivered"
+    ? message.statusDelivered
+    : orderDB.status === "received"
+    ? message.statusReceived
+    : orderDB.status === "pending"
+    ? message.statusPending
+    : message.statusCancelled 
+    
+    //if(user.phone) sendMessage(`${user.phone}@c.us`, `${msg} \n\n Order Number:  ${orderDB.id} \n Order Status:  ${orderDB.status} \n\n *TECNOSHOP*` )
     emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
+
+    if(orderDB.status === 'cancelled'){
+     const unitsDB = await OrderDetail.findAll({
+       where: { id: id },
+       attributes: ["ProductId", "units"],
+     });
+     const units = unitsDB.map((e) => ({ id: e.ProductId, qty: e.units }));
+     units.map(
+       async (e) =>
+         await Product.increment({ stock: +e.qty }, { where: { id: e.id } })
+     );
+    }
     
     res.status(200).json("Order updated successfully");
   } catch (error) {
@@ -147,8 +167,12 @@ const updateStatus = async (req, res) => {
   try {
     const { id } = req.query;
     let {status} = req.params;
+    let oldStock = false;
     
-    if(status==="rejected") status="cancelled"
+    if(status==="rejected") {
+     status="cancelled"
+     oldStock= true
+    }
     if(status==="approved") status="in process"
     if(status==="in_process") status="pending"
     if(status==="pending") status="pending"
@@ -176,6 +200,15 @@ const updateStatus = async (req, res) => {
         : message.statusCancelled 
 
     emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
+
+    if(oldStock){
+     const unitsDB = await OrderDetail.findAll({     
+     where: {id: id},
+     attributes:['ProductId','units']    
+     });
+     const units = unitsDB.map(e => ({id: e.ProductId, qty: e.units}));
+     units.map(async (e) => await Product.increment({stock: +e.qty}, {where:{id: e.id}}));     
+    }
 
     res.status(200).json("Status updated successfully");
   } catch (error) {

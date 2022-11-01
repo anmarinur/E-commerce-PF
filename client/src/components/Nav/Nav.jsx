@@ -6,18 +6,25 @@ import { Profile } from "../LogProfile/Profile";
 import { Link } from 'react-router-dom';
 import { useLocalStorage } from '../../utils/useLocalStorage';
 import { useDispatch, useSelector } from "react-redux";
-import { getItemsLocal } from "../../redux/actions";
+import { getItemsLocal, getTotalFav } from "../../redux/actions";
 import getCartLocalStorage from "../../utils/getCartLocalStorage";
 
 
 export default function Nav() {
 
-    const { isAuthenticated } = useAuth0();
+    const { user,isAuthenticated, getAccessTokenSilently } = useAuth0();
     const cart = useSelector(state=>state.cart);
     const [items, setItems] = useLocalStorage("cart", []);
     const dispatch = useDispatch();
     const [isFirstTime, setIsFirstTime] = useState(true);
+    const totalFav = useSelector(state => state.totalFav);
 
+    useEffect(()=>{
+        if (isAuthenticated){
+            getFav(user ? user.email : '')
+        }
+        
+    },[user,totalFav])
     
     useEffect(()=>{
         if(items.length>0 && cart.length ===0 && isFirstTime){
@@ -25,7 +32,14 @@ export default function Nav() {
         }else{
             setItems(cart); 
         }
+
+        
     },[cart])
+
+    const getFav = async(email) => {
+        const token = await getAccessTokenSilently();
+        dispatch(getTotalFav(email,token));
+    }
 
     useEffect(()=>{setIsFirstTime(false)},[])
 
@@ -48,13 +62,25 @@ export default function Nav() {
                         <span className="fw-semibold lh-lg fs-3 text-white "> TECNOSHOP </span>
                     </Link>
                     <div className="d-flex" role="search">
-                        <Link  to="/" className="text-white text-decoration-none bg-danger position-relative my-2 mx-5 p-1 ">
+                        { isAuthenticated ? (
+                            <Link  to="/profile/myFavorites" className="text-white text-decoration-none bg-danger position-relative my-2 mx-5 p-1 ">
                             <i className="fa-solid fa-heart fa-2x "></i>
                             <p className="fw-normal fs-6 lh-1 ">Favs</p>
                             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-                                99+                         
+                                { !isAuthenticated ? '-' : totalFav }                         
                             </span>
                         </Link>
+
+                         ) : (
+                            <button  disabled={true} className="text-white text-decoration-none bg-danger position-relative my-2 mx-5 p-1 border-0  ">
+                            <i className="fa-solid fa-heart fa-2x "></i>
+                            <p className="fw-normal fs-6 lh-1 ">Favs</p>
+                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+                                -
+                            </span>
+                        </button>
+                         ) }
+                        
                         <Link  to="/cart" className="text-white text-decoration-none bg-danger position-relative my-2 mx-5 p-1  ">
                             <i className="fa-solid fa-cart-shopping  fa-2x"></i>
                             <p className="fw-normal fs-6 lh-1 ">Cart</p>

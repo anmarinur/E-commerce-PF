@@ -17,7 +17,7 @@ const getProducts = async (req, res) => {
 
     if(!Number.isNaN(pageNumber) && pageNumber > 0) page = pageNumber;
     if(!Number.isNaN(sizeNumber) && sizeNumber > 0 && sizeNumber < 12) size = sizeNumber;
-    if(cat) where.category=cat;
+    if(cat) where.CategoryId=cat;
     if(brand) where.brand=brand;
     if(orderPrice) order = [["price", orderPrice]];
     if(search?.length>0) where.name = {[Op.iLike]: `%${search}%`};
@@ -48,21 +48,22 @@ const getProductById = async (req, res) => {
 
 const postProduct = async ( req, res ) => {
  try {
-  const { name, image, description, price, category, stock, brand } = req.body; 
-
-  if( !name || !image || !description || !price || !category || !stock || !brand) throw(Error('Invalid inputs'));
+  const { name, image, description, price, CategoryId, stock, brand } = req.body; 
+    console.log(req.body)
+  if( !name || !image || !description || !price || !CategoryId || !stock || !brand) throw(Error('Invalid inputs'));
 
   let productData = await Product.findAll({
-   where:{
-    name: name,
-    brand: brand,
-    stock: stock
+    where:{
+    name,
+    brand,
+    CategoryId: Number(CategoryId),
+    stock,
    }
   });
 
   if(productData.length > 0) throw(Error('Product already in database'));
 
-  let product = await Product.create({ name, image, description, price, category, stock, brand });
+  let product = await Product.create({ name, image, description, price, CategoryId, stock, brand });
 
   res.status(200).json('Product created successfully');
 
@@ -100,7 +101,7 @@ const {category} = req.query
   if(category){
    var brandsDB = await Product.aggregate("brand", "DISTINCT", {
      plain: false,
-     where: {category: category}
+     where: {CategoryId: category}
    });
    
   } else {

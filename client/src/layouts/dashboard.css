@@ -90,3 +90,12 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+.charts {
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: #dc2424;
+  justify-content: center;
+  flex-wrap: nowrap;
+  width: 100%;
+}

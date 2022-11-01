@@ -65,7 +65,6 @@ const ProductsTable = ({ itemsPerPage }) => {
                 <div className="row p-2">
                     <div className="col-8 py-2"><SearchBarProducts  sort={sort} setSortOrder={setSort} setPage={setSize}  setSearch={setSearch} /> </div>
                     <div className="col-4 py-2"> <Link to={'/Dashboard/Products/Create'} className="btn btn-primary">  <i className="fa-solid fa-cart-plus me-2"></i> Create Product</Link> </div>
-
                 </div>
                 <table className="table align-middle table-hover">
                     <thead>

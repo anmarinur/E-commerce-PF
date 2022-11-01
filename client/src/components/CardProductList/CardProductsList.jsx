@@ -10,6 +10,7 @@ import PaginationProducts from './Pagination';
 import SearchBarProducts from './SearchBarProducts';
 import spinner from '../spinner.gif';
 import axios from 'axios';
+import { nameCategory } from '../../utils/nameCategory';
 
 
 const CardProductsList = () => {
@@ -17,7 +18,7 @@ const CardProductsList = () => {
     const dispatch = useDispatch();
     const totalPages = useSelector(state => state.products.totalPages);
     const products = useSelector(state => state.products.products);
-
+    const categories = useSelector(state => state.categories);
 
     const [size, setSize] = useState(8);
     const [page, setPage] = useState(0);
@@ -41,9 +42,6 @@ const CardProductsList = () => {
         dispatch(getAllProducts(size, page,categoryFilter,sort,search,brandsSelected));
     }, [dispatch, size, page, categoryFilter, sort,search,brandsSelected])
 
-    
-
-
     useEffect(() => {
         axios.get(`/product/brand?category=${categoryFilter ? categoryFilter :''}`)
             .then(response => setBrands(response.data))
@@ -54,7 +52,7 @@ const CardProductsList = () => {
             <div className="container mt-4">
                 <div className="row g-4">
                     <div className="col-lg-3 col-md-12">
-                        { brands !== undefined &&<FilterAndOrder brands={brands} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
+                        { brands !== undefined &&<FilterAndOrder brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
                     </div>
                     <div className="col-lg-9 col-md-12">
                         <div className='container bg-light border shadow p-3 mb-3 '>
@@ -71,7 +69,7 @@ const CardProductsList = () => {
                                 }
 
                                 {
-                                    totalPages===0 && ( <p> {`The product with the name '${search}' does not exist in the category '${categoryFilter}'`} </p>) 
+                                    totalPages===0 && ( <p> {`The product with the name '${search}' does not exist in the category '${nameCategory(categories, categoryFilter) || ""}'`} </p>) 
                                 }
                             </Row>
 

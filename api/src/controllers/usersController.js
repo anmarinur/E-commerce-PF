@@ -4,14 +4,18 @@ const emailNotifications = require('../utils/emailNotifications.js');
 const message = require('../utils/emailMessages');
 const { uploadImage } = require('../utils/cloudinary.js');
 const fs = require('fs-extra');
+const { sendMessage } = require('../../whatsapp/whatsappBot.js');
+const { client } = require('../../whatsapp/whatsappBot.js');
+
 
 
 const getUsers = async (req, res) => {
-
-    const { page, size, search } = req.query;
-    const offset = page || 0;
-    const limit  = size || 12;
+    const { page, search } = req.query;
+    const limit  = 12;
+    const offset = page * limit;
     let where    = {};
+    let order    = [["id", "ASC"]];
+
 
     if(search) where.email = {[Op.iLike]: `%${search}%`};
 
@@ -19,13 +23,14 @@ const getUsers = async (req, res) => {
 
         const users = await User.findAndCountAll({
             where,
+            order,
             limit,
             offset
         })
 
         return res.json({
             totalPages: Math.ceil(users.count / limit), 
-            products: users.rows
+            users: users.rows
         });
             
     } catch (error) {
@@ -64,7 +69,8 @@ const getUserCheck = async (req, res)=>{
 }
 
 const blockUser = async (req, res)=>{
-    const { email, block } = req.params
+    const email = req.params.email
+    const block = req.body.block
 
     try {
         const user = await User.update({block},{
@@ -88,6 +94,7 @@ const updateUser = async (req, res)=>{
             updateData.image  = imageUploaded.secure_url;
         }
         //await fs.unlink(`./src/uploads/${image}`);
+        if(client.authStrategy.clientId && updateData.phone) sendMessage(`${updateData.phone}@c.us`, 'Thanks for updating 📝\n *TECNOSHOP*');
         User.update(updateData,{
             where: {
                 email
