@@ -11,5 +11,6 @@ db.sync({ force: true })
 
 app.listen(process.env.PORT, () => {
 console.log(`Server listening at port ${process.env.PORT}`); // eslint-disable-line no-console
-//client.initialize();
+//para desactivar el bot solo comentar la siguiente linea
+client.initialize();
 });
