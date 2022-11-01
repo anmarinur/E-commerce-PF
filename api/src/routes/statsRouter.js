@@ -7,6 +7,6 @@ const statsRouter = Router();
 
 statsRouter.get('/categories', login, admin, getStatsCategories);
 
-statsRouter.get('/stock', getFiveProductsLowStock);
+statsRouter.get('/stock', login, admin, getFiveProductsLowStock);
 
 module.exports = statsRouter;
