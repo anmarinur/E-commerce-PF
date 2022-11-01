@@ -4,13 +4,17 @@ import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories } from '../../../redux/actions'
 
 export default function Categories() {
 
 
+    const dispatch = useDispatch();
     const [categories, setCategories] = React.useState(0);
     const { getAccessTokenSilently } = useAuth0();
     const [id, setId] = React.useState();
+    const categoriesAll = useSelector(state => state.categories);
 
     const [open, setOpen] = React.useState(false);
 
@@ -20,8 +24,8 @@ export default function Categories() {
     };
 
     React.useEffect(() => {
-        getAllCategories()
-    }, [])
+        dispatch(getCategories())
+    }, [dispatch])
 
     const getAllCategories = async () => {
         const result = await axios.get('/category')
@@ -41,31 +45,31 @@ export default function Categories() {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            })           
+            })
         } catch (error) {
 
         }
         setOpen(false)
-        getAllCategories()
+        dispatch(getCategories())
     }
 
 
     return (
         <div className='container-fluid mt-4'>
             <div className="row">
-                <div className="col-12">
-                    <table className='table'>
+                <div className="col-12 bg-light border border-secondary px-2 rounded shadow">
+                    <table className='table  table-hover text-center'>
                         <thead>
                             <tr>
-                                <th className='fw-semibold fs-5'>Id</th>
-                                <th className='fw-semibold fs-5'>Name</th>
+                                <th className='fw-semibold fs-6'>Id</th>
+                                <th className='fw-semibold fs-6'>Category</th>
                                 <th><Link to='/Dashboard/Categories/Create' className="btn btn-sm btn-info fw-bold"><i className="me-2 fa-solid fa-plus"></i>New Category</Link></th>
                             </tr>
                         </thead>
                         <tbody>
 
                             {
-                                categories !== 0 ? categories.map(category =>
+                                categoriesAll !== 0 ? categoriesAll.map(category =>
                                 (
                                     <tr key={category.id}>
                                         <td className="fw-bold">{category.id}</td>
@@ -90,19 +94,20 @@ export default function Categories() {
                 </div>
             </div>
             <Popup open={open} closeOnDocumentClick onClose={closeModal} >
-                <div className="row">
+                <div className="row border border-dark rounded py-4 m-0">
+                    <div className="col-12 text-center py-4 text-dark">
+                        <i class="fa-solid fa-circle-question fa-4x"></i>
+                    </div>
                     <div className="col-12">
-                        <h3 className="text-danger text-center font-weight-bold">Are you sure to delete the category?</h3>
+                        <h5 className="text-dark text-center font-weight-bold py-3">Are you sure to delete the category?</h5>
                     </div>
                     <div className="col-12 text-center">
                         <div class="btn-group mx-auto" role="group" aria-label="Basic example">
-                            <button onClick={() => deleteOnClick(id) } type="button" class="btn btn-success">Yes</button>
-                            <button type="button" class="btn btn-danger">No</button>
+                            <button onClick={() => deleteOnClick(id)} type="button" class="btn btn-success fs-6"> <i className="fa-solid fa-square-check fa-xl me-2"></i> Yes</button>
+                            <button onClick={() => setOpen(false)} type="button" class="btn btn-danger fs-6"> <i className="fa-solid fa-square-xmark fa-xl me-2"></i> No</button>
                         </div>
                     </div>
                 </div>
-
-
             </Popup>
         </div>
     )
