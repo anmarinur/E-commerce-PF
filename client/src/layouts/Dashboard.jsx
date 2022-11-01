@@ -8,6 +8,7 @@ import AdminOrderContainer from '../components/Dashboard/AdminOrders/AdminOrderC
 import FormCreate from '../components/Dashboard/Products/FormCreate';
 import Update from '../components/Dashboard/Products/Update';
 import UsersList from '../components/Dashboard/UsersList/UsersList'
+import DoughnutChart from '../components/Dashboard/Charts/DoughnutChart';
 
 const Dashboard = () => {
 
@@ -19,6 +20,9 @@ const Dashboard = () => {
                     <Sidebar />
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         <Switch>
+                            <Route exact path="/Dashboard">
+                                <DoughnutChart />
+                            </Route>
                             <Route exact path="/Dashboard/Products">
                                 <ProductsTable />
                             </Route>
