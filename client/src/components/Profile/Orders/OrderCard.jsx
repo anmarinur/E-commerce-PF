@@ -52,15 +52,15 @@ const OrderCard = () => {
         <div>
             <div className='col-12 mb-3 '>
                 { typeof userOrders === 'object' ? userOrders.map(order =>
-                    <div key={order.id} style={ {backgroundColor : '#EAEAEA'} } className="card border-secondary p-2 shadow-md mb-5">
+                    <div key={order.id} style={ {backgroundColor : '#FDEDEC'} } className="card shadow border-gray p-2 mb-5">
                         <div className="row">
                             {/* Order ID */}
-                            <div className="col-7">
-                                <p className=' text-sm fw-semibold  bg-danger text-white px-2 w-25 text-center rounded'>Order ID: {order.id} </p>
+                            <div className="col-xl-6 col-sm-4 text-center mx-auto py-2">
+                                <span className=' text-sm fw-semibold  bg-danger text-white px-4 rounded'>ID: {order.id} </span>
                             </div>
                             {/* Order Status */}
-                            <div className="col-5 text-danger fs-6 fw-bold">
-                                <p> Order status: 
+                            <div className="col-xl-6 col-sm-8 text-danger fs-6 fw-bold text-center py-2">
+                                <p> status: 
                                     { order.status==='created' && ( <> <span style={ {backgroundColor : '#000000'} } className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-cart-shopping"></i> { order.status }</span> </> )}
                                     { order.status==='pending' && ( <> <span style={ {backgroundColor : '#facc25'} }  className=" text-black text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-spinner"></i> { order.status }</span> </> )}
                                     { order.status==='in process' && ( <> <span style={ {backgroundColor : '#2967e3'} }  className=" text-white text-uppercase  py-1 px-2 rounded"> <i className="fa-solid fa-box-open"></i> { order.status }</span> </> )}
@@ -77,7 +77,7 @@ const OrderCard = () => {
                                         Shipping Information
                                     </span>
                                     <div className="row m-2">
-                                            <div className="col-6 mt-1"><span>{order.shipping_address}</span></div>
+                                            <div className="col-12 mt-1"><span>{order.shipping_address}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@ const OrderCard = () => {
                                             )}
                                         </div>
                                 </div>
-                                        {order.status==='created' && <button value={order.id} className="mx-3 mt-3 fs-6 px-3 badge rounded bg-warning text-dark" onClick={(e) => payment(e.target.value)}>
+                                        {order.status==='created' && <button value={order.id} className="mx-3 mt-3 fs-6 px-3 rounded btn btn-warning fw-bold text-dark" onClick={(e) => payment(e.target.value)}>
                                             Continue payment process
                                         </button>}
                                         {order.status==='received' && <AddComment products={order.Products} email={userEmail} idOrder={order.id}/>}
