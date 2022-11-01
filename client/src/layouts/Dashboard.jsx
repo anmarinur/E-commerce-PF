@@ -11,6 +11,7 @@ import UsersList from '../components/Dashboard/UsersList/UsersList'
 import DoughnutChart from '../components/Dashboard/Charts/DoughnutChart';
 import Categories from '../components/Dashboard/Categories/Categories';
 import FormCategory from '../components/Dashboard/Categories/FormCategory';
+import PolarAreaChart from '../components/Dashboard/Charts/PolarAreaChart';
 
 const Dashboard = () => {
 
@@ -23,7 +24,10 @@ const Dashboard = () => {
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         <Switch>
                             <Route exact path="/Dashboard">
-                                <DoughnutChart />
+                                <div  className='d-flex justify-content-center align-items-center'>
+                                    <DoughnutChart />
+                                    <PolarAreaChart />
+                                </div>
                             </Route>
                             <Route exact path="/Dashboard/Products">
                                 <ProductsTable />

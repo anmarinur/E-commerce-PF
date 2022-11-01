@@ -65,8 +65,8 @@ export default function DoughnutChart(){
     }, [stats]);
 
     return (
-        <div style={{width:"500px", margin:"auto"}}>
-            <h3 style={{textAlign: "center"}}>Products by category</h3>
+        <div style={{width:"45%", padding:"5px"}}>
+            <h3 style={{fontSize: "1rem", fontWeight: "bold", textAlign: "center"}}>PRODUCTS BY CATEGORY</h3>
             {stats &&
             <Doughnut data={stats} />
             }
