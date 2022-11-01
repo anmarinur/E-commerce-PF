@@ -8,7 +8,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 export default function MyFavorites() {
     const { user, getAccessTokenSilently } = useAuth0();
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState('');
     const dispatch = useDispatch();
     
     useEffect(() => {
@@ -57,7 +57,8 @@ export default function MyFavorites() {
                 <h3>MyFavorites</h3>
                 <div className="row">
                     <div className="col-12">
-                        {products.length !==0 ? products.map(product =>(
+                        {products.length === 0  && products && ( <p>No have products favourites</p> )}
+                        {products ? products.map(product =>(
                             <Link  to={`/product/${product.id}`} key={product.id} className="card mb-3 text-decoration-none text-dark p-2">
                                 <div className="row g-0 justify-content">
                                     <div className="col-xl-3 col-md-4 col-sm-4 col-4">
