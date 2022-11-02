@@ -63,7 +63,6 @@ export default function Coment({ id, rating, comment, name }) {
 
   return (
     <div>
-      <Card style={{ width: '500px', margin: '30px' }}>
         <Card.Body>
           <Card.Title>{name}</Card.Title>
 
@@ -79,7 +78,6 @@ export default function Coment({ id, rating, comment, name }) {
             <Button className="m-3 fw-bold text-danger" variant="light" onClick={() => deleteP(id)}>X</Button>
           </div> */}
         </Card.Body>
-      </Card>
     </div>
   )
 }
