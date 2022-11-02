@@ -1,7 +1,48 @@
 import React from 'react';
+import Popup from 'reactjs-popup';
+import { useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios'
+import Table from 'react-bootstrap/Table';
+import { useHistory } from 'react-router-dom';
 
 const AdminOrderCard = ({ order,updateStatus,availableStatus }) => {
 
+    const history = useHistory();
+    const [open, setOpen] = useState(false);
+    const [orderById, setOrderById] = useState('')
+    const [user, setUser] = useState('')
+    const closeModal = () => {
+        setOpen(false)
+        setOrderById('')
+    };
+    const { getAccessTokenSilently } = useAuth0();
+
+    async function getOrder() {
+        const id = order.id;
+        const token = await getAccessTokenSilently()
+        try {
+            setOpen(o => !o)
+            let result = await axios.get(`/order/id/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setOrderById(result.data)
+            let userName = await axios.get(`/user/${order.user_email}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(userName.data)
+        } catch (error) {
+            console.log("getOrderById Error:", error)
+        }
+    }
+
+    function handleClick(id) {
+        history.push(`/product/${id}`)
+    }
 
     return (
         <div className="col-12">
@@ -34,7 +75,41 @@ const AdminOrderCard = ({ order,updateStatus,availableStatus }) => {
                                                     <option value={status}>{status}</option> : null
                                                         )}
                                                 </select>
-                                    <button className="btn btn-info text-white mt-3"> <i class="me-2 fa-solid fa-eye"></i>View </button>
+                                    <button type="button" className="btn btn-success my-2" onClick={() => getOrder()}>View detail</button>
+                                    <Popup open={open} closeOnDocumentClick onClose={closeModal}>
+                                        <div className="modal d-block position-relative">
+                                            <button type="button" className=" close btn btn-dark mb-2" onClick={closeModal}>Close</button>
+                                            <p className='text-center fw-bold my-0'>Order #{order.id}</p>
+                                            <p className='text-center fw-bold my-0'>{user.name}</p>
+                                            <p className='text-center fw-bold my-0'>{user.email}</p>
+                                            <p className='text-center fw-bold'>Tel. {user.phone}</p>
+                                            <Table striped bordered hover responsive="sm">
+                                                <thead>
+                                                    <tr className='bg-danger text-white'>
+                                                        <th>Product id</th>
+                                                        <th>Brand</th>
+                                                        <th colSpan={2}>Name</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {typeof orderById.Products === 'object' ? orderById.Products.map((el) => {
+                                                        return(
+                                                            <tr key={el.id} role="button" onClick={() => handleClick(el.id)}>
+                                                                <td>{el.id}</td>
+                                                                <td>{el.brand}</td>
+                                                                <td colSpan={2}>{el.name}</td>
+                                                                <td>$ {el.price}</td>
+                                                                <td>{el.OrderDetail.units}</td>
+                                                            </tr>
+                                                        )
+                                                    }) : <h4 className="dropdown-item">No orders</h4>}  
+                                                </tbody>
+                                            </Table>
+                                            <p className='text-center fw-bold'>Total order: $ {order.total_payment}</p>
+                                        </div>
+                                    </Popup>
                                 </div>
                             </div>
                         </div>
