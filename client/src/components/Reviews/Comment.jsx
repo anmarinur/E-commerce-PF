@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 
-export default function Coment({ id, rating, comment, name }) {
+export default function Coment({ id, rating, comment, name, image }) {
 
   //const [open, setOpen] = useState(false);
   //const reviews = useSelector(state => state.reviews[0].Reviews);
@@ -65,6 +65,7 @@ export default function Coment({ id, rating, comment, name }) {
     <div>
       <Card style={{ width: '500px', margin: '30px' }}>
         <Card.Body>
+          <img src={image} alt="foto" style={{width: "3rem", borderRadius: "10px"}}/>
           <Card.Title>{name}</Card.Title>
 
           <div class="d-flex flex-row">

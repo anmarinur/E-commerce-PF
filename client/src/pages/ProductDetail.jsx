@@ -191,6 +191,7 @@ export default function ProductDetail(props) {
                   <Comment
                     rating={review.rating}
                     comment={review.comment}
+                    image={review.image}
                     id={review.id}
                   />
 

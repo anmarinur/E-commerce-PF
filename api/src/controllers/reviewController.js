@@ -1,4 +1,6 @@
 const { Product, Review } = require("../db.js");
+const { uploadImage } = require('../utils/cloudinary.js');
+
 
 var newComment = false;
 
@@ -43,7 +45,14 @@ const getComments = async (req, res) => {
 };
 
 const postComments = async (req, res) => {
-  const { email, comment, rating, idProduct, idOrder } = req.body;
+  const { image, commentRate } = req.body;
+  const { email, comment, rating, idProduct, idOrder } = commentRate;
+  let img;
+  if(image) {
+    let imageUploaded = await uploadImage(image);
+    img  = imageUploaded.secure_url;
+  }
+
   try {
 
    await Review.create({
@@ -51,7 +60,8 @@ const postComments = async (req, res) => {
     comment: comment,
     rating: rating,
     orderId: idOrder,
-    ProductId: idProduct
+    ProductId: idProduct,
+    image: img
    });
 
    newComment = true;
