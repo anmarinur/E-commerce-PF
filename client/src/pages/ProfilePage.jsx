@@ -81,7 +81,8 @@ export default function ProfilePage() {
 
 
             </div>
-            <Footer />
+            <div className='fixed-bottom'><Footer /></div>
+            
         </>
     )
 }
