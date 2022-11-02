@@ -12,10 +12,12 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 
-export default function Coment({ id, rating, comment, name, image }) {
 
-  //const [open, setOpen] = useState(false);
-  //const reviews = useSelector(state => state.reviews[0].Reviews);
+export default function Coment({ id, rating, comment, name, createdAt,image }) {
+
+
+  const [open, setOpen] = useState(false);
+  const reviews = useSelector(state => state.reviews[0].Reviews);
 
 
   const stars = []
@@ -27,22 +29,22 @@ export default function Coment({ id, rating, comment, name, image }) {
     stars.push(<Star state={false} size='small' />)
   }
 
-  //const [admin, setAdmin] = useState();
+  const [admin, setAdmin] = useState();
   const dispatch = useDispatch();
-  //const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
 
 
-  /* useEffect(() => {
+  useEffect(() => {
     isAdmin(getAccessTokenSilently).then((res) => setAdmin(res)).catch(() => setAdmin(false));
     if (admin === false) {
       setOpen(o => !o)
     }
     if (reviews.length === 0) dispatch(getReviews());
-  }, [admin]); */
+  }, [admin]);
 
 
 
-  /* const deleteP = async (id) => {
+  const deleteP = async (id) => {
     const token = await getAccessTokenSilently();
     try {
       await axios.delete(`/review/${id}`, {
@@ -57,17 +59,34 @@ export default function Coment({ id, rating, comment, name, image }) {
     catch (error) {
     }
     dispatch(getReviews());
-  } */
+  }
 
 
 
   return (
-    <div>
+
+    <div className='col-xl-6'>
         <Card.Body>
           <img src={image} alt="foto" style={{width: "3rem", borderRadius: "10px"}}/>
           <Card.Title>{name}</Card.Title>
 
-          <div class="d-flex flex-row">
+
+          {admin ?
+            <button onClick={() => deleteP(id)} type="button" className="btn-close" style={{ float: 'right' }} aria-label="Close"></button> : null
+          }
+          <div className="d-flex">
+            <img
+              src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+              alt="avatar"
+              style={{ maxWidth: '4em', maxHeight: '4em' }}
+            />
+            <div className="row">
+              <p className='ms-4 text-start my-0'>User Name </p>
+              <p className='ms-4 text-start my-0'>{ new Date(createdAt).toLocaleString() } </p>
+            </div>
+          </div>
+
+          <div className="d-flex flex-row px-2 pt-3">
             {stars.map((star) => {
               return star
             })}
