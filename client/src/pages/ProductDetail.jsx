@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addCartGlobal, getDetails, getTotalFav } from "../redux/actions";
+import { addCartGlobal, getCategories, getDetails, getTotalFav } from "../redux/actions";
 import { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -29,14 +29,16 @@ export default function ProductDetail(props) {
   const [admin, setAdmin] = useState();
   const productDetail = useSelector((state) => state.details)
   const productReviews = useSelector((state) => state.reviews[0])
+  const categories = useSelector((state) => state.categories)
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   
-
+  console.log(categories)
 
 
   useEffect(() => {
     dispatch(getDetails(id))
     dispatch(getReviews(id))
+    dispatch(getCategories())
 
     isAdmin(getAccessTokenSilently)
       .then((res) => setAdmin(res))
@@ -111,6 +113,11 @@ export default function ProductDetail(props) {
 
 }
 
+  function nameCategory(id) {
+    const categoryName = categories.find((category) => category.id === id)
+    return categoryName.category;
+  }
+
   /* const deleteP = async (review) => {
     const token = await getAccessTokenSilently();
     try {
@@ -167,7 +174,7 @@ export default function ProductDetail(props) {
                 </p>
                 <p className="text-start text-muted start lh-1 mb-4">
                   <b className="text-danger">Category: </b>
-                  {productDetail.CategoryId}
+                  {nameCategory(productDetail.CategoryId)}
                 </p>
                 <p className="text-start text-muted start lh-1 fw-semibold mb-4">
                   <b className="text-danger">In Stock:</b> {productDetail.stock}
