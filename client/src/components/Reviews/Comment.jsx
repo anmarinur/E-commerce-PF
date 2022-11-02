@@ -12,7 +12,9 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 
-export default function Coment({ id, rating, comment, name, createdAt }) {
+
+export default function Coment({ id, rating, comment, name, createdAt,image }) {
+
 
   const [open, setOpen] = useState(false);
   const reviews = useSelector(state => state.reviews[0].Reviews);
@@ -62,10 +64,12 @@ export default function Coment({ id, rating, comment, name, createdAt }) {
 
 
   return (
+
     <div className='col-xl-6'>
- 
-      <Card >
         <Card.Body>
+          <img src={image} alt="foto" style={{width: "3rem", borderRadius: "10px"}}/>
+          <Card.Title>{name}</Card.Title>
+
 
           {admin ?
             <button onClick={() => deleteP(id)} type="button" className="btn-close" style={{ float: 'right' }} aria-label="Close"></button> : null
@@ -94,7 +98,6 @@ export default function Coment({ id, rating, comment, name, createdAt }) {
             <Button className="m-3 fw-bold text-danger" variant="light" onClick={() => deleteP(id)}>X</Button>
           </div> */}
         </Card.Body>
-      </Card>
     </div>
   )
 }

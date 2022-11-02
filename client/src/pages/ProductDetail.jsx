@@ -324,14 +324,34 @@ export default function ProductDetail(props) {
           {/* <div className="w-70 mx-auto">
             {productReviews && productReviews.Reviews.length > 0 ? (
               productReviews.Reviews.map((review) => (
-                <>
+
+                <Card style={{ width: '500px', margin: '30px' }}>
+                  {admin ? 
+                  <Button
+                    className="fw-bold text-danger"
+                    variant="light"
+                    onClick={() => deleteP(review.id)}
+                    style={{
+                      'border': '1px solid #cfcece',
+                      'border-radius': '18px',
+                      'cursor': 'pointer',
+                      'display': 'block',
+                      'font-size': '24px',
+                      'padding': '2px 5px',
+                      'position': 'absolute',
+                      'right': '-10px',
+                      'top': '-10px',}}
+                  >×</Button> : null
+                  }
                   <Comment
                     rating={review.rating}
                     comment={review.comment}
+                    image={review.image}
                     id={review.id}
                   />
-                </>
-              ))
+                </Card>
+               ))
+
             ) : (
               <h4>There are no comments</h4>
             )}
