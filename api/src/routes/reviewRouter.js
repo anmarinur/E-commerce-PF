@@ -5,13 +5,15 @@ const { getComments,
   postComments,
   deleteComments,
 } = require("../controllers/reviewController");
+const fileUpload = require('../middlewares/fileUpload.js');
+
 
 
 const reviewRouter = Router();
 
 reviewRouter.get("/:id", getComments);
 
-reviewRouter.post("/", login, postComments);
+reviewRouter.post("/", login, fileUpload, postComments);
 
 reviewRouter.delete("/:id", login, admin, deleteComments);
 
