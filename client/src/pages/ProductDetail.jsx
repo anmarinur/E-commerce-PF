@@ -32,7 +32,7 @@ export default function ProductDetail(props) {
   const categories = useSelector((state) => state.categories)
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   
-  console.log(categories)
+
 
 
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function ProductDetail(props) {
 
   function nameCategory(id) {
     const categoryName = categories.find((category) => category.id === id)
-    return categoryName.category;
+    return categoryName && categoryName.category;
   }
 
   /* const deleteP = async (review) => {
@@ -187,12 +187,12 @@ export default function ProductDetail(props) {
                   <div className="d-flex flex-row justify-content-center">
                     {productReviews
                       ? [...Array(Math.round(productReviews.rating))].map(
-                        (el, i) => <Star key={i.id} state={true} size="big" />
+                        (el, i) => <Star key={i} state={true} size="big" />
                       )
                       : ""}
                     {productReviews
                       ? [...Array(5 - Math.round(productReviews.rating))].map(
-                        (el, i) => <Star  key={i.id} state={false} size="big" />
+                        (el, i) => <Star  key={i} state={false} size="big" />
                       )
                       : ""}
                   </div>
