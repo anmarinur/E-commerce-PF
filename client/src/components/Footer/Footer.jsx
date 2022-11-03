@@ -3,7 +3,7 @@ import React from "react";
 export default function Footer(){
     return(
         <div className="container-fluid" style={{ backgroundColor: "#a52323"}}>
-            <footer className="py-3 my-4">
+            <footer className="py-3 mt-4">
                 <ul className="nav justify-content-center pb-3 mb-3">
                     <li className="nav-item "><a href={"/"} className="nav-link px-2 text-white">Home</a></li>
                     <li className="nav-item "><a href={`/privacy`} className="nav-link px-2 text-white">Privacy Policies</a></li>

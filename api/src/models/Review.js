@@ -20,6 +20,12 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      image:{
+        type: DataTypes.STRING,
+        validate: {
+          isUrl: true
+        }
+      },
       rating: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -28,6 +34,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      public_id: {
+        type: DataTypes.STRING,
+        unique: true
+      }
     },
     {
       timestamps: true,
