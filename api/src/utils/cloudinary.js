@@ -17,7 +17,7 @@ const uploadImage = async (filePath)=>{
 }
 
 const deleteImage = async (publicId)=>{
-    return await cloudinary.uploader.destroy(publicId);
+    return await cloudinary.uploader.destroy(`tecnoshop/${publicId}`);
 }
 
 module.exports= {

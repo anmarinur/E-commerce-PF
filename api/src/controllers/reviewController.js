@@ -1,5 +1,5 @@
 const { Product, Review } = require("../db.js");
-const { uploadImage } = require('../utils/cloudinary.js');
+const { uploadImage, deleteImage } = require('../utils/cloudinary.js');
 
 
 var newComment = false;
@@ -48,9 +48,11 @@ const postComments = async (req, res) => {
   const { image, commentRate } = req.body;
   const { email, comment, rating, idProduct, idOrder } = commentRate;
   let img;
+  let public_id
   if(image) {
     let imageUploaded = await uploadImage(image);
     img  = imageUploaded.secure_url;
+    public_id  = imageUploaded.public_id.split('/')[1];
   }
 
   try {
@@ -61,7 +63,8 @@ const postComments = async (req, res) => {
     rating: rating,
     orderId: idOrder,
     ProductId: idProduct,
-    image: img
+    image: img,
+    public_id: public_id
    });
 
    newComment = true;
@@ -79,6 +82,7 @@ try {
  
  const review = await Review.findByPk(id);
  await Review.destroy({ where: { id } });
+ await deleteImage(review.public_id);
  
  const ratingDB = await Review.findAndCountAll({
    where: { ProductId: review.ProductId },
