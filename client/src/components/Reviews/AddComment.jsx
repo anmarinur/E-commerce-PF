@@ -91,14 +91,9 @@ export default function AddComment({products, email, idOrder}) {
             setPreview(reader.result)
         }
     }
-
-    const handleSubmitImg= (e)=>{
-        e.preventDefault();
-        if(!preview) return;
-        setLoading(true);
-    }
-
+    
     async function onSubmit() {
+      setLoading(true);
       const token = await getAccessTokenSilently();
   
       const comments = await axios.get('/review/' + commentRate.idProduct);
@@ -131,6 +126,8 @@ export default function AddComment({products, email, idOrder}) {
               progress: undefined,
               theme: "light",
               });
+              
+      setLoading(false);
     }
 
   return(
@@ -162,15 +159,16 @@ export default function AddComment({products, email, idOrder}) {
             </Form.Group>
           </Form>
           
-          {location.pathname==="/profile/myOrders" ? 
+          {loading
+          ?<img className='mx-0 my-0' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' />
+          :location.pathname==="/profile/myOrders" ? 
                     <>
                     <p className='col-4'>Upload a photo of your product:</p>
                     <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
                     <label for="image" className='m-2 btn btn-secondary col-3'>Select Photo</label>
                     <img style={{width: "10rem"}} src={preview ||"https://removal.ai/wp-content/uploads/2021/02/no-img.png" } alt="photo" />
                     </>
-            : <></>
-            }
+          :<></>}
 
           <div className="d-flex justify-content-around py-3 w-50 mx-auto">
             <Button disabled={errors.comment || errors.idProduct ? true : false} variant="danger" type="submit"  onClick={onSubmit}>Submit</Button>{' '}

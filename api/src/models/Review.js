@@ -34,6 +34,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      public_id: {
+        type: DataTypes.STRING,
+        unique: true
+      }
     },
     {
       timestamps: true,
