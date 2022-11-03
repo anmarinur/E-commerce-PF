@@ -1,4 +1,4 @@
-import { GET_CATEGORIES, GET_USER, GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART, DELETE_CART, CLEAR_CART, GET_ITEMS_LOCAL, SET_TOTAL_PAYMENT, SET_CURRENT_ORDER, SET_PROFILE_IMG, GET_TOTAL_FAV, GET_REVIEWS,DELETE_REVIEWS } from "./actions";
+import { SET_MODAL, GET_CATEGORIES, GET_USER, GET_PRODUCTS, GET_DETAILS, DELETE_PRODUCT, ADD_CART, DELETE_CART, CLEAR_CART, GET_ITEMS_LOCAL, SET_TOTAL_PAYMENT, SET_CURRENT_ORDER, SET_PROFILE_IMG, GET_TOTAL_FAV, GET_REVIEWS,DELETE_REVIEWS } from "./actions";
 
 const stateInitial = {
     products: {},
@@ -12,6 +12,7 @@ const stateInitial = {
     categories: [],
     totalFav: 0,
     reviews: {},
+    modalShow: true
 };
 
 export default function rootReducer(state = stateInitial, action) {
@@ -86,11 +87,15 @@ export default function rootReducer(state = stateInitial, action) {
                 ...JSON.parse(JSON.stringify(state)),
                 categories: action.payload,
             }
-            
         case GET_TOTAL_FAV:
             return {
                 ...JSON.parse(JSON.stringify(state)),
                 totalFav: action.payload,
+            }
+        case SET_MODAL:
+            return {
+                ...JSON.parse(JSON.stringify(state)),
+                modalShow: action.payload,
             }
         default:
             return state;
