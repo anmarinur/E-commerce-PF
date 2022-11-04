@@ -3,20 +3,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {  getOffers } from "../../../redux/actions"; 
+import { useState } from "react";
 
 export default function Offers() {
   const dispatch = useDispatch();
 
   const allOffers = useSelector((state) => state.offers);
+  const [allproducts, setAllProducts] = useState([])
 
   React.useEffect(() => {
     dispatch(getOffers());
   }, [dispatch]);
 
-  
   const getProducts = async (disc) => {
-    const result = await axios.get(`/product?disc=${disc}`)
-    return result.data.products;
+   try {
+     const result = await axios.get(`/product?disc=${disc}`)
+     setAllProducts(result.data.products);             
+   } catch (error) {
+    console.log(error)
+   }    
   };
 
   return (
@@ -48,9 +53,9 @@ export default function Offers() {
                   <td>{o.startDay}</td>
                   <td>{o.endDay}</td>
                   <td>
-                    {/* {getProducts(o.id)?.map((e) => (
-                      <p>{e.name}</p>
-                    ))}  */}
+                    {getProducts(o.id) && allproducts.map((e) => (
+                      <p key={e.id}>{e.name}</p>
+                    ))} 
                   </td>
                 </tr>
               ))}
