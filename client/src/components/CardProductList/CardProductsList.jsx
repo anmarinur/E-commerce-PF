@@ -30,6 +30,7 @@ const CardProductsList = () => {
 
     function setPagePagination(n) {
         setPage(n)
+        window.scroll(0,0);
     }
     function setCategory(category) {
         setCategoryFilter(category);

@@ -113,11 +113,15 @@ export default function Home() {
     window.scroll(0,0);
   }
 
+  useEffect(()=>{
+    window.scroll(0,0);
+  }, []);
+
   return (
     <>
       <Nav />
       <Transition>
-        <CardProductsList />
+        <CardProductsList goUp={goUp} />
       </Transition>
       <Footer />
       <button style={{position: "fixed", right: 20, bottom: 20, transition: "0.5s" , scale: showUp}} 

@@ -1,7 +1,7 @@
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import logo from '../components/Nav/images/Logo_60x60.png'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
@@ -9,26 +9,31 @@ import emailjs from 'emailjs-com';
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Dropdown from 'react-bootstrap/Dropdown';
+import Transition from "../components/Transition/Transition";
 
 export default function Contact() {
-
+    
     const frmContact = {
         userName: '',
         userEmail: '',
         emailTitle:'',
         emailDetails:'' };
-
-    const [contact, setContact] = useState(frmContact);
-    const [store, setStore] = useState('')
-
-    const handleChange = e => { 
-		const {name,value} = e.target;
-		setContact({...contact, [name]:value}); 
-    };
-
-    const handleClick = e =>{
-	    e.preventDefault();
-        // emailjs.init('px6i5Eu00A48ZrODj');
+        
+        const [contact, setContact] = useState(frmContact);
+        const [store, setStore] = useState('')
+        
+        useEffect(()=>{
+            window.scroll(0,0);
+        }, []);
+        
+        const handleChange = e => { 
+            const {name,value} = e.target;
+            setContact({...contact, [name]:value}); 
+        };
+        
+        const handleClick = e =>{
+            e.preventDefault();
+            // emailjs.init('px6i5Eu00A48ZrODj');
 		emailjs.send('default_service','template_mhmbvwk', contact, 'px6i5Eu00A48ZrODj')
 		.then((response) => {
             setContact(frmContact);
@@ -56,6 +61,7 @@ export default function Contact() {
 		});
    }
 
+
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY
     })
@@ -65,6 +71,7 @@ export default function Contact() {
     return (
         <>
             <Nav />
+            <Transition>
             <div className="container my-5">
                 <h2 className="fw-bold text-danger text-center my-2 fs-1">Contact Us</h2>
                 <div className="d-flex flex-row flex-fill justify-content-around my-5">
@@ -166,6 +173,7 @@ export default function Contact() {
                 </div>
             </div>
             <Map />
+            </Transition>
             <Footer />
         </>
     );

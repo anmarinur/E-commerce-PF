@@ -8,11 +8,19 @@ import Estefano from "./Imagenes/Estefano.jpeg";
 import Anderson from "./Imagenes/Anderson.jpeg";
 import Enrique from "./Imagenes/Enrique.jpeg"
 import Juan from "./Imagenes/Juan.jpeg"
+import Transition from "../../components/Transition/Transition";
+import { useEffect } from "react";
 
 export default function Developers() {
+
+    useEffect(()=>{
+        window.scroll(0,0);
+    }, []);
+
     return (
         <div>
             <Nav />
+            <Transition>
             <div class="container mt-4">
                 <h1>Developers</h1><br />
 
@@ -299,6 +307,7 @@ export default function Developers() {
                 </Card>
 
             </div>
+            </Transition>
             <Footer />
         </div>
 
