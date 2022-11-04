@@ -15,6 +15,7 @@ import PolarAreaChart from '../components/Dashboard/Charts/PolarAreaChart';
 import ImageProduct from '../components/Dashboard/Products/ImageProduct';
 import Offers from '../components/Dashboard/Offers/offers';
 import FormOffers from '../components/Dashboard/Offers/FormOffers';
+import UpdateOffers from '../components/Dashboard/Offers/UpdateOffers';
 
 const Dashboard = () => {
 
@@ -72,6 +73,9 @@ const Dashboard = () => {
                 </Route>
                 <Route exact path="/Dashboard/Offers/create">
                   <FormOffers />
+                </Route>
+                <Route exact path="/Dashboard/Offers/update/:id">
+                  <UpdateOffers />
                 </Route>
               </Switch>
             </main>

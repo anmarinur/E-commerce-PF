@@ -34,7 +34,8 @@ export default function FormOffers() {
  const [category, setCategory] = useState('');
  const [brands, setBrands] = useState('');
  const [allbrands, setAllBrands] = useState([]);
- const [allproducts, setAllProducts] = useState([])
+ const [allproducts, setAllProducts] = useState([]);
+ const [prods, setProds] = useState([]);
 
  const [admin, setAdmin] = useState();
  const { getAccessTokenSilently } = useAuth0();
@@ -105,6 +106,7 @@ export default function FormOffers() {
        products: [...input.products, e.target.id],
      })
    );
+   setProds([...prods, e.target.name]);
  }
 
  async function handleClick (e){
@@ -130,9 +132,13 @@ export default function FormOffers() {
   history.push('/dashboard/offers')
  }
 
+ function handleDelete(e){
+  
+ }
 
  return (
    <div>
+     <h1 className="text-center py-2  text-danger">Create an offer</h1>
      <Form className="w-75 mx-auto">
        <Form.Group className="mb-3" controlId="offerEvent">
          <Form.Label>Event Name</Form.Label>
@@ -316,24 +322,40 @@ export default function FormOffers() {
              </Accordion.Body>
            </Accordion.Item>
          </Accordion>
-         
        </Form.Group>
+       <Form.Group className="mb-3" controlId="offerSelected">
+         <Form.Label>Selected items:</Form.Label>
+         <ul class="list-group list-group-flush">
+           {prods &&
+             prods.map((e) => (
+               <li class="list-group-item">
+                 <i>{e}</i>              
+                 {/* <button
+                   type="button"
+                   onClick={() => handleDelete(e)}
+                 >
+                   Delete item
+                 </button> */}
+               </li>
+             ))}
+         </ul>
+       </Form.Group>
+       <Button
+         variant="danger"
+         type="submit"
+         onClick={(e) => handleClick(e)}
+         disabled={
+           errors.event ||
+           errors.discount ||
+           errors.startDay ||
+           errors.endDay ||
+           errors.products
+         }
+       >
+         Submit
+       </Button>{" "}
+       <ToastContainer />
      </Form>
-     <Button
-       variant="danger"
-       type="submit"
-       onClick={(e) => handleClick(e)}
-       disabled={
-         errors.event ||
-         errors.discount ||
-         errors.startDay ||
-         errors.endDay ||
-         errors.products
-       }
-     >
-       Submit
-     </Button>{" "}
-     <ToastContainer />
    </div>
  );
 }

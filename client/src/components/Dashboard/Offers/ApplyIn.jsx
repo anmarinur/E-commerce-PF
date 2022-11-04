@@ -16,7 +16,7 @@ export default function ApplyIn({ id }){
 
     return (
         <>
-            {products?.map(p=><p key={p.id} style={{lineHeight: 1}} className="my-0 p-0 d-flex">{p.name}</p>)}
+            {products?.map(p=><p key={p.id} className="my-0 p-0 d-flex-center">{p.name}</p>)}
         </>
     )
 }

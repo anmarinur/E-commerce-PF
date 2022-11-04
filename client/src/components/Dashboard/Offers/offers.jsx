@@ -4,16 +4,27 @@ import { useDispatch, useSelector } from "react-redux";
 import {  getOffers } from "../../../redux/actions"; 
 import ApplyIn from "./ApplyIn";
 import { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Offers() {
   const dispatch = useDispatch();
 
   const allOffers = useSelector((state) => state.offers);
-  const [allproducts, setAllProducts] = useState([])
 
   React.useEffect(() => {
     dispatch(getOffers());
   }, [dispatch]);
+
+  async function deleteOffer(id){
+   try{
+    await axios.delete(`/offer/${id}`);
+    toast.success("Offer deleted successfully");
+    dispatch(getOffers());
+   }catch(error){
+    toast.error('Error deleting an offer');
+   }
+  }
 
   return (
     <div className="container-fluid mt-4">
@@ -33,6 +44,7 @@ export default function Offers() {
               <th className="fw-semibold fs-6">Starts at</th>
               <th className="fw-semibold fs-6">Finishes at</th>
               <th className="fw-semibold fs-6">Apply in</th>
+              <th className="fw-semibold fs-6">Edit Offers</th>
             </tr>
           </thead>
           <tbody>
@@ -44,7 +56,29 @@ export default function Offers() {
                   <td>{o.startDay}</td>
                   <td>{o.endDay}</td>
                   <td>
-                    <ApplyIn id={o.id}/>
+                    <ApplyIn id={o.id} />
+                  </td>
+                  <td>
+                    <div
+                      className="btn-group"
+                      role="group"
+                      aria-label="Basic example"
+                    >
+                      <button
+                        onClick={() => deleteOffer(o.id)}
+                        type="button"
+                        className="btn btn-sm btn-danger"
+                      >
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                      <Link
+                        to={`/Dashboard/Offers/Update/${o.id}`}
+                        type="button"
+                        className="btn btn-sm btn-warning"
+                      >
+                        <i className="fa-solid fa-pen-to-square"></i>
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}
