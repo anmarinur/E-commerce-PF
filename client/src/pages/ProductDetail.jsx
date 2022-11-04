@@ -17,7 +17,10 @@ import { getReviews } from "../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import isAdmin from "../utils/isAdmin";
 import axios from "axios";
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 export default function ProductDetail(props) {
 
@@ -31,22 +34,34 @@ export default function ProductDetail(props) {
   const productReviews = useSelector((state) => state.reviews[0])
   const categories = useSelector((state) => state.categories)
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [open, setOpen] = useState(false);
+
+    const closeModal = () => {;
+        setOpen(false)
+        return;
+    };
   
-
-
-
+  const [images, setImages] = useState([])
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 0 },
+      items: 3,
+      slidesToSlide: 3 // optional, default to 1.
+    }
+  };
+  
   useEffect(() => {
     dispatch(getDetails(id))
     dispatch(getReviews(id))
     dispatch(getCategories())
+    getImages(id)
 
     isAdmin(getAccessTokenSilently)
       .then((res) => setAdmin(res))
       .catch(() => setAdmin(false));
-
-
   }, [dispatch, id])
 
+  
 
   const addCart = (e, product) => {
     e.preventDefault();
@@ -118,6 +133,16 @@ export default function ProductDetail(props) {
     return categoryName && categoryName.category;
   }
 
+  async function getImages(id){
+    try {
+      const result = await axios.get(`/image/${id}`);
+      setImages(result.data)
+    } catch (error) {
+      console.log("getImages Error:", error)
+    }
+  }
+
+
   /* const deleteP = async (review) => {
     const token = await getAccessTokenSilently();
     try {
@@ -166,6 +191,42 @@ export default function ProductDetail(props) {
                   className="rounded"
                   src={productDetail.image}
                 />
+                <Carousel
+                    swipeable={false}
+                    draggable={false}
+                    showDots={true}
+                    responsive={responsive}
+                    ssr={true} // means to render carousel on server-side.
+                    infinite={true}
+                    autoPlay={true}
+                    autoPlaySpeed={1000}
+                    keyBoardControl={true}
+                    customTransition="transform 800ms ease-in-out"
+                    transitionDuration={1000}
+                    containerClass="carousel-container"
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px"
+                    >
+                    {images ? images.map(i =>
+                      <div key={i.image} className="rounded"
+                                style={{
+                                  width: "auto",
+                                  height: "auto",
+                                  maxWidth: "10em",
+                                  maxHeight: "5em",
+                                  marginTop: "1em",
+                                  marginBottom: "1em",
+                                }}
+                                > 
+                                <Card.Img
+                                  src={i.image}
+                                  style={{
+                                    width: "auto",
+                                    maxHeight: "5em",
+                                  }}/>
+                      </div>
+                      ) : null}
+                  </Carousel>;
               </div>
               <div className="col-xl-6">
                 <h3 className="text-start fs-2 fw-semibold"> {productDetail.name}</h3>
