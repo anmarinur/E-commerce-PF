@@ -52,13 +52,12 @@ const deleteOffers = async (req, res)=>{
 }
 
 const deleteOfferById = async (req, res)=>{
-    const id = req.params;
+    const {id} = req.params;
     try {
         await Offer.destroy({
             where:{
-                ProductId: id
-            },
-            truncate:{ cascade: true}
+                id: id
+            }
         });
         res.json("Delete successfully");
     } catch (error) {
