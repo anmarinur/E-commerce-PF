@@ -97,7 +97,7 @@ export default function ImageProduct(){
             </div>
             <div>
                 {images?.length>0
-                ? images.map(img=><img onClick={()=>deleteImage(img.public_id)} className="m-1 img-thumbnail" style={{width:"10rem"}} src={img.image} alt="product"/>)
+                ? images.map(img=><div onClick={()=>deleteImage(img.public_id)} className="d-inline img-delete"><img className="m-1 img-thumbnail" style={{width:"10rem"}} src={img.image} alt="product"/></div>)
                 :<></>
             }
             </div>
