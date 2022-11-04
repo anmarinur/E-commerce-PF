@@ -34,14 +34,9 @@ export default function ProductDetail(props) {
   const productReviews = useSelector((state) => state.reviews[0])
   const categories = useSelector((state) => state.categories)
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [open, setOpen] = useState(false);
-
-    const closeModal = () => {;
-        setOpen(false)
-        return;
-    };
   
   const [images, setImages] = useState([])
+  const [showImage, setShowImage] = useState("")
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 0 },
@@ -136,7 +131,8 @@ export default function ProductDetail(props) {
   async function getImages(id){
     try {
       const result = await axios.get(`/image/${id}`);
-      setImages(result.data)
+      console.log(result.data)
+      setImages([{"image": productDetail.image}, ...result.data])
     } catch (error) {
       console.log("getImages Error:", error)
     }
@@ -189,7 +185,7 @@ export default function ProductDetail(props) {
                     marginBottom: "2em",
                   }}
                   className="rounded"
-                  src={productDetail.image}
+                  src={showImage}
                 />
                 <Carousel
                     swipeable={false}
@@ -217,6 +213,7 @@ export default function ProductDetail(props) {
                                   marginTop: "1em",
                                   marginBottom: "1em",
                                 }}
+                                onClick={() => setShowImage(i.image)}
                                 > 
                                 <Card.Img
                                   src={i.image}
