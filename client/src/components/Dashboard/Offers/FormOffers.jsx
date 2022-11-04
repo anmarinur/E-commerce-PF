@@ -316,7 +316,7 @@ export default function FormOffers() {
              </Accordion.Body>
            </Accordion.Item>
          </Accordion>
-         {allproducts?.map(p => <div>{p.name}</div>)}
+         
        </Form.Group>
      </Form>
      <Button
