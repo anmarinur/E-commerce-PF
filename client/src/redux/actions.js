@@ -16,6 +16,8 @@ export const GET_USER = "GET_USER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_TOTAL_FAV = "GET_TOTAL_FAV";
 export const GET_REVIEWS = "GET_REVIEWS";
+export const SET_MODAL = "SET_MODAL";
+
 //export const DELETE_REVIEWS = "DELETE_REVIEWS";
 
 
@@ -36,6 +38,13 @@ export const addCartGlobal = (item) => {
     return {
         type: ADD_CART,
         payload: item
+    }
+}
+
+export const setModal = (boolean) => {
+    return {
+        type: SET_MODAL,
+        payload: boolean
     }
 }
 

@@ -11,6 +11,8 @@ import CardProduct from "../components/CardProductList/CardProduct";
 import Modal from 'react-bootstrap/Modal';
 import logo from "../components/Nav/images/Logo.png";
 import CardBestRaitingProduct from "../components/Oferts/CardBestRaitingProduct";
+import { useDispatch, useSelector } from "react-redux";
+import { setModal } from "../redux/actions";
 
 
 export default function Home() {
@@ -20,17 +22,19 @@ export default function Home() {
   const searchParams = new URLSearchParams(location.search);
   let status = searchParams.get('status');
   let id = searchParams.get('id');
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [lastestProducts, setLastestProducts] = useState();
   const [bestRatingProducts, setBestRatingProducts] = useState();
+  const modalShow = useSelector(state=>state.modalShow); 
+  const dispatch = useDispatch();
   // ---------------------------
 
 
   useEffect(() => {
     getLastestProducts();
     getBestRatingProducts();
-
   }, [])
+
   const getLastestProducts = async () => {
     try {
       const result = await axios.get('/product/latest');
@@ -117,8 +121,8 @@ export default function Home() {
       className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`} 
       onClick={goUp}> <i class="fa-solid fa-angle-up"></i> </button>
       <Modal
-        show={show}
-        onHide={() => setShow(false)}
+        show={modalShow}
+        onHide={() => dispatch(setModal(false))}
         fullscreen={true}
         aria-labelledby="example-custom-modal-styling-title"
       >
