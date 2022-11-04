@@ -1,8 +1,8 @@
-import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {  getOffers } from "../../../redux/actions"; 
+import ApplyIn from "./ApplyIn";
 
 export default function Offers() {
   const dispatch = useDispatch();
@@ -12,12 +12,6 @@ export default function Offers() {
   React.useEffect(() => {
     dispatch(getOffers());
   }, [dispatch]);
-
-  
-  const getProducts = async (disc) => {
-    const result = await axios.get(`/product?disc=${disc}`)
-    return result.data.products;
-  };
 
   return (
     <div className="container-fluid mt-4">
@@ -48,9 +42,7 @@ export default function Offers() {
                   <td>{o.startDay}</td>
                   <td>{o.endDay}</td>
                   <td>
-                    {/* {getProducts(o.id)?.map((e) => (
-                      <p>{e.name}</p>
-                    ))}  */}
+                    <ApplyIn id={o.id}/>
                   </td>
                 </tr>
               ))}
