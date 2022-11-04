@@ -13,7 +13,7 @@ import Categories from '../components/Dashboard/Categories/Categories';
 import FormCategory from '../components/Dashboard/Categories/FormCategory';
 import PolarAreaChart from '../components/Dashboard/Charts/PolarAreaChart';
 import ImageProduct from '../components/Dashboard/Products/ImageProduct';
-import Offers from '../components/Dashboard/Offers/Offers';
+import Offers from '../components/Dashboard/Offers/offers';
 import FormOffers from '../components/Dashboard/Offers/FormOffers';
 
 const Dashboard = () => {
