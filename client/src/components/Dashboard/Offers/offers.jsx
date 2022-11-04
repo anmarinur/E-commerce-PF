@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getOffers } from "../../../redux/actions";
+import { getAllProducts, getOffers } from "../../../redux/actions"; 
 
 export default function Offers() {
   const dispatch = useDispatch();
