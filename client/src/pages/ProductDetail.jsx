@@ -49,13 +49,15 @@ export default function ProductDetail(props) {
     dispatch(getDetails(id))
     dispatch(getReviews(id))
     dispatch(getCategories())
-    getImages(id)
 
     isAdmin(getAccessTokenSilently)
       .then((res) => setAdmin(res))
       .catch(() => setAdmin(false));
   }, [dispatch, id])
 
+  useEffect(()=>{
+    getImages(id)
+  },[id, productDetail]);
   
 
   const addCart = (e, product) => {
@@ -131,8 +133,8 @@ export default function ProductDetail(props) {
   async function getImages(id){
     try {
       const result = await axios.get(`/image/${id}`);
-      console.log(result.data)
-      setImages([{"image": productDetail.image}, ...result.data])
+      setShowImage(productDetail.image);
+      setImages([{ image: productDetail.image }, ...result.data]);
     } catch (error) {
       console.log("getImages Error:", error)
     }
@@ -223,7 +225,7 @@ export default function ProductDetail(props) {
                                   }}/>
                       </div>
                       ) : null}
-                  </Carousel>;
+                  </Carousel>
               </div>
               <div className="col-xl-6">
                 <h3 className="text-start fs-2 fw-semibold"> {productDetail.name}</h3>
