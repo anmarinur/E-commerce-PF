@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {  getOffers } from "../../../redux/actions"; 
 import ApplyIn from "./ApplyIn";
+import { useState } from "react";
 
 export default function Offers() {
   const dispatch = useDispatch();
 
   const allOffers = useSelector((state) => state.offers);
+  const [allproducts, setAllProducts] = useState([])
 
   React.useEffect(() => {
     dispatch(getOffers());
