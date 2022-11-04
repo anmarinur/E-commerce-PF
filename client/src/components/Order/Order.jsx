@@ -8,6 +8,11 @@ import OrderDetailsProduct from './OrderDetailsProduct';
 import { useAuth0 } from '@auth0/auth0-react';
 import { clearCart } from '../../redux/actions';
 import { useLocalStorage } from '../../utils/useLocalStorage';
+import jsPDF from 'jspdf';
+import logoTech from '../Nav/images/Logo.png';
+import logoShipp from './shipping.png';
+import Transition from "../Transition/Transition";
+
 
 const Order = () => {
 
@@ -50,6 +55,102 @@ const Order = () => {
         setCheck(true);
     }
 
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--* INICIO DE P D F S -*-*-*-*-*-*-*-*-*-*-*---
+
+    const getPdf = ()=> {
+    const docPdf = new jsPDF("p", "mm", "letter");
+
+    var centerText = function(text, y) {
+        var textWidth = docPdf.getStringUnitWidth(text) * docPdf.internal.getFontSize() / docPdf.internal.scaleFactor;
+        var textOffset = (docPdf.internal.pageSize.width - textWidth) / 2;
+        docPdf.text(textOffset, y, text);
+    }
+
+
+    docPdf.setFillColor(165,35,35);
+    docPdf.rect(0,0,250,20,'F');
+
+
+    var logo = new Image();
+    logo.src = logoTech;
+    docPdf.addImage(logo, 'PNG', 5, 0, 15, 15);
+
+
+    docPdf.setFontSize(18);
+        docPdf.setTextColor(255,255,255);
+
+        centerText('TECNOSHOP',10);    
+
+    docPdf.setFontSize(13);
+    docPdf.setFontStyle('normal');
+    docPdf.setTextColor(0,0,0);
+        centerText('PURCHASE ORDER',17)   
+
+
+
+    var logos = new Image();
+        logos.src = logoShipp;
+        docPdf.addImage(logos, 'PNG', 105, 22, 10, 10);
+
+    docPdf.setFontSize(10);
+        centerText('(Shipping Address)',35);
+
+    docPdf.setFontSize(12);
+    docPdf.setFont('Arial','italic');
+        centerText(finalOrder.shipping_address,40);
+
+
+    docPdf.setFontSize(12);
+    docPdf.setFontStyle('normal');
+        docPdf.text("Id:",10,55)
+        docPdf.text("Name:",30,55)
+        docPdf.text("Quantity:",110,55)
+        docPdf.text("Price:",150,55)
+        docPdf.text("Import:",180,55)
+    const posy = 60;
+    const posx = 10;
+    docPdf.line(5,57 ,210,57);
+
+    docPdf.setFontSize(10);
+     for (let i = 0;i < totalProducts.length;i++) {
+        let p = totalProducts[i];
+        if (i%2 !==0) {
+
+            docPdf.setFillColor(250, 250, 250);
+            docPdf.rect(posx-5,posy+2+ (i+1) * 10,210,10, 'F');
+        } else {
+            docPdf.setFillColor(255, 248, 220);
+            docPdf.rect(posx-5,posy+2+ (i+1) * 10,210,10, 'F');
+        }
+
+
+
+
+
+        docPdf.text(p.id.toString(),    posx,       posy + (i+1) * 10 );
+        docPdf.text(p.name,             posx + 20,  posy + (i+1) * 10);
+        docPdf.text(p.qty,              posx + 108, posy + (i+1) * 10, );
+        docPdf.text('$ ' + p.price.toString(), posx + 140, posy + (i+1) * 10); 
+        let imp = p.qty * p.price;
+        docPdf.text('$ ' + imp.toString(), posx + 170, posy + (i+1) * 10); 
+
+
+    } 
+
+        docPdf.setDrawColor(0);
+
+        docPdf.setFillColor(165,35,35);
+        docPdf.setTextColor(255,255,255);
+            docPdf.rect(175, posy + 25 + (totalProducts.length-1) * 10 , 25, 10, 'F')
+
+        docPdf.setFontSize(12);
+            docPdf.text('$ '+ finalOrder.total_payment.toString(),180,posy + 20 + totalProducts.length * 10);
+        docPdf.save("Orderpdf");
+
+    }
+
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--* FIN DE P D F S -*-*-*-*-*-*-*-*-*-*-*---
+
     async function mercadopago() {
         try {
             const token = await getAccessTokenSilently();
@@ -59,7 +160,7 @@ const Order = () => {
                 }
             })
             const id = response.data;
-            console.log(response.data)
+            getPdf();
             dispatch(clearCart());
             setUnits({});
             setCart([]);
@@ -74,9 +175,7 @@ const Order = () => {
     return (
         <>
             <Nav />
-
-
-
+            <Transition>
             <div className="container mt-4 " >
                 <h2>Order</h2>
                 <div className="row g-4">
@@ -124,6 +223,7 @@ const Order = () => {
                 </div>
 
             </div>
+            </Transition>
             <Footer />
 
         </>
