@@ -8,7 +8,7 @@ const getProducts = async (req, res) => {
     const orderPrice = req.query.ordprice; // Se recibe por query el criterio de ordenacion EJ: &ordprice=ASC
     const search     = req.query.search; // en caso de llamar este endpoint para search x query enviar EJ: &search=iPhone
     const brand     = req.query.brand; // en caso de llamar este endpoint para brands x query enviar EJ: &brand=Apple
-
+    const disc      = req.query.disc; //en caso de tener un descuento aplicado
         
     let page  = 0;
     let size  = 12;
@@ -21,6 +21,7 @@ const getProducts = async (req, res) => {
     if(brand) where.brand=brand;
     if(orderPrice) order = [["price", orderPrice]];
     if(search?.length>0) where.name = {[Op.iLike]: `%${search}%`};
+    if(disc) where.OfferId = disc;
 
     try{
         const products = await Product.findAndCountAll({

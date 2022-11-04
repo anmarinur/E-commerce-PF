@@ -13,8 +13,14 @@ import Categories from '../components/Dashboard/Categories/Categories';
 import FormCategory from '../components/Dashboard/Categories/FormCategory';
 import PolarAreaChart from '../components/Dashboard/Charts/PolarAreaChart';
 import ImageProduct from '../components/Dashboard/Products/ImageProduct';
+
+import Offers from '../components/Dashboard/Offers/offers';
+import FormOffers from '../components/Dashboard/Offers/FormOffers';
+import UpdateOffers from '../components/Dashboard/Offers/UpdateOffers';
+
 import Transition from '../components/Transition/Transition';
 import TransitionY from '../components/Transition/TransitionY';
+
 
 const Dashboard = () => {
 
@@ -83,15 +89,28 @@ const Dashboard = () => {
                                 <FormCategory />
                             </TransitionY>
                             </Route>
-
+                            <Route exact path="/Dashboard/Offers">
+                              <Transition>
+                              <Offers />
+                              </Transition>
+                            </Route>
+                            <Route exact path="/Dashboard/Offers/create">
+                              <TransitionY>
+                              <FormOffers />
+                              </TransitionY>
+                            </Route>
+                            <Route exact path="/Dashboard/Offers/update/:id">
+                              <TransitionY>
+                              <UpdateOffers />
+                              </TransitionY>
+                            </Route>
                         </Switch>
-
-
                     </main>
                 </div>
             </div>
         </>
     )
+
 }
 
 
