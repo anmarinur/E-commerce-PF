@@ -67,8 +67,8 @@ export default function Contact() {
             <Nav />
             <div className="container my-5">
                 <h2 className="fw-bold text-danger text-center my-2 fs-1">Contact Us</h2>
-                <div className="d-flex flex-row justify-content-between my-5">
-                    <div className="w-50">
+                <div className="d-flex flex-row flex-fill justify-content-around my-5">
+                    <div className="w-50 me-3">
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label className="fw-bold fs-5">Name:</Form.Label>
@@ -91,30 +91,77 @@ export default function Contact() {
                             Submit
                         </Button>
                     </div>
-                    <div className="w-40">
-                        <Dropdown>
+                    <div className="w-25 ms-3">
+                        <Dropdown className="mb-4">
                             <Dropdown.Toggle variant="danger" id="dropdown-basic">
                                 Select one of our stores
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item onSelect={() => setStore('Technoshop Av. Díaz Velez')}>Technoshop Av. Díaz Velez</Dropdown.Item>
-                                <Dropdown.Item onSelect={() => setStore('Technoshop Av. Lastra')}>Technoshop Av. Lastra</Dropdown.Item>
-                                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setStore('Technoshop Av. Díaz Velez')}>Technoshop Av. Díaz Velez</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setStore('Technoshop Av. Lastra')}>Technoshop Av. Lastra</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setStore('Technoshop Au Acceso Oeste')}>Technoshop Au Acceso Oeste</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setStore('Technoshop Av. Hipólito Yrigoyen')}>Technoshop Av. Hipólito Yrigoyen</Dropdown.Item>
+                                <Dropdown.Item onClick={() => setStore('Technoshop Av. Eva Perón')}>Technoshop Av. Eva Perón</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <h3>Customer care Center</h3>
-                        <p>Monday to Friday from 9 a.m. to 8 p.m. / Saturday from 9 a.m. to 5 p.m.</p>
+                        {
+                            store === 'Technoshop Av. Díaz Velez' ? 
+                                <div className="card text-center text-dark bg-light pt-3 my-3 lh-1">
+                                    <p className="fs-6 text-danger">Tel. 5555555</p>
+                                    <p className="fs-6">Monday to Friday from 9 am to 8 pm</p>
+                                    <p className="fs-6">Saturday from 9 am to 5 pm</p>
+                                </div>
+                            : store === 'Technoshop Av. Lastra' ?
+                                <div className="card text-center text-dark bg-light pt-3 lh-1">
+                                    <p className="fs-6 text-danger">Tel. 6666666</p>
+                                    <p className="fs-6">Monday to Friday from 12 pm to 8 pm</p>
+                                    <p className="fs-6">Saturday from 9 am to 5 pm</p>
+                                    <p className="fs-6">Sunday from 9 am to 12pm</p>
+                                </div>
+                            : store === 'Technoshop Au Acceso Oeste' ?
+                                <div className="card text-center text-dark bg-light pt-3 lh-1">
+                                    <p className="fs-6 text-danger">Tel. 3333333</p>
+                                    <p className="fs-6">Monday to Friday from 9 am to 6 pm</p>
+                                    <p className="fs-6">Saturday from 9 am to 5 pm</p>
+                                </div>
+                            : store === 'Technoshop Av. Hipólito Yrigoyen' ?
+                                <div className="card text-center text-dark bg-light pt-3 lh-1">
+                                    <p className="fs-6 text-danger">Tel. 11111111</p>
+                                    <p className="fs-6">Monday to Friday from 8 am pm to 8 pm</p>
+                                    <p className="fs-6">Saturday from 8 am to 8 pm</p>
+                                    <p className="fs-6">Sunday from 9 am to 12pm</p>
+                                    <p className="fs-6">Sunday from 9 am to 12pm</p>
+                                </div>
+                            : store === 'Technoshop Av. Eva Perón' ?
+                                <div className="card text-center text-dark bg-light pt-3 lh-1">
+                                    <p className="fs-6 text-danger">Tel. 44444444</p>
+                                    <p className="fs-6">Monday to Friday from 12 am to 10 pm</p>
+                                    <p className="fs-6">Saturday from 12 pm to 8 pm</p>
+                                </div>  
+                            : 
+                            <div className="card text-center text-dark bg-light pt-3 lh-1">
+                                <p className="fs-6 text-danger">Select one option if you want to know</p>
+                                <p className="fs-6 text-danger">the time our stores are open/close</p>
+                            </div>  
+                        }
+                        
+                        <h3 className="fw-bold fs-5 mt-4">E-Mail</h3>
+                        <p className="mb-4 fs-5 text-danger">ecommerce@tecnoshop.com.ar</p>
 
-                        <h3>E-Mail</h3>
-                        <p>ecommerce@tecnoshop.com.ar</p>
-
-                        <h3>Phone</h3>
-                        <p>55-55555</p>
-
-                        <h3>Social Networks</h3>
-                        <p>https://www.facebook.com/tecnoshop.arg/</p>
-                        <p>https://www.instagram.com/tecnoshop.arg/</p>
+                        <h3 className="fw-bold fs-5 mt-4">Social Media</h3>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="68" height="68" viewBox="0 0 24 24" stroke-width="1.5" stroke="#a52834" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <rect x="4" y="4" width="16" height="16" rx="4" />
+                            <circle cx="12" cy="12" r="3" />
+                            <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="68" height="68" viewBox="0 0 24 24" stroke-width="1.5" stroke="#a52834" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
