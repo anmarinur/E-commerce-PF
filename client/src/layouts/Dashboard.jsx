@@ -13,64 +13,72 @@ import Categories from '../components/Dashboard/Categories/Categories';
 import FormCategory from '../components/Dashboard/Categories/FormCategory';
 import PolarAreaChart from '../components/Dashboard/Charts/PolarAreaChart';
 import ImageProduct from '../components/Dashboard/Products/ImageProduct';
+import Offers from '../components/Dashboard/Offers/Offers';
+import FormOffers from '../components/Dashboard/Offers/FormOffers';
 
 const Dashboard = () => {
 
     return (
-        <>
-            <Navbar />
-            <div className="container-fluid">
-                <div className="row">
-                    <Sidebar />
-                    <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                        <Switch>
-                            <Route exact path="/Dashboard">
-                                <div  className='d-flex justify-content-center align-items-center'>
-                                    <DoughnutChart />
-                                    <PolarAreaChart />
-                                </div>
-                            </Route>
-                            <Route exact path="/Dashboard/Products">
-                                <ProductsTable />
-                            </Route>
+      <>
+        <Navbar />
+        <div className="container-fluid">
+          <div className="row">
+            <Sidebar />
+            <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+              <Switch>
+                <Route exact path="/Dashboard">
+                  <div className="d-flex justify-content-center align-items-center">
+                    <DoughnutChart />
+                    <PolarAreaChart />
+                  </div>
+                </Route>
+                <Route exact path="/Dashboard/Products">
+                  <ProductsTable />
+                </Route>
 
-                            <Route exact strict path="/Dashboard/Products/Create">
-                                <FormCreate />
-                            </Route>
+                <Route exact strict path="/Dashboard/Products/Create">
+                  <FormCreate />
+                </Route>
 
-                            <Route exact strict path="/Dashboard/Products/Image">
-                                <ImageProduct />
-                            </Route>
+                <Route exact strict path="/Dashboard/Products/Image">
+                  <ImageProduct />
+                </Route>
 
-                            <Route exact strict path="/Dashboard/Products/Update">
-                                <Update />
-                            </Route>
+                <Route exact strict path="/Dashboard/Products/Update">
+                  <Update />
+                </Route>
 
-                            <Route path="/Dashboard/Orders">
-                                <AdminOrderContainer />
-                            </Route>
+                <Route path="/Dashboard/Orders">
+                  <AdminOrderContainer />
+                </Route>
 
-                            <Route path="/Dashboard/Users">
-                                <UsersList />
-                            </Route>
-                            <Route exact path="/Dashboard/Categories">
-                                <Categories />
-                            </Route>
-                            <Route exact path="/Dashboard/Categories/Create">
-                                <FormCategory />
-                            </Route>
-                            <Route exact path="/Dashboard/Categories/Update/:id/:categorySelected">
-                                <FormCategory />
-                            </Route>
-
-                        </Switch>
-
-
-                    </main>
-                </div>
-            </div>
-        </>
-    )
+                <Route path="/Dashboard/Users">
+                  <UsersList />
+                </Route>
+                <Route exact path="/Dashboard/Categories">
+                  <Categories />
+                </Route>
+                <Route exact path="/Dashboard/Categories/Create">
+                  <FormCategory />
+                </Route>
+                <Route
+                  exact
+                  path="/Dashboard/Categories/Update/:id/:categorySelected"
+                >
+                  <FormCategory />
+                </Route>
+                <Route exact path="/Dashboard/Offers">
+                  <Offers />
+                </Route>
+                <Route exact path="/Dashboard/Offers/create">
+                  <FormOffers />
+                </Route>
+              </Switch>
+            </main>
+          </div>
+        </div>
+      </>
+    );
 }
 
 

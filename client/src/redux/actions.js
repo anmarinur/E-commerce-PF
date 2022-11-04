@@ -17,8 +17,19 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_TOTAL_FAV = "GET_TOTAL_FAV";
 export const GET_REVIEWS = "GET_REVIEWS";
 //export const DELETE_REVIEWS = "DELETE_REVIEWS";
+export const GET_OFFERS = "GET_OFFERS";
 
 
+export const getOffers = () => {
+ return async function (dispatch){
+  try {
+   const result = await axios.get('/offer');
+   return dispatch({ type: GET_OFFERS, payload: result.data });
+  } catch (error) {
+   console.log(error);
+  }
+ }
+}
 
 export const getCategories = () => {
 
@@ -93,21 +104,23 @@ export const orderDetail = (total) => {
     }
 }
 
-export const getAllProducts = (size, page, filterCategory, sort, search, brands) => {
+export const getAllProducts = (size, page, filterCategory, sort, search, brands, disc) => {
     var queryCat = '';
     var querySortPrice = '';
     var querySearch = '';
     var queryBrands = '';
+    var queryDisc = '';
 
 
     if (filterCategory) queryCat = `&cat=${filterCategory}`;
     if (sort) querySortPrice = `&ordprice=${sort}`;
     if (search) querySearch = `&search=${search}`;
     if (brands) queryBrands = `&brand=${brands}`;
+    if(disc) queryDisc = `&disc=${disc}`;
 
     return async function (dispatch) {
         try {
-            const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}${queryBrands}`);
+            const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}${queryBrands}${queryDisc}`);
             return dispatch({ type: GET_PRODUCTS, payload: result.data });
         } catch (error) {
             console.log(error);
