@@ -1,15 +1,11 @@
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getOffers } from "../../../redux/actions"; 
+import {  getOffers } from "../../../redux/actions"; 
 
 export default function Offers() {
   const dispatch = useDispatch();
-  const { getAccessTokenSilently } = useAuth0();
 
   const allOffers = useSelector((state) => state.offers);
 
@@ -17,8 +13,10 @@ export default function Offers() {
     dispatch(getOffers());
   }, [dispatch]);
 
-  const getProducts = (disc) => {
-    dispatch(getAllProducts(disc));
+  
+  const getProducts = async (disc) => {
+    const result = await axios.get(`/product?disc=${disc}`)
+    return result.data.products;
   };
 
   return (
@@ -50,9 +48,9 @@ export default function Offers() {
                   <td>{o.startDay}</td>
                   <td>{o.endDay}</td>
                   <td>
-                    {getProducts(o.id)?.products?.map((e) => (
+                    {/* {getProducts(o.id)?.map((e) => (
                       <p>{e.name}</p>
-                    ))}
+                    ))}  */}
                   </td>
                 </tr>
               ))}
