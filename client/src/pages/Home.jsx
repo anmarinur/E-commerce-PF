@@ -13,6 +13,7 @@ import logo from "../components/Nav/images/Logo.png";
 import CardBestRaitingProduct from "../components/Oferts/CardBestRaitingProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../redux/actions";
+import Transition from "../components/Transition/Transition";
 
 
 export default function Home() {
@@ -115,7 +116,9 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <CardProductsList />
+      <Transition>
+        <CardProductsList />
+      </Transition>
       <Footer />
       <button style={{position: "fixed", right: 20, bottom: 20, transition: "0.5s" , scale: showUp}} 
       className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`} 
@@ -125,7 +128,7 @@ export default function Home() {
         onHide={() => dispatch(setModal(false))}
         fullscreen={true}
         aria-labelledby="example-custom-modal-styling-title"
-      >
+        >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
             <img src={logo} className='me-3' alt="" style={{width:"2em"}} />
@@ -197,8 +200,8 @@ export default function Home() {
                 {
                   bestRatingProducts ? bestRatingProducts.map(p =>
                     <CardBestRaitingProduct p={p} />
-                  ) : (<>Cargando . . .</>)
-                }             
+                    ) : (<>Cargando . . .</>)
+                  }             
               </Carousel>;
             </div>
           </div>

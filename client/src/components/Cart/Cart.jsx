@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import getCartLocalStorage from "../../utils/getCartLocalStorage";
 import { clearCart, deleteCartGlobal, getItemsLocal } from "../../redux/actions";
 import Button from "react-bootstrap/Button";
+import Transition from "../Transition/Transition";
 
 export const Cart = () => {
 
@@ -35,6 +36,7 @@ export const Cart = () => {
   return (
     <div>
       <Nav />
+      <Transition>
       <div className="">
         <Container className="card mb-5 mt-4 rounded border border-secondary p-3 shadow  bg-light">
           <h5 className="text-left mb-4 ps-2">Cart List</h5>
@@ -97,6 +99,7 @@ export const Cart = () => {
           </Row>
         </Container>
       </div>
+      </Transition>
       <Footer />
     </div>
 

@@ -11,6 +11,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../redux/actions.js';
 import MyFavorites from '../components/MyFavorites/MyFavorites.jsx';
+import Transition from '../components/Transition/Transition.jsx';
+import TransitionY from '../components/Transition/TransitionY.jsx';
 
 export default function ProfilePage() {
 
@@ -42,6 +44,7 @@ export default function ProfilePage() {
     return (
         <>
             <Nav />
+            <Transition>
             <div className="container mt-4 border border-secondary rounded">
                 <div className="row my-3 ">
                     <div className="col-xl-3 col-md-4 col-sm-12  mb-4">
@@ -63,14 +66,19 @@ export default function ProfilePage() {
 
                     <div className='col-xl-9 col-md-8 col-sm-12 '>
                         <Route path={'/profile/myInformation'}>
-                            <FormOrder user={ user} />
-                            
+                            <TransitionY>
+                                <FormOrder user={ user} />
+                            </TransitionY>
                         </Route>
                         <Route path={'/profile/myOrders'}>
-                            <OrderContainer />
+                            <TransitionY>
+                                <OrderContainer />
+                            </TransitionY>
                         </Route>
                         <Route path={'/profile/myFavorites'}>
-                            <MyFavorites></MyFavorites>
+                            <TransitionY>
+                                <MyFavorites />
+                            </TransitionY>
                         </Route>
                         
                        
@@ -81,6 +89,7 @@ export default function ProfilePage() {
 
 
             </div>
+            </Transition>
             <Footer/>
           
             
