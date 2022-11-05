@@ -41,9 +41,14 @@ const getProducts = async (req, res) => {
 
 const getProductById = async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findByPk(id);
-    
-    if(product) return res.status(200).json(product);
+    let idNumber = Number.parseInt(id);
+    if(!Number.isNaN(idNumber)) idNumber = id;
+    try{
+        const product = await Product.findByPk(idNumber);
+        if(product) return res.status(200).json(product);
+    }catch(error){
+        res.json(error.message)
+    }
     res.status(404).json({ error: "product ID not found or invalid" });
 }
 
@@ -124,8 +129,6 @@ const {category} = req.query
 const latestProducts = async ( req, res ) => {
     const sizeNumber = Number.parseInt(req.query.size);
 // en caso de llamar este endpoint para brands x query enviar EJ: &brand=Apple
-
-        
 
     let size  = 12;
     let order = [["id", "DESC"]];
