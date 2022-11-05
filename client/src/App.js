@@ -11,7 +11,7 @@ import ProfilePage from './pages/ProfilePage';
 import {Cart} from './components/Cart/Cart';
 import Order from './components/Order/Order';
 import { ToastContainer } from 'react-toastify';
-import FAQs from './pages/Faqs';
+import Developers from './pages/Developers/Developers';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 
@@ -27,8 +27,8 @@ export default function App() {
         <Route exact path="/about">
           <About/>
         </Route>
-        <Route exact path="/faqs">
-          <FAQs/>
+        <Route exact path="/developers">
+          <Developers/>
         </Route>
         <Route exact path="/contact">
           <Contact/>

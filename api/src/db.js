@@ -7,6 +7,7 @@ const modelFav = require('./models/Fav');
 const modelReview = require('./models/Review');
 const modelCategory = require('./models/Category');
 const modelImage = require('./models/Image');
+const modelOffer = require('./models/Offer');
 require('dotenv').config();
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
@@ -25,8 +26,9 @@ modelFav(sequelize);
 modelReview(sequelize);
 modelCategory(sequelize);
 modelImage(sequelize);
+modelOffer(sequelize);
 
-const { Product, User, Order, OrderDetail, Fav, Review, Category, Image } = sequelize.models;
+const { Product, User, Order, OrderDetail, Fav, Review, Category, Image, Offer } = sequelize.models;
 
 Order.belongsToMany(Product, { through : OrderDetail})
 Product.belongsToMany(Order, { through: OrderDetail})
@@ -43,6 +45,9 @@ Product.belongsTo(Category);
 Product.hasMany(Image);
 Image.belongsTo(Product);
 
+Offer.hasMany(Product);
+Product.belongsTo(Offer);
+
 module.exports = {
   Product,
   User,
@@ -52,5 +57,6 @@ module.exports = {
   Category,
   Review,
   Image,
+  Offer,
   db: sequelize,
 };

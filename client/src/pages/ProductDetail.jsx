@@ -19,8 +19,7 @@ import isAdmin from "../utils/isAdmin";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import Transition from "../components/Transition/Transition";
 
 export default function ProductDetail(props) {
 
@@ -159,20 +158,21 @@ export default function ProductDetail(props) {
   return (
     <>
       <Nav />
+      <Transition>
       <div className="container mt-4">
         <Card className="border shadow">
           {/* <Card.Header className="text-center align-items-center text-uppercase py-0 px-3 bg-danger text-white fw-semibold">
             <Card.Title className="d-flex justify-content-between fs-3 align-items-center">
-              {productDetail.name}
-              <div>
-                <Link to="/">
-                  <Button className="m-3 fw-bold text-danger" variant="light">
+            {productDetail.name}
+            <div>
+            <Link to="/">
+            <Button className="m-3 fw-bold text-danger" variant="light">
                     X
-                  </Button>
-                </Link>
-              </div>
-            </Card.Title>
-          </Card.Header> */}
+                    </Button>
+                    </Link>
+                    </div>
+                    </Card.Title>
+                  </Card.Header> */}
           
           <Card.Body className="text-center">
           <Link to="/" type="button" className="btn btn-danger border shadow-sm rounded fs-5 px-2 py-0" style={ {float: 'right'} } aria-label="Close">↩</Link>
@@ -248,20 +248,20 @@ export default function ProductDetail(props) {
                     {productReviews
                       ? [...Array(Math.round(productReviews.rating))].map(
                         (el, i) => <Star key={i} state={true} size="big" />
-                      )
-                      : ""}
+                        )
+                        : ""}
                     {productReviews
                       ? [...Array(5 - Math.round(productReviews.rating))].map(
                         (el, i) => <Star  key={i} state={false} size="big" />
-                      )
-                      : ""}
+                        )
+                        : ""}
                   </div>
 
                   {productReviews ? (
                     <div>{Math.round(productReviews.rating)} of 5</div>
-                  ) : (
-                    <div>0 of 5</div>
-                  )}
+                    ) : (
+                      <div>0 of 5</div>
+                      )}
                 </div>
                 <Card.Subtitle className="mt-3 mb-3 text-muted fs-5 w-70 mx-auto">
                   <b className="text-danger">Description:</b>{" "}
@@ -281,7 +281,7 @@ export default function ProductDetail(props) {
                         className="px-3 py-3 rounded-4 "
                         variant="danger"
                         onClick={(e) => addCart(e, productDetail)}
-                      >
+                        >
                         {" "}
                         <i className="fa-solid fa-cart-plus fa-xl"></i>{" "}
                       </Button>
@@ -299,14 +299,14 @@ export default function ProductDetail(props) {
                   {productReviews && productReviews.Reviews.length > 0 ? (
                     productReviews.Reviews.map((review) => (
                       
-                        <Comment
-                          key={review.id}
-                          rating={review.rating}
-                          comment={review.comment}
-                          id={review.id}
-                          createdAt={review.createdAt}
-                        />
-
+                      <Comment
+                      key={review.id}
+                      rating={review.rating}
+                      comment={review.comment}
+                      id={review.id}
+                      createdAt={review.createdAt}
+                      />
+                      
                     ))
                   ) : (
                     <h4>There are no comments</h4>
@@ -327,71 +327,71 @@ export default function ProductDetail(props) {
               }}
               className="rounded"
               src={productDetail.image}
-            />
-            <Card.Subtitle className="mt-3 mb-3 text-muted fs-5 w-70 mx-auto">
+              />
+              <Card.Subtitle className="mt-3 mb-3 text-muted fs-5 w-70 mx-auto">
               <b className="text-danger">Description:</b>{" "}
               {productDetail.description}
-            </Card.Subtitle>
-            <p className="text-center text-muted start lh-1 mb-4">
+              </Card.Subtitle>
+              <p className="text-center text-muted start lh-1 mb-4">
               <b className="text-danger">Category: </b>
               {productDetail.category}
-            </p>
-            <p className="text-center text-muted start lh-1 fw-semibold mb-4">
+              </p>
+              <p className="text-center text-muted start lh-1 fw-semibold mb-4">
               <b className="text-danger">In Stock:</b> {productDetail.stock}
-            </p>
-
-            <p className="text-center  text-danger fs-4">
+              </p>
+              
+              <p className="text-center  text-danger fs-4">
               Price: ${productDetail.price}
-            </p>
-            <div>
+              </p>
+              <div>
               <div className="d-flex flex-row justify-content-center">
-                {productReviews
+              {productReviews
                   ? [...Array(Math.round(productReviews.rating))].map(
                     (el, i) => <Star state={true} size="big" />
-                  )
+                    )
                   : ""}
                 {productReviews
                   ? [...Array(5 - Math.round(productReviews.rating))].map(
                     (el, i) => <Star state={false} size="big" />
-                  )
+                    )
                   : ""}
               </div>
-
+              
               {productReviews ? (
                 <div>{Math.round(productReviews.rating)} of 5</div>
-              ) : (
+                ) : (
                 <div>0 of 5</div>
-              )}
+                )}
             </div>
             <div className="row text-center">
-              <div className="col-6">
-                <Button className="px-5 py-2" variant="danger">
-                  {" "}
-                  <i className="fa-solid fa-heart-circle-plus"></i>{" "}
-                </Button>
-              </div>
-              <div className="col-6">
-                <Link to="/cart">
-                  <Button
-                    className="px-5 py-2"
-                    variant="danger"
-                    onClick={(e) => addCart(e, productDetail)}
-                  >
-                    {" "}
-                    <i className="fa-solid fa-cart-plus"></i>{" "}
-                  </Button>
-                </Link>
-              </div>
+            <div className="col-6">
+            <Button className="px-5 py-2" variant="danger">
+            {" "}
+            <i className="fa-solid fa-heart-circle-plus"></i>{" "}
+            </Button>
+            </div>
+            <div className="col-6">
+            <Link to="/cart">
+            <Button
+            className="px-5 py-2"
+            variant="danger"
+            onClick={(e) => addCart(e, productDetail)}
+            >
+            {" "}
+            <i className="fa-solid fa-cart-plus"></i>{" "}
+            </Button>
+            </Link>
+            </div>
             </div>
             <Card.Subtitle className="mt-5 mb-3 text-muted fs-5 w-70 mx-auto">
-              Customer reviews
-            </Card.Subtitle> */}
+            Customer reviews
+          </Card.Subtitle> */}
           </Card.Body>
 
           {/* <div className="w-70 mx-auto">
             {productReviews && productReviews.Reviews.length > 0 ? (
               productReviews.Reviews.map((review) => (
-
+                
                 <Card style={{ width: '500px', margin: '30px' }}>
                   {admin ? 
                   <Button
@@ -409,22 +409,23 @@ export default function ProductDetail(props) {
                       'right': '-10px',
                       'top': '-10px',}}
                   >×</Button> : null
-                  }
+                }
                   <Comment
                     rating={review.rating}
                     comment={review.comment}
                     image={review.image}
                     id={review.id}
-                  />
-                </Card>
-               ))
+                    />
+                    </Card>
+                    ))
 
-            ) : (
+                    ) : (
               <h4>There are no comments</h4>
-            )}
+              )}
           </div> */}
         </Card>
       </div>
+      </Transition>
       <Footer />
       <ToastContainer />
     </>
