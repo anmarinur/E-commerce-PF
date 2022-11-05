@@ -2,7 +2,7 @@ import CardProductsList from "../components/CardProductList/CardProductsList";
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import { ToastContainer } from 'react-toastify';
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
@@ -14,6 +14,10 @@ import CardBestRaitingProduct from "../components/Oferts/CardBestRaitingProduct"
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../redux/actions";
 import Transition from "../components/Transition/Transition";
+import Spinner from 'react-bootstrap/Spinner';
+import CardOfferProduct from "../components/Oferts/CardOfferProduct";
+
+
 
 
 export default function Home() {
@@ -23,10 +27,11 @@ export default function Home() {
   const searchParams = new URLSearchParams(location.search);
   let status = searchParams.get('status');
   let id = searchParams.get('id');
-  const [show, setShow] = useState(false);
   const [lastestProducts, setLastestProducts] = useState();
   const [bestRatingProducts, setBestRatingProducts] = useState();
-  const modalShow = useSelector(state=>state.modalShow); 
+  const [offerProducts, setOfferProducts] = useState();
+
+  const modalShow = useSelector(state => state.modalShow);
   const dispatch = useDispatch();
   // ---------------------------
 
@@ -34,6 +39,7 @@ export default function Home() {
   useEffect(() => {
     getLastestProducts();
     getBestRatingProducts();
+    getOfferProduct();
   }, [])
 
   const getLastestProducts = async () => {
@@ -53,15 +59,31 @@ export default function Home() {
     }
   }
 
+  const getOfferProduct = async () => {
+    try {
+      const result = await axios.get('/offer');
+      var offerlast = result.data.length;
+      const resultTwo = await axios.get(`/product?disc=${offerlast}&size=6`);
+      if ( resultTwo.data.products.length < 6) {
+        const result3 = await axios.get(`/product?disc=${offerlast - 1}&size=${6 - (resultTwo.data.products.length) }`);
+        setOfferProducts(resultTwo.data.products.concat(result3.data.products));
+      }else{
+        setOfferProducts(resultTwo.data.products);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
-      items: 5
+      items: 3
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 5
+      items: 3
     },
     tablet: {
       breakpoint: { max: 1200, min: 757 },
@@ -99,22 +121,22 @@ export default function Home() {
     status = '';
   }, []);
 
-  const [ showUp, setShowUp] = useState("0");
+  const [showUp, setShowUp] = useState("0");
 
-  useEffect(()=>{
-    window.onscroll = function(){
+  useEffect(() => {
+    window.onscroll = function () {
       let scroll = window.scrollY;
-      if(scroll<300) setShowUp("0");
-      if(scroll>=300) setShowUp("1");
+      if (scroll < 300) setShowUp("0");
+      if (scroll >= 300) setShowUp("1");
     }
   }, []);
 
-  const goUp = ()=>{
-    window.scroll(0,0);
+  const goUp = () => {
+    window.scroll(0, 0);
   }
 
-  useEffect(()=>{
-    window.scroll(0,0);
+  useEffect(() => {
+    window.scroll(0, 0);
   }, []);
 
   return (
@@ -124,18 +146,18 @@ export default function Home() {
         <CardProductsList goUp={goUp} />
       </Transition>
       <Footer />
-      <button style={{position: "fixed", right: 20, bottom: 20, transition: "0.5s" , scale: showUp}} 
-      className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`} 
-      onClick={goUp}> <i class="fa-solid fa-angle-up"></i> </button>
+      <button style={{ position: "fixed", right: 20, bottom: 20, transition: "0.5s", scale: showUp }}
+        className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`}
+        onClick={goUp}> <i className="fa-solid fa-angle-up"></i> </button>
       <Modal
         show={modalShow}
         onHide={() => dispatch(setModal(false))}
-        fullscreen={true}
         aria-labelledby="example-custom-modal-styling-title"
-        >
+        size="xl"
+      >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
-            <img src={logo} className='me-3' alt="" style={{width:"2em"}} />
+            <img src={logo} className='me-3' alt="" style={{ width: "2em" }} />
             TecnoShop Ofert
           </Modal.Title>
         </Modal.Header>
@@ -157,8 +179,10 @@ export default function Home() {
                 containerClass="carousel-container m-5">
                 {
                   lastestProducts ? lastestProducts.map(p =>
-                    <CardProduct product={p} />
-                  ) : (<>Cargando . . .</>)
+                    <CardProduct product={p} key={p.id} />
+                  ) : (<Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>)
                 }
               </Carousel>;
             </div>
@@ -166,23 +190,15 @@ export default function Home() {
             <div className="col-12 text-center text-dark bg-white">
               <h3 className="text-uppercase fw-bold my-4">product offer.</h3>
               <div className="row g-4 px-5">
+                {offerProducts && offerProducts.length === 0 && <p>no offert</p>}
                 {
-                  lastestProducts ? lastestProducts.map(p =>
-                    <div className="col-xl-4 col-md-6">
-                      <div className="card p-2 border shadow">
-                        <div className="row">
-                          <div className="col-6">
-                            <img style={{ maxWidth: '12em', maxHeight: '10em' }} src={p.image} alt="IMG_PRODUCT_OFERT" />
-                          </div>
-                          <div className="col-6 text-end">
-                            <h4 className='text-danger fs-5 text-wrap'>{p.name}</h4>
-                            <p className='m-0 p-0 fw-semibold  fs-6 ' > 20% <span className='text-decoration-line-through'>$ {p.price}</span></p>
-                            <p className='m-0 p-0 fw-bold fs-5 text-danger' >$ {(p.price - (p.price * 0.2))}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (<>s</>)
+                  offerProducts ? offerProducts.map(p =>
+
+                    <CardOfferProduct p={p} key={p.id} />
+
+                  ) : (<Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>)
                 }
               </div>
 
@@ -200,12 +216,15 @@ export default function Home() {
                 itemClass="px-2"
                 customTransition="all .5s"
                 transitionDuration={1000}
-                containerClass="carousel-container m-5">               
+                containerClass="carousel-container m-5">
+                {bestRatingProducts && bestRatingProducts.length === 0 && <p>no best Rating Products</p>}
                 {
                   bestRatingProducts ? bestRatingProducts.map(p =>
-                    <CardBestRaitingProduct p={p} />
-                    ) : (<>Cargando . . .</>)
-                  }             
+                    <CardBestRaitingProduct p={p} key={p.id} />
+                  ) : (<Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>)
+                }
               </Carousel>;
             </div>
           </div>
