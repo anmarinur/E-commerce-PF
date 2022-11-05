@@ -13,6 +13,7 @@ const favRouter = require("./routes/favRouter.js");
 const reviewRouter = require('./routes/reviewRouter.js');
 const statsRouter = require('./routes/statsRouter.js');
 const imageRouter = require('./routes/imageRouter.js');
+const offerRouter = require('./routes/offerRouter.js');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use("/favourites", favRouter);
 app.use('/review', reviewRouter);
 app.use('/stats', statsRouter);
 app.use('/image', imageRouter);
+app.use('/offer', offerRouter);
 
 app.get("/authorization", login, admin, (req, res)=>{
   res.json({message: "authorized"});
