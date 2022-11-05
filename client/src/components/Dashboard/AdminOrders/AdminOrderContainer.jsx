@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import ReactPaginate from 'react-paginate';
 import AdminOrderCard from './AdminOrderCard';
 import  {toast}  from 'react-toastify';
+import Transition from '../../Transition/Transition';
 
 const AdminOrderContainer = () => {
 
@@ -80,6 +81,7 @@ const AdminOrderContainer = () => {
 
     return (
         <>
+            <Transition>
             <div className='container  p-2 mt-4'>
                 <div className='row justify-content-around'>
                     <select  onChange={(e) => setOrderAs(e.target.value)}class="form-select mb-4 w-25">
@@ -160,7 +162,7 @@ const AdminOrderContainer = () => {
                     </nav>
                 </div>
             </div>
-
+            </Transition>
         </>
     )
 }

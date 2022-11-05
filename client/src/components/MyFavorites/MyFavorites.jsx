@@ -5,6 +5,7 @@ import {getTotalFav} from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
+import TransitionY from '../Transition/TransitionY';
 
 export default function MyFavorites() {
     const { user, getAccessTokenSilently } = useAuth0();
@@ -53,6 +54,7 @@ export default function MyFavorites() {
 
     return (
         <>
+        <TransitionY>
             <div className="container">
                 <h3>MyFavorites</h3>
                 <div className="row">
@@ -81,6 +83,7 @@ export default function MyFavorites() {
                     </div>
                 </div>
             </div>
+        </TransitionY>
         </>
     )
 }

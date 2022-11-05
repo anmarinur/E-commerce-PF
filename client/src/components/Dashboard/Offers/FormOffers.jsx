@@ -9,6 +9,8 @@ import { getCategories } from "../../../redux/actions";
 import Accordion from "react-bootstrap/Accordion";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useHistory, useLocation } from "react-router-dom";
+import Transition from "../../Transition/Transition";
+
 
 export default function FormOffers() {
   const dispatch = useDispatch();
@@ -164,6 +166,7 @@ export default function FormOffers() {
   }
 
   return (
+    <Transition>
     <div>
       <h1 className="text-center py-2  text-danger">Create an offer</h1>
       <Form className="w-75 mx-auto">
@@ -357,7 +360,6 @@ export default function FormOffers() {
               ? prods?.map((e) => (
                   <li class="list-group-item">
                     <i>{e.name}</i>
-
                     <button type="button" onClick={() => handleDelete(e)}>
                       Delete item
                     </button>
@@ -397,5 +399,5 @@ export default function FormOffers() {
         <ToastContainer />
       </Form>
     </div>
+    </Transition>
   );
-}

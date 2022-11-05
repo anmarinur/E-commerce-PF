@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { setProfileImg } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
 import spinner from '../spinner.gif';
+import Transition from '../Transition/Transition';
+import TransitionY from '../Transition/TransitionY';
 
 
 const FormOrder = (props) => {
@@ -180,6 +182,7 @@ const FormOrder = (props) => {
 
     return (
         <>
+        <TransitionY>
             {loading ?
             <img className='mx-0 my-0' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' />
             : location.pathname==="/profile/myInformation" ? 
@@ -248,8 +251,7 @@ const FormOrder = (props) => {
 
 
             </form>
-
-
+            </TransitionY>
         </>
     )
 }
