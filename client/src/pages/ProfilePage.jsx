@@ -13,6 +13,7 @@ import { getUser } from '../redux/actions.js';
 import MyFavorites from '../components/MyFavorites/MyFavorites.jsx';
 import Transition from '../components/Transition/Transition.jsx';
 import TransitionY from '../components/Transition/TransitionY.jsx';
+import GoUpButton from '../components/GoUpButton/GoUpButton.jsx';
 
 export default function ProfilePage() {
 
@@ -78,6 +79,7 @@ export default function ProfilePage() {
 
                 </div>
             </div>
+            <GoUpButton />
             </Transition>
             <Footer/>
         </>

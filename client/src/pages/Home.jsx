@@ -16,6 +16,7 @@ import { setModal } from "../redux/actions";
 import Transition from "../components/Transition/Transition";
 import Spinner from 'react-bootstrap/Spinner';
 import CardOfferProduct from "../components/Oferts/CardOfferProduct";
+import GoUpButton from "../components/GoUpButton/GoUpButton";
 
 
 
@@ -121,20 +122,6 @@ export default function Home() {
     status = '';
   }, []);
 
-  const [showUp, setShowUp] = useState("0");
-
-  useEffect(() => {
-    window.onscroll = function () {
-      let scroll = window.scrollY;
-      if (scroll < 300) setShowUp("0");
-      if (scroll >= 300) setShowUp("1");
-    }
-  }, []);
-
-  const goUp = () => {
-    window.scroll(0, 0);
-  }
-
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
@@ -143,12 +130,10 @@ export default function Home() {
     <>
       <Nav />
       <Transition>
-        <CardProductsList goUp={goUp} />
+        <CardProductsList goUp={()=>window.scroll(0, 0)} />
       </Transition>
       <Footer />
-      <button style={{ position: "fixed", right: 20, bottom: 20, transition: "0.5s", scale: showUp }}
-        className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`}
-        onClick={goUp}> <i className="fa-solid fa-angle-up"></i> </button>
+      <GoUpButton />
       <Modal
         show={modalShow}
         onHide={() => dispatch(setModal(false))}

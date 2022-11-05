@@ -20,6 +20,7 @@ import UpdateOffers from '../components/Dashboard/Offers/UpdateOffers';
 
 import Transition from '../components/Transition/Transition';
 import TransitionY from '../components/Transition/TransitionY';
+import GoUpButton from '../components/GoUpButton/GoUpButton';
 
 
 const Dashboard = () => {
@@ -90,6 +91,7 @@ const Dashboard = () => {
                         </Switch>
                     </main>
                 </div>
+            <GoUpButton />
             </div>
         </>
     )

@@ -10,6 +10,7 @@ import Enrique from "./Imagenes/Enrique.jpeg"
 import Juan from "./Imagenes/Juan.jpeg"
 import Transition from "../../components/Transition/Transition";
 import { useEffect } from "react";
+import GoUpButton from "../../components/GoUpButton/GoUpButton";
 
 export default function Developers() {
 
@@ -21,6 +22,7 @@ export default function Developers() {
         <div>
             <Nav />
             <Transition>
+            <GoUpButton />
             <div class="container mt-4">
                 <h1>Developers</h1><br />
 
