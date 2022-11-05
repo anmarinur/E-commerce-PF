@@ -1,4 +1,4 @@
-const { Product } = require('../db.js');
+const { Product, Offer } = require('../db.js');
 const { Op } = require("sequelize");
 
 const getProducts = async (req, res) => {
@@ -28,7 +28,9 @@ const getProducts = async (req, res) => {
             where,
             order,
             limit: size,
-            offset: page * size
+            offset: page * size,
+            attributes: {exclude: ['OfferId']},
+            include: Offer
         });
         return res.status(200).json({
             totalPages: Math.ceil(products.count / size), 
@@ -42,13 +44,18 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     const { id } = req.params;
     let idNumber = Number.parseInt(id);
-    if(!Number.isNaN(idNumber)) idNumber = id;
-    try{
-        const product = await Product.findByPk(idNumber);
-        if(product) return res.status(200).json(product);
-    }catch(error){
-        res.json(error.message)
-    }
+    if(!Number.isNaN(idNumber)){
+        idNumber = id;
+        try{
+            const product = await Product.findByPk(idNumber, {
+                attributes: {exclude: ['OfferId']},
+                include: Offer,
+            });
+            if(product) return res.status(200).json(product);
+        }catch(error){
+            res.json(error.message)
+        }
+    } 
     res.status(404).json({ error: "product ID not found or invalid" });
 }
 
