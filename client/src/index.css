@@ -46,3 +46,14 @@ code {
 .img-delete:hover::before{
   opacity: 1;
 }
+
+.loader svg polygon {
+  stroke-dasharray: 50;
+  animation: middle-animation 1.5s linear infinite;
+}
+
+@keyframes middle-animation {
+  to{
+    stroke-dashoffset: 100;
+  }
+}
