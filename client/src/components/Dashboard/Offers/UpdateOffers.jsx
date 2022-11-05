@@ -19,11 +19,16 @@ export default function UpdateOffers() {
   const { id, event, discount, startDay, endDay } = location.state
     ? location.state
     : "";
-  const [products, setProducts] = useState([]);
+
 
     const getProducts = async () => {
       const result = await axios.get(`/product?disc=${id}`);
-      setProducts(result.data.products);
+      const res = [];
+      result.data.products.map(e => res.push({id: e.id, name: e.name}));
+      const res2 = [];
+      result.data.products.map((e) => res2.push(e.id));
+      setInput({...input, products: res2});
+      setProds(res);      
     };
 
     useEffect(() => {
@@ -35,7 +40,7 @@ export default function UpdateOffers() {
     discount: id ? discount : 0,
     startDay: id ? startDay : "",
     endDay: id? endDay : "",
-    products: [],
+    products: id? [] : [],
   });
 
   const [errors, setErrors] = useState({
