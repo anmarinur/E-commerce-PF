@@ -6,6 +6,7 @@ import ApplyIn from "./ApplyIn";
 import { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import Transition from "../../Transition/Transition";
 
 export default function Offers() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function Offers() {
   }
 
   return (
+    <Transition>
     <div className="container-fluid mt-4">
       <div>
         <div className="col-4 py-2">
@@ -86,5 +88,6 @@ export default function Offers() {
         </table>
       </div>
     </div>
+    </Transition>
   );
 }

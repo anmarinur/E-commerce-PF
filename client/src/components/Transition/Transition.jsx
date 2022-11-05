@@ -14,7 +14,7 @@ export default function Transition({ children }){
             animate="animate" 
             exit="exit" 
             transition={{ 
-                duration : 1,
+                duration : 0.25,
                 ease: "easeInOut",
                 delay: 0.2,
             }} 

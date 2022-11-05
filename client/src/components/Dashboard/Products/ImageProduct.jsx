@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom"
 import { toast } from "react-toastify";
 import spinner from '../../spinner.gif';
+import Transition from "../../Transition/Transition";
 
 
 export default function ImageProduct(){
@@ -81,6 +82,7 @@ export default function ImageProduct(){
     }
 
     return (
+        <Transition>
         <div className="container">
             <h1 className="text-center py-2  text-danger">Upload product photos (ID:{id})</h1>
             <div className="d-flex" style={{gap: "5rem"}}>
@@ -103,5 +105,7 @@ export default function ImageProduct(){
             </div>
             </div>
         </div>
+        </Transition>
+
     )
 }

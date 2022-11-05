@@ -11,6 +11,7 @@ import { getCategories } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import Transition from '../../Transition/Transition';
 
 export default function FormCreate(){
    
@@ -155,6 +156,7 @@ export default function FormCreate(){
     }
 
     return (
+        <Transition>
         <div>
             {id ? <h1 className="text-center py-2  text-danger">Update product</h1> : <h1 className="text-center py-5 text-danger">Create new product</h1>}
             <Form className="w-75 mx-auto">
@@ -225,5 +227,7 @@ export default function FormCreate(){
                 <h2 className="text-danger text-center font-weight-bold">"You dont have the necesary permissions"</h2>
             </Popup>
         </div>
+        </Transition>
+
     )
 }

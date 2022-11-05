@@ -40,70 +40,53 @@ const Dashboard = () => {
                                 </div>
                             </Route>
                             <Route exact path="/Dashboard/Products">
-                            <TransitionY>
                                 <ProductsTable />
-                            </TransitionY>
                             </Route>
 
                             <Route exact strict path="/Dashboard/Products/Create">
-                            <Transition>
                                 <FormCreate />
-                            </Transition>
                             </Route>
 
                             <Route exact strict path="/Dashboard/Products/Image">
-                            <Transition>
                                 <ImageProduct />
-                            </Transition>
                             </Route>
 
                             <Route exact strict path="/Dashboard/Products/Update">
-                            <Transition>
                                 <Update />
-                            </Transition>
                             </Route>
 
                             <Route path="/Dashboard/Orders">
-                            <TransitionY>
                                 <AdminOrderContainer />
-                            </TransitionY>
                             </Route>
 
                             <Route path="/Dashboard/Users">
-                            <Transition>
                                 <UsersList />
-                            </Transition>
                             </Route>
+
                             <Route exact path="/Dashboard/Categories">
-                            <Transition>
                                 <Categories />
-                            </Transition>
                             </Route>
+
                             <Route exact path="/Dashboard/Categories/Create">
-                            <TransitionY>
                                 <FormCategory />
-                            </TransitionY>
                             </Route>
+
                             <Route exact path="/Dashboard/Categories/Update/:id/:categorySelected">
-                            <TransitionY>
                                 <FormCategory />
-                            </TransitionY>
                             </Route>
+
                             <Route exact path="/Dashboard/Offers">
-                              <Transition>
                               <Offers />
-                              </Transition>
                             </Route>
+
                             <Route exact path="/Dashboard/Offers/create">
-                              <TransitionY>
                               <FormOffers />
-                              </TransitionY>
                             </Route>
+
                             <Route exact path="/Dashboard/Offers/update/:id">
-                              <TransitionY>
                               <UpdateOffers />
-                              </TransitionY>
                             </Route>
+                            
                         </Switch>
                     </main>
                 </div>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth0 } from '@auth0/auth0-react'
 import ReactPaginate from 'react-paginate';
 import UsersCard from './UsersCard';
+import Transition from "../../Transition/Transition";
 
 
 
@@ -54,6 +55,7 @@ const GetAllUsers = () =>{
     }
 
     return(
+        <Transition>
         <div>
             <input className="form-control mt-2 mb-2 bg-light w-25" type="search" onChange={(e) => setSearch(e.target.value)} placeholder="Search by Email" aria-label="Search" />
             <table className="table align-middle table-hover">
@@ -101,6 +103,7 @@ const GetAllUsers = () =>{
                 : null }
             </nav>
         </div>
+        </Transition>
     )
 }
 
