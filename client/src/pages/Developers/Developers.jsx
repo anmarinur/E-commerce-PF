@@ -6,12 +6,19 @@ import Nahuel from "./Imagenes/Nahuel.jpeg";
 import Damian from "./Imagenes/Damian.jpeg";
 import Estefano from "./Imagenes/Estefano.jpeg";
 import Anderson from "./Imagenes/Anderson.jpeg";
-import Enrique from "./Imagenes/Enrique.jpeg";
-import Juan from "./Imagenes/Juan.jpeg";
+import Enrique from "./Imagenes/Enrique.jpeg"
+import Juan from "./Imagenes/Juan.jpeg"
+import Transition from "../../components/Transition/Transition";
+import { useEffect } from "react";
+import GoUpButton from "../../components/GoUpButton/GoUpButton";
 
 export default function Developers() {
 
-    let info = [
+    useEffect(()=>{
+        window.scroll(0,0);
+    }, []);
+
+let info = [
         { name: "Ana Belén Gonzalvez", email: "mailto:damiangonzalez@gmail.com", gitHub: "https://github.com/AnaGonzalvez", linkedIn: "https://linkedin.com/in/anabeléngonzalvez", img: Ana },
         { name: "Juan Ignacio Grodz", email: "mailto:jigrodz@gmail.com", gitHub: "https://github.com/Juani2409", linkedIn: "https://www.linkedin.com/in/juan-ignacio-grodz-80ab57241/", img: Juan },
         { name: "Damian Gonzalez", email: "mailto:damiangonzalez@gmail.com", gitHub: "https://github.com/nangonz", linkedIn: "https://www.linkedin.com/in/dami-gonzalez/", img: Damian },
@@ -24,6 +31,8 @@ export default function Developers() {
     return (
         <div>
             <Nav />
+            <Transition>
+            <GoUpButton />
             <div class="container mt-4">
                 <h2 className="fw-bold text-danger text-center my-2 fs-1">Developers</h2>
 
@@ -90,6 +99,7 @@ export default function Developers() {
                     </Card>
                 )}
             </div>
+            </Transition>
             <Footer />
         </div>
 

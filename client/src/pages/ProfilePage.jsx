@@ -13,6 +13,7 @@ import { getUser } from '../redux/actions.js';
 import MyFavorites from '../components/MyFavorites/MyFavorites.jsx';
 import Transition from '../components/Transition/Transition.jsx';
 import TransitionY from '../components/Transition/TransitionY.jsx';
+import GoUpButton from '../components/GoUpButton/GoUpButton.jsx';
 
 export default function ProfilePage() {
 
@@ -66,33 +67,21 @@ export default function ProfilePage() {
 
                     <div className='col-xl-9 col-md-8 col-sm-12 '>
                         <Route path={'/profile/myInformation'}>
-                            <TransitionY>
                                 <FormOrder user={ user} />
-                            </TransitionY>
                         </Route>
                         <Route path={'/profile/myOrders'}>
-                            <TransitionY>
                                 <OrderContainer />
-                            </TransitionY>
                         </Route>
                         <Route path={'/profile/myFavorites'}>
-                            <TransitionY>
                                 <MyFavorites />
-                            </TransitionY>
                         </Route>
-                        
-                       
-
                     </div>
 
                 </div>
-
-
             </div>
+            <GoUpButton />
             </Transition>
             <Footer/>
-          
-            
         </>
     )
 }

@@ -1,4 +1,4 @@
-const { Product } = require('../db.js');
+const { Product, Offer } = require('../db.js');
 const { Op } = require("sequelize");
 
 const getProducts = async (req, res) => {
@@ -8,7 +8,7 @@ const getProducts = async (req, res) => {
     const orderPrice = req.query.ordprice; // Se recibe por query el criterio de ordenacion EJ: &ordprice=ASC
     const search     = req.query.search; // en caso de llamar este endpoint para search x query enviar EJ: &search=iPhone
     const brand     = req.query.brand; // en caso de llamar este endpoint para brands x query enviar EJ: &brand=Apple
-
+    const disc      = req.query.disc; //en caso de tener un descuento aplicado
         
     let page  = 0;
     let size  = 12;
@@ -21,13 +21,16 @@ const getProducts = async (req, res) => {
     if(brand) where.brand=brand;
     if(orderPrice) order = [["price", orderPrice]];
     if(search?.length>0) where.name = {[Op.iLike]: `%${search}%`};
+    if(disc) where.OfferId = disc;
 
     try{
         const products = await Product.findAndCountAll({
             where,
             order,
             limit: size,
-            offset: page * size
+            offset: page * size,
+            attributes: {exclude: ['OfferId']},
+            include: Offer
         });
         return res.status(200).json({
             totalPages: Math.ceil(products.count / size), 
@@ -40,9 +43,19 @@ const getProducts = async (req, res) => {
 
 const getProductById = async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findByPk(id);
-    
-    if(product) return res.status(200).json(product);
+    let idNumber = Number.parseInt(id);
+    if(!Number.isNaN(idNumber)){
+        idNumber = id;
+        try{
+            const product = await Product.findByPk(idNumber, {
+                attributes: {exclude: ['OfferId']},
+                include: Offer,
+            });
+            if(product) return res.status(200).json(product);
+        }catch(error){
+            res.json(error.message)
+        }
+    } 
     res.status(404).json({ error: "product ID not found or invalid" });
 }
 
@@ -123,8 +136,6 @@ const {category} = req.query
 const latestProducts = async ( req, res ) => {
     const sizeNumber = Number.parseInt(req.query.size);
 // en caso de llamar este endpoint para brands x query enviar EJ: &brand=Apple
-
-        
 
     let size  = 12;
     let order = [["id", "DESC"]];

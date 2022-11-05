@@ -10,20 +10,26 @@ import AddComment from '../../Reviews/AddComment'
 
 
 const OrderCard = () => {
-    const { getAccessTokenSilently } = useAuth0()
-    const userEmail = useLoginEmail()
-    const [userOrders, setUserOrders] = useState([])
-
+    const { getAccessTokenSilently } = useAuth0();
+    const userEmail = useLoginEmail();
+    const [userOrders, setUserOrders] = useState([]);
+    const [userData, setUserData] = useState({});
 
     async function getUserOrders() {
         const token = await getAccessTokenSilently()
         try {
-            var result = await axios.get(`/order/email/${userEmail}`, {
+            let result = await axios.get(`/order/email/${userEmail}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             setUserOrders(result.data)
+            let userGet = await axios.get(`/user/${userEmail}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUserData(userGet.data)
         } catch (error) {
             console.log("getUserOrders Error:", error)
         }
@@ -105,7 +111,7 @@ const OrderCard = () => {
                                         {order.status==='created' && <button value={order.id} className="mx-3 mt-3 fs-6 px-3 rounded btn btn-warning fw-bold text-dark" onClick={(e) => payment(e.target.value)}>
                                             Continue payment process
                                         </button>}
-                                        {order.status==='received' && <AddComment products={order.Products} email={userEmail} idOrder={order.id}/>}
+                                        {order.status==='received' && <AddComment products={order.Products} email={userEmail} idOrder={order.id} block={userData.block}/>}
                             </div>
                         </div>
                     </div>

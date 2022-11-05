@@ -17,7 +17,8 @@ import { getReviews } from "../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import isAdmin from "../utils/isAdmin";
 import axios from "axios";
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import Transition from "../components/Transition/Transition";
 
 export default function ProductDetail(props) {
@@ -33,9 +34,16 @@ export default function ProductDetail(props) {
   const categories = useSelector((state) => state.categories)
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   
-
-
-
+  const [images, setImages] = useState([])
+  const [showImage, setShowImage] = useState("")
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 0 },
+      items: 3,
+      slidesToSlide: 3 // optional, default to 1.
+    }
+  };
+  
   useEffect(() => {
     dispatch(getDetails(id))
     dispatch(getReviews(id))
@@ -44,10 +52,12 @@ export default function ProductDetail(props) {
     isAdmin(getAccessTokenSilently)
       .then((res) => setAdmin(res))
       .catch(() => setAdmin(false));
-
-
   }, [dispatch, id])
 
+  useEffect(()=>{
+    getImages(id)
+  },[id, productDetail]);
+  
 
   const addCart = (e, product) => {
     e.preventDefault();
@@ -119,6 +129,17 @@ export default function ProductDetail(props) {
     return categoryName && categoryName.category;
   }
 
+  async function getImages(id){
+    try {
+      const result = await axios.get(`/image/${id}`);
+      setShowImage(productDetail.image);
+      setImages([{ image: productDetail.image }, ...result.data]);
+    } catch (error) {
+      console.log("getImages Error:", error)
+    }
+  }
+
+
   /* const deleteP = async (review) => {
     const token = await getAccessTokenSilently();
     try {
@@ -154,7 +175,7 @@ export default function ProductDetail(props) {
                   </Card.Header> */}
           
           <Card.Body className="text-center">
-          <Link to="/" type="button" className="text-decoration-none bg-light border shadow-sm rounded text-danger fs-5 px-2 py-0" style={ {float: 'right'} } aria-label="Close">x</Link>
+          <Link to="/" type="button" className="btn btn-danger border shadow-sm rounded fs-5 px-2 py-0" style={ {float: 'right'} } aria-label="Close">↩</Link>
             <div className="row p-3">
               <div className="col-xl-6">
                 <Card.Img
@@ -166,8 +187,45 @@ export default function ProductDetail(props) {
                     marginBottom: "2em",
                   }}
                   className="rounded"
-                  src={productDetail.image}
-                  />
+                  src={showImage}
+                />
+                <Carousel
+                    swipeable={false}
+                    draggable={false}
+                    showDots={true}
+                    responsive={responsive}
+                    ssr={true} // means to render carousel on server-side.
+                    infinite={true}
+                    autoPlay={true}
+                    autoPlaySpeed={1500}
+                    keyBoardControl={true}
+                    customTransition="transform 1000ms ease-in-out"
+                    transitionDuration={1500}
+                    containerClass="carousel-container"
+                    dotListClass="custom-dot-list-style"
+                    itemClass="carousel-item-padding-40-px"
+                    >
+                    {images ? images.map(i =>
+                      <div key={i.image} className="rounded"
+                                style={{
+                                  width: "auto",
+                                  height: "auto",
+                                  maxWidth: "10em",
+                                  maxHeight: "5em",
+                                  marginTop: "1em",
+                                  marginBottom: "1em",
+                                }}
+                                onClick={() => setShowImage(i.image)}
+                                > 
+                                <Card.Img
+                                  src={i.image}
+                                  style={{
+                                    width: "auto",
+                                    maxHeight: "5em",
+                                  }}/>
+                      </div>
+                      ) : null}
+                  </Carousel>
               </div>
               <div className="col-xl-6">
                 <h3 className="text-start fs-2 fw-semibold"> {productDetail.name}</h3>

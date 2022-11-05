@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { setProfileImg } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
 import spinner from '../spinner.gif';
+import Transition from '../Transition/Transition';
+import TransitionY from '../Transition/TransitionY';
 
 
 const FormOrder = (props) => {
@@ -180,15 +182,15 @@ const FormOrder = (props) => {
 
     return (
         <>
+        <TransitionY>
             {loading ?
             <img className='mx-0 my-0' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' />
             : location.pathname==="/profile/myInformation" ? 
                 <form onSubmit={handleSubmitImg} encType='multipart/form-data' className='row align-items-center'>
-                    <h4 className='col-4'>Change you profile picture:</h4>
-                    <label for="image" className='btn btn-secondary col-3'>Select and Upload Image</label>
+                    <h5 className='m-0 col-4'>Change you profile picture:</h5>
+                    <label for="image" className='btn btn-secondary m-0 col-4'>Select and Upload Image</label>
                     <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
-                    <div className='col-1'></div>
-                    <input className='col-2 btn btn-success text-center' type="submit" value="Save"/>
+                    <input className='col-2 btn btn-success m-2 text-center' type="submit" value="Save"/>
                 </form>
             : <></>
             }
@@ -242,15 +244,14 @@ const FormOrder = (props) => {
                             {errors.phone && <span className="ms-2 text-danger">{errors.phone}</span>}
                         </div>
                     </div>
-                    <input onClick={saveUser} className='col btn btn-success mt-2 text-center mx-5' type="submit" value="Confirm information" />
+                    <input onClick={saveUser} className='col btn btn-success mt-4 mb-2 text-center mx-5' type="submit" value="Confirm information" />
                 </div>
 
 
 
 
             </form>
-
-
+            </TransitionY>
         </>
     )
 }

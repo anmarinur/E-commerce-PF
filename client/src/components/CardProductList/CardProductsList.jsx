@@ -11,6 +11,7 @@ import SearchBarProducts from './SearchBarProducts';
 import spinner from '../spinner.gif';
 import axios from 'axios';
 import { nameCategory } from '../../utils/nameCategory';
+import Loading from '../Loading/Loading';
 
 
 const CardProductsList = () => {
@@ -30,6 +31,7 @@ const CardProductsList = () => {
 
     function setPagePagination(n) {
         setPage(n)
+        window.scroll(0,0);
     }
     function setCategory(category) {
         setCategoryFilter(category);
@@ -65,7 +67,7 @@ const CardProductsList = () => {
                                         <Col key={product.id} sm={6} md={6} lg={4} xl={3} className='mb-4'>
                                             <CardProduct key={product.id} product={product} />
                                         </Col>
-                                    )) : ( <img className='mx-auto my-5' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' /> )
+                                    )) : <Loading />/* ( <img className='mx-auto my-5' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' /> ) */
                                 }
 
                                 {

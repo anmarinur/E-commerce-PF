@@ -6,6 +6,7 @@ import 'reactjs-popup/dist/index.css';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getCategories } from '../../../redux/actions';
+import Transition from '../../Transition/Transition';
 
 export default function FormCategory({ match }) {
 
@@ -85,6 +86,7 @@ export default function FormCategory({ match }) {
 
     return (
         <>
+        <Transition>
             <div className="container-fluid mt-4">
                 <h3 className="text-center"> {id ? 'Update category' : 'New Category'}</h3>
                 <form action="" className='text-center' onSubmit={saveCategory}>
@@ -110,6 +112,7 @@ export default function FormCategory({ match }) {
                 )}
 
             </Popup>
+        </Transition>
         </>
     )
 }
