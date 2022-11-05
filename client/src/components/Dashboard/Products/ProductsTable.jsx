@@ -9,6 +9,7 @@ import ProductsTableRow from './ProductTableRow';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import SearchBarProducts from '../../CardProductList/SearchBarProducts';
+import Transition from '../../Transition/Transition';
 
 
 const ProductsTable = ({ itemsPerPage }) => {
@@ -61,6 +62,7 @@ const ProductsTable = ({ itemsPerPage }) => {
 
     return (
         <>
+        <Transition>
             <div className="container-fluid mt-4 mx-auto ">
                 <div className="col-12 d-flex justify-content-center mx-auto my-4">
                     <div className="col-8 py-2"><SearchBarProducts  sort={sort} setSortOrder={setSort} setPage={setSize}  setSearch={setSearch} /> </div>
@@ -110,7 +112,7 @@ const ProductsTable = ({ itemsPerPage }) => {
                     
                     </nav>
             </div>
-
+            </Transition>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Are you sure?</Modal.Title>
