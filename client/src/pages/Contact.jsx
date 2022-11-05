@@ -28,6 +28,19 @@ export default function Contact() {
         title: 'Enter a valid title',
         detail: 'Enter a detail'
     })
+    const [showUp, setShowUp] = useState("0");
+
+    useEffect(() => {
+        window.onscroll = function () {
+          let scroll = window.scrollY;
+          if (scroll < 300) setShowUp("0");
+          if (scroll >= 300) setShowUp("1");
+        }
+      }, []);
+
+    const goUp = () => {
+        window.scroll(0, 0);
+    }
     
     useEffect(()=>{
         window.scroll(0,0);
@@ -198,7 +211,7 @@ export default function Contact() {
 
                         <h3 className="fw-bold fs-5 mt-5">Follow us</h3>
                         <div>
-                            <a href="https://www.instagram.com/tecnoshopstore/" style={{textDecoration: 'none'}} target= '_blanck'>
+                            <a className='mx-0' href="https://www.instagram.com/tecnoshopstore/" style={{textDecoration: 'none'}} target= '_blanck'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-instagram" width="68" height="68" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#a52834" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <rect x="4" y="4" width="16" height="16" rx="4" />
@@ -212,6 +225,11 @@ export default function Contact() {
             </div>
             <Map />
             </Transition>
+            <button 
+                style={{ position: "fixed", right: 20, bottom: 20, transition: "0.5s", scale: showUp}}
+                className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`} onClick={goUp}>
+                <i className="fa-solid fa-angle-up"></i>
+            </button>
             <Footer />
         </>
     );
