@@ -8,7 +8,7 @@ const getProducts = async (req, res) => {
     const orderPrice = req.query.ordprice; // Se recibe por query el criterio de ordenacion EJ: &ordprice=ASC
     const search     = req.query.search; // en caso de llamar este endpoint para search x query enviar EJ: &search=iPhone
     const brand     = req.query.brand; // en caso de llamar este endpoint para brands x query enviar EJ: &brand=Apple
-
+    const disc      = req.query.disc; //en caso de tener un descuento aplicado
         
     let page  = 0;
     let size  = 12;
@@ -21,6 +21,7 @@ const getProducts = async (req, res) => {
     if(brand) where.brand=brand;
     if(orderPrice) order = [["price", orderPrice]];
     if(search?.length>0) where.name = {[Op.iLike]: `%${search}%`};
+    if(disc) where.OfferId = disc;
 
     try{
         const products = await Product.findAndCountAll({
@@ -120,6 +121,48 @@ const {category} = req.query
 
 }
 
+const latestProducts = async ( req, res ) => {
+    const sizeNumber = Number.parseInt(req.query.size);
+// en caso de llamar este endpoint para brands x query enviar EJ: &brand=Apple
+
+        
+
+    let size  = 12;
+    let order = [["id", "DESC"]];
+
+    if(!Number.isNaN(sizeNumber) && sizeNumber > 0 && sizeNumber < 12) size = sizeNumber;
+
+    try{
+        const products = await Product.findAndCountAll({
+            order,
+            limit: size
+        });
+        return res.status(200).json({
+            products: products.rows
+        })
+    }catch{
+        res.status(404).json({ error: "Product not found" });
+    }
+
+}
+
+const bestranking = async ( req, res )=>{
+    let order = [["rating", "DESC"]];
+    try{
+        const products = await Product.findAndCountAll({
+            where : { rating : {[Op.ne]: 0} },
+            order,
+            limit: 8
+        });
+        return res.status(200).json({
+            products: products.rows
+        })
+    }catch{
+        res.status(404).json({ error: "Product not found" });
+    }
+
+}
+
 
 module.exports = {
     getProducts,
@@ -127,5 +170,7 @@ module.exports = {
     postProduct,
     deleteProduct,
     updateProduct,
-    getBrands
+    getBrands,
+    latestProducts,
+    bestranking
 }

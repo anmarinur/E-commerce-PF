@@ -1,10 +1,18 @@
 import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
+import Transition from "../components/Transition/Transition";
+import { useEffect } from "react";
 
 export default function Privacy() {
+
+    useEffect(()=>{
+        window.scroll(0,0);
+    }, []);
+
     return (
         <>
             <Nav />
+            <Transition>
             <div class="container mt-4">
                 <h2>Privacy Policies</h2><br /><br />
                 <p>In order to use the website efficiently and safely, Users must provide certain information, including their name and surname, address, email, identity document, without which it would be impossible to provide the services. That is why it is required that these be true and accurate. The data collected by the corresponding forms will be incorporated into the general client base of TECNOSHOP S.A.<br /><br />
@@ -16,9 +24,8 @@ export default function Privacy() {
                     The owner of the personal data has the power to exercise the right of access to them free of charge at intervals of no less than six months, unless a legitimate interest is proven for this purpose in accordance with the provisions of article 14, paragraph 3 of Law No. 25,326. The National Directorate for the Protection of Personal Data, the control body of Law No. 25,326, has the power to deal with complaints and claims filed in relation to non-compliance with the regulations on the protection of personal data.<br /><br />
                     The personal information that Users enter on the website will be treated confidentially and TECNOSHOP S.A. will do its best to protect their privacy, in accordance with the provisions of Law 25,326. Notwithstanding the foregoing, the User must bear in mind that the Internet is not an impregnable medium in terms of its security.
                     </p>
-
-
             </div>
+            </Transition>
             <Footer />
         </>
     );
