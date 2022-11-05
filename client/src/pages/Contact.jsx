@@ -17,25 +17,75 @@ export default function Contact() {
         userName: '',
         userEmail: '',
         emailTitle:'',
-        emailDetails:'' };
+        emailDetails:'' 
+    };
         
-        const [contact, setContact] = useState(frmContact);
-        const [store, setStore] = useState('')
+    const [contact, setContact] = useState(frmContact);
+    const [store, setStore] = useState('');
+    const [error, setError] = useState({
+        name: 'Enter a valid name',
+        email: 'Enter a valid email',
+        title: 'Enter a valid title',
+        detail: 'Enter a detail'
+    })
+    const [showUp, setShowUp] = useState("0");
+
+    useEffect(() => {
+        window.onscroll = function () {
+          let scroll = window.scrollY;
+          if (scroll < 300) setShowUp("0");
+          if (scroll >= 300) setShowUp("1");
+        }
+      }, []);
+
+    const goUp = () => {
+        window.scroll(0, 0);
+    }
+    
+    useEffect(()=>{
+        window.scroll(0,0);
+    }, []);
+
+    function validate(contact) {
+        if(contact.userName === '' || contact.userName.length < 3) {
+            error.name = 'Enter a valid name'
+        } else {
+            error.name = '';
+        }
+
+        if(contact.userEmail === '' || ! /\S+@\S+\.\S+/.test(contact.userEmail)) {
+            error.email = 'Enter a valid email'
+        } else {
+            error.email = '';
+        }
+
+        if(contact.emailTitle === '' || contact.emailTitle.length < 3) {
+            error.title = 'Enter a valid title'
+        } else {
+            error.title = ''
+        }
+
+        if(contact.emailDetails === '' || contact.emailDetails.length < 6) {
+            error.detail = 'Enter a detail'
+        } else {
+            error.detail = ''
+        }
+        return error;
+    }
+    
+    const handleChange = e => { 
+        const {name,value} = e.target;
+        setContact({...contact, [name]:value}); 
+        setError(validate({
+            ...contact,
+            [name]: value
+        }))
+    };
         
-        useEffect(()=>{
-            window.scroll(0,0);
-        }, []);
-        
-        const handleChange = e => { 
-            const {name,value} = e.target;
-            setContact({...contact, [name]:value}); 
-        };
-        
-        const handleClick = e =>{
-            e.preventDefault();
-            // emailjs.init('px6i5Eu00A48ZrODj');
-		emailjs.send('default_service','template_mhmbvwk', contact, 'px6i5Eu00A48ZrODj')
-		.then((response) => {
+    const handleClick = e =>{
+        e.preventDefault();
+        emailjs.send('default_service','template_mhmbvwk', contact, 'px6i5Eu00A48ZrODj')
+        .then((response) => {
             setContact(frmContact);
             toast.success('Message sent succesfully', {
                 position: "top-right",
@@ -47,7 +97,7 @@ export default function Contact() {
                 progress: undefined,
                 theme: "light",
                 })
-		}, (err) => {
+        }, (err) => {
             toast.error('Something went wrong', {
                 position: "top-right",
                 autoClose: 2000,
@@ -58,8 +108,8 @@ export default function Contact() {
                 progress: undefined,
                 theme: "light",
                 });
-		});
-   }
+        });
+    }
 
 
     const { isLoaded } = useLoadScript({
@@ -80,21 +130,25 @@ export default function Contact() {
                             <Form.Group className="mb-3">
                                 <Form.Label className="fw-bold fs-5">Name:</Form.Label>
                                 <Form.Control type="text" placeholder="Enter your name" name="userName" value={contact.userName} onChange={(e) => handleChange(e)}/>
+                                {error.name && <span className="ms-2 text-danger">{error.name}</span>}
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label className="fw-bold fs-5">Email:</Form.Label>
                                 <Form.Control type="email" placeholder="Enter your email" name="userEmail" value={contact.userEmail} onChange={(e) => handleChange(e)}/>
+                                {error.email && <span className="ms-2 text-danger">{error.email}</span>}
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label className="fw-bold fs-5">Title:</Form.Label>
                                 <Form.Control type="text" placeholder="Enter a title" name="emailTitle" value={contact.emailTitle} onChange={(e) => handleChange(e)}/>
+                                {error.title && <span className="ms-2 text-danger">{error.title}</span>}
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label className="fw-bold fs-5">Message:</Form.Label>
                                 <Form.Control as="textarea" rows={2} placeholder="Enter your message" name="emailDetails" value={contact.emailDetails} onChange={(e) => handleChange(e)}/>
+                                {error.detail && <span className="ms-2 text-danger">{error.detail}</span>}
                             </Form.Group>
                         </Form>
-                        <Button variant="danger" type="submit" onClick={(e) => handleClick(e)}>
+                        <Button disabled={error.name || error.email || error.title || error.detail ? true : ''} variant="danger" type="submit" onClick={(e) => handleClick(e)}>
                             Submit
                         </Button>
                     </div>
@@ -138,7 +192,6 @@ export default function Contact() {
                                     <p className="fs-6">Monday to Friday from 8 am pm to 8 pm</p>
                                     <p className="fs-6">Saturday from 8 am to 8 pm</p>
                                     <p className="fs-6">Sunday from 9 am to 12pm</p>
-                                    <p className="fs-6">Sunday from 9 am to 12pm</p>
                                 </div>
                             : store === 'Technoshop Av. Eva Perón' ?
                                 <div className="card text-center text-dark bg-light pt-3 lh-1">
@@ -156,24 +209,27 @@ export default function Contact() {
                         <h3 className="fw-bold fs-5 mt-5">E-Mail</h3>
                         <a href="mailto:tecnoshop.henry@gmail.com" style={{textDecoration: 'none'}}><p className="mb-4 fs-5 text-danger">tecnoshop.henry@gmail.com</p></a>
 
-                        <h3 className="fw-bold fs-5 mt-5">Social Media</h3>
+                        <h3 className="fw-bold fs-5 mt-5">Follow us</h3>
                         <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-instagram" width="68" height="68" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#a52834" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <rect x="4" y="4" width="16" height="16" rx="4" />
-                            <circle cx="12" cy="12" r="3" />
-                            <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-facebook" width="68" height="68" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#a52834" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
-                            </svg>
+                            <a className='mx-0' href="https://www.instagram.com/tecnoshopstore/" style={{textDecoration: 'none'}} target= '_blanck'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-instagram" width="68" height="68" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#a52834" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <rect x="4" y="4" width="16" height="16" rx="4" />
+                                <circle cx="12" cy="12" r="3" />
+                                <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <Map />
             </Transition>
+            <button 
+                style={{ position: "fixed", right: 20, bottom: 20, transition: "0.5s", scale: showUp}}
+                className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`} onClick={goUp}>
+                <i className="fa-solid fa-angle-up"></i>
+            </button>
             <Footer />
         </>
     );
