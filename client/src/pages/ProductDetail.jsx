@@ -175,7 +175,7 @@ export default function ProductDetail(props) {
           </Card.Header> */}
           
           <Card.Body className="text-center">
-          <Link to="/" type="button" className="text-decoration-none bg-light border shadow-sm rounded text-danger fs-5 px-2 py-0" style={ {float: 'right'} } aria-label="Close">x</Link>
+          <Link to="/" type="button" className="btn btn-danger border shadow-sm rounded fs-5 px-2 py-0" style={ {float: 'right'} } aria-label="Close">↩</Link>
             <div className="row p-3">
               <div className="col-xl-6">
                 <Card.Img
@@ -197,10 +197,10 @@ export default function ProductDetail(props) {
                     ssr={true} // means to render carousel on server-side.
                     infinite={true}
                     autoPlay={true}
-                    autoPlaySpeed={1000}
+                    autoPlaySpeed={1500}
                     keyBoardControl={true}
-                    customTransition="transform 800ms ease-in-out"
-                    transitionDuration={1000}
+                    customTransition="transform 1000ms ease-in-out"
+                    transitionDuration={1500}
                     containerClass="carousel-container"
                     dotListClass="custom-dot-list-style"
                     itemClass="carousel-item-padding-40-px"
