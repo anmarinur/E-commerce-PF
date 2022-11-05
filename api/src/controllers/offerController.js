@@ -66,10 +66,12 @@ const deleteOfferById = async (req, res)=>{
 }
 
 const updateOfferById = async (req, res)=>{
-    const id = req.params;
-    const offer = req.body;
+    const {id} = req.params;
+    const {products, offer} = req.body;
     try {
-        await Offer.update( offer, { where:{ id } });
+        await Offer.update( offer, { where:{ id: id } });
+        const of = await Offer.findOne({where:{id: id}})
+        await of.setProducts(products);
         res.json("Update successfully");
     } catch (error) {
         res.json(error.message);
