@@ -2,6 +2,7 @@ import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import Transition from "../components/Transition/Transition";
 import { useEffect } from "react";
+import GoUpButton from "../components/GoUpButton/GoUpButton";
 
 export default function Home(){
 
@@ -26,6 +27,7 @@ export default function Home(){
                 <h2>Our mission and our approach</h2>
                 <p>Tecnoshop follows a simple business philosophy: to dedicate its talent and technology to selling superior products that contribute to a better global society. To achieve this, it places a high value on its people and technologies.</p>
             </div> 
+            <GoUpButton />
             </Transition>      
             <Footer />
         </>

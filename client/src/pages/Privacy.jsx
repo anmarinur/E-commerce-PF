@@ -2,6 +2,7 @@ import Nav from "../components/Nav/Nav";
 import Footer from "../components/Footer/Footer";
 import Transition from "../components/Transition/Transition";
 import { useEffect } from "react";
+import GoUpButton from "../components/GoUpButton/GoUpButton";
 
 export default function Privacy() {
 
@@ -25,6 +26,7 @@ export default function Privacy() {
                     The personal information that Users enter on the website will be treated confidentially and TECNOSHOP S.A. will do its best to protect their privacy, in accordance with the provisions of Law 25,326. Notwithstanding the foregoing, the User must bear in mind that the Internet is not an impregnable medium in terms of its security.
                     </p>
             </div>
+            <GoUpButton />
             </Transition>
             <Footer />
         </>

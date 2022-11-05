@@ -10,6 +10,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Transition from "../components/Transition/Transition";
+import GoUpButton from "../components/GoUpButton/GoUpButton";
 
 export default function Contact() {
     
@@ -28,19 +29,6 @@ export default function Contact() {
         title: 'Enter a valid title',
         detail: 'Enter a detail'
     })
-    const [showUp, setShowUp] = useState("0");
-
-    useEffect(() => {
-        window.onscroll = function () {
-          let scroll = window.scrollY;
-          if (scroll < 300) setShowUp("0");
-          if (scroll >= 300) setShowUp("1");
-        }
-      }, []);
-
-    const goUp = () => {
-        window.scroll(0, 0);
-    }
     
     useEffect(()=>{
         window.scroll(0,0);
@@ -225,11 +213,7 @@ export default function Contact() {
             </div>
             <Map />
             </Transition>
-            <button 
-                style={{ position: "fixed", right: 20, bottom: 20, transition: "0.5s", scale: showUp}}
-                className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`} onClick={goUp}>
-                <i className="fa-solid fa-angle-up"></i>
-            </button>
+            <GoUpButton />
             <Footer />
         </>
     );
