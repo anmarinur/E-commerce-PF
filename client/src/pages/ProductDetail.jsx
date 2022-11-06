@@ -314,7 +314,7 @@ export default function ProductDetail(props) {
                 <Card.Subtitle className="mt-5 mb-3 text-muted fs-5 w-70 mx-auto">
                   Customer reviews
                 </Card.Subtitle>
-                <div className="row g-4">
+                <div className="d-flex flex-row align-content-center">
                   {productReviews && productReviews.Reviews.length > 0 ? (
                     productReviews.Reviews.map((review) => (
                       
@@ -324,11 +324,12 @@ export default function ProductDetail(props) {
                       comment={review.comment}
                       id={review.id}
                       createdAt={review.createdAt}
+                      image={review.image}
                       />
                       
                     ))
                   ) : (
-                    <h4>There are no comments</h4>
+                    <p className="text-danger fs-3 mt-2">There are no comments</p>
                   )}
                 </div>
 
