@@ -12,6 +12,7 @@ import spinner from '../spinner.gif';
 import axios from 'axios';
 import { nameCategory } from '../../utils/nameCategory';
 import Loading from '../Loading/Loading';
+import SocialBar from '../SocialBar/SocialBar';
 
 
 const CardProductsList = () => {
@@ -52,6 +53,7 @@ const CardProductsList = () => {
     return (
         <>
             <div className="container mt-4">
+
                 <div className="row g-4">
                     <div className="col-lg-3 col-md-12">
                         { brands !== undefined &&<FilterAndOrder brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
@@ -84,7 +86,7 @@ const CardProductsList = () => {
                     </div>
                 </div>
             </div>
-
+            <SocialBar />
         </>
     )
 
