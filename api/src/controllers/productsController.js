@@ -173,6 +173,20 @@ const bestranking = async ( req, res )=>{
 
 }
 
+const similarprice = async ( req, res )=>{
+ const {cat, price} = req.query;
+ try {
+   const products = await Product.findAll({
+   where:{ CategoryId: cat, price: {[Op.between]: [price-100, price+100]}},
+   limit: 10,
+   });
+
+   return res.status(200).json(products);
+
+ } catch (error) {
+  res.status(400).json({ error: "Products not found" });  
+ }
+}
 
 module.exports = {
     getProducts,
@@ -182,5 +196,6 @@ module.exports = {
     updateProduct,
     getBrands,
     latestProducts,
-    bestranking
+    bestranking,
+    similarprice
 }
