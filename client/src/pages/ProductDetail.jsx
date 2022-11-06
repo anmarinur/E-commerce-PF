@@ -229,9 +229,28 @@ export default function ProductDetail(props) {
               </div>
               <div className="col-xl-6">
                 <h3 className="text-start fs-2 fw-semibold"> {productDetail.name}</h3>
-                <p className="text-start  text-danger fs-4">
-                  Price: ${productDetail.price}
-                </p>
+                { productDetail.Offer?.active === "true" && 
+                (<span  className="text-muted fw-bold p-2 text-uppercase fs-5" style={ {float: 'left'}} > 
+                  In Offert  {productDetail.Offer.discount}% 
+                </span>)  }
+
+                {
+                    productDetail.Offer?.active === "true" ? 
+                    (<p className="card-text text-start  text-danger fs-4 text-decoration-line-through">${productDetail.price}</p>) 
+                    :
+                     (<p className="card-text text-start  text-danger fs-4">${productDetail.price}</p>) 
+                }
+                {
+                    productDetail.Offer?.active === "true" ? 
+                    (<p className="text-start  text-danger fs-4">
+                    Price: ${Math.trunc(productDetail.price*(1-productDetail.Offer.discount/100))}
+                    </p>)
+                  :
+                     (<p className="text-start  text-danger fs-4">
+                     Price: ${productDetail.price}
+                   </p>) 
+                }
+                
                 <p className="text-start text-muted start lh-1 mb-4">
                   <b className="text-danger">Category: </b>
                   {nameCategory(productDetail.CategoryId)}

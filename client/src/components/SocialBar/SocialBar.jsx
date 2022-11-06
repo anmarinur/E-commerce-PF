@@ -11,8 +11,8 @@ export default function SocialBar(){
 
     return (
         <div style={{opacity: opacity}} className="social-bar">
-            <a href={`https://wa.me/${num}`} className="icon icon-whatsapp" target="_blanck"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="https://www.instagram.com/tecnoshopstore" className="icon bg-danger icon-instagram" target="_blanck"><i class="fa-brands fa-instagram"></i></a>
+            <a href={`https://wa.me/${num}`} className="iconSocial iconSocial-whatsapp" target="_blanck"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/tecnoshopstore" className="iconSocial bg-danger iconSocial-instagram" target="_blanck"><i class="fa-brands fa-instagram"></i></a>
         </div>
     )
 }

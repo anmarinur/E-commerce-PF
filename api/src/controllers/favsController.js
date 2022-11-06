@@ -1,4 +1,4 @@
-const { Product, User,Fav } = require('../db.js');
+const { Product, User,Fav, Offer } = require('../db.js');
 
 
 const getFavorites = async (req, res) => {
@@ -18,8 +18,11 @@ const getFavorites = async (req, res) => {
         
         const favProducts = await Product.findAll({
          where: {
-         id: favsDB
-        }});                 
+            id: favsDB
+         },
+         attributes: {exclude: ['OfferId']},
+         include: Offer
+        });                 
                 
          return res.status(200).json(favProducts);
         } catch (error) {

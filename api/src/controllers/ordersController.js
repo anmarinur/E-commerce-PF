@@ -1,4 +1,4 @@
-const { Order, Product, OrderDetail, User } = require("../db");
+const { Order, Product, OrderDetail, Offer, User } = require("../db");
 const { Op } = require("sequelize");
 const emailNotifications = require("../utils/emailNotifications.js");
 const message = require("../utils/emailMessages");
@@ -60,7 +60,7 @@ const getOrdersById = async (req, res) => {
     const { id } = req.params;
     const order = await Order.findOne({
       where: {id},
-      include: Product
+      include: {model: Product, attributes: {exclude: ['OfferId']}, include: Offer }
     });
 
     order
@@ -78,7 +78,7 @@ const getOrdersByEmail = async (req, res) => {
       where: {
         user_email: email
       },
-      include: Product,
+      include: {model: Product, attributes: {exclude: ['OfferId']}, include: Offer }
     });
 
     order.length !== 0

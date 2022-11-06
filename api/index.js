@@ -3,7 +3,7 @@ const { db } = require('./src/db.js');
 const chargeProducts = require('./src/utils/chargeProducts.js');
 const { client } = require('./whatsapp/whatsappBot.js');
 
-db.sync({ force: true })
+db.sync(/*{ force: true }*/)
   .then(()=>{
     chargeProducts();
     console.log("Database sync");

@@ -70,7 +70,7 @@ code {
   transition: all .5s;
 }
 
-.icon {
+.iconSocial {
   color: white;
   text-decoration: none;
   padding: .7rem;
@@ -78,23 +78,23 @@ code {
   transition: all .5s;
 }
 
-.icon-whatsapp {
+.iconSocial-whatsapp {
   background: #25d366;
 }
 
-.icon-instagram {
+.iconSocial-instagram {
   background: #e82868 ;
 }
 
-.icon:first-child{
+.iconSocial:first-child{
   border-radius: 1rem 0 0 0;
 }
 
-.icon:last-child{
+.iconSocial:last-child{
   border-radius: 0 0 0 1rem;
 }
 
-.icon:hover {
+.iconSocial:hover {
   padding-right: 2.5rem;
   border-radius: 1rem 0 0 1rem;
   box-shadow: 0 0 .5rem rgba(0, 0, 0, .42);

@@ -33,13 +33,13 @@ let info = [
             <Nav />
             <Transition>
             <GoUpButton />
-            <div class="container mt-4">
+            <div class="m-0 d-flex flex-column justify-content-center align-items-center">
                 <h2 className="fw-bold text-danger text-center my-2 fs-1">Developers</h2>
 
                 {info.map((e) =>
                     <Card className="center" style={{
                         display: "flex",
-                        width: "auto",
+                        width: "50em",
                         maxWidth: "50em",
                         maxHeight: "30em",
                         marginTop: "2em",
