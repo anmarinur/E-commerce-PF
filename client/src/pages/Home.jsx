@@ -66,7 +66,7 @@ export default function Home() {
   const getOfferProduct = async () => {
     try {
       const result = await axios.get('/offer');
-      var offerlast = result.data.length;
+      var offerlast = result.data[result.data.length-1].id;
       const resultTwo = await axios.get(`/product?disc=${offerlast}&size=6`);
       if ( resultTwo.data.products.length < 6) {
         const result3 = await axios.get(`/product?disc=${offerlast - 1}&size=${6 - (resultTwo.data.products.length) }`);
@@ -170,15 +170,17 @@ export default function Home() {
                 }
               </Carousel>
             </div>
-
             <div className="col-12 text-center text-dark bg-white">
               <h3 className="text-uppercase fw-bold my-4">Product Offer</h3>
               <div className="row g-4 px-5">
-                {offerProducts && offerProducts.length === 0 && <p>no offert</p>}
+                {offerProducts?.length > 0 && offerProducts.find(p=>p.Offer?.active==="true") ? <></> : <p>no offers available</p>}
                 {
-                  offerProducts ? offerProducts.map(p =>
-
-                    <CardOfferProduct p={p} key={p.id} />
+                  offerProducts ? offerProducts.map(p =>{
+                    if(p.Offer?.active === "true"){
+                      return <CardOfferProduct p={p} key={p.id} />
+                    }
+                    return;
+                  }
                   ) : (<Loading />)
                 }
               </div>

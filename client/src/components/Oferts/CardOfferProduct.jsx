@@ -3,11 +3,11 @@ import React from 'react';
 export default function CardOfferProduct({p}) {
 
     return (
-        <div className="col-xl-4 col-md-6">
+        <div className="col-xl-4 col-md-6 my-4">
             <div className="card p-2 border shadow">
                 <div className="row">
                     <div className="col-xl-6">
-                        <img style={{ maxWidth: '12em', maxHeight: '10em' }} src={p.image} alt="IMG_PRODUCT_OFERT" />
+                        <img style={{ maxWidth: '10em', maxHeight: '10em' }} src={p.image} alt="IMG_PRODUCT_OFERT" />
                     </div>
                     <div className="col-xl-6 text-end">
                         <h4 className='text-danger fs-5 text-wrap'>{p.name}</h4>

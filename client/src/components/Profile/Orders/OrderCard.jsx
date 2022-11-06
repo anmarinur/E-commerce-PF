@@ -53,7 +53,7 @@ const OrderCard = () => {
         let checkoutURL = await axios.post('/checkout', { totalProducts, id });
         window.location.replace(`${checkoutURL.data}`)
     }
-
+    console.log(userOrders)
     return (
         <div>
             <div className='col-12 mb-3 '>
@@ -101,9 +101,11 @@ const OrderCard = () => {
                                                 <div key={product.id} className="row text-center mb-2">
                                                     <div className="col-2"> <img style={{ maxHeight : '3em', maxWidth : '3em' , minHeight : '1em', minWidth:'2em'}} src={product.image} alt="" /> </div>
                                                     <div className="col-4"><span className='fw-bold text-wrap'>{product.name}</span> </div>
-                                                    <div className="col-2"><span className='fw-bold'>{product.price}</span></div>
+                                                    { product.Offer?.active ==="true" ? <div className="col-2"><span className='fw-bold'>{Math.trunc(product.price*(1-product.Offer.discount/100))}</span></div>
+                                                    : <div className="col-2"><span className='fw-bold'>{product.price}</span></div>}
                                                     <div className="col-2"><span className='fw-bold'>{product.OrderDetail.units}</span></div>
-                                                    <div className="col-2"><span className='fw-bold'>$ {product.OrderDetail.units * product.price}</span> </div>
+                                                    { product.Offer?.active ==="true" ? <div className="col-2"><span className='fw-bold'>$ {product.OrderDetail.units * Math.trunc(product.price*(1-product.Offer.discount/100))}</span></div>
+                                                    :<div className="col-2"><span className='fw-bold'>$ {product.OrderDetail.units * product.price}</span> </div>}
                                                 </div>
                                             )}
                                         </div>

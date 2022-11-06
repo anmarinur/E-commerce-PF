@@ -70,8 +70,20 @@ export default function MyFavorites() {
                                     <div className="col-xl-7 col-md-6 col-sm-6 col-5">
                                         <div className="card-body">
                                             <h5 className="card-title m-0 p-0">{product.name}</h5>
-                                            <p className="card-text m-0 p-0 fw-semibold">Price : ${product.price}</p>
+                                            { product.Offer?.active === "true" ? 
+                                                (<p className="text-start m-0 text-danger fs-7 text-decoration-line-through">${product.price}</p>) 
+                                                :
+                                                (<></>) 
+                                            }
+                                            {product.Offer?.active === "true" 
+                                            ? <p className="card-text m-0 p-0 fw-semibold">Price : ${Math.trunc(product.price*(1-product.Offer.discount/100))}</p>
+                                            : <p className="card-text m-0 p-0 fw-semibold">Price : ${product.price}</p>
+                                            }
                                             <p className="card-text m-0 p-0 fw-semibold"><small className="text-muted fs-6 text-danger">Stock  : {product.stock}</small></p>
+                                            { product.Offer?.active === "true" && 
+                                            (<span  className="text-muted fw-bold p-2 text-uppercase fs-5" style={ {float: 'left'}} > 
+                                                In Offert  {product.Offer.discount}% 
+                                             </span>)  }
                                         </div>
                                     </div>
                                     <div className="col-xl-2 col-md-2 col-sm-2 col-2 p-4 ">

@@ -8,6 +8,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import spinner from '../spinner.gif';
 import { useLocation } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 
 
 export default function AddComment({products, email, idOrder, block}) {
@@ -160,7 +161,7 @@ export default function AddComment({products, email, idOrder, block}) {
           </Form>
           
           {loading
-          ?<img className='mx-0 my-0' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' />
+          ? <div className='d-flex justify-content-center'><Loading /></div>
           :location.pathname==="/profile/myOrders" ? 
                     block === false && <>
                     <p className='col-4'>Upload a photo of your product:</p>

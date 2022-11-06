@@ -98,7 +98,7 @@ export default function Nav() {
                         </div>
 
                         <div className="col-lg-6 col-md-6 col-sm-6 col-6 align-self-start text-center">
-                            <div className="d-flex justify-content-center" >
+                            <div className="d-flex justify-content-end" >
                                 {isAuthenticated ? (
                                     <Link to="/profile/myFavorites" className="nav-card text-white text-decoration-none bg-danger position-relative my-2 mx-5 p-1 ">
                                         <i className="fa-solid fa-heart fa-2x "></i>
