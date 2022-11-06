@@ -173,17 +173,19 @@ export default function UpdateOffers() {
   }
 
   function handleProducts(e) {
-    setInput({
-      ...input,
-      products: [...input.products, e.target.id],
-    });
-    setErrors(
-      validate({
+    if(input.products.filter(p => p === e.target.id).length === 0){
+      setInput({
         ...input,
         products: [...input.products, e.target.id],
-      })
-    );
-    setProds([...prods, { id: e.target.id, name: e.target.value }]);
+      });
+      setErrors(
+        validate({
+          ...input,
+          products: [...input.products, e.target.id],
+        })
+      );
+      setProds([...prods, { id: e.target.id, name: e.target.value }]);
+    }
   }
 
   async function handleClick(e) {
@@ -424,10 +426,12 @@ export default function UpdateOffers() {
               {prods.length !== 0
                 ? prods?.map((e) => (
                     <li class="list-group-item">
-                      <i>{e.name}</i>
-                      <button type="button" onClick={() => handleDelete(e)}>
-                        Delete item
-                      </button>
+                      <div className="d-flex justify-content-start">
+                        <button className="btn btn-danger me-3 my-auto" type="button" onClick={() => handleDelete(e)}>
+                          x
+                        </button>
+                        <p className="lh-3 my-auto">{e.name}</p>
+                      </div>
                     </li>
                   ))
                 : null}
