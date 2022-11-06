@@ -17,6 +17,7 @@ import Transition from "../components/Transition/Transition";
 import Spinner from 'react-bootstrap/Spinner';
 import CardOfferProduct from "../components/Oferts/CardOfferProduct";
 import GoUpButton from "../components/GoUpButton/GoUpButton";
+import Loading from "../components/Loading/Loading";
 
 
 
@@ -165,15 +166,13 @@ export default function Home() {
                 {
                   lastestProducts ? lastestProducts.map(p =>
                     <CardProduct product={p} key={p.id} />
-                  ) : (<Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>)
+                  ) : (<Loading />)
                 }
-              </Carousel>;
+              </Carousel>
             </div>
 
             <div className="col-12 text-center text-dark bg-white">
-              <h3 className="text-uppercase fw-bold my-4">product offer.</h3>
+              <h3 className="text-uppercase fw-bold my-4">product offer</h3>
               <div className="row g-4 px-5">
                 {offerProducts && offerProducts.length === 0 && <p>no offert</p>}
                 {
@@ -181,9 +180,7 @@ export default function Home() {
 
                     <CardOfferProduct p={p} key={p.id} />
 
-                  ) : (<Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>)
+                  ) : (<Loading />)
                 }
               </div>
 
@@ -206,11 +203,9 @@ export default function Home() {
                 {
                   bestRatingProducts ? bestRatingProducts.map(p =>
                     <CardBestRaitingProduct p={p} key={p.id} />
-                  ) : (<Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>)
+                  ) : (<Loading />)
                 }
-              </Carousel>;
+              </Carousel>
             </div>
           </div>
         </Modal.Body>

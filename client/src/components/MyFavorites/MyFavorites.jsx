@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import TransitionY from '../Transition/TransitionY';
+import Loading from '../Loading/Loading';
 
 export default function MyFavorites() {
     const { user, getAccessTokenSilently } = useAuth0();
@@ -56,7 +57,7 @@ export default function MyFavorites() {
         <>
         <TransitionY>
             <div className="container">
-                <h3>MyFavorites</h3>
+                <h3>My Favorites</h3>
                 <div className="row">
                     <div className="col-12">
                         {products.length === 0  && products && ( <p>No have products favourites</p> )}
@@ -78,7 +79,7 @@ export default function MyFavorites() {
                                     </div>
                                 </div>
                             </Link>
-                        )) : (<Spinner className='text-center m-4' animation="border" />)}
+                        )) : <Loading />}
                         
                     </div>
                 </div>
