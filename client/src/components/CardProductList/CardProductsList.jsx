@@ -8,10 +8,10 @@ import FilterAndOrder from "../FilterAndOrderProducts/FilterAndOrder";
 import { getAllProducts } from '../../redux/actions';
 import PaginationProducts from './Pagination';
 import SearchBarProducts from './SearchBarProducts';
-import spinner from '../spinner.gif';
 import axios from 'axios';
 import { nameCategory } from '../../utils/nameCategory';
 import Loading from '../Loading/Loading';
+import SocialBar from '../SocialBar/SocialBar';
 
 
 const CardProductsList = () => {
@@ -21,7 +21,7 @@ const CardProductsList = () => {
     const products = useSelector(state => state.products.products);
     const categories = useSelector(state => state.categories);
 
-    const [size, setSize] = useState(8);
+    const [size, setSize] = useState(12);
     const [page, setPage] = useState(0);
     const [categoryFilter, setCategoryFilter] = useState('');
     const [sort, setSort] = useState(undefined);
@@ -52,15 +52,16 @@ const CardProductsList = () => {
     return (
         <>
             <div className="container mt-4">
+
                 <div className="row g-4">
                     <div className="col-lg-3 col-md-12">
                         { brands !== undefined &&<FilterAndOrder brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
                     </div>
                     <div className="col-lg-9 col-md-12">
-                        <div className='container bg-light border shadow p-3 mb-3 '>
+                        <div className='container bg-white border shadow p-3 mb-3 rounded'>
                             <SearchBarProducts sort={sort}  setPage={setSize} setSortOrder={setSortOrder} setSearch={setSearch} />
                         </div>
-                        <Container className="bg-light border shadow p-3">
+                        <Container className="m-0 p-0">
                             <Row>
                                 {
                                     products ? products.map(product => (
@@ -84,7 +85,7 @@ const CardProductsList = () => {
                     </div>
                 </div>
             </div>
-
+            <SocialBar />
         </>
     )
 
