@@ -8,7 +8,8 @@ const OrderContainer = () => {
     return (
         <>
             <TransitionY>
-            <div className='container  p-2 mt-4'>
+            <div className='container '>
+              <h3>My Orders</h3>
                 <div className="row">
                     <OrderCard />
                 </div>

@@ -51,7 +51,7 @@ export default function ProfilePage() {
                     <div className="col-xl-3 col-md-4 col-sm-12  mb-4">
                         <div className=" text-center">
                             
-                            <img src={profileImg ? profileImg : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em', height: "6em"}} className="text-center rounded-circle" alt="Avatar" />
+                            <img src={profileImg ? profileImg : userLocal.image? userLocal.image : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em', height: "6em"}} className="text-center rounded-circle" alt="Avatar" />
                             <p className='m-0 p-0 fw-bold'>{user && user.name}</p>
                             <span className='m-0 p-0 fw-bold fs-15'>{user && user.email}</span>
                         </div>

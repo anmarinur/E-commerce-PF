@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom"
 import { toast } from "react-toastify";
+import Loading from "../../Loading/Loading";
 import spinner from '../../spinner.gif';
 import Transition from "../../Transition/Transition";
 
@@ -90,7 +91,7 @@ export default function ImageProduct(){
 
             <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
             {loading
-            ?<div style={{width: "20rem"}}><img src={spinner} alt="loading" /></div>
+            ?<div style={{width: "20rem"}} className="d-flex align-items-center justify-content-start"><Loading /></div>
             :<img style={{width: "20rem"}} src={preview ||"https://removal.ai/wp-content/uploads/2021/02/no-img.png" } alt="photo" />
             }
             <br/>

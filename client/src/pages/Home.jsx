@@ -179,8 +179,7 @@ export default function Home() {
                   offerProducts ? offerProducts.map(p =>
 
                     <CardOfferProduct p={p} key={p.id} />
-
-                  ) :  (<Loading/>)
+                  ) : (<Loading />)
                 }
               </div>
 
@@ -205,7 +204,7 @@ export default function Home() {
                     <CardBestRaitingProduct p={p} key={p.id} />
                   ) :  (<Loading/>)
                 }
-              </Carousel>;
+              </Carousel>
             </div>
           </div>
         </Modal.Body>
