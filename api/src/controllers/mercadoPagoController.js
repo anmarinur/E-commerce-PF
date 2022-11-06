@@ -7,9 +7,10 @@ const postMercadoPago = (req, res) => {
   const { totalProducts, id } = req.body
   let preference = {
     "items": totalProducts.map((product) => {
+
       return({
         title: product.name,
-        unit_price: Number(product.price),
+        unit_price: product.Offer?.active === "true" ? Math.trunc(product.price*(1-product.Offer.discount/100)) : Number(product.price),
         quantity: Number(product.qty),
         picture_url: product.image
       })

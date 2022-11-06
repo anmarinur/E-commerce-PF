@@ -42,7 +42,6 @@ const Order = () => {
             quantity: product.qty
         }
     })
-
     const finalOrder = {
         user_email: user ? user.email : '',
         total_payment: totalCart,
