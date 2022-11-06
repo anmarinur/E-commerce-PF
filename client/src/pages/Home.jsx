@@ -57,6 +57,7 @@ export default function Home() {
   const getBestRatingProducts = async () => {
     try {
       const result = await axios.get('/product/bestranking');
+      console.log(result.data)
       setBestRatingProducts(result.data.products);
     } catch (error) {
       console.error(error.message);
@@ -200,7 +201,7 @@ export default function Home() {
                 customTransition="all .5s"
                 transitionDuration={1000}
                 containerClass="carousel-container m-5">
-                {bestRatingProducts && bestRatingProducts.length === 0 && <p>no best Rating Products</p>}
+                {bestRatingProducts?.length === 0 && <p>no best Rating Products</p>}
                 {
                   bestRatingProducts ? bestRatingProducts.map(p =>
                     <CardBestRaitingProduct p={p} key={p.id} />
