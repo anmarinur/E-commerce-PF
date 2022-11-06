@@ -314,7 +314,7 @@ export default function ProductDetail(props) {
                 <Card.Subtitle className="mt-5 mb-3 text-muted fs-5 w-70 mx-auto">
                   Customer reviews
                 </Card.Subtitle>
-                <div className="d-flex flex-row align-content-center">
+                <div className="d-flex flex-column align-items-center">
                   {productReviews && productReviews.Reviews.length > 0 ? (
                     productReviews.Reviews.map((review) => (
                       
