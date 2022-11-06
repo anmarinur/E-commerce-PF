@@ -1,0 +1,18 @@
+
+
+.accordion-button{
+    background-color:none !important;
+    color :#3d3d3d !important;
+}
+.accordion-button:focus {
+    border: 1px solid #7e7e7e !important;
+    color: #f5f5f5 !important;
+    box-shadow: none !important;
+    background-color: #7e7e7e !important;
+    
+}
+.accordion-button:focus-visible  {
+    border: 1px solid #d25c5c !important;
+    color: #f5f5f5 !important;
+
+}

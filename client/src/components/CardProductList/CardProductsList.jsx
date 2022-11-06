@@ -56,7 +56,7 @@ const CardProductsList = () => {
                         { brands !== undefined &&<FilterAndOrder brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
                     </div>
                     <div className="col-lg-9 col-md-12">
-                        <div className='container bg-light border shadow p-3 mb-3 rounded'>
+                        <div className='container bg-white border shadow p-3 mb-3 rounded'>
                             <SearchBarProducts sort={sort}  setPage={setSize} setSortOrder={setSortOrder} setSearch={setSearch} />
                         </div>
                         <Container className="m-0 p-0">

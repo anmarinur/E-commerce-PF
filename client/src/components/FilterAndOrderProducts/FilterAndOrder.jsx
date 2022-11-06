@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../redux/actions';
 import Accordion from 'react-bootstrap/Accordion';
+import './FilterAndOrder.css'
+
 
 const FilterAndOrder = (props) => {
 
@@ -19,7 +21,7 @@ const FilterAndOrder = (props) => {
     }, [props.brands]);
 
     return (
-        <Card className='shadow w-100 p-0 rounded-0 border bg-light' >
+        <Card className='shadow w-100 p-0 border bg-white' >
             <Card.Body className=''>
 
                 <div id='filter' className=''>
