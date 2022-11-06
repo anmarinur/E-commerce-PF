@@ -174,15 +174,15 @@ export default function Home() {
             <div className="col-12 text-center text-dark bg-white">
               <h3 className="text-uppercase fw-bold my-4">Product Offer</h3>
               <div className="row g-4 px-5">
-                {offerProducts?.length > 0 && offerProducts.find(p=>p.Offer?.active==="true") ? <></> : <p>no offers available</p>}
+                {offerProducts && offerProducts.find(p=>p.Offer?.active==="true") ? <></> : <p>no offers available</p>}
                 {
-                  offerProducts ? offerProducts.map(p =>{
+                  offerProducts? offerProducts.map(p =>{
                     if(p.Offer?.active === "true"){
                       return <CardOfferProduct p={p} key={p.id} />
                     }
                     return;
                   }
-                  ) : (<Loading />)
+                  ) : offerProducts? (<Loading />) : <></>
                 }
               </div>
 
@@ -190,6 +190,7 @@ export default function Home() {
 
             <div className="col-12 mt-2 text-center">
               <h3 className="text-uppercase fw-bold my-4" >best ranking</h3>
+                {bestRatingProducts?.length === 0 && <p>no best Rating Products</p>}
               <Carousel
                 swipeable={false}
                 draggable={false}
@@ -201,7 +202,6 @@ export default function Home() {
                 customTransition="all .5s"
                 transitionDuration={1000}
                 containerClass="carousel-container m-5">
-                {bestRatingProducts?.length === 0 && <p>no best Rating Products</p>}
                 {
                   bestRatingProducts ? bestRatingProducts.map(p =>
                     <CardBestRaitingProduct p={p} key={p.id} />
