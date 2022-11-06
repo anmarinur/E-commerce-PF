@@ -66,18 +66,18 @@ export default function FormOffers() {
   }, [dispatch, category, brands]);
 
   function validate(input) {
-    if (!input.event) errors.event = "Enter a valid event name";
+    if (!input.event || input.event.length < 3) errors.event = "Enter a valid event name";
     else errors.event = "";
 
     if (input.discount <= 0 || input.discount > 100)
       errors.discount = "Enter a valid discount percentage";
     else errors.discount = "";
 
-    if (!input.startDay)
+    if (!input.startDay || !validateDate(input.startDay))
       errors.startDay = "Enter a valid start date to apply the discount";
     else errors.startDay = "";
 
-    if (!input.endDay)
+    if (!input.endDay || !validateDate(input.endDay) || !validateToday(input.endDay, input.startDay))
       errors.endDay = "Enter a valid end date to apply the discount";
     else errors.endDay = "";
 
@@ -88,8 +88,55 @@ export default function FormOffers() {
     return errors;
   }
 
+  function validateDate(date){
+   let dated = date.split('-');
+   let year = Number(dated[0]);
+   let month = Number(dated[1]);
+   let day = Number(dated[2]);
+   let today = new Date();
+   let valid = 0;
+
+   if(year >= today.getFullYear()) valid++;
+   else valid--;
+
+   if(month >= today.getMonth()) valid++;
+   else valid--;
+
+   if(day >= today.getDate()) valid++;
+   else valid--;
+
+   if (valid > 1) return true
+   else return false;
+  }
+
+  function validateToday(end, start){
+   let enddated = end.split("-");
+   let endyear = Number(enddated[0]);
+   let endmonth = Number(enddated[1]);
+   let endday = Number(enddated[2]);
+   let startdated = start.split("-");
+   let startyear = Number(startdated[0]);
+   let startmonth = Number(startdated[1]);
+   let startday = Number(startdated[2]);
+   let valid = 0;
+
+   if(endyear < startyear) valid--;
+   else valid++;
+
+   if(endmonth < startmonth) valid--;
+   else valid++;
+
+   if(endday <= startday) valid--;
+   else valid++;
+
+   if (valid > 1) return true;
+   else return false;
+  }
+  
+
   function handleChange(e) {
     e.preventDefault();
+    console.log(e.target.value)
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -186,7 +233,7 @@ export default function FormOffers() {
         <Form.Group className="mb-3" controlId="offerDiscount">
           <Form.Label>Discount</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             name="discount"
             value={input.discount}
             onChange={(e) => handleChange(e)}
@@ -199,7 +246,7 @@ export default function FormOffers() {
         <Form.Group className="mb-3" controlId="offerStartDay">
           <Form.Label>Starts at</Form.Label>
           <Form.Control
-            type="text"
+            type="date"
             name="startDay"
             value={input.startDay}
             onChange={(e) => handleChange(e)}
@@ -212,7 +259,7 @@ export default function FormOffers() {
         <Form.Group className="mb-3" controlId="offerEndDay">
           <Form.Label>Ends at</Form.Label>
           <Form.Control
-            type="text"
+            type="date"
             name="endDay"
             value={input.endDay}
             onChange={(e) => handleChange(e)}

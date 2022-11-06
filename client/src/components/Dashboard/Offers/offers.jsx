@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOffers } from "../../../redux/actions";
 import ApplyIn from "./ApplyIn";
-import { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Transition from "../../Transition/Transition";
@@ -35,14 +34,29 @@ export default function Offers() {
     });
   }
 
+  async function deleteAll(){
+   try {
+    await axios.delete('/offer');
+   toast.success("Offers deleted successfully");
+   dispatch(getOffers());
+   } catch (error) {
+    toast.error("Error deleting offers");
+   }   
+  }
+
   return (
     <Transition>
       <div className="container-fluid mt-4">
-        <div>
-          <div className="col-4 py-2">
+        <div className="row">
+          <div className="col-10 py-2">
             <Link to="/Dashboard/Offers/Create" className="btn btn-primary">
               <i className="fa-solid fa-plus me-2"></i>New offer
             </Link>
+          </div>
+          <div className="col-2 py-2">
+            <button onClick={() => deleteAll()} className="btn btn-primary">
+              <i className="fa-solid fa-less me-2"></i>Clear all
+            </button>
           </div>
         </div>
         <div className="col-12 bg-light border border-secondary px-2 rounded shadow">
@@ -82,13 +96,15 @@ export default function Offers() {
                           <i className="fa-solid fa-trash"></i>
                         </button>
                         <button
-                          onClick={() => updateOffer({
-                           id: o.id,
-                           event: o.event,
-                           discount: o.discount,
-                           startDay: o.startDay,
-                           endDay: o.endDay
-                          })}
+                          onClick={() =>
+                            updateOffer({
+                              id: o.id,
+                              event: o.event,
+                              discount: o.discount,
+                              startDay: o.startDay,
+                              endDay: o.endDay,
+                            })
+                          }
                           type="button"
                           className="btn btn-sm btn-warning"
                         >
