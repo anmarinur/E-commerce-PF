@@ -55,7 +55,7 @@ const CardProduct = ({ product }) => {
         if (!exist) {
             dispatch(addCartGlobal(product));
 
-            toast.success('Added to Car!', {
+            toast.success('Added to Cart!', {
                 position: "top-right",
                 autoClose: 1200,
                 hideProgressBar: false,
