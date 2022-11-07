@@ -71,7 +71,7 @@ export const Cart = () => {
                     (<>
                       <tr >
                         <td colSpan={6}>
-                          <p className="text-center fs-5 my-2">You have no product in the Cart;</p>
+                          <p className="text-center fs-5 my-2">You have no product in the Cart</p>
                         </td>
                       </tr>
                     </>)}

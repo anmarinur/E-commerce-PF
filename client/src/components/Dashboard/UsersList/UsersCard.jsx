@@ -60,6 +60,7 @@ const UsersCard = ({user, blockUnblock}) => {
                                     <th className='col-2'>Date Created</th>
                                 </tr>
                                 {typeof userOrders == "object" ? userOrders.map(order =>
+                                    
                                     <tr key={order.id}>
                                         <td className='col-1'>{order.id}</td>
                                         <td className='col-1'>{order.total_payment}</td>
@@ -67,7 +68,10 @@ const UsersCard = ({user, blockUnblock}) => {
                                         <td className='col-2'>{order.shipping_address}</td>
                                         <td className='col-2'>{new Date(order.createdAt).toLocaleString()}</td>
                                     </tr>
-                                ): <h4 className="dropdown-item">No orders</h4>}
+                                ) : <div className='d-flex flex-column align-items-center mt-4'>
+                                <i class="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
+                                <p className='text-danger fw-bold fs-4 mt-2'>Without Orders</p>
+                            </div>}
                         </div>
                     </Popup>
                 </td>
