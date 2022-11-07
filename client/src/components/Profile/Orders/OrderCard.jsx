@@ -54,11 +54,11 @@ const OrderCard = () => {
         let checkoutURL = await axios.post('/checkout', { totalProducts, id });
         window.location.replace(`${checkoutURL.data}`)
     }
-    console.log(userOrders)
+
     return (
         <div>
             <div className='col-12 mb-3 '>
-                { userOrders && userOrders?.length >0 ? userOrders.map(order =>
+                { Array.isArray(userOrders) && userOrders.length > 0 ? userOrders.map(order =>
                     <div key={order.id} style={ {backgroundColor : '#FDEDEC'} } className="card shadow border-gray p-2 mb-5">
                         <div className="row">
                             {/* Order ID */}
@@ -118,7 +118,11 @@ const OrderCard = () => {
                             </div>
                         </div>
                     </div>
-                    ) : userOrders?.length === 0 ? <p>Without Orders</p> : <Loading height={"250px"}/>
+                    ) :
+                    <div className='d-flex flex-column align-items-center mt-4'>
+                        <i class="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
+                        <p className='text-danger fw-bold fs-4 mt-2'>Without Orders</p>
+                    </div>
                 }
             </div>
         </div>
