@@ -258,8 +258,10 @@ export default function FormOffers() {
                   type="checkbox"
                   name="category"
                   id="all"
-                  onChange={(e) => {
+                  onChange={() => {
                     setCategory("");
+                    let categoriesId = categories.map(e => e.id);
+                    setCategorySelected([...categorySelected, ...categoriesId]);
                   }}
                 />
                 <label className="form-check-label fw-semibold" htmlFor="all">
@@ -304,6 +306,7 @@ export default function FormOffers() {
                     id="allBrands"
                     onChange={(e) => {
                       setBrands("");
+                      setBrandSelected([...brandSelected, ...allbrands]);
                     }}
                   />
                   <label
@@ -359,8 +362,9 @@ export default function FormOffers() {
                   errors.event ||
                   errors.discount ||
                   errors.startDay ||
-                  errors.endDay ||
-                  !brands
+                  errors.endDay   ||
+                  categorySelected.length === 0 ||
+                  brandSelected.length === 0                
                 }
               >
                 Submit

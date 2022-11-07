@@ -74,11 +74,20 @@ const deleteOfferById = async (req, res)=>{
 
 const updateOfferById = async (req, res)=>{
     const {id} = req.params;
-    const {products, offer} = req.body;
+    const { CategoryId, brand, offer } = req.body;
     try {
         await Offer.update( offer, { where:{ id: id } });
         const of = await Offer.findOne({where:{id: id}})
-        await of.setProducts(products);
+
+        const products = await Product.findAll({
+          where: {
+            CategoryId,
+            brand,
+          },
+        });
+        const applyOfferProducts = products.map((p) => p.id);
+
+        await of.setProducts(applyOfferProducts);
         res.json("Update successfully");
     } catch (error) {
         res.status(400).json(error.message);
