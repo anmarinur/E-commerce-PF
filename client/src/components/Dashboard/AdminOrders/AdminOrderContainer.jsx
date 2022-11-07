@@ -84,13 +84,13 @@ const AdminOrderContainer = () => {
             <Transition>
             <div className='container  p-2 mt-4'>
                 <div className='row justify-content-around'>
-                    <select  onChange={(e) => setOrderAs(e.target.value)}class="form-select mb-4 w-25">
-                        <option selected>Order By</option>
+                    <select  onChange={(e) => setOrderAs(e.target.value)}className="form-select mb-4 w-25">
+                        <option value="" >Order By</option>
                         <option value="ASC">Older</option>
                         <option value="DESC">Recent</option>
                     </select>
-                    <select onChange={(e) => setStatusFilter(e.target.value)} class="form-select mb-4 w-25">
-                        <option selected value="all">Filter By Status (Default All)</option>
+                    <select onChange={(e) => setStatusFilter(e.target.value)} className="form-select mb-4 w-25">
+                        <option  value="all">Filter By Status (Default All)</option>
                         <option value="received">Received</option>
                         <option value="in process">In process</option>
                         <option value="created">Created</option>
@@ -118,7 +118,7 @@ const AdminOrderContainer = () => {
                                             <td>{order.user_email}</td>
                                             <td>{order.total_payment}</td>
                                             <td>
-                                                <select onChange={(e)=> updateStatus(e, order.id)} class="form-select mb-4 w-50">
+                                                <select onChange={(e)=> updateStatus(e, order.id)} className="form-select mb-4 w-50">
                                                     <option selected>{order.status}</option>
                                                     {availableStatus.map(status=> !(status == order.status) ?
                                                     <option value={status}>{status}</option> : null
@@ -133,7 +133,7 @@ const AdminOrderContainer = () => {
                         </tbody>
                     </table> */}
                     {orders.length !== 0 ? orders.map(order =>
-                            <AdminOrderCard availableStatus={availableStatus}  updateStatus={updateStatus} order={order} />
+                            <AdminOrderCard key={order.id} availableStatus={availableStatus}  updateStatus={updateStatus} order={order} />
                     ) : <h4 className='text-danger'>Orders not Found</h4>
                     }
                     
@@ -150,12 +150,13 @@ const AdminOrderContainer = () => {
                         renderOnZeroPageCount={1}
                         className="pagination justify-content-center"
                         pageClassName="page-item "
-                        pageLinkClassName="page-link "
-                        activeClassName="active"
+                        pageLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                        activeClassName="page-item"
+                        activeLinkClassName="bg-danger border-danger text-white rounded shadow-sm "
                         previousClassName="page-item"
-                        nextClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextLinkClassName="page-link"
+                        nextClassName="page-item "
+                        previousLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                        nextLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
                     />  
                     : null} 
                     

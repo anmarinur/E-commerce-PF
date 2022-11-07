@@ -32,8 +32,8 @@ const ProductsTable = ({ itemsPerPage }) => {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getAllProducts(size, page,null,sort,search));
-    }, [size, page, dispatch,search,sort])
+        dispatch(getAllProducts(size, page, null, sort, search));
+    }, [size, page, dispatch, search, sort])
 
     const handlePageClick = (event) => {
         setPage(event.selected)
@@ -62,56 +62,63 @@ const ProductsTable = ({ itemsPerPage }) => {
 
     return (
         <>
-        <Transition>
-            <div className="container-fluid mt-4 mx-auto ">
-                <div className="col-12 d-flex justify-content-center mx-auto my-4">
-                    <div className="col-8 py-2"><SearchBarProducts  sort={sort} setSortOrder={setSort} setPage={setSize}  setSearch={setSearch} /> </div>
-                    <div className="col-4 py-2"> <Link to={'/Dashboard/Products/Create'} className="btn btn-primary">  <i className="fa-solid fa-cart-plus me-2"></i> Create Product</Link> </div>
-                </div>
-                <table className="table align-middle table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Brand</th>
-                            <th scope="col">Stock</th>                          
-                            <th scope="col"> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <Transition>
+                <div className="container-fluid mt-4 mx-auto ">
+                    <div className="col-12 d-flex justify-content-center mx-auto my-4">
+                        <div className="row w-100 align-items-center">
+                            <div className="col-8"><SearchBarProducts sort={sort} setSortOrder={setSort} setPage={setSize} setSearch={setSearch} /> </div>
+                            <div className="col-4 align-middle "> <Link to={'/Dashboard/Products/Create'} className="btn btn-primary py-2">  <i className="fa-solid fa-cart-plus me-2"></i> Create Product</Link> </div>
 
-                        {products && products.map(p => (
-                            <ProductsTableRow key={p.id} p={p} deleteP={deleteP} updateProduct={updateProduct}  setShow={setShow} setId={setId} />
-                        ))}
-                    </tbody>
+                        </div>
+                    </div>
+                    <div className="table-responsive">
+                        <table className="table align-middle table-hover ">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col"> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                </table>
-                <nav aria-label="navigation">
-                    { totalPages !==0 ?
-                        <ReactPaginate
-                        breakLabel="..."
-                        breakLinkClassName='page-link'
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={totalPages}
-                        previousLabel="<"
-                        renderOnZeroPageCount={1}
-                        className="pagination justify-content-center"
-                        pageClassName="page-item "
-                        pageLinkClassName="page-link "
-                        activeClassName="active"
-                        previousClassName="page-item"
-                        nextClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextLinkClassName="page-link"
-                    />  
-                    : ( <>  {`The product '${search}' doesn' t exist`}  </>)} 
-                    
+                                {products && products.map(p => (
+                                    <ProductsTableRow key={p.id} p={p} deleteP={deleteP} updateProduct={updateProduct} setShow={setShow} setId={setId} />
+                                ))}
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <nav aria-label="navigation">
+                        {totalPages !== 0 ?
+                            <ReactPaginate
+                                breakLabel="..."
+                                breakLinkClassName='btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1'
+                                nextLabel=">"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={1}
+                                marginPagesDisplayed={2}
+                                pageCount={totalPages}
+                                previousLabel="<"
+                                renderOnZeroPageCount={1}
+                                className="pagination justify-content-center"
+                                pageClassName="page-item "
+                                pageLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                                activeClassName="page-item"
+                                activeLinkClassName="bg-danger border-danger text-white rounded shadow-sm "
+                                previousClassName="page-item"
+                                nextClassName="page-item "
+                                previousLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                                nextLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                            />
+                            : (<>  {`The product '${search}' doesn' t exist`}  </>)}
+
                     </nav>
-            </div>
+                </div>
             </Transition>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -128,7 +135,7 @@ const ProductsTable = ({ itemsPerPage }) => {
                 </Modal.Footer>
             </Modal>
 
-            
+
         </>
     )
 }
