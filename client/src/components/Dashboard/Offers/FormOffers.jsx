@@ -10,6 +10,8 @@ import Accordion from "react-bootstrap/Accordion";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import Transition from "../../Transition/Transition";
+import FormProducts from "./FormProducts";
+import ReactPaginate from "react-paginate";
 
 
 export default function FormOffers() {
@@ -37,10 +39,19 @@ export default function FormOffers() {
   const [brands, setBrands] = useState("");
   const [allbrands, setAllBrands] = useState([]);
   const [allproducts, setAllProducts] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   const [prods, setProds] = useState([]);
+  const [totalproducts, setTotalProducts] = useState([]);
 
   const [admin, setAdmin] = useState();
   const { getAccessTokenSilently } = useAuth0();
+
+  const [size, setSize] = useState(12);
+  const [page, setPage] = useState(0);
+
+  const handlePageClick = (event) => {
+    setPage(event.selected);
+  };
 
   useEffect(() => {
     isAdmin(getAccessTokenSilently)
@@ -61,9 +72,17 @@ export default function FormOffers() {
 
   useEffect(() => {
     axios
-      .get(`/product?cat=${category}&brand=${brands}`)
-      .then((response) => setAllProducts(response.data.products));
-  }, [dispatch, category, brands]);
+      .get(`/product?size=${size}&page=${page}&cat=${category}&brand=${brands}`)
+      .then((response) => {setAllProducts(response.data.products); setTotalPages(response.data.totalPages)});
+  }, [dispatch, category, brands, size, page]);
+
+  useEffect(() => {
+    axios
+      .get(`/product`)
+      .then((response) => {
+        setTotalProducts(response.data.products);
+      });
+  }, [dispatch]);
 
   function validate(input) {
     if (!input.event || input.event.length < 3) errors.event = "Enter a valid event name";
@@ -165,6 +184,35 @@ export default function FormOffers() {
     }
   }
 
+  function handleAllProducts(){
+   let array = [];
+   let arr =[];
+   brands || category
+     ? allproducts.map((e) => {
+         if (input.products.filter((p) => p === e.id).length === 0) {
+           array.push(e.id);
+           arr.push({ id: e.id, name: e.name });
+         }
+       })
+     : totalproducts.map((e) => {
+         if (input.products.filter((p) => p === e.id).length === 0) {
+           array.push(e.id);
+           arr.push({ id: e.id, name: e.name });
+         }
+       });
+     setInput({
+         ...input,
+         products: [...input.products, ...array],
+       });
+       setErrors(
+         validate({
+           ...input,
+           products: [...input.products, ...array],
+         })
+       );
+       setProds([...prods, ...arr]);   
+  }
+
   async function handleClick(e) {
     e.preventDefault();
     try {
@@ -216,240 +264,275 @@ export default function FormOffers() {
 
   return (
     <Transition>
-    <div>
-      <h1 className="text-center py-2  text-danger">Create an offer</h1>
-      <Form className="w-75 mx-auto">
-        <Form.Group className="mb-3" controlId="offerEvent">
-          <Form.Label>Event Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="event"
-            value={input.event}
-            onChange={(e) => handleChange(e)}
-            placeholder="Enter a event name"
-          />
-          {errors.event && (
-            <Form.Text className="text-muted">{errors.event}</Form.Text>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="offerDiscount">
-          <Form.Label>Discount</Form.Label>
-          <Form.Control
-            type="number"
-            name="discount"
-            value={input.discount}
-            onChange={(e) => handleChange(e)}
-            placeholder="Enter a discount percentage"
-          />
-          {errors.discount && (
-            <Form.Text className="text-muted">{errors.discount}</Form.Text>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="offerStartDay">
-          <Form.Label>Starts at</Form.Label>
-          <Form.Control
-            type="date"
-            name="startDay"
-            value={input.startDay}
-            onChange={(e) => handleChange(e)}
-            placeholder="Enter a start date"
-          />
-          {errors.startDay && (
-            <Form.Text className="text-muted">{errors.startDay}</Form.Text>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="offerEndDay">
-          <Form.Label>Ends at</Form.Label>
-          <Form.Control
-            type="date"
-            name="endDay"
-            value={input.endDay}
-            onChange={(e) => handleChange(e)}
-            placeholder="Enter an end date"
-          />
-          {errors.endDay && (
-            <Form.Text className="text-muted">{errors.endDay}</Form.Text>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="offerProducts">
-          <Form.Label>Products to apply discount</Form.Label>
-          <Accordion>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Categories</Accordion.Header>
-              <Accordion.Body>
-                <div className="row mx-1 my-1">
-                  <div className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="category"
-                      id="all"
-                      onChange={(e) => {
-                        setBrands("");
-                      }}
-                    />
-                    <label
-                      className="form-check-label fw-semibold"
-                      htmlFor="all"
-                    >
-                      All
-                    </label>
-                  </div>
-                  {categories.map((element) => {
-                    return (
-                      <div
-                        key={element.id}
-                        className="col-xl-12 col-md-6 col-sm-6 col-6 form-check"
-                      >
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="category"
-                          id={element.id}
-                          onChange={() => {
-                            setCategory(element.id);
-                          }}
-                        />
-                        <label
-                          className="form-check-label fw-semibold"
-                          htmlFor={element.id}
-                        >
-                          {`${element.category[0].toUpperCase()}${element.category.slice(
-                            1
-                          )} `}
-                        </label>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="1">
-              <Accordion.Header>Brands</Accordion.Header>
-              <Accordion.Body>
-                <div className="row mx-1 my-1">
-                  <div className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="brand"
-                      id="allBrands"
-                      onChange={(e) => {
-                        setBrands("");
-                      }}
-                    />
-                    <label
-                      className="form-check-label fw-semibold"
-                      htmlFor="allBrands"
-                    >
-                      All
-                    </label>
-                  </div>
-                  {allbrands &&
-                    allbrands.map((b) => (
-                      <div
-                        key={b}
-                        className="col-xl-12 col-md-6 col-sm-6 col-6 form-check"
-                      >
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="brand"
-                          id={b}
-                          onChange={(e) => {
-                            setBrands(e.target.id);
-                          }}
-                        />
-                        <label
-                          className="form-check-label fw-semibold"
-                          htmlFor={b}
-                        >
-                          {b}
-                        </label>
-                      </div>
-                    ))}
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2">
-              <Accordion.Header>Products</Accordion.Header>
-              <Accordion.Body>
-                {allproducts &&
-                  allproducts.map((e) => (
-                    <div
-                      key={e.id}
-                      className="col-xl-12 col-md-6 col-sm-6 col-6 form-check"
-                    >
+      <div>
+        <h1 className="text-center py-2  text-danger">Create an offer</h1>
+        <Form className="w-75 mx-auto">
+          <Form.Group className="mb-3" controlId="offerEvent">
+            <Form.Label>Event Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="event"
+              value={input.event}
+              onChange={(e) => handleChange(e)}
+              placeholder="Enter a event name"
+            />
+            {errors.event && (
+              <Form.Text className="text-muted">{errors.event}</Form.Text>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="offerDiscount">
+            <Form.Label>Discount</Form.Label>
+            <Form.Control
+              type="number"
+              name="discount"
+              value={input.discount}
+              onChange={(e) => handleChange(e)}
+              placeholder="Enter a discount percentage"
+            />
+            {errors.discount && (
+              <Form.Text className="text-muted">{errors.discount}</Form.Text>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="offerStartDay">
+            <Form.Label>Starts at</Form.Label>
+            <Form.Control
+              type="date"
+              name="startDay"
+              value={input.startDay}
+              onChange={(e) => handleChange(e)}
+              placeholder="Enter a start date"
+            />
+            {errors.startDay && (
+              <Form.Text className="text-muted">{errors.startDay}</Form.Text>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="offerEndDay">
+            <Form.Label>Ends at</Form.Label>
+            <Form.Control
+              type="date"
+              name="endDay"
+              value={input.endDay}
+              onChange={(e) => handleChange(e)}
+              placeholder="Enter an end date"
+            />
+            {errors.endDay && (
+              <Form.Text className="text-muted">{errors.endDay}</Form.Text>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="offerProducts">
+            <Form.Label>Products to apply discount</Form.Label>
+            <div className="row mx-1 my-1"></div>
+            <Form.Label>Filter by:</Form.Label>
+            <Accordion>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Categories</Accordion.Header>
+                <Accordion.Body>
+                  <div className="row mx-1 my-1">
+                    <div className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
                       <input
                         className="form-check-input"
                         type="radio"
-                        name="products"
-                        id={e.id}
-                        value={e.name}
+                        name="category"
+                        id="all"
                         onChange={(e) => {
-                          handleProducts(e);
+                          setBrands("");
                         }}
                       />
                       <label
                         className="form-check-label fw-semibold"
-                        htmlFor={e.id}
+                        htmlFor="all"
                       >
-                        {e.name}
+                        All
                       </label>
                     </div>
-                  ))}
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="offerSelected">
-          <Form.Label>Selected items:</Form.Label>
-          <ul class="list-group list-group-flush">
-            {prods.length !== 0
-              ? prods?.map((e) => (
-                  <li class="list-group-item">
-                    <div className="d-flex justify-content-start">
-                      <button className="btn btn-danger me-3 my-auto" type="button" onClick={() => handleDelete(e)}>
-                        x
-                      </button>
-                      <p className="lh-3 my-auto">{e.name}</p>
+                    {categories.map((element) => {
+                      return (
+                        <div
+                          key={element.id}
+                          className="col-xl-12 col-md-6 col-sm-6 col-6 form-check"
+                        >
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="category"
+                            id={element.id}
+                            onChange={() => {
+                              setCategory(element.id);
+                            }}
+                          />
+                          <label
+                            className="form-check-label fw-semibold"
+                            htmlFor={element.id}
+                          >
+                            {`${element.category[0].toUpperCase()}${element.category.slice(
+                              1
+                            )} `}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Brands</Accordion.Header>
+                <Accordion.Body>
+                  <div className="row mx-1 my-1">
+                    <div className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="brand"
+                        id="allBrands"
+                        onChange={(e) => {
+                          setBrands("");
+                          setPage(0);
+                        }}
+                      />
+                      <label
+                        className="form-check-label fw-semibold"
+                        htmlFor="allBrands"
+                      >
+                        All
+                      </label>
                     </div>
-                  </li>
-                ))
-              : null}
-          </ul>
-        </Form.Group>
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-4">
-            <Link to="/dashboard/offers">
-              <Button className="column-3" variant="danger">
-                Go Back
+                    {allbrands &&
+                      allbrands.map((b) => (
+                        <div
+                          key={b}
+                          className="col-xl-12 col-md-6 col-sm-6 col-6 form-check"
+                        >
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="brand"
+                            id={b}
+                            onChange={(e) => {
+                              setBrands(e.target.id);
+                              setPage(0);
+                            }}
+                          />
+                          <label
+                            className="form-check-label fw-semibold"
+                            htmlFor={b}
+                          >
+                            {b}
+                          </label>
+                        </div>
+                      ))}
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+            <div className="row mx-1 my-1"></div>
+            <Form.Group className="mb-3" controlId="offerProductsList">
+              <Form.Label>Product list:</Form.Label>
+
+              {allproducts && (
+                <>
+                  <div className="row mx-1 my-1">
+                    <div className="col-xl-1 col-md-6 col-sm-6 col-6 form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="products"
+                        id="allproducts"
+                        onChange={() => {
+                          handleAllProducts();
+                        }}
+                      />
+                      <label
+                        className="form-check-label fw-semibold"
+                        htmlFor="allProducts"
+                      >
+                        All
+                      </label>
+                    </div>
+                  </div>
+                 
+                  <FormProducts
+                    allproducts={allproducts}
+                    handleProducts={handleProducts}
+                  />
+
+                  <nav aria-label="navigation">
+                    {totalPages !== 0 ? (
+                      <ReactPaginate
+                        breakLabel="..."
+                        breakLinkClassName="page-link"
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={totalPages}
+                        previousLabel="<"
+                        renderOnZeroPageCount={1}
+                        className="pagination justify-content-center"
+                        pageClassName="page-item "
+                        pageLinkClassName="page-link "
+                        activeClassName="active"
+                        previousClassName="page-item"
+                        nextClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextLinkClassName="page-link"
+                      />
+                    ) : null}
+                  </nav>                                 
+                </>
+              )}
+            </Form.Group>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="offerSelected">
+            <Form.Label>Selected items:</Form.Label>
+            <ul class="list-group list-group-flush">
+              {prods.length !== 0
+                ? prods?.map((e) => (
+                    <li className="list-group-item" key={e.id}>
+                      <div className="d-flex justify-content-start">
+                        <button
+                          className="btn btn-danger me-3 my-auto"
+                          type="button"
+                          onClick={() => handleDelete(e)}
+                        >
+                          x
+                        </button>
+                        <p className="lh-3 my-auto">{e.name}</p>
+                      </div>
+                    </li>
+                  ))
+                : null}
+            </ul>
+          </Form.Group>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-4">
+              <Link to="/dashboard/offers">
+                <Button className="column-3" variant="danger">
+                  Go Back
+                </Button>
+              </Link>
+            </div>
+            <div class="col-4">
+              <Button
+                className="column-3"
+                variant="danger"
+                type="submit"
+                onClick={(e) => handleClick(e)}
+                disabled={
+                  errors.event ||
+                  errors.discount ||
+                  errors.startDay ||
+                  errors.endDay ||
+                  errors.products
+                }
+              >
+                Submit
               </Button>
-            </Link>
+              <div> </div>
+            </div>
           </div>
-          <div class="col-4">
-            <Button
-              className="column-3"
-              variant="danger"
-              type="submit"
-              onClick={(e) => handleClick(e)}
-              disabled={
-                errors.event ||
-                errors.discount ||
-                errors.startDay ||
-                errors.endDay ||
-                errors.products
-              }
-            >
-              Submit
-            </Button>
-            <div> </div>
-          </div>
-        </div>
-        <ToastContainer />
-      </Form>
-    </div>
+          <ToastContainer />
+        </Form>
+      </div>
     </Transition>
   );
  }
