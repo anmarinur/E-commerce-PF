@@ -21,26 +21,11 @@ export default function UpdateOffers() {
     : "";
 
 
-    const getProducts = async () => {
-      const result = await axios.get(`/product?disc=${id}`);
-      const res = [];
-      result.data.products.map(e => res.push({id: e.id, name: e.name}));
-      const res2 = [];
-      result.data.products.map((e) => res2.push(e.id));
-      setInput({...input, products: res2});
-      setProds(res);      
-    };
-
-    useEffect(() => {
-      getProducts();
-    }, []);
-
   const [input, setInput] = useState({
     event: id ? event : "",
     discount: id ? discount : 0,
     startDay: id ? startDay : "",
     endDay: id? endDay : "",
-    products: id? [] : [],
   });
 
   const [errors, setErrors] = useState({
@@ -48,14 +33,13 @@ export default function UpdateOffers() {
     discount: "Enter a valid discount percentage",
     startDay: "Enter a valid start date to apply the discount",
     endDay: "Enter a valid end date to apply the discount",
-    products: "Enter the products to apply the discount",
   });
 
   const [category, setCategory] = useState("");
+  const [categorySelected, setCategorySelected] = useState([]);
   const [brands, setBrands] = useState("");
+  const [brandSelected, setBrandSelected] = useState([]);
   const [allbrands, setAllBrands] = useState([]);
-  const [allproducts, setAllProducts] = useState([]);
-  const [prods, setProds] = useState([]);
   
   const [admin, setAdmin] = useState();
   const { getAccessTokenSilently } = useAuth0();
@@ -77,11 +61,6 @@ export default function UpdateOffers() {
     if (!allbrands.find((brand) => brand === brands)) setBrands("");
   }, [allbrands]);
 
-  useEffect(() => {
-    axios
-      .get(`/product?cat=${category}&brand=${brands}`)
-      .then((response) => setAllProducts(response.data.products));
-  }, [dispatch, category, brands]);
 
   function validate(input) {
     if (!input.event || input.event.length < 3)
@@ -103,10 +82,6 @@ export default function UpdateOffers() {
     )
       errors.endDay = "Enter a valid end date to apply the discount";
     else errors.endDay = "";
-
-    if (input.products.length === 0)
-      errors.products = "Enter the products to apply the discount";
-    else errors.products = "";
 
     return errors;
   }
@@ -172,22 +147,20 @@ export default function UpdateOffers() {
     );
   }
 
-  function handleProducts(e) {
-    if(input.products.filter(p => p === e.target.id).length === 0){
-      setInput({
-        ...input,
-        products: [...input.products, e.target.id],
-      });
-      setErrors(
-        validate({
-          ...input,
-          products: [...input.products, e.target.id],
-        })
-      );
-      setProds([...prods, { id: e.target.id, name: e.target.value }]);
+  function handleCategory(e) {
+    if (categorySelected.filter((c) => c === e.target.id).length === 0) {
+      setCategorySelected([...categorySelected, e.target.id]);
     }
+    setCategory(e.target.id);
   }
 
+  function handleBrand(e) {
+    if (brandSelected.filter((b) => b === e.target.id).length === 0) {
+      setBrandSelected([...brandSelected, e.target.id]);
+    }
+    setBrands(e.target.id);
+  }
+ 
   async function handleClick(e) {
     e.preventDefault();
     try {
@@ -195,7 +168,8 @@ export default function UpdateOffers() {
        await axios.put(
          `/offer/${id}`,
          {
-           products: input.products,
+           CategoryId: categorySelected,
+           brand: brandSelected,
            offer: {
              event: input.event,
              startDay: input.startDay,
@@ -215,22 +189,7 @@ export default function UpdateOffers() {
     }
     history.push("/dashboard/offers");
   }
-
-  function handleDelete(e) {
-    setInput({
-      ...input,
-      products: input.products.filter((p) => p !== e.id),
-    });
-    setErrors(
-      validate({
-        ...input,
-        products: input.products.filter((p) => p !== e.id),
-      })
-    );
-    setProds(prods.filter((p) => p.id !== e.id));
-  }
-
-  
+ 
 
   return (
     <Transition>
@@ -291,151 +250,99 @@ export default function UpdateOffers() {
           </Form.Group>
           <Form.Group className="mb-3" controlId="offerProducts">
             <Form.Label>Products to apply discount</Form.Label>
-            <Accordion>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Categories</Accordion.Header>
-                <Accordion.Body>
-                  <div className="row mx-1 my-1">
-                    <div className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="category"
-                        id="all"
-                        onChange={(e) => {
-                          setBrands("");
-                        }}
-                      />
-                      <label
-                        className="form-check-label fw-semibold"
-                        htmlFor="all"
-                      >
-                        All
-                      </label>
-                    </div>
-                    {categories.map((element) => {
-                      return (
-                        <div
-                          key={element.id}
-                          className="col-xl-12 col-md-6 col-sm-6 col-6 form-check"
-                        >
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="category"
-                            id={element.id}
-                            onChange={() => {
-                              setCategory(element.id);
-                            }}
-                          />
-                          <label
-                            className="form-check-label fw-semibold"
-                            htmlFor={element.id}
-                          >
-                            {`${element.category[0].toUpperCase()}${element.category.slice(
-                              1
-                            )} `}
-                          </label>
-                        </div>
-                      );
-                    })}
+            <div className="row mx-1 my-1"></div>
+            <Form.Label>Filter by:</Form.Label>
+            <div className="row mx-1 my-1"></div>
+            <Form.Label>Categories</Form.Label>
+
+            <div className="row mx-1 my-1">
+              <div className="col-xl-3 col-md-4 col-sm-4 col-4 form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="category"
+                  id="all"
+                  onChange={(e) => {
+                    setCategory("");
+                  }}
+                />
+                <label className="form-check-label fw-semibold" htmlFor="all">
+                  All
+                </label>
+              </div>
+              {categories.map((element) => {
+                return (
+                  <div
+                    key={element.id}
+                    className="col-xl-3 col-md-4 col-sm-4 col-4 form-check"
+                  >
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="category"
+                      id={element.id}
+                      onChange={(e) => {
+                        handleCategory(e);
+                      }}
+                    />
+                    <label
+                      className="form-check-label fw-semibold"
+                      htmlFor={element.id}
+                    >
+                      {`${element.category[0].toUpperCase()}${element.category.slice(
+                        1
+                      )} `}
+                    </label>
                   </div>
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Brands</Accordion.Header>
-                <Accordion.Body>
-                  <div className="row mx-1 my-1">
-                    <div className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
+                );
+              })}
+            </div>
+            <Form.Label>Brands</Form.Label>
+            <Form.Group className="mb-3" controlId="offerProducts">
+              <div className="row mx-1 my-1">
+                <div className="col-xl-3 col-md-4 col-sm-6 col-6 form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    name="brand"
+                    id="allBrands"
+                    onChange={(e) => {
+                      setBrands("");
+                    }}
+                  />
+                  <label
+                    className="form-check-label fw-semibold"
+                    htmlFor="allBrands"
+                  >
+                    All
+                  </label>
+                </div>
+                {allbrands &&
+                  allbrands.map((b) => (
+                    <div
+                      key={b}
+                      className="col-xl-3 col-md-4 col-sm-6 col-6 form-check"
+                    >
                       <input
                         className="form-check-input"
-                        type="radio"
+                        type="checkbox"
                         name="brand"
-                        id="allBrands"
+                        id={b}
                         onChange={(e) => {
-                          setBrands("");
+                          handleBrand(e);
                         }}
                       />
                       <label
                         className="form-check-label fw-semibold"
-                        htmlFor="allBrands"
+                        htmlFor={b}
                       >
-                        All
+                        {b}
                       </label>
                     </div>
-                    {allbrands &&
-                      allbrands.map((b) => (
-                        <div
-                          key={b}
-                          className="col-xl-12 col-md-6 col-sm-6 col-6 form-check"
-                        >
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="brand"
-                            id={b}
-                            onChange={(e) => {
-                              setBrands(e.target.id);
-                            }}
-                          />
-                          <label
-                            className="form-check-label fw-semibold"
-                            htmlFor={b}
-                          >
-                            {b}
-                          </label>
-                        </div>
-                      ))}
-                  </div>
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>Products</Accordion.Header>
-                <Accordion.Body>
-                  {allproducts &&
-                    allproducts.map((e) => (
-                      <div
-                        key={e.id}
-                        className="col-xl-12 col-md-6 col-sm-6 col-6 form-check"
-                      >
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="products"
-                          id={e.id}
-                          value={e.name}
-                          onChange={(e) => {
-                            handleProducts(e);
-                          }}
-                        />
-                        <label
-                          className="form-check-label fw-semibold"
-                          htmlFor={e.id}
-                        >
-                          {e.name}
-                        </label>
-                      </div>
-                    ))}
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="offerSelected">
-            <Form.Label>Selected items:</Form.Label>
-            <ul class="list-group list-group-flush">
-              {prods.length !== 0
-                ? prods?.map((e) => (
-                    <li class="list-group-item">
-                      <div className="d-flex justify-content-start">
-                        <button className="btn btn-danger me-3 my-auto" type="button" onClick={() => handleDelete(e)}>
-                          x
-                        </button>
-                        <p className="lh-3 my-auto">{e.name}</p>
-                      </div>
-                    </li>
-                  ))
-                : null}
-            </ul>
+                  ))}
+              </div>
+            </Form.Group>
+            <div className="row mx-1 my-1"></div>
           </Form.Group>
           <div class="row">
             <div class="col-3"></div>

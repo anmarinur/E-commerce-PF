@@ -31,7 +31,9 @@ export default function FormOffers() {
   });
 
   const [category, setCategory] = useState("");
+  const [categorySelected, setCategorySelected] = useState([]);
   const [brands, setBrands] = useState("");
+  const [brandSelected, setBrandSelected] = useState([]);
   const [allbrands, setAllBrands] = useState([]);
 
   const [admin, setAdmin] = useState();
@@ -135,16 +137,29 @@ export default function FormOffers() {
     );
   }
 
+  function handleCategory(e){
+   if(categorySelected.filter(c => c === e.target.id).length === 0){
+    setCategorySelected([...categorySelected, e.target.id]);
+   }
+   setCategory(e.target.id);
+  }
+
+  function handleBrand(e){
+   if(brandSelected.filter(b => b === e.target.id).length === 0){
+    setBrandSelected([...brandSelected, e.target.id]);
+   }
+    setBrands(e.target.id);                      
+  }
+
   async function handleClick(e) {
     e.preventDefault();
     try {
       const token = await getAccessTokenSilently();
       await axios.post(
-       
         "/offer",
         {
-          category: category,
-          brand: brands, 
+          CategoryId: categorySelected,
+          brand: brandSelected,
           offer: {
             event: input.event,
             startDay: input.startDay,
@@ -244,7 +259,7 @@ export default function FormOffers() {
                   name="category"
                   id="all"
                   onChange={(e) => {
-                    setBrands("");
+                    setCategory("");
                   }}
                 />
                 <label className="form-check-label fw-semibold" htmlFor="all">
@@ -262,8 +277,8 @@ export default function FormOffers() {
                       type="checkbox"
                       name="category"
                       id={element.id}
-                      onChange={() => {
-                        setCategory(element.id);
+                      onChange={(e) => {
+                        handleCategory(e);
                       }}
                     />
                     <label
@@ -310,7 +325,7 @@ export default function FormOffers() {
                         name="brand"
                         id={b}
                         onChange={(e) => {
-                          setBrands(e.target.id);
+                         handleBrand(e);
                         }}
                       />
                       <label
