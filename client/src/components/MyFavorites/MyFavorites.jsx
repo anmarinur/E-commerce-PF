@@ -60,7 +60,10 @@ export default function MyFavorites() {
                 <h3>My Favorites</h3>
                 <div className="row">
                     <div className="col-12">
-                        {products.length === 0  && products && ( <p>No have products favourites</p> )}
+                        {products.length === 0  && products && (   <div className='d-flex flex-column align-items-center mt-4'>
+                        <i class="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
+                        <p className='text-danger fw-bold fs-4 mt-2'>You have not added any product to favorites yet</p>
+                    </div> )}
                         {products ? products.map(product =>(
                             <Link  to={`/product/${product.id}`} key={product.id} className="card mb-3 text-decoration-none text-dark p-2">
                                 <div className="row g-0 justify-content">
