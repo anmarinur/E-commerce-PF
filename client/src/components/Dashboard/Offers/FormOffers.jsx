@@ -140,11 +140,10 @@ export default function FormOffers() {
     try {
       const token = await getAccessTokenSilently();
       await axios.post(
-       
         "/offer",
         {
-          category: category,
-          brand: brands, 
+          CategoryId: category,
+          brand: brands,
           offer: {
             event: input.event,
             startDay: input.startDay,
