@@ -165,8 +165,8 @@ export default function AddComment({products, email, idOrder, block}) {
           :location.pathname==="/profile/myOrders" ? 
                     block === false && <>
                     <p className='col-4'>Upload a photo of your product:</p>
-                    <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
-                    <label for="image" className='m-2 btn btn-secondary col-3'>Select Photo</label>
+                    <input onChange={handleInputImg} type="file" name={`${idOrder}`} accept='image/*' id={`${idOrder}`} style={{"display":"none"}}/>
+                    <label for={`${idOrder}`} className='m-2 btn btn-secondary col-3'>Select Photo</label>
                     <img style={{width: "10rem"}} src={preview ||"https://removal.ai/wp-content/uploads/2021/02/no-img.png" } alt="photo" />
                     </>
           :<></>}

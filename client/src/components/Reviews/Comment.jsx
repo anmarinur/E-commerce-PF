@@ -10,13 +10,16 @@ import { getReviews } from '../../redux/actions';
 import isAdmin from '../../utils/isAdmin';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import Popup from 'reactjs-popup';
+import Modal from 'react-bootstrap/Modal';
 
 
 
-export default function Coment({ rating, comment, createdAt, image }) {
+export default function Coment({ id, rating, comment, createdAt, image, handleDelete }) {
 
 
   const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
   const reviews = useSelector(state => state.reviews[0].Reviews);
 
 
@@ -32,36 +35,27 @@ export default function Coment({ rating, comment, createdAt, image }) {
   const [admin, setAdmin] = useState();
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
+  const closeModal = () => {
+    setOpen(false)
+  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
   useEffect(() => {
     isAdmin(getAccessTokenSilently).then((res) => setAdmin(res)).catch(() => setAdmin(false));
-    if (admin === false) {
-      setOpen(o => !o)
-    }
     if (reviews.length === 0) dispatch(getReviews());
   }, [admin]);
 
 
-
-  const deleteP = async (id) => {
-    const token = await getAccessTokenSilently();
-    try {
-      await axios.delete(`/review/${id}`, {
-
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      console.log(id)
-      toast.success("Comment delete successfully");
-    }
-    catch (error) {
-    }
-    dispatch(getReviews());
+  function openModal() {
+    setOpen(o => !o)
   }
 
-
+  function handleClick(id) {
+    handleClose();
+    handleDelete(id);
+  }
 
   return (
     <div className="w-50 my-3 p-3 border border-danger rounded bg-light bg-gradient">
@@ -78,9 +72,31 @@ export default function Coment({ rating, comment, createdAt, image }) {
       <div>
         <p className='fs-5 text-start'>{comment}</p>
       </div>
-      <div className='text-center rounded' style={{width: '300px'}}>
-        {image !== null && <img src={image} alt='product'/>}
+      <div className='d-flex flex-row justify-content-center'>
+        {image !== null && <img className="w-25 border border-danger rounded" role="button" src={image} alt='product' onClick={openModal}/>}
       </div>
+      <div className='d-flex flex-row justify-content-end'>
+        {admin && <button className="btn btn-danger mt-4" onClick={handleShow}>Delete comment</button>}
+      </div>
+      <Popup open={open} closeOnDocumentClick onClose={closeModal}>
+        <div className='d-flex flex-row justify-content-center'>
+          <img className="rounded" src={image} alt='product'/>
+        </div>
+      </Popup>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Warning!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>This action cannot be undone. Are you shure you want to delete this comment?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            No
+          </Button>
+          <Button variant="primary" onClick={() => handleClick(id)}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }
