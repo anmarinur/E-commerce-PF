@@ -33,29 +33,21 @@ let info = [
             <Nav />
             <Transition>
             <GoUpButton />
-            <div class="m-0 d-flex flex-column justify-content-center align-items-center">
+            <div class="container m-0 d-flex flex-column justify-content-center align-items-center">
                 <h2 className="fw-bold text-danger text-center my-2 fs-1">Developers</h2>
 
                 {info.map((e) =>
-                    <Card className="center" style={{
-                        display: "flex",
-                        width: "50em",
-                        maxWidth: "50em",
-                        maxHeight: "30em",
-                        marginTop: "2em",
-                        marginBottom: "2em",
-                        borderRadius: "10px",
-                        marginLeft: "2em",
-
+                    <Card className="w-75 mt-4 shadow" style={{
+                        
+                
                     }}>
                         <div class="row g-0" >
 
-                            <div class="col-md-3" >
+                            <div class="col-12 text-center col-md-3" >
                                 <Card.Img
                                     style={{
-                                        // width: "auto",
+                                        
                                         maxWidth: "14em",
-                                        // height:'auto',
                                         maxHeight: "20em",
                                         marginTop: "2em",
                                         marginBottom: "2em",
@@ -66,28 +58,21 @@ let info = [
                                     src={e.img}
                                 />
                             </div>
-                            <div class="col-md-8"   >
+                            <div class=" col-12 text-center col-md-8 p-5"   >
                                 <Card.Subtitle className=" fs-5 "
                                     style={{
-                                        display: "inline-block",
-                                        width: "auto",
-                                        maxWidth: "40em",
-                                        maxHeight: "25em",
-                                        marginTop: "3.5em",
-                                        marginBottom: "3em",
-                                        marginLeft: "10em"
-
+                                    
                                     }}  >
 
                                     <b> {e.name} </b> <br /><br />
                                     Full Stack-Developer <br /><br />
-                                    <div >
-                                        <div class="d-flex">
-                                            <a href={e.gitHub} className="nav-link px-2 text-white" target="_blank">
+                                    <div class="row g-0" >
+                                        <div class=" col-12">
+                                            <a href={e.gitHub} className="px-2 text-white" target="_blank">
                                                 <i class="fa-brands fa-github fa-3x text-black"></i></a>
                                             <a href={e.email}>
                                                 <i class="fa-solid fa-envelope fa-3x text-info"></i></a>
-                                            <a href={e.linkedIn} className="nav-link px-2 " target="_blank">
+                                            <a href={e.linkedIn} className=" px-2 " target="_blank">
                                                 <i class="fa-brands fa-linkedin fa-3x text-primary"></i>
                                             </a>
 
