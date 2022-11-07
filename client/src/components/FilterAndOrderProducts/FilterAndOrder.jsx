@@ -41,7 +41,7 @@ const FilterAndOrder = (props) => {
                                             All
                                         </label>
                                     </div>
-                                    {offers && offers.map(o => (
+                                    {offers && offers.filter(o=>o.active==="true").map(o => (
                                         <div key={o.id} className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
                                             <input className="form-check-input" type="radio" name="offer" id={o.event} onChange={(e) => { props.setOffer(o.id) }} />
                                             <label className="form-check-label fw-semibold" htmlFor={o.event}>
