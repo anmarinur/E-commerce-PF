@@ -91,7 +91,7 @@ export default function MyFavorites() {
                                     </div>
                                 </div>
                             </Link>
-                        )) : <Loading />}
+                        )) : <Loading height={"250px"}/>}
                         
                     </div>
                 </div>

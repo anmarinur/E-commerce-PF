@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { useLocalStorage } from "../utils/useLocalStorage";
 import Star from '../components/Reviews/Star';
 import Comment from '../components/Reviews/Comment';
+import RelatedProducts from "../components/RelatedProducts/RelatedProducts";
 import AddComment from "../components/Reviews/AddComment";
 import { getReviews } from "../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -33,14 +34,28 @@ export default function ProductDetail(props) {
   const productReviews = useSelector((state) => state.reviews[0])
   const categories = useSelector((state) => state.categories)
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+  const [relatedProducts, setRelatedProducts] = useState([])
   
   const [images, setImages] = useState([])
   const [showImage, setShowImage] = useState("")
   const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 3
+    },
     desktop: {
-      breakpoint: { max: 3000, min: 0 },
-      items: 3,
-      slidesToSlide: 3 // optional, default to 1.
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1200, min: 757 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 757, min: 0 },
+      items: 1
     }
   };
   
@@ -56,6 +71,7 @@ export default function ProductDetail(props) {
 
   useEffect(()=>{
     getImages(id)
+    getRelatedProducts(productDetail.CategoryId, productDetail.price)
   },[id, productDetail]);
   
 
@@ -136,6 +152,15 @@ export default function ProductDetail(props) {
       setImages([{ image: productDetail.image }, ...result.data]);
     } catch (error) {
       console.log("getImages Error:", error)
+    }
+  }
+
+  async function getRelatedProducts(categoryId, price){
+    try {
+      const result= await axios.get(`/product/similarprice?cat=${categoryId}&price=${price}`)
+      setRelatedProducts(result.data)
+    } catch (error) {
+      console.log("getRelatedProducts error", error)
     }
   }
 
@@ -445,6 +470,7 @@ export default function ProductDetail(props) {
               )}
           </div> */}
         </Card>
+        <RelatedProducts relatedProducts={relatedProducts} productId={productDetail.id}/>
       </div>
       </Transition>
       <Footer />

@@ -177,8 +177,8 @@ const similarprice = async ( req, res )=>{
  const {cat, price} = req.query;
  try {
    const products = await Product.findAll({
-   where:{ CategoryId: cat, price: {[Op.between]: [price-100, price+100]}},
-   limit: 10,
+   where:{ CategoryId: cat, price: {[Op.between]: [price - (price * 0.1), price + (price * 0.1)]}},
+   limit: 11,
    });
 
    return res.status(200).json(products);
