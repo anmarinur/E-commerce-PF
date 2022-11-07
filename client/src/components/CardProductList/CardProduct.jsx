@@ -7,6 +7,7 @@ import { addCartGlobal, getTotalFav } from '../../redux/actions';
 import './CardProduct.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import GlitchText from '../GlitchText/GlitchText';
 
 const CardProduct = ({ product }) => {
 
@@ -82,7 +83,8 @@ const CardProduct = ({ product }) => {
 
     return (
         <Link to={`/product/${product.id}`} className='card cardProduct h-100 text-decoration-none shadow ' >
-            { product.Offer?.active === "true" && (<span  className="text-muted fw-bold p-2  text-uppercase fs-5" style={ {float: 'right'}} > In Offert  {product.Offer.discount}% </span>)  }
+            {/* { product.Offer?.active === "true" && (<span  className="text-muted fw-bold p-2  text-uppercase fs-5" style={ {float: 'right'}} > In Offert  {product.Offer.discount}% </span>)  } */}
+            { product.Offer?.active === "true" && (<GlitchText disc={product.Offer.discount} />)  }
             <div className="row h-100 align-items-center">
                 <div className="col mx-auto align-middle"  >
                     <Card.Img variant="top" src={product.image} style={{ maxWidth: '90%', minWidth: '100%', minHeight: '100%' }} className="img-product img-fluid w-50  mx-auto d-block p-3" />
