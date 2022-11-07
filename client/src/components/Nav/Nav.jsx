@@ -68,14 +68,7 @@ export default function Nav() {
                     <div className="row  py-2 px-xl-5">
                         <div className="col-lg-6 d-none d-lg-block">
                             <div className="d-inline-flex align-items-center">
-                                <Link className="text-white px-2" to="/" ><i className="fa-solid fa-globe me-2"></i>www.tecnoshop.com.ar</Link>
-                                <span className="text-white px-2" aria-current="page" href="#"><i className="fa-solid fa-phone me-2"></i> 55-55555</span>                            
-                                <a className="text-white px-2" href="#">
-                                    <i className="fab fa-facebook-f"></i>
-                                </a>
-                                <a className="text-white px-2" href="#">
-                                    <i className="fab fa-instagram"></i>
-                                </a>                                
+                                <Link className="text-white px-2" to="/" ><i className="fa-solid fa-globe me-2"></i>www.tecnoshop.com.ar</Link>                                                               
                             </div>
                         </div>
                         <div className="col-lg-6 text-center text-lg-end">
