@@ -49,8 +49,8 @@ const AdminOrderContainer = () => {
     async function updateStatus(e, id){
         const token = await getAccessTokenSilently()
         const orderById = orders.find((order) => order.id === id)
-        if (orderById.status === 'cancelled') {
-            toast.error('The order is currently cancelled', {
+        if (orderById.status === 'received' || orderById.status === 'cancelled') {
+            toast.error(`The order is currently ${orderById.status}`, {
                 position: "top-right",
                 autoClose: 1200,
                 hideProgressBar: false,
