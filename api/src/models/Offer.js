@@ -11,7 +11,8 @@ module.exports= (sequelize) => {
         },
         event: {
             type: DataTypes.STRING,
-            defaultValue: null
+            allowNull: false,
+            unique: true
         },
         discount: {
             type: DataTypes.INTEGER,

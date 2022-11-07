@@ -1,4 +1,4 @@
-const { Offer } = require('../db.js');
+const { Offer, Product } = require('../db.js');
 
 const getOffers = async (req, res)=>{
     try {
@@ -7,7 +7,7 @@ const getOffers = async (req, res)=>{
         });
         res.json(offers);
     } catch (error) {
-        res.json(error.message);
+        res.status(404).json(error.message);
     }
 }
 
@@ -21,22 +21,29 @@ const getOfferById = async (req, res)=>{
         });
         res.json(offer);
     } catch (error) {
-        res.json(error.message);
+        res.status(404).json(error.message);
     }
 }
 
 const postOffers = async (req, res)=>{
-    const { products, offer } = req.body
+    const { CategoryId, brand, offer } = req.body
     try {
+        const products = await Product.findAll({
+            where:{
+                CategoryId,
+                brand
+            }
+        })
+        const applyOfferProducts = products.map(p=>p.id)
         const [createdOffer, created] = await Offer.findOrCreate({
             where:{
                 ...offer
             }
         });
-        await createdOffer.setProducts(products);
+        await createdOffer.setProducts(applyOfferProducts);
         res.json("Offer successfully published");
     } catch (error) {
-        res.json(error.message);
+        res.status(400).json(error.message);
     }
 }
 
@@ -47,7 +54,7 @@ const deleteOffers = async (req, res)=>{
         });
         res.json("All offers successfully eliminated")
     } catch (error) {
-        res.json(error.message);
+        res.status(400).json(error.message);
     }
 }
 
@@ -61,7 +68,7 @@ const deleteOfferById = async (req, res)=>{
         });
         res.json("Delete successfully");
     } catch (error) {
-        res.json(error.message);
+        res.status(400).json(error.message);
     }
 }
 
@@ -74,7 +81,7 @@ const updateOfferById = async (req, res)=>{
         await of.setProducts(products);
         res.json("Update successfully");
     } catch (error) {
-        res.json(error.message);
+        res.status(400).json(error.message);
     }
 }
 
