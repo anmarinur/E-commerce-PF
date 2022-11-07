@@ -91,7 +91,7 @@ export default function ImageProduct(){
 
             <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
             {loading
-            ?<div style={{width: "20rem"}} className="d-flex align-items-center justify-content-start"><Loading /></div>
+            ?<div style={{width: "20rem"}} className=""><Loading height={"250px"}/></div>
             :<img style={{width: "20rem"}} src={preview ||"https://removal.ai/wp-content/uploads/2021/02/no-img.png" } alt="photo" />
             }
             <br/>
