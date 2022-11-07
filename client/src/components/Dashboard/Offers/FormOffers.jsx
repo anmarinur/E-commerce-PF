@@ -218,32 +218,34 @@ export default function FormOffers() {
               <Form.Text className="text-muted">{errors.discount}</Form.Text>
             )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="offerStartDay">
-            <Form.Label>Starts at</Form.Label>
-            <Form.Control
-              type="date"
-              name="startDay"
-              value={input.startDay}
-              onChange={(e) => handleChange(e)}
-              placeholder="Enter a start date"
-            />
-            {errors.startDay && (
-              <Form.Text className="text-muted">{errors.startDay}</Form.Text>
-            )}
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="offerEndDay">
+          <div className="row">
+            <Form.Group className="mb-3 col-6" controlId="offerStartDay">
+              <Form.Label>Starts at</Form.Label>
+              <Form.Control
+                type="date"
+                name="startDay"
+                value={input.startDay}
+                onChange={(e) => handleChange(e)}
+                placeholder="Enter a start date"
+              />
+              {errors.startDay && (
+                <Form.Text className="text-muted">{errors.startDay}</Form.Text>
+              )}
+            </Form.Group>
+          <Form.Group className="mb-3 col-6" controlId="offerEndDay">
             <Form.Label>Ends at</Form.Label>
-            <Form.Control
-              type="date"
-              name="endDay"
-              value={input.endDay}
-              onChange={(e) => handleChange(e)}
-              placeholder="Enter an end date"
-            />
-            {errors.endDay && (
-              <Form.Text className="text-muted">{errors.endDay}</Form.Text>
-            )}
-          </Form.Group>
+              <Form.Control
+                type="date"
+                name="endDay"
+                value={input.endDay}
+                onChange={(e) => handleChange(e)}
+                placeholder="Enter an end date"
+              />
+              {errors.endDay && (
+                <Form.Text className="text-muted">{errors.endDay}</Form.Text>
+              )}
+            </Form.Group>
+          </div>
           <Form.Group className="mb-3" controlId="offerProducts">
             <Form.Label>Products to apply discount</Form.Label>
             <div className="row mx-1 my-1"></div>
