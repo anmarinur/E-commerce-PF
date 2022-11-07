@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getCategories } from "../../../redux/actions";
-import Accordion from "react-bootstrap/Accordion";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import Transition from "../../Transition/Transition";
@@ -264,6 +263,8 @@ export default function UpdateOffers() {
                   id="all"
                   onChange={(e) => {
                     setCategory("");
+                    let categoriesId = categories.map((e) => e.id);
+                    setCategorySelected([...categorySelected, ...categoriesId]);
                   }}
                 />
                 <label className="form-check-label fw-semibold" htmlFor="all">
@@ -308,6 +309,7 @@ export default function UpdateOffers() {
                     id="allBrands"
                     onChange={(e) => {
                       setBrands("");
+                      setBrandSelected([...brandSelected, ...allbrands]);
                     }}
                   />
                   <label
@@ -364,12 +366,15 @@ export default function UpdateOffers() {
                   errors.discount ||
                   errors.startDay ||
                   errors.endDay ||
-                  errors.products
+                  categorySelected.length === 0 ||
+                  brandSelected.length === 0
                 }
               >
                 Submit
               </Button>
-              <div> </div>
+              <div>
+                <br />
+              </div>
             </div>
           </div>
           <ToastContainer />
