@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import AddComment from '../../Reviews/AddComment'
+import Loading from '../../Loading/Loading'
 
 
 
@@ -57,7 +58,7 @@ const OrderCard = () => {
     return (
         <div>
             <div className='col-12 mb-3 '>
-                { typeof userOrders === 'object' ? userOrders.map(order =>
+                { userOrders && userOrders?.length >0 ? userOrders.map(order =>
                     <div key={order.id} style={ {backgroundColor : '#FDEDEC'} } className="card shadow border-gray p-2 mb-5">
                         <div className="row">
                             {/* Order ID */}
@@ -117,7 +118,7 @@ const OrderCard = () => {
                             </div>
                         </div>
                     </div>
-                    ) : <p>Without Orders</p>
+                    ) : userOrders?.length === 0 ? <p>Without Orders</p> : <Loading height={"250px"}/>
                 }
             </div>
         </div>

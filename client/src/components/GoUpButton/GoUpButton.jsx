@@ -27,7 +27,7 @@ export default function GoUpButton(){
   return (
         <button 
             style={{ disaplay: display, position: "fixed", right: 20, bottom: 20, transition: "0.5s", scale: showUp }}
-            className={`px-3 py-2 border-0 ms-2 bg-danger text-white rounded mx-5}`}
+            className={`px-3 py-2 border-0 ms-2 bg-dark text-white rounded mx-5}`}
             onClick={goUp}>
                 <i className="fa-solid fa-angle-up"></i>
         </button>

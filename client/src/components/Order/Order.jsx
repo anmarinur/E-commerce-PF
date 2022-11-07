@@ -159,7 +159,7 @@ const Order = () => {
                 }
             })
             const id = response.data;
-            getPdf();
+            /* getPdf(); */
             dispatch(clearCart());
             setUnits({});
             setCart([]);

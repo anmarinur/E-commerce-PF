@@ -167,14 +167,14 @@ export default function Home() {
                 {
                   lastestProducts ? lastestProducts.map(p =>
                     <CardProduct product={p} key={p.id} />
-                  ) : (<Loading/>)
+                  ) : (<div className="d-flex justify-content-center"><Loading height={"250px"}/></div>)
                 }
               </Carousel>
             </div>
             <div className="col-12 text-center text-dark bg-white">
               <h3 className="text-uppercase fw-bold my-4">Product Offer</h3>
               <div className="row g-4 px-5">
-                {offerProducts && offerProducts.find(p=>p.Offer?.active==="true") ? <></> : <p>no offers available</p>}
+                {offerProducts?.length === 0 && offerProducts.find(p=>p.Offer?.active==="true") && <p>no offers available</p>}
                 {
                   offerProducts? offerProducts.map(p =>{
                     if(p.Offer?.active === "true"){
@@ -182,7 +182,7 @@ export default function Home() {
                     }
                     return;
                   }
-                  ) : offerProducts? (<Loading />) : <></>
+                  ) : (<div className="d-flex justify-content-center"><Loading height={"250px"} text={"true"}/></div>)
                 }
               </div>
 
@@ -205,7 +205,7 @@ export default function Home() {
                 {
                   bestRatingProducts ? bestRatingProducts.map(p =>
                     <CardBestRaitingProduct p={p} key={p.id} />
-                  ) :  (<Loading/>)
+                  ) :  (<div className="d-flex justify-content-center"><Loading height={"250px"}/></div>)
                 }
               </Carousel>
             </div>
