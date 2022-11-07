@@ -139,21 +139,21 @@ export default function ProductDetail(props) {
     }
   }
 
-
-  /* const deleteP = async (review) => {
+  const handleDelete = async (idReview) => {
     const token = await getAccessTokenSilently();
     try {
-      await axios.delete(`/review/${review}`, {
+      await axios.delete(`/review/${idReview}`, {
+
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+          Authorization: `Bearer ${token}`
+        }
+      })
       toast.success("Comment delete successfully");
-      dispatch(getReviews(id));
-    } catch (error) {
-      console.log(error)
     }
-  }; */
+    catch (error) {
+    }
+    history.push('/')
+  }
 
   return (
     <>
@@ -325,6 +325,7 @@ export default function ProductDetail(props) {
                       id={review.id}
                       createdAt={review.createdAt}
                       image={review.image}
+                      handleDelete={handleDelete}
                       />
                       
                     ))
