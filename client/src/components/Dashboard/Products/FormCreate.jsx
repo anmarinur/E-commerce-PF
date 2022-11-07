@@ -219,7 +219,7 @@ export default function FormCreate(){
             <div className="d-flex justify-content-around py-3 w-50 mx-auto">
                 <Button variant="danger" type="submit"  onClick={(e) => history.push('/Dashboard/Products')}><i className="fa-solid fa-left-long"></i></Button>{' '}
                 <Button variant="danger" type="submit"  onClick={(e) => handleClick(e)} 
-                disabled={(errors.name || errors.image || errors.description || errors.price || errors.category || errors.stock || errors.brand) ? true : ''}
+                disabled={(errors.name || errors.image || errors.description || errors.price || errors.CategoryId || errors.stock || errors.brand) ? true : ''}
                 >Submit</Button>{' '}
             </div>
             <ToastContainer/>

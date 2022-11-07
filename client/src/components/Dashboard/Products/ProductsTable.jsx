@@ -67,7 +67,7 @@ const ProductsTable = ({ itemsPerPage }) => {
                     <div className="col-12 d-flex justify-content-center mx-auto my-4">
                         <div className="row w-100 align-items-center">
                             <div className="col-8"><SearchBarProducts sort={sort} setSortOrder={setSort} setPage={setSize} setSearch={setSearch} /> </div>
-                            <div className="col-4 align-middle "> <Link to={'/Dashboard/Products/Create'} className="btn btn-primary py-2">  <i className="fa-solid fa-cart-plus me-2"></i> Create Product</Link> </div>
+                            <div className="col-4 align-middle "> <Link to={'/Dashboard/Products/Create'} className="btn btn-danger py-2">  <i className="fa-solid fa-plus me-2"></i> Create Product</Link> </div>
 
                         </div>
                     </div>
