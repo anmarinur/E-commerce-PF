@@ -42,6 +42,7 @@ export default function FormOffers() {
   const [totalPages, setTotalPages] = useState(0);
   const [prods, setProds] = useState([]);
   const [totalproducts, setTotalProducts] = useState([]);
+  const [check, setCheck] = useState(false);
 
   const [admin, setAdmin] = useState();
   const { getAccessTokenSilently } = useAuth0();
@@ -169,6 +170,34 @@ export default function FormOffers() {
   }
 
   function handleProducts(e) {
+   if(e.target.id === 'allproducts'){
+    let array = [];
+    let arr = [];
+    brands || category
+      ? allproducts.map((e) => {
+          if (input.products.filter((p) => p === e.id).length === 0) {
+            array.push(e.id);
+            arr.push({ id: e.id, name: e.name });
+          }
+        })
+      : totalproducts.map((e) => {
+          if (input.products.filter((p) => p === e.id).length === 0) {
+            array.push(e.id);
+            arr.push({ id: e.id, name: e.name });
+          }
+        });
+    setInput({
+      ...input,
+      products: [...input.products, ...array],
+    });
+    setErrors(
+      validate({
+        ...input,
+        products: [...input.products, ...array],
+      })
+    );
+    setProds([...prods, ...arr]);
+   }else{
     if(input.products.filter(p => p === e.target.id).length === 0){
       setInput({
         ...input,
@@ -182,6 +211,7 @@ export default function FormOffers() {
       );
       setProds([...prods, { id: e.target.id, name: e.target.value }]);
     }
+   }    
   }
 
   function handleAllProducts(){
@@ -387,6 +417,7 @@ export default function FormOffers() {
                         onChange={(e) => {
                           setBrands("");
                           setPage(0);
+                          setCheck(false);
                         }}
                       />
                       <label
@@ -410,6 +441,7 @@ export default function FormOffers() {
                             onChange={(e) => {
                               setBrands(e.target.id);
                               setPage(0);
+                              setCheck(false);
                             }}
                           />
                           <label
@@ -437,8 +469,9 @@ export default function FormOffers() {
                         type="radio"
                         name="products"
                         id="allproducts"
-                        onChange={() => {
-                          handleAllProducts();
+                        onChange={(e) => {
+                          handleProducts(e);
+                          setCheck(true);
                         }}
                       />
                       <label
@@ -453,6 +486,7 @@ export default function FormOffers() {
                   <FormProducts
                     allproducts={allproducts}
                     handleProducts={handleProducts}
+                    check={check}
                   />
 
                   <nav aria-label="navigation">
