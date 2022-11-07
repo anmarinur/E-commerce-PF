@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories } from '../../redux/actions';
+import { getCategories, getOffers } from '../../redux/actions';
 import Accordion from 'react-bootstrap/Accordion';
 import './FilterAndOrder.css'
 
@@ -10,10 +10,12 @@ import './FilterAndOrder.css'
 const FilterAndOrder = (props) => {
 
     const categories = useSelector(state => state.categories);
+    const offers = useSelector(state => state.offers);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getCategories(""));
+        dispatch(getOffers());
     }, []);
 
     useEffect(() => {
@@ -28,6 +30,29 @@ const FilterAndOrder = (props) => {
 
 
                     <Accordion defaultActiveKey={['0']} alwaysOpen>
+                    <Accordion.Item eventKey="2">
+                            <Accordion.Header>Offers</Accordion.Header>
+                            <Accordion.Body>
+
+                                <div className='row mx-1 my-1'>
+                                    <div className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
+                                        <input checked={props.check} className="form-check-input" type="radio" name="offer" id="allOffer" onChange={(e) => { props.setOffer('') }} />
+                                        <label className="form-check-label fw-semibold" htmlFor="allOffer">
+                                            All
+                                        </label>
+                                    </div>
+                                    {offers && offers.map(o => (
+                                        <div key={o.id} className="col-xl-12 col-md-6 col-sm-6 col-6 form-check">
+                                            <input className="form-check-input" type="radio" name="offer" id={o.event} onChange={(e) => { props.setOffer(o.id) }} />
+                                            <label className="form-check-label fw-semibold" htmlFor={o.event}>
+                                                {`${o.event[0].toUpperCase()}${o.event.slice(1)} ${o.discount}%`}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+
+                            </Accordion.Body>
+                        </Accordion.Item>
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>Categories</Accordion.Header>
                             <Accordion.Body>

@@ -12,7 +12,7 @@ import Modal from 'react-bootstrap/Modal';
 import logo from "../components/Nav/images/Logo.png";
 import CardBestRaitingProduct from "../components/Oferts/CardBestRaitingProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { setModal } from "../redux/actions";
+import { getOffers, setModal } from "../redux/actions";
 import Transition from "../components/Transition/Transition";
 import CardOfferProduct from "../components/Oferts/CardOfferProduct";
 import GoUpButton from "../components/GoUpButton/GoUpButton";
@@ -41,6 +41,7 @@ export default function Home() {
     getLastestProducts();
     getBestRatingProducts();
     getOfferProduct();
+    dispatch(getOffers());
     if (id && status) axios.put(`order/status/${status}?id=${id}`);
     id = '';
     status = '';

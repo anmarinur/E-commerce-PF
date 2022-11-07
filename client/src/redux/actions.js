@@ -113,12 +113,13 @@ export const orderDetail = (total) => {
     }
 }
 
-export const getAllProducts = (size, page, filterCategory, sort, search, brands, disc) => {
+export const getAllProducts = (size, page, filterCategory, sort, search, brands, disc, offer) => {
     var queryCat = '';
     var querySortPrice = '';
     var querySearch = '';
     var queryBrands = '';
     var queryDisc = '';
+    var queryOffer = '';
 
 
     if (filterCategory) queryCat = `&cat=${filterCategory}`;
@@ -126,10 +127,11 @@ export const getAllProducts = (size, page, filterCategory, sort, search, brands,
     if (search) querySearch = `&search=${search}`;
     if (brands) queryBrands = `&brand=${brands}`;
     if(disc) queryDisc = `&disc=${disc}`;
+    if(offer) queryOffer = `&offer=${offer}`;
 
     return async function (dispatch) {
         try {
-            const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}${queryBrands}${queryDisc}`);
+            const result = await axios.get(`/product?size=${size}&page=${page}${queryCat}${querySortPrice}${querySearch}${queryBrands}${queryDisc}${queryOffer}`);
             return dispatch({ type: GET_PRODUCTS, payload: result.data });
         } catch (error) {
             console.log(error);
