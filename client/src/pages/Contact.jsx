@@ -25,7 +25,7 @@ export default function Contact() {
     const [store, setStore] = useState('');
     const [error, setError] = useState({
         name: 'Enter a valid name',
-        email: 'Enter a valid email',
+        email: 'Enter a valid E-Mail',
         title: 'Enter a valid title',
         detail: 'Enter a detail'
     })
@@ -121,8 +121,8 @@ export default function Contact() {
                                 {error.name && <span className="ms-2 text-danger">{error.name}</span>}
                             </Form.Group>
                             <Form.Group className="mb-3">
-                                <Form.Label className="fw-bold fs-5">Email:</Form.Label>
-                                <Form.Control type="email" placeholder="Enter your email" name="userEmail" value={contact.userEmail} onChange={(e) => handleChange(e)}/>
+                                <Form.Label className="fw-bold fs-5">E-Mail:</Form.Label>
+                                <Form.Control type="email" placeholder="Enter your E-Mail" name="userEmail" value={contact.userEmail} onChange={(e) => handleChange(e)}/>
                                 {error.email && <span className="ms-2 text-danger">{error.email}</span>}
                             </Form.Group>
                             <Form.Group className="mb-3">
