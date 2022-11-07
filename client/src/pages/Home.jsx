@@ -41,7 +41,6 @@ export default function Home() {
     getLastestProducts();
     getBestRatingProducts();
     getOfferProduct();
-    dispatch(getOffers());
     if (id && status) axios.put(`order/status/${status}?id=${id}`);
     id = '';
     status = '';
@@ -58,7 +57,6 @@ export default function Home() {
   const getBestRatingProducts = async () => {
     try {
       const result = await axios.get('/product/bestranking');
-      console.log(result.data)
       setBestRatingProducts(result.data.products);
     } catch (error) {
       console.error(error.message);

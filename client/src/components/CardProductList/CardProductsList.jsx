@@ -20,7 +20,6 @@ const CardProductsList = () => {
     const totalPages = useSelector(state => state.products.totalPages);
     const products = useSelector(state => state.products.products);
     const categories = useSelector(state => state.categories);
-    const offers = useSelector(state => state.offers);
 
     const [size, setSize] = useState(12);
     const [page, setPage] = useState(0);
@@ -30,7 +29,7 @@ const CardProductsList = () => {
     const [brandsSelected, setBrandsSelected] = useState();
     const [brands, setBrands] = useState();
     const [offer, setOffer] = useState();
-    console.log(offer)
+
     function setPagePagination(n) {
         setPage(n)
         window.scroll(0,0);
@@ -43,8 +42,8 @@ const CardProductsList = () => {
     }
 
     useEffect(() => {
-        dispatch(getAllProducts(size, page,categoryFilter,sort,search,brandsSelected, offer));
-    }, [dispatch, size, page, categoryFilter, sort,search,brandsSelected, offer])
+        dispatch(getAllProducts(size, page, categoryFilter, sort, search, brandsSelected, offer));
+    }, [dispatch, size, page, categoryFilter, sort, search, brandsSelected, offer])
 
     useEffect(() => {
         axios.get(`/product/brand?category=${categoryFilter ? categoryFilter :''}`)
@@ -61,7 +60,7 @@ const CardProductsList = () => {
 
                 <div className="row g-4">
                     <div className="col-lg-3 col-md-12">
-                        { brands !== undefined &&<FilterAndOrder offers={offers} setOffer={setOffer} brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
+                        { brands !== undefined &&<FilterAndOrder setOffer={setOffer} brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
                     </div>
                     <div className="col-lg-9 col-md-12">
                         <div className='container bg-white border shadow p-3 mb-3 rounded'>
