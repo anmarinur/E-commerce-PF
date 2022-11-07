@@ -41,6 +41,7 @@ export default function FormOffers() {
   const [allproducts, setAllProducts] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [prods, setProds] = useState([]);
+  const [totalproducts, setTotalProducts] = useState([]);
 
   const [admin, setAdmin] = useState();
   const { getAccessTokenSilently } = useAuth0();
@@ -74,6 +75,14 @@ export default function FormOffers() {
       .get(`/product?size=${size}&page=${page}&cat=${category}&brand=${brands}`)
       .then((response) => {setAllProducts(response.data.products); setTotalPages(response.data.totalPages)});
   }, [dispatch, category, brands, size, page]);
+
+  useEffect(() => {
+    axios
+      .get(`/product`)
+      .then((response) => {
+        setTotalProducts(response.data.products);
+      });
+  }, [dispatch]);
 
   function validate(input) {
     if (!input.event || input.event.length < 3) errors.event = "Enter a valid event name";
@@ -176,21 +185,32 @@ export default function FormOffers() {
   }
 
   function handleAllProducts(){
-   allproducts.map((e) => {
-      if (input.products.filter((p) => p === e.id).length === 0) {
-       setInput({
+   let array = [];
+   let arr =[];
+   brands || category
+     ? allproducts.map((e) => {
+         if (input.products.filter((p) => p === e.id).length === 0) {
+           array.push(e.id);
+           arr.push({ id: e.id, name: e.name });
+         }
+       })
+     : totalproducts.map((e) => {
+         if (input.products.filter((p) => p === e.id).length === 0) {
+           array.push(e.id);
+           arr.push({ id: e.id, name: e.name });
+         }
+       });
+     setInput({
          ...input,
-         products: [...input.products, e.id],
+         products: [...input.products, ...array],
        });
        setErrors(
          validate({
            ...input,
-           products: [...input.products, e.id],
+           products: [...input.products, ...array],
          })
        );
-       setProds([...prods, { id: e.id, name: e.name }]);
-     }}
-   )
+       setProds([...prods, ...arr]);   
   }
 
   async function handleClick(e) {
