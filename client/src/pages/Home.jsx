@@ -12,7 +12,7 @@ import Modal from 'react-bootstrap/Modal';
 import logo from "../components/Nav/images/Logo.png";
 import CardBestRaitingProduct from "../components/Oferts/CardBestRaitingProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { setModal } from "../redux/actions";
+import { getOffers, setModal } from "../redux/actions";
 import Transition from "../components/Transition/Transition";
 import CardOfferProduct from "../components/Oferts/CardOfferProduct";
 import GoUpButton from "../components/GoUpButton/GoUpButton";
@@ -57,7 +57,6 @@ export default function Home() {
   const getBestRatingProducts = async () => {
     try {
       const result = await axios.get('/product/bestranking');
-      console.log(result.data)
       setBestRatingProducts(result.data.products);
     } catch (error) {
       console.error(error.message);

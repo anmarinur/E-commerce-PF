@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 
 
 export default function RelatedProducts({ relatedProducts, productId }){
-    console.log(relatedProducts)
-    console.log(productId)
 
     const responsive = {
         superLargeDesktop: {

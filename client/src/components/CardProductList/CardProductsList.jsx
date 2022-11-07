@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CardProduct from './CardProduct';
 import FilterAndOrder from "../FilterAndOrderProducts/FilterAndOrder";
-import { getAllProducts } from '../../redux/actions';
+import { getAllProducts, getOffers } from '../../redux/actions';
 import PaginationProducts from './Pagination';
 import SearchBarProducts from './SearchBarProducts';
 import axios from 'axios';
@@ -28,6 +28,7 @@ const CardProductsList = () => {
     const [search, setSearch] = useState(undefined);
     const [brandsSelected, setBrandsSelected] = useState();
     const [brands, setBrands] = useState();
+    const [offer, setOffer] = useState();
 
     function setPagePagination(n) {
         setPage(n)
@@ -41,13 +42,17 @@ const CardProductsList = () => {
     }
 
     useEffect(() => {
-        dispatch(getAllProducts(size, page,categoryFilter,sort,search,brandsSelected));
-    }, [dispatch, size, page, categoryFilter, sort,search,brandsSelected])
+        dispatch(getAllProducts(size, page, categoryFilter, sort, search, brandsSelected, offer));
+    }, [dispatch, size, page, categoryFilter, sort, search, brandsSelected, offer])
 
     useEffect(() => {
         axios.get(`/product/brand?category=${categoryFilter ? categoryFilter :''}`)
             .then(response => setBrands(response.data))
     }, [categoryFilter])
+
+    useEffect(()=>{
+        dispatch(getOffers());
+    },[])
 
     return (
         <>
@@ -55,7 +60,7 @@ const CardProductsList = () => {
 
                 <div className="row g-4">
                     <div className="col-lg-3 col-md-12">
-                        { brands !== undefined &&<FilterAndOrder brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
+                        { brands !== undefined &&<FilterAndOrder setOffer={setOffer} brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
                     </div>
                     <div className="col-lg-9 col-md-12">
                         <div className='container bg-white border shadow p-3 mb-3 rounded'>
