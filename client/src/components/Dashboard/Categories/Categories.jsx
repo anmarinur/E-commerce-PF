@@ -65,7 +65,7 @@ export default function Categories() {
                             <tr>
                                 <th className='fw-semibold fs-6'>Id</th>
                                 <th className='fw-semibold fs-6'>Category</th>
-                                <th><Link to='/Dashboard/Categories/Create' className="btn btn-sm btn-info fw-bold"><i className="me-2 fa-solid fa-plus"></i>New Category</Link></th>
+                                <th><Link to='/Dashboard/Categories/Create' className="btn btn-danger"><i className="me-2 fa-solid fa-plus"></i>New Category</Link></th>
                             </tr>
                         </thead>
                         <tbody>
