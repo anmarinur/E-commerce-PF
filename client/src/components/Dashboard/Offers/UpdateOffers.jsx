@@ -353,7 +353,7 @@ export default function UpdateOffers() {
             <div class="col-4">
               <Link to="/dashboard/offers">
                 <Button className="column-3" variant="danger">
-                  Go Back
+                  <i className="fa-solid fa-left-long"></i>
                 </Button>
               </Link>
             </div>

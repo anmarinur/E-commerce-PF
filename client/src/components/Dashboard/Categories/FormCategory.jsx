@@ -7,6 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getCategories } from '../../../redux/actions';
 import Transition from '../../Transition/Transition';
+import Button from 'react-bootstrap/Button';
 
 export default function FormCategory({ match }) {
 
@@ -101,7 +102,11 @@ export default function FormCategory({ match }) {
                         <label htmlFor="categoryName" className="mx-auto">Category Name</label>
                         {errors && (<p className="mt-2 text-danger fw-semibold"> {errors} </p>)}
                     </div>
-                    <button disabled={errors && true} type="submit" className="btn btn-success text-center"  > <i className="me-2 fa-solid fa-floppy-disk"></i> Save</button>
+                    <div className="d-flex justify-content-around py-3 w-50 mx-auto">
+                        <button className="btn btn-danger text-center" type="submit"  onClick={(e) => history.push('/Dashboard/Categories')}><i className="fa-solid fa-left-long"></i></button>{' '}
+                        <button disabled={errors && true} type="submit" className="btn btn-danger text-center">Submit</button>
+                    </div>
+                    
                 </form>
             </div>
             <Popup open={open} closeOnDocumentClick onClose={closeModal} >
