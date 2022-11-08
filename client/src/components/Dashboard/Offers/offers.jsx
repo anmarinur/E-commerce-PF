@@ -79,7 +79,10 @@ export default function Offers() {
                     <td>{o.discount}</td>
                     <td>{o.startDay}</td>
                     <td>{o.endDay}</td>
-                    <td>{o.detail}</td>
+                    <td>
+                    <p style={{margin: 0}}>{`Categories: ${o.detail.split("/")[0].toUpperCase()}`}</p>
+                    <p style={{margin: 0}}>{`Brands: ${o.detail.split("/")[1].toUpperCase()}`}</p>
+                    </td>  
                     <td>
                       <div
                         className="btn-group"

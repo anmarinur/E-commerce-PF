@@ -156,19 +156,28 @@ export default function FormOffers() {
   }
     setBrands(e.target.id);                      
   }
-    console.log("brand", brandSelected);
-    console.log("category", categorySelected);
 
     function getDetails(){
-     let response = '';
-     if(setCatDetail === 'All' || setBrandDetail === 'All'){
-      response.concat(`${catDetail} - ${brandDetail}`);
+      let response = '';
+      if(catDetail === 'All'){
+        response=catDetail;
+      }else{
+       const detailsCat = categories.map(c=>{
+          if(categorySelected.map(c=>Number(c)).includes(c.id)){
+            return c.category;
+          }
+        });
+        response=detailsCat.filter(c=>!!c).join("-");
+     }
+     if(brandDetail === 'All'){
+      response = response.concat(`/${brandDetail}`)
      }else{
-      response.concat(`${categorySelected} - ${brandSelected}`);
+      response = response.concat(`/${brandSelected.join("-")}`);
      }
 
      return response;
     }
+    
 
   async function handleClick(e) {
     e.preventDefault();
@@ -351,7 +360,7 @@ export default function FormOffers() {
                     All
                   </label>
                 </div>
-                {allbrands &&
+                {allbrands && brandSelected.length !== 28 ?
                   allbrands.map((b) => (
                     <div
                       key={b}
@@ -373,21 +382,21 @@ export default function FormOffers() {
                         {b}
                       </label>
                     </div>
-                  ))}
+                  )): <></>}
               </div>
             </Form.Group>
             <div className="row mx-1 my-1"></div>
           </Form.Group>
-          <div class="row">
-            <div class="col-3"></div>
-            <div class="col-4">
+          <div className="row">
+            <div className="col-3"></div>
+            <div className="col-4">
               <Link to="/dashboard/offers">
                 <Button className="column-3" variant="danger">
                   <i className="fa-solid fa-left-long"></i>
                 </Button>
               </Link>
             </div>
-            <div class="col-4">
+            <div className="col-4">
               <Button
                 className="column-3"
                 variant="danger"

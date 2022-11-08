@@ -39,6 +39,8 @@ export default function UpdateOffers() {
   const [brands, setBrands] = useState("");
   const [brandSelected, setBrandSelected] = useState([]);
   const [allbrands, setAllBrands] = useState([]);
+  const [catDetail, setCatDetail] = useState('');
+  const [brandDetail, setBrandDetail] = useState('');
   
   const [admin, setAdmin] = useState();
   const { getAccessTokenSilently } = useAuth0();
@@ -160,9 +162,31 @@ export default function UpdateOffers() {
     setBrands(e.target.id);
   }
  
+  function getDetails(){
+    let response = '';
+    if(catDetail === 'All'){
+      response=catDetail;
+    }else{
+     const detailsCat = categories.map(c=>{
+        if(categorySelected.map(c=>Number(c)).includes(c.id)){
+          return c.category;
+        }
+      });
+      response=detailsCat.filter(c=>!!c).join("-");
+   }
+   if(brandDetail === 'All'){
+    response = response.concat(`/${brandDetail}`)
+   }else{
+    response = response.concat(`/${brandSelected.join("-")}`);
+   }
+
+   return response;
+  }
+
   async function handleClick(e) {
     e.preventDefault();
     try {
+      let details = getDetails();
       const token = await getAccessTokenSilently();      
        await axios.put(
          `/offer/${id}`,
@@ -174,6 +198,7 @@ export default function UpdateOffers() {
              startDay: input.startDay,
              endDay: input.endDay,
              discount: input.discount,
+             detail: details
            },
          },
          {
@@ -193,7 +218,7 @@ export default function UpdateOffers() {
   return (
     <Transition>
       <div>
-        <h1 className="text-center py-2  text-danger">Update offer</h1>
+        <h1 className="text-center py-2  text-danger">Create an offer</h1>
         <Form className="w-75 mx-auto">
           <Form.Group className="mb-3" controlId="offerEvent">
             <Form.Label>Event Name</Form.Label>
@@ -235,8 +260,8 @@ export default function UpdateOffers() {
                 <Form.Text className="text-muted">{errors.startDay}</Form.Text>
               )}
             </Form.Group>
-            <Form.Group className="mb-3 col-6" controlId="offerEndDay">
-              <Form.Label>Ends at</Form.Label>
+          <Form.Group className="mb-3 col-6" controlId="offerEndDay">
+            <Form.Label>Ends at</Form.Label>
               <Form.Control
                 type="date"
                 name="endDay"
@@ -265,15 +290,21 @@ export default function UpdateOffers() {
                   id="all"
                   onChange={(e) => {
                     setCategory("");
-                    let categoriesId = categories.map((e) => e.id);
-                    setCategorySelected([...categorySelected, ...categoriesId]);
+                    if(e.target.checked){
+                      let categoriesId = categories.map(e => e.id);
+                      setCategorySelected([...categoriesId]);
+                      setCatDetail('All')
+                    }else{
+                      setCategorySelected([]);
+                      setCatDetail('')
+                    }
                   }}
                 />
                 <label className="form-check-label fw-semibold" htmlFor="all">
                   All
                 </label>
               </div>
-              {categories.map((element) => {
+              {categorySelected?.length!==6 ? categories.map((element) => {
                 return (
                   <div
                     key={element.id}
@@ -298,7 +329,7 @@ export default function UpdateOffers() {
                     </label>
                   </div>
                 );
-              })}
+              }): <></>}
             </div>
             <Form.Label>Brands</Form.Label>
             <Form.Group className="mb-3" controlId="offerProducts">
@@ -311,7 +342,13 @@ export default function UpdateOffers() {
                     id="allBrands"
                     onChange={(e) => {
                       setBrands("");
-                      setBrandSelected([...brandSelected, ...allbrands]);
+                      if(e.target.checked){
+                        setBrandSelected([...allbrands]);
+                        setBrandDetail('All')
+                    }else{
+                      setBrandSelected([]);
+                      setBrandDetail("");
+                    }
                     }}
                   />
                   <label
@@ -321,7 +358,7 @@ export default function UpdateOffers() {
                     All
                   </label>
                 </div>
-                {allbrands &&
+                {allbrands && brandSelected.length !== 28 ?
                   allbrands.map((b) => (
                     <div
                       key={b}
@@ -333,7 +370,7 @@ export default function UpdateOffers() {
                         name="brand"
                         id={b}
                         onChange={(e) => {
-                          handleBrand(e);
+                         handleBrand(e);
                         }}
                       />
                       <label
@@ -343,21 +380,21 @@ export default function UpdateOffers() {
                         {b}
                       </label>
                     </div>
-                  ))}
+                  )): <></>}
               </div>
             </Form.Group>
             <div className="row mx-1 my-1"></div>
           </Form.Group>
-          <div class="row">
-            <div class="col-3"></div>
-            <div class="col-4">
+          <div className="row">
+            <div className="col-3"></div>
+            <div className="col-4">
               <Link to="/dashboard/offers">
                 <Button className="column-3" variant="danger">
                   <i className="fa-solid fa-left-long"></i>
                 </Button>
               </Link>
             </div>
-            <div class="col-4">
+            <div className="col-4">
               <Button
                 className="column-3"
                 variant="danger"
@@ -367,16 +404,14 @@ export default function UpdateOffers() {
                   errors.event ||
                   errors.discount ||
                   errors.startDay ||
-                  errors.endDay ||
+                  errors.endDay   ||
                   categorySelected.length === 0 ||
-                  brandSelected.length === 0
+                  brandSelected.length === 0                
                 }
               >
                 Submit
               </Button>
-              <div>
-                <br />
-              </div>
+              <div><br/></div>
             </div>
           </div>
           <ToastContainer />
@@ -384,4 +419,4 @@ export default function UpdateOffers() {
       </div>
     </Transition>
   );
-}
+ }
