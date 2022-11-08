@@ -80,7 +80,7 @@ export default function Coment({ id, rating, comment, createdAt, image, handleDe
       </div>
       <Popup open={open} closeOnDocumentClick onClose={closeModal}>
         <div className='d-flex flex-row justify-content-center'>
-          <img className="rounded" src={image} alt='product'/>
+          <img className="col-6 rounded" src={image} alt='product'/>
         </div>
       </Popup>
       <Modal show={show} onHide={handleClose}>

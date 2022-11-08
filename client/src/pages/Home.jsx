@@ -30,7 +30,7 @@ export default function Home() {
   let id = searchParams.get('id');
   const [lastestProducts, setLastestProducts] = useState();
   const [bestRatingProducts, setBestRatingProducts] = useState();
-  const [offerProducts, setOfferProducts] = useState();
+  const [offerProducts, setOfferProducts] = useState([]);
 
   const modalShow = useSelector(state => state.modalShow);
   const dispatch = useDispatch();
@@ -66,6 +66,7 @@ export default function Home() {
   const getOfferProduct = async () => {
     try {
       const result = await axios.get('/offer');
+      if(result.data.length === 0) return setOfferProducts(undefined);
       var offerlast = result.data[result.data.length-1]?.id || "";
       const resultTwo = await axios.get(`/product?disc=${offerlast}&size=6`);
       if ( resultTwo.data.products.length < 6) {
@@ -173,15 +174,17 @@ export default function Home() {
             <div className="col-12 text-center text-dark bg-white">
               <h3 className="text-uppercase fw-bold my-4">Product Offer</h3>
               <div className="row g-4 px-5">
-                {offerProducts?.length === 0 && offerProducts.find(p=>p.Offer?.active==="true") && <p>no offers available</p>}
-                {
-                  offerProducts? offerProducts.map(p =>{
+                { offerProducts && offerProducts.find(p=>p.Offer?.active==="true") ? 
+                
+                  offerProducts.map(p =>{
                     if(p.Offer?.active === "true"){
                       return <CardOfferProduct p={p} key={p.id} />
                     }
                     return;
                   }
-                  ) : (<div className="d-flex justify-content-center"><Loading height={"250px"} text={"true"}/></div>)
+                  ) : offerProducts === undefined
+                  ? <p>no offers available</p>  
+                  : (<div className="d-flex justify-content-center"><Loading height={"250px"} text={"true"}/></div>)
                 }
               </div>
 

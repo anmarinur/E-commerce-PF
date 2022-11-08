@@ -10,40 +10,10 @@ import logoTech from '../../Nav/images/Logo.png';
 import logoShipp from './shipping.png';
 import Loading from '../../Loading/Loading'
 
-
-
-const OrderCard = () => {
-    const { getAccessTokenSilently } = useAuth0();
-    const userEmail = useLoginEmail();
-    const [userOrders, setUserOrders] = useState([]);
-    const [userData, setUserData] = useState({});
-    const [modalShow, setModalShow] = React.useState(false);
+const OrderCard = ({ order, userData, userOrders, userEmail }) => {
+    
+    const [modalShow, setModalShow] = useState(false);
     const [loadpdf, setLoadpdf] = useState(true);
-
-
-    async function getUserOrders() {
-        const token = await getAccessTokenSilently()
-        try {
-            let result = await axios.get(`/order/email/${userEmail}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            setUserOrders(result.data)
-            let userGet = await axios.get(`/user/${userEmail}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            setUserData(userGet.data)
-        } catch (error) {
-            console.log("getUserOrders Error:", error)
-        }
-    }
-
-    useEffect(() => {
-        getUserOrders()
-    }, [])
 
     async function payment(orderId) {
         const order = userOrders.find((el) => el.id === Number(orderId));
@@ -59,7 +29,7 @@ const OrderCard = () => {
         let checkoutURL = await axios.post('/checkout', { totalProducts, id });
         window.location.replace(`${checkoutURL.data}`)
     }
-    console.log(userOrders)
+
     //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--* INICIO DE P D F S -*-*-*-*-*-*-*-*-*-*-*---
 
     const getPDF = (order)=> {
@@ -165,8 +135,7 @@ const OrderCard = () => {
     return (
         <div>
             <div className='col-12 mb-3 '>
-                {Array.isArray(userOrders) && userOrders.length > 0 ? userOrders.map(order =>
-                    <div key={order.id} style={{ backgroundColor: '#FDEDEC' }} className="card shadow border-gray p-2 mb-5">
+                <div style={{ backgroundColor: '#FDEDEC' }} className="card shadow border-gray p-2 mb-5">
                         <div className="row">
                             {/* Order ID */}
                             <div className="col-xl-6 col-sm-4 text-center mx-auto py-2">
@@ -225,13 +194,13 @@ const OrderCard = () => {
                                 </button>}
                                 {
                                     order.status === 'received' &&
-                                    (<button disabled={order.status === 'received' ? false : true} className='"my-2 btn  btn-info  fw-bold mx-3' onClick={() => setModalShow(true)}>
+                                    (<button disabled={order.status === 'received' ? false : true} className='"my-2 btn  btn-dark  fw-bold mx-3' onClick={() => setModalShow(true)}>
                                         <i className="fa-sharp fa-solid fa-comment-dots me-2"></i>Comment
                                     </button>)
                                 }
 
                                 {
-                                loadpdf ?
+                                loadpdf && order.id ?
                                 <button className='btn btn-success fw-bold ' onClick={()=>{
                                     setLoadpdf(false);
                                     setTimeout(()=>{
@@ -255,17 +224,9 @@ const OrderCard = () => {
                             email={userEmail}
                             idOrder={order.id}
                             block={userData.block}
-                        
                         />
                     </div>
-                ) :
-                    <div className='d-flex flex-column align-items-center mt-4'>
-                        <i className="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
-                        <p className='text-danger fw-bold fs-4 mt-2'>Without Orders</p>
-                    </div>
-                }
             </div>
-
         </div>
     )
 }
