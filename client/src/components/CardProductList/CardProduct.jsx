@@ -83,7 +83,6 @@ const CardProduct = ({ product }) => {
 
     return (
         <Link to={`/product/${product.id}`} className='card cardProduct h-100 text-decoration-none shadow ' >
-            {/* { product.Offer?.active === "true" && (<span  className="text-muted fw-bold p-2  text-uppercase fs-5" style={ {float: 'right'}} > In Offert  {product.Offer.discount}% </span>)  } */}
             { product.Offer?.active === "true" && (<GlitchText disc={product.Offer.discount} />)  }
             <div className="row h-100 align-items-center">
                 <div className="col mx-auto align-middle"  >

@@ -149,17 +149,21 @@ export default function UpdateOffers() {
   }
 
   function handleCategory(e) {
-    if (categorySelected.filter((c) => c === e.target.id).length === 0) {
+   if(e.target.checked && !categorySelected.find(c=>c===Number(e.target.id))){
       setCategorySelected([...categorySelected, e.target.id]);
+    }else{
+      setCategorySelected(categorySelected.filter(c => c !== e.target.id));
     }
-    setCategory(e.target.id);
+   setCategory(e.target.id);
   }
 
   function handleBrand(e) {
-    if (brandSelected.filter((b) => b === e.target.id).length === 0) {
+    if (e.target.checked && !brandSelected.find((c) => c === e.target.id)) {
       setBrandSelected([...brandSelected, e.target.id]);
+    } else {
+      setBrandSelected(brandSelected.filter((c) => c !== e.target.id));
     }
-    setBrands(e.target.id);
+    setBrands(e.target.id);     
   }
  
   function getDetails(){
@@ -218,7 +222,7 @@ export default function UpdateOffers() {
   return (
     <Transition>
       <div>
-        <h1 className="text-center py-2  text-danger">Create an offer</h1>
+        <h1 className="text-center py-2  text-danger">Update an offer</h1>
         <Form className="w-75 mx-auto">
           <Form.Group className="mb-3" controlId="offerEvent">
             <Form.Label>Event Name</Form.Label>

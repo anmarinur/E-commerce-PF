@@ -19,7 +19,7 @@ export default function Developers() {
     }, []);
 
 let info = [
-        { name: "Ana Belén Gonzalvez", email: "mailto:damiangonzalez@gmail.com", gitHub: "https://github.com/AnaGonzalvez", linkedIn: "https://linkedin.com/in/anabeléngonzalvez", img: Ana },
+        { name: "Ana Belén Gonzalvez", email: "mailto:anaa.gonzalvez2@gmail.com", gitHub: "https://github.com/AnaGonzalvez", linkedIn: "https://linkedin.com/in/anabeléngonzalvez", img: Ana },
         { name: "Juan Ignacio Grodz", email: "mailto:jigrodz@gmail.com", gitHub: "https://github.com/Juani2409", linkedIn: "https://www.linkedin.com/in/juan-ignacio-grodz-80ab57241/", img: Juan },
         { name: "Damian Gonzalez", email: "mailto:damiangonzalez@gmail.com", gitHub: "https://github.com/nangonz", linkedIn: "https://www.linkedin.com/in/dami-gonzalez/", img: Damian },
         { name: "Anderson Marin", email: "mailto:andersonmarindev@gmail.com", gitHub: "https://github.com/anmarinur", linkedIn: "https://www.linkedin.com/in/andersonmarindev/", img: Anderson },
