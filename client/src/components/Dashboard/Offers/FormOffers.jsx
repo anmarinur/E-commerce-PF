@@ -49,7 +49,7 @@ export default function FormOffers() {
 
   useEffect(() => {
     axios
-      .get(`/product/brand?category=${category ? category : ""}`)
+      .get(`/product/brand?category=${""}`)
       .then((response) => setAllBrands(response.data));
   }, [category]);
 
@@ -138,18 +138,24 @@ export default function FormOffers() {
   }
 
   function handleCategory(e){
-   if(categorySelected.filter(c => c === e.target.id).length === 0){
-    setCategorySelected([...categorySelected, e.target.id]);
-   }
+    if(e.target.checked && !categorySelected.find(c=>c===Number(e.target.id))){
+      setCategorySelected([...categorySelected, e.target.id]);
+    }else{
+      setCategorySelected(categorySelected.filter(c => c !== e.target.id));
+    }
    setCategory(e.target.id);
   }
 
   function handleBrand(e){
-   if(brandSelected.filter(b => b === e.target.id).length === 0){
+   if(e.target.checked && !brandSelected.find(c=>c===e.target.id)){
     setBrandSelected([...brandSelected, e.target.id]);
-   }
+  }else{
+    setBrandSelected(brandSelected.filter(c => c !== e.target.id));
+  }
     setBrands(e.target.id);                      
   }
+    console.log("brand", brandSelected);
+    console.log("category", categorySelected);
 
   async function handleClick(e) {
     e.preventDefault();
@@ -260,17 +266,21 @@ export default function FormOffers() {
                   type="checkbox"
                   name="category"
                   id="all"
-                  onChange={() => {
+                  onChange={(e) => {
                     setCategory("");
-                    let categoriesId = categories.map(e => e.id);
-                    setCategorySelected([...categorySelected, ...categoriesId]);
+                    if(e.target.checked){
+                      let categoriesId = categories.map(e => e.id);
+                      setCategorySelected([...categoriesId]);
+                    }else{
+                      setCategorySelected([]);
+                    }
                   }}
                 />
                 <label className="form-check-label fw-semibold" htmlFor="all">
                   All
                 </label>
               </div>
-              {categories.map((element) => {
+              {categorySelected?.length!==6 ? categories.map((element) => {
                 return (
                   <div
                     key={element.id}
@@ -295,7 +305,7 @@ export default function FormOffers() {
                     </label>
                   </div>
                 );
-              })}
+              }): <></>}
             </div>
             <Form.Label>Brands</Form.Label>
             <Form.Group className="mb-3" controlId="offerProducts">
@@ -308,7 +318,11 @@ export default function FormOffers() {
                     id="allBrands"
                     onChange={(e) => {
                       setBrands("");
-                      setBrandSelected([...brandSelected, ...allbrands]);
+                      if(e.target.checked){
+                        setBrandSelected([...allbrands]);
+                    }else{
+                      setBrandSelected([]);
+                    }
                     }}
                   />
                   <label
