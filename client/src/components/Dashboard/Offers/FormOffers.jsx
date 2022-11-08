@@ -154,8 +154,6 @@ export default function FormOffers() {
   }
     setBrands(e.target.id);                      
   }
-    console.log("brand", brandSelected);
-    console.log("category", categorySelected);
 
   async function handleClick(e) {
     e.preventDefault();
@@ -359,16 +357,16 @@ export default function FormOffers() {
             </Form.Group>
             <div className="row mx-1 my-1"></div>
           </Form.Group>
-          <div class="row">
-            <div class="col-3"></div>
-            <div class="col-4">
+          <div className="row">
+            <div className="col-3"></div>
+            <div className="col-4">
               <Link to="/dashboard/offers">
                 <Button className="column-3" variant="danger">
                   <i className="fa-solid fa-left-long"></i>
                 </Button>
               </Link>
             </div>
-            <div class="col-4">
+            <div className="col-4">
               <Button
                 className="column-3"
                 variant="danger"

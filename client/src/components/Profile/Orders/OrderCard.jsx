@@ -123,11 +123,11 @@ const OrderCard = () => {
                                 {
                                     order.status === 'received' &&
                                     (<button disabled={order.status === 'received' ? false : true} className='"my-2 btn  btn-info  fw-bold mx-3' onClick={() => setModalShow(true)}>
-                                        <i class="fa-sharp fa-solid fa-comment-dots me-2"></i>Comment
+                                        <i className="fa-sharp fa-solid fa-comment-dots me-2"></i>Comment
                                     </button>)
                                 }
                                 <button className='btn btn-success fw-bold '>
-                                    <i class="fa-solid fa-file-pdf me-2"></i>Download
+                                    <i className="fa-solid fa-file-pdf me-2"></i>Download
                                 </button>
 
                             </div>
@@ -144,7 +144,7 @@ const OrderCard = () => {
                     </div>
                 ) :
                     <div className='d-flex flex-column align-items-center mt-4'>
-                        <i class="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
+                        <i className="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
                         <p className='text-danger fw-bold fs-4 mt-2'>Without Orders</p>
                     </div>
                 }

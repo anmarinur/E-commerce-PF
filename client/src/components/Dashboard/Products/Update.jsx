@@ -187,15 +187,9 @@ export default function Update(){
                         <option>Select a category</option>
                         {categories.map(c=>{
                             return(
-                                <option value={c.id}>{c.category}</option>
+                                <option key={c.id} value={c.id}>{c.category}</option>
                             )
                         })}
-                        {/* <option value="smartphones">Smartphones</option>
-                        <option value="laptops">PC Laptops</option>
-                        <option value="tablets">Tablets</option>
-                        <option value="smartwatches">Smartwatches</option>
-                        <option value="speakers">Speakers</option>
-                        <option value="tv">TVs</option> */}
                     </Form.Control>
                     {errors.CategoryId && <Form.Text className="text-muted">Select one category</Form.Text>}
                 </Form.Group>

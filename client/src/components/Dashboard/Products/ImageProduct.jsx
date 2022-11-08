@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom"
 import { toast } from "react-toastify";
 import Loading from "../../Loading/Loading";
-import spinner from '../../spinner.gif';
 import Transition from "../../Transition/Transition";
 
 
@@ -95,12 +94,12 @@ export default function ImageProduct(){
             :<img style={{width: "20rem"}} src={preview ||"https://removal.ai/wp-content/uploads/2021/02/no-img.png" } alt="photo" />
             }
             <br/>
-            <label for="image" className='my-2 mx-1 btn btn-secondary'>Select Photo</label>
+            <label htmlFor="image" className='my-2 mx-1 btn btn-secondary'>Select Photo</label>
             <button disabled={!preview} type="submit" className="btn btn-success text-center" onClick={uploadImage} ><i className="me-2 fa-solid fa-floppy-disk"></i> Save</button>
             </div>
             <div>
                 {images?.length>0
-                ? images.map(img=><div onClick={()=>deleteImage(img.public_id)} className="d-inline img-delete"><img className="m-1 img-thumbnail" style={{width:"10rem"}} src={img.image} alt="product"/></div>)
+                ? images.map((img, idx)=><div key={idx} onClick={()=>deleteImage(img.public_id)} className="d-inline img-delete"><img className="m-1 img-thumbnail" style={{width:"10rem"}} src={img.image} alt="product"/></div>)
                 :<></>
             }
             </div>
