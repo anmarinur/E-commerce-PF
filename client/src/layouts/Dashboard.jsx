@@ -18,9 +18,8 @@ import Offers from '../components/Dashboard/Offers/offers';
 import FormOffers from '../components/Dashboard/Offers/FormOffers';
 import UpdateOffers from '../components/Dashboard/Offers/UpdateOffers';
 
-import Transition from '../components/Transition/Transition';
-import TransitionY from '../components/Transition/TransitionY';
 import GoUpButton from '../components/GoUpButton/GoUpButton';
+import LineChart from '../components/Dashboard/Charts/LineChart';
 
 
 const Dashboard = () => {
@@ -35,10 +34,11 @@ const Dashboard = () => {
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         <Switch>
                             <Route exact path="/Dashboard">
-                                <div  className='d-flex justify-content-center align-items-center'>
+                                <div style={{margin: "2em 0"}} className='d-flex justify-content-center align-items-center'>
                                     <DoughnutChart />
                                     <PolarAreaChart />
                                 </div>
+                                    <LineChart />
                             </Route>
                             <Route exact path="/Dashboard/Products">
                                 <ProductsTable />
