@@ -18,7 +18,8 @@ const getStatsCategories = async( req, res )=>{
         res.json(result);
         
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
+        res.status(404).json(error.message);
     }
 }
 
@@ -35,7 +36,7 @@ const getFiveProductsLowStock = async (req, res)=>{
         })
         res.json(products);
     } catch (error) {
-        res.json(error.message);
+        res.status(404).json(error.message);
     }
 }
 

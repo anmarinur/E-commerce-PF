@@ -1,4 +1,4 @@
-const { Category, Product } = require('../db.js');
+const { Category } = require('../db.js');
 
 const getCategories = async (req, res)=>{
 
@@ -6,7 +6,7 @@ const getCategories = async (req, res)=>{
         const categoriesDB = await Category.findAll();
         res.json(categoriesDB);
     } catch (error) {
-        res.json({error: error.message});
+        res.status(404).json({error: error.message});
     }
 
 }
@@ -23,7 +23,7 @@ const postCategory = async (req, res)=>{
             : res.json("Category already exist");
 
     } catch (error) {
-        res.json(error.message);
+        res.status(400).json(error.message);
     }
 }
 

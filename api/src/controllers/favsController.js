@@ -1,4 +1,4 @@
-const { Product, User,Fav, Offer } = require('../db.js');
+const { Product, User, Fav, Offer } = require('../db.js');
 
 
 const getFavorites = async (req, res) => {
@@ -47,7 +47,7 @@ const postFavorites = async(req,res)=> {
         }
         return res.status(200).json('User not found');
     } catch (error) {
-        return res.json(error.message);
+        return res.status(400).json(error.message);
     }
 }
 
@@ -67,7 +67,7 @@ try {
   res.status(200).json('Fav deleted successfully');
 
 } catch (error) {
- return res.json(error.message);
+ return res.status(400).json(error.message);
 }
 }
 

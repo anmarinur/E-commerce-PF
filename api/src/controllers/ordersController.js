@@ -85,7 +85,7 @@ const getOrdersByEmail = async (req, res) => {
       ? res.status(200).send(order)
       : res.json("Order not found or email invalid");
   } catch (error) {
-    res.json(error.message);
+    res.status(404).json(error.message);
   }
 };
 
@@ -109,7 +109,7 @@ const postOrder = async (req, res) => {
     return res.status(200).json(orderDB.id);
     
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
   }
 };
 
@@ -159,7 +159,7 @@ const updateOrder = async (req, res) => {
     
     res.status(200).json("Order updated successfully");
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
   }
 };
 
@@ -212,7 +212,7 @@ const updateStatus = async (req, res) => {
 
     res.status(200).json("Status updated successfully");
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
   }
 };
 
