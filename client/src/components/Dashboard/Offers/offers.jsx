@@ -2,9 +2,8 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOffers } from "../../../redux/actions";
-import ApplyIn from "./ApplyIn";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Transition from "../../Transition/Transition";
 
 export default function Offers() {

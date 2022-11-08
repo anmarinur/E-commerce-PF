@@ -28,10 +28,10 @@ export default function UpdateOffers() {
   });
 
   const [errors, setErrors] = useState({
-    event: "Enter a valid event name",
-    discount: "Enter a valid discount percentage",
-    startDay: "Enter a valid start date to apply the discount",
-    endDay: "Enter a valid end date to apply the discount",
+    event: id ? "" : "Enter a valid event name",
+    discount: id ? "" : "Enter a valid discount percentage",
+    startDay: id ? "" : "Enter a valid start date to apply the discount",
+    endDay: id ? "" : "Enter a valid end date to apply the discount",
   });
 
   const [category, setCategory] = useState("");
