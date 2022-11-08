@@ -74,11 +74,13 @@ const getOrdersById = async (req, res) => {
 const getOrdersByEmail = async (req, res) => {
   try {
     const { email } = req.params;
+    const orderBy = [["id", "DESC"]];
     const order = await Order.findAll({
       where: {
         user_email: email
       },
-      include: {model: Product, attributes: {exclude: ['OfferId']}, include: Offer }
+      include: {model: Product, attributes: {exclude: ['OfferId']}, include: Offer },
+      order: orderBy
     });
 
     order.length !== 0
