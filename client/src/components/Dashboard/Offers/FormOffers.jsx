@@ -51,7 +51,7 @@ export default function FormOffers() {
 
   useEffect(() => {
     axios
-      .get(`/product/brand?category=${""}`)
+      .get(`/product/brand?category=${category ? category : ""}`)
       .then((response) => setAllBrands(response.data));
   }, [category]);
 

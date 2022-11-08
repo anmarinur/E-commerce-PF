@@ -1,6 +1,4 @@
-
 import React, { useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, getOffers } from '../../redux/actions';
 import Accordion from 'react-bootstrap/Accordion';

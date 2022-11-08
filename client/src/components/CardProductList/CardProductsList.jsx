@@ -32,7 +32,7 @@ const CardProductsList = () => {
 
     function setPagePagination(n) {
         setPage(n)
-        window.scroll(0,0);
+        window.scroll(0,0);        
     }
     function setCategory(category) {
         setCategoryFilter(category);
@@ -51,48 +51,87 @@ const CardProductsList = () => {
     }, [categoryFilter])
 
     useEffect(()=>{
-        dispatch(getOffers());
+        dispatch(getOffers());        
     },[])
 
     return (
-        <>
-            <div className="container mt-4">
-
-                <div className="row g-4">
-                    <div className="col-lg-3 col-md-12">
-                        { brands !== undefined &&<FilterAndOrder setOffer={setOffer} brands={brands} brandsSelected={brandsSelected} setBrandsSelected={setBrandsSelected} setCategory = {setCategory}/>}
-                    </div>
-                    <div className="col-lg-9 col-md-12">
-                        <div className='container bg-white border shadow p-3 mb-3 rounded'>
-                            <SearchBarProducts sort={sort}  setPage={setSize} setSortOrder={setSortOrder} setSearch={setSearch} />
-                        </div>
-                        <Container className="m-0 p-0">
-                            <Row>
-                                {
-                                    products ? products.map(product => (
-                                        <Col key={product.id} sm={6} md={6} lg={4} xl={3} className='mb-4'>
-                                            <CardProduct key={product.id} product={product} />
-                                        </Col>
-                                    )) : <Loading height={"250px"} text={"true"}/>/* ( <img className='mx-auto my-5' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' /> ) */
-                                }
-
-                                {
-                                    totalPages===0 && ( <p> {`The product with the name '${search}' does not exist in the category '${nameCategory(categories, categoryFilter) || ""}'`} </p>) 
-                                }
-                            </Row>
-
-                            <div className="container mx-auto">
-                                <PaginationProducts currentPage={ page + 1 } setPagePagination={setPagePagination} totalPages={totalPages} />
-                            </div>
-
-                        </Container>
-
-                    </div>
-                </div>
+      <>
+        <div className="container mt-4">
+          <div className="row g-4">
+            <div className="col-lg-3 col-md-12">
+              {brands !== undefined && (
+                <FilterAndOrder
+                  setOffer={setOffer}
+                  brands={brands}
+                  brandsSelected={brandsSelected}
+                  setBrandsSelected={setBrandsSelected}
+                  setCategory={setCategory}
+                />
+              )}
             </div>
-            <SocialBar />
-        </>
-    )
+            <div className="col-lg-9 col-md-12">
+              <div className="container bg-white border shadow p-3 mb-3 rounded">
+                <SearchBarProducts
+                  sort={sort}
+                  setPage={setSize}
+                  setSortOrder={setSortOrder}
+                  setSearch={setSearch}
+                />
+              </div>
+              <Container className="m-0 p-0">
+                <Row>
+                  {products ? (
+                    products.map((product) => (
+                      <Col
+                        key={product.id}
+                        sm={6}
+                        md={6}
+                        lg={4}
+                        xl={3}
+                        className="mb-4"
+                      >
+                        <CardProduct key={product.id} product={product} />
+                      </Col>
+                    ))
+                  ) : (
+                    <Loading height={"250px"} text={"true"} />
+                  )}
+
+                  {totalPages === 0 &&
+                    (categoryFilter !== "" &&
+                    nameCategory(categories, categoryFilter) !== undefined ? (
+                      <div className="d-flex flex-column align-items-center mt-4">
+                        <p className="text-danger fw-bold fs-4 mt-2">
+                          {" "}
+                          {`The product with the name '${search}' does not exist in ${nameCategory(
+                            categories,
+                            categoryFilter
+                          )} category`}{" "}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="d-flex flex-column align-items-center mt-4">
+                        <p className="text-danger fw-bold fs-4 mt-2">
+                          {`The product with the name '${search}' does not exist`}
+                        </p>
+                      </div>
+                    ))}
+                </Row>
+
+                <div className="container mx-auto">
+                  <PaginationProducts
+                    currentPage={page + 1}
+                    setPagePagination={setPagePagination}
+                    totalPages={totalPages}
+                  />
+                </div>
+              </Container>
+            </div>
+          </div>
+        </div>
+        <SocialBar />
+      </>
+    );
 
 }
 
