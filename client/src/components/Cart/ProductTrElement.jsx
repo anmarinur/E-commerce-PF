@@ -58,8 +58,8 @@ function ProductTrElement(props) {
                 <Link className="text-decoration-none text-dark fw-semibold fs-6 " to={`/product/${props.product.id}`}>{props.product.name}</Link>
             </td>
             {Offer?.active
-            ?<td className="align-middle fw-semibold" >$ {priceOffer}</td>
-            :<td className="align-middle fw-semibold" >$ {props.product.price}</td>
+            ?<td className="align-middle fw-semibold text-nowrap" >$ {priceOffer}</td>
+            :<td className="align-middle fw-semibold text-nowrap" >$ {props.product.price}</td>
             }
 
             <td className="align-middle" style={{ maxWidth: '1em', minHeight: '1em' }} >
@@ -77,7 +77,7 @@ function ProductTrElement(props) {
             </td>
 
             {!props.isWish ? (
-                <td className="subTotalShow align-middle fw-semibold">$ {priceOffer * unit}</td>
+                <td className="subTotalShow align-middle fw-semibold text-nowrap">$ {priceOffer * unit}</td>
             ) : (
                 ""
             )}
