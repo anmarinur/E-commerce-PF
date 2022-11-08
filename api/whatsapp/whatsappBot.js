@@ -26,6 +26,21 @@ client.on('message', message => {
     if(from.split("@")[1] === "g.us") return;
 
     switch(body){
+        case('1'):
+        sendMessage(from, '*Tecnoshop Av. Días Velez* \n Monday to Friday from 9 am to 8 pm \n Saturday from 9 am to 5 pm' );
+        break;
+        case('2'):
+        sendMessage(from, '*Tecnoshop Av. Lastra* \n Monday to Friday from 12 pm to 8 pm \n Saturday from 9 am to 5 pm \n Sunday from 9 am to 12pm' );
+        break;
+        case('3'):
+        sendMessage(from, '*Tecnoshop Av. Acceso Oeste* \n Monday to Friday from 9 am to 6 pm \n Saturday from 9 am to 5 pm' );
+        break;
+        case('4'):
+        sendMessage(from, '*Tecnoshop Av. Hipólito Yrigoyen* \n Monday to Friday from 8 am pm to 8 pm \n Saturday from 8 am to 8 pm \n Sunday from 9 am to 12pm' );
+        break;
+        case('5'):
+        sendMessage(from, '*Tecnoshop Av. Eva Perón* \n Monday to Friday from 12 am to 10 pm \n Saturday from 12 pm to 8 pm' );
+        break;
         case('a'):
         sendMessage(from, 'We have incredible discounts waiting for you on our website 🌐 \n https://e-commerce-pf-henna.vercel.app/');
         sendMedia(from, 'discount.png');
@@ -38,7 +53,8 @@ client.on('message', message => {
         sendMessage(from, 'We need you to provide us with your order number and the reasons for your decision 💱') ;
         break;
         case('d'):
-        sendMessage(from, 'We have more than 100 branches throughout the country. 🏙') ;
+        sendMessage(from, 'We have five branches in Buenos Aires city. 🏙 \n\n for more information: \n\n *1*- Tecnoshop Av. Días Velez \n *2*- Tecnoshop Av. Lastra \n *3*- Tecnoshop Av. Acceso Oeste \n *4*- Tecnoshop Av. Hipólito Yrigoyen \n *5*- Tecnoshop Av. Eva Perón \n\n https://e-commerce-pf-henna.vercel.app/contact') ;
+        sendMedia(from, 'map.png');
         break;
         case('e'):
         sendMessage(from, 'Trained personnel will contact you in a few minutes 👩🏻‍💻👨🏻‍💻') ;
