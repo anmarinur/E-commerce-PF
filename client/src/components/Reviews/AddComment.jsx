@@ -129,6 +129,19 @@ export default function AddComment({products, email, idOrder, block}) {
               });
               
       setLoading(false);
+      setInput({
+        idProduct: '',
+        comment: ''
+      });
+      setStar({
+        star1: false,
+        star2: false,
+        star3: false,
+        star4: false,
+        star5: false
+      });
+      setPreview();
+
     }
 
   return(
@@ -139,8 +152,8 @@ export default function AddComment({products, email, idOrder, block}) {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Select product</Form.Label>
-              <Form.Control disabled={block === true ? true : ''} as="select" className={errors.idProduct ? "form-control border border-danger" : "form-control"}name="idProduct" onChange={(e) => handleChange(e)}>
-                <option>Select a product</option>
+              <Form.Control disabled={block === true ? true : ''} as="select" className={errors.idProduct ? "form-control border border-danger" : "form-control"}name="idProduct" value={input.idProduct} onChange={(e) => handleChange(e)}>
+                <option value={""}>Select a product</option>
                 {products ? products.map((product) => {
                   return (
                   <option key={product.id} value={product.id} >{product.name}</option>
