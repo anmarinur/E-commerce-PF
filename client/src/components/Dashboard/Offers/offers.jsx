@@ -55,7 +55,7 @@ export default function Offers() {
           </div>
           <div className="col-2 py-2">
             <button onClick={() => deleteAll()} className="btn btn-primary">
-              <i className="fa-solid fa-less me-2"></i>Clear all
+              <i className="fa-solid fa-trash-can me-2"></i>Clear all
             </button>
           </div>
         </div>
