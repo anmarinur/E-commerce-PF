@@ -13,8 +13,7 @@ import Loading from '../Loading/Loading';
 
 const FormOrder = (props) => {
 
-    const { user } = useAuth0();
-    const { getAccessTokenSilently } = useAuth0();
+    const { getAccessTokenSilently, user } = useAuth0();
     const dispatch = useDispatch();
     const location = useLocation();
 
@@ -191,7 +190,7 @@ const FormOrder = (props) => {
             : location.pathname==="/profile/myInformation" ? 
                 <form onSubmit={handleSubmitImg} encType='multipart/form-data' className='row align-items-center'>
                     <h5 className='m-0 col-4'>Change your profile picture:</h5>
-                    <label for="image" className='btn btn-secondary m-0 col-4'>Select and Upload Image</label>
+                    <label htmlFor="image" className='btn btn-secondary m-0 col-4'>Select and Upload Image</label>
                     <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
                     <input className='col-2 btn btn-success m-2 text-center' type="submit" value="Save"/>
                 </form>

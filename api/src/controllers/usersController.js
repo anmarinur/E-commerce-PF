@@ -34,7 +34,7 @@ const getUsers = async (req, res) => {
         });
             
     } catch (error) {
-        res.status(400).json("Not Found Users");
+        res.status(404).json("Not Found Users");
         
     }
 }
@@ -64,7 +64,7 @@ const getUserCheck = async (req, res)=>{
         return res.json({block: user.block})
         
     } catch (error) {
-        res.json(error.message);
+        res.status(404).json(error.message);
     }
 }
 
@@ -81,7 +81,7 @@ const blockUser = async (req, res)=>{
         if(user[0]) return res.json( block==="true" ? "block" : "unblock" );
         return res.json("Not match user");
     } catch (error) {
-        res.json(error.message)
+        res.status(400).json(error.message)
     }
 }
 
@@ -118,7 +118,7 @@ const getUserByEmail = async ( req, res)=>{
         })
         return res.json(user);
     } catch (error) {
-        res.json(error.message);
+        res.status(404).json(error.message);
     }
 
 }

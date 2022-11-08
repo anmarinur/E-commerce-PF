@@ -36,6 +36,7 @@ const postMercadoPago = (req, res) => {
     })
     .catch(function (error) {
       console.log(error);
+      res.status(400).json(error.message);
     });
 
 };

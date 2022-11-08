@@ -61,7 +61,7 @@ export default function MyFavorites() {
                 <div className="row">
                     <div className="col-12">
                         {products.length === 0  && products && (   <div className='d-flex flex-column align-items-center mt-4'>
-                        <i class="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
+                        <i className="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
                         <p className='text-danger fw-bold fs-4 mt-2'>You have not added any product to favorites yet</p>
                     </div> )}
                         {products ? products.map(product =>(

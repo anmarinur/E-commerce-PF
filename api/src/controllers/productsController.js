@@ -184,7 +184,7 @@ const similarprice = async ( req, res )=>{
    return res.status(200).json(products);
 
  } catch (error) {
-  res.status(400).json({ error: "Products not found" });  
+  res.status(404).json({ error: "Products not found" });  
  }
 }
 
