@@ -35,6 +35,8 @@ export default function FormOffers() {
   const [brands, setBrands] = useState("");
   const [brandSelected, setBrandSelected] = useState([]);
   const [allbrands, setAllBrands] = useState([]);
+  const [catDetail, setCatDetail] = useState('');
+  const [brandDetail, setBrandDetail] = useState('');
 
   const [admin, setAdmin] = useState();
   const { getAccessTokenSilently } = useAuth0();
@@ -155,9 +157,32 @@ export default function FormOffers() {
     setBrands(e.target.id);                      
   }
 
+    function getDetails(){
+      let response = '';
+      if(catDetail === 'All'){
+        response=catDetail;
+      }else{
+       const detailsCat = categories.map(c=>{
+          if(categorySelected.map(c=>Number(c)).includes(c.id)){
+            return c.category;
+          }
+        });
+        response=detailsCat.filter(c=>!!c).join("-");
+     }
+     if(brandDetail === 'All'){
+      response = response.concat(`/${brandDetail}`)
+     }else{
+      response = response.concat(`/${brandSelected.join("-")}`);
+     }
+
+     return response;
+    }
+    
+
   async function handleClick(e) {
     e.preventDefault();
     try {
+      let details = getDetails();
       const token = await getAccessTokenSilently();
       await axios.post(
         "/offer",
@@ -169,6 +194,7 @@ export default function FormOffers() {
             startDay: input.startDay,
             endDay: input.endDay,
             discount: input.discount,
+            detail: details
           },
         },
         {
@@ -269,8 +295,10 @@ export default function FormOffers() {
                     if(e.target.checked){
                       let categoriesId = categories.map(e => e.id);
                       setCategorySelected([...categoriesId]);
+                      setCatDetail('All')
                     }else{
                       setCategorySelected([]);
+                      setCatDetail('')
                     }
                   }}
                 />
@@ -318,8 +346,10 @@ export default function FormOffers() {
                       setBrands("");
                       if(e.target.checked){
                         setBrandSelected([...allbrands]);
+                        setBrandDetail('All')
                     }else{
                       setBrandSelected([]);
+                      setBrandDetail("");
                     }
                     }}
                   />
@@ -330,7 +360,7 @@ export default function FormOffers() {
                     All
                   </label>
                 </div>
-                {allbrands &&
+                {allbrands && brandSelected.length !== 28 ?
                   allbrands.map((b) => (
                     <div
                       key={b}
@@ -352,7 +382,7 @@ export default function FormOffers() {
                         {b}
                       </label>
                     </div>
-                  ))}
+                  )): <></>}
               </div>
             </Form.Group>
             <div className="row mx-1 my-1"></div>

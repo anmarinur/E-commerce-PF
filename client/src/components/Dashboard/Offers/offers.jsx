@@ -2,9 +2,8 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOffers } from "../../../redux/actions";
-import ApplyIn from "./ApplyIn";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Transition from "../../Transition/Transition";
 
 export default function Offers() {
@@ -80,8 +79,9 @@ export default function Offers() {
                     <td>{o.startDay}</td>
                     <td>{o.endDay}</td>
                     <td>
-                      <ApplyIn id={o.id} />
-                    </td>
+                    <p style={{margin: 0}}>{`Categories: ${o.detail.split("/")[0].toUpperCase()}`}</p>
+                    <p style={{margin: 0}}>{`Brands: ${o.detail.split("/")[1].toUpperCase()}`}</p>
+                    </td>  
                     <td>
                       <div
                         className="btn-group"
