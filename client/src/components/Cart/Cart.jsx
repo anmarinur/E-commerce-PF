@@ -56,17 +56,15 @@ export const Cart = () => {
                 <tbody>
 
                   {products.length ? products.map((product, idx) => (
-                    <>
                       <ProductTrElement
                         product={product}
-                        key={idx}
+                        key={product.id}
                         isCart={true}
                         // editCart={editCart}
                         removeCart={removeCart}
                         setOrder={setOrder}
                         order={order}
                       />
-                    </>
                   )) :
                     (<>
                       <tr >

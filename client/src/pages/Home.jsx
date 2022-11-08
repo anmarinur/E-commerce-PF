@@ -66,7 +66,7 @@ export default function Home() {
   const getOfferProduct = async () => {
     try {
       const result = await axios.get('/offer');
-      var offerlast = result.data[result.data.length-1].id;
+      var offerlast = result.data[result.data.length-1]?.id || "";
       const resultTwo = await axios.get(`/product?disc=${offerlast}&size=6`);
       if ( resultTwo.data.products.length < 6) {
         const result3 = await axios.get(`/product?disc=${offerlast - 1}&size=${6 - (resultTwo.data.products.length) }`);
