@@ -79,9 +79,7 @@ export default function Offers() {
                     <td>{o.discount}</td>
                     <td>{o.startDay}</td>
                     <td>{o.endDay}</td>
-                    <td>
-                      <ApplyIn id={o.id} />
-                    </td>
+                    <td>{o.detail}</td>
                     <td>
                       <div
                         className="btn-group"

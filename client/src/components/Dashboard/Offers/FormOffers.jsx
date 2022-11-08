@@ -35,6 +35,8 @@ export default function FormOffers() {
   const [brands, setBrands] = useState("");
   const [brandSelected, setBrandSelected] = useState([]);
   const [allbrands, setAllBrands] = useState([]);
+  const [catDetail, setCatDetail] = useState('');
+  const [brandDetail, setBrandDetail] = useState('');
 
   const [admin, setAdmin] = useState();
   const { getAccessTokenSilently } = useAuth0();
@@ -157,9 +159,21 @@ export default function FormOffers() {
     console.log("brand", brandSelected);
     console.log("category", categorySelected);
 
+    function getDetails(){
+     let response = '';
+     if(setCatDetail === 'All' || setBrandDetail === 'All'){
+      response.concat(`${catDetail} - ${brandDetail}`);
+     }else{
+      response.concat(`${categorySelected} - ${brandSelected}`);
+     }
+
+     return response;
+    }
+
   async function handleClick(e) {
     e.preventDefault();
     try {
+      let details = getDetails();
       const token = await getAccessTokenSilently();
       await axios.post(
         "/offer",
@@ -171,6 +185,7 @@ export default function FormOffers() {
             startDay: input.startDay,
             endDay: input.endDay,
             discount: input.discount,
+            detail: details
           },
         },
         {
@@ -271,8 +286,10 @@ export default function FormOffers() {
                     if(e.target.checked){
                       let categoriesId = categories.map(e => e.id);
                       setCategorySelected([...categoriesId]);
+                      setCatDetail('All')
                     }else{
                       setCategorySelected([]);
+                      setCatDetail('')
                     }
                   }}
                 />
@@ -320,8 +337,10 @@ export default function FormOffers() {
                       setBrands("");
                       if(e.target.checked){
                         setBrandSelected([...allbrands]);
+                        setBrandDetail('All')
                     }else{
                       setBrandSelected([]);
+                      setBrandDetail("");
                     }
                     }}
                   />
