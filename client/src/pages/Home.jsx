@@ -183,7 +183,10 @@ export default function Home() {
                     return;
                   }
                   ) : offerProducts === undefined
-                  ? <p>no offers available</p>  
+                  ? <div className='d-flex flex-column align-items-center mt-4'>
+                  
+                  <p className='text-danger fw-bold fs-4 mt-2'>No offers available</p>
+              </div>
                   : (<div className="d-flex justify-content-center"><Loading height={"250px"} text={"true"}/></div>)
                 }
               </div>
@@ -192,7 +195,9 @@ export default function Home() {
 
             <div className="col-12 mt-2 text-center">
               <h3 className="text-uppercase fw-bold my-4" >best ranking</h3>
-                {bestRatingProducts?.length === 0 && <p>no best Rating Products</p>}
+                {bestRatingProducts?.length === 0 && <div className='d-flex flex-column align-items-center mt-4'>
+                  <p className='text-danger fw-bold fs-4 mt-2'>No best rating products</p>
+              </div>}
               <Carousel
                 swipeable={false}
                 draggable={false}

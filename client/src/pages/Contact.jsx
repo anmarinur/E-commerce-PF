@@ -104,7 +104,7 @@ export default function Contact() {
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY
     })
 
-    if (!isLoaded) return <div>Loading...</div>;
+    if (!isLoaded) return <div></div>;
 
     return (
         <>
