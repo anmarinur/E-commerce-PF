@@ -40,7 +40,7 @@ const getComments = async (req, res) => {
    product.length !== 0 ? res.status(200).json(product) : res.status(200).json('Product not found');
    
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
@@ -82,7 +82,7 @@ const postComments = async (req, res) => {
    res.status(200).json('Review added successfully')
     
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
   }
 };
 
@@ -112,7 +112,7 @@ try {
 
  res.status(200).json("Comment deleted successfully");
 } catch (error) {
- res.json(error.message);
+ res.status(400).json(error.message);
 }
 };
 
