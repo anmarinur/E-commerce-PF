@@ -33,6 +33,9 @@ module.exports= (sequelize) => {
             set(value){
                 throw new Error("Do not try to set the active value");
             }
+        },
+        detail: {
+         type: DataTypes.TEXT,
         }
       },
       {
