@@ -5,7 +5,10 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import ModalComentProduct from './ModalComentProduct'
-
+import jsPDF from 'jspdf';
+import logoTech from '../../Nav/images/Logo.png';
+import logoShipp from './shipping.png';
+import Loading from '../../Loading/Loading'
 
 
 
@@ -15,6 +18,7 @@ const OrderCard = () => {
     const [userOrders, setUserOrders] = useState([]);
     const [userData, setUserData] = useState({});
     const [modalShow, setModalShow] = React.useState(false);
+    const [loadpdf, setLoadpdf] = useState(true);
 
 
     async function getUserOrders() {
@@ -55,8 +59,107 @@ const OrderCard = () => {
         let checkoutURL = await axios.post('/checkout', { totalProducts, id });
         window.location.replace(`${checkoutURL.data}`)
     }
+    console.log(userOrders)
+    //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--* INICIO DE P D F S -*-*-*-*-*-*-*-*-*-*-*---
 
+    const getPDF = (order)=> {
+        const docPdf = new jsPDF("p", "mm", "letter");
+    
+        var centerText = function(text, y) {
+            var textWidth = docPdf.getStringUnitWidth(text) * docPdf.internal.getFontSize() / docPdf.internal.scaleFactor;
+            var textOffset = (docPdf.internal.pageSize.width - textWidth) / 2;
+            docPdf.text(textOffset, y, text);
+        }
+    
+    
+        docPdf.setFillColor(165,35,35);
+        docPdf.rect(0,0,250,20,'F');
+    
+    
+        var logo = new Image();
+        logo.src = logoTech;
+        docPdf.addImage(logo, 'PNG', 5, 0, 15, 15);
+    
+    
+        docPdf.setFontSize(18);
+            docPdf.setTextColor(255,255,255);
+    
+            centerText('TECNOSHOP',10);    
+    
+        docPdf.setFontSize(13);
+        docPdf.setFontStyle('normal');
+        docPdf.setTextColor(0,0,0);
+            centerText('PURCHASE ORDER',17)   
+    
+    
+    
+        var logos = new Image();
+            logos.src = logoShipp;
+            docPdf.addImage(logos, 'PNG', 105, 22, 10, 10);
+    
+        docPdf.setFontSize(10);
+            centerText('(Shipping Address)',35);
+    
+        docPdf.setFontSize(12);
+        docPdf.setFont('Arial','italic');
+            centerText(order.shipping_address ,40);
 
+        docPdf.setFontSize(12);
+        docPdf.setFont('Arial','italic');
+            centerText("Status: " + order.status.toUpperCase() ,45);
+    
+    
+        docPdf.setFontSize(12);
+        docPdf.setFontStyle('normal');
+            docPdf.text("Id:",10,55)
+            docPdf.text("Name:",30,55)
+            docPdf.text("Quantity:",110,55)
+            docPdf.text("Price:",150,55)
+            docPdf.text("Import:",180,55)
+        const posy = 60;
+        const posx = 10;
+        docPdf.line(5,57 ,210,57);
+    
+        docPdf.setFontSize(10);
+         for (let i = 0;i < order.Products.length;i++) {
+            let p = order.Products[i];
+            if (i%2 !==0) {
+    
+                docPdf.setFillColor(250, 250, 250);
+                docPdf.rect(posx-5,posy+2+ (i+1) * 10,210,10, 'F');
+            } else {
+                docPdf.setFillColor(255, 248, 220);
+                docPdf.rect(posx-5,posy+2+ (i+1) * 10,210,10, 'F');
+            }
+    
+    
+    
+    
+    
+            docPdf.text(p.id.toString(),    posx,       posy + (i+1) * 10 );
+            docPdf.text(p.name,             posx + 20,  posy + (i+1) * 10); 
+            docPdf.text(p.OrderDetail.units.toString(),              posx + 108, posy + (i+1) * 10, );
+            docPdf.text('$ ' + p.price.toString(), posx + 140, posy + (i+1) * 10); 
+            let imp = p.OrderDetail.units * p.price;
+            docPdf.text('$ ' + imp.toString(), posx + 170, posy + (i+1) * 10); 
+    
+    
+        } 
+    
+            docPdf.setDrawColor(0);
+    
+            docPdf.setFillColor(165,35,35);
+            docPdf.setTextColor(255,255,255);
+                docPdf.rect(175, posy + 25 + (order.Products.length-1) * 10 , 25, 10, 'F')
+    
+            docPdf.setFontSize(12);
+                docPdf.text('$ '+ order.total_payment.toString(),180,posy + 20 + order.Products.length * 10);
+                                
+            docPdf.save("Orderpdf");
+    
+        }
+    
+        //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--* FIN DE P D F S -*-*-*-*-*-*-*-*-*-*-*---
 
 
     return (
@@ -126,9 +229,21 @@ const OrderCard = () => {
                                         <i class="fa-sharp fa-solid fa-comment-dots me-2"></i>Comment
                                     </button>)
                                 }
-                                <button className='btn btn-success fw-bold '>
+                                {
+                                loadpdf ?
+                                <button className='btn btn-success fw-bold ' onClick={()=>{
+                                    setLoadpdf(false);
+                                    setTimeout(()=>{
+                                        getPDF(order);
+                                    }, 1000)
+                                    setTimeout(() => {
+                                        setLoadpdf(true);
+                                    }, 3000);
+                                    }}>
                                     <i class="fa-solid fa-file-pdf me-2"></i>Download
                                 </button>
+                                : <Loading size={"50px"} height={"50px"} />
+                                }
 
                             </div>
                         </div>
