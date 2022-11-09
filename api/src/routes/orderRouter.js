@@ -13,8 +13,8 @@ orderRouter.get("/email/:email", login, getOrdersByEmail);
 
 orderRouter.post("/", login, postOrder);
 
-orderRouter.put("/:id", login, admin, updateOrder);
+orderRouter.put('/status/:id', login, updateStatus);
 
-orderRouter.put('/status/:status', updateStatus);
+orderRouter.put("/:id", login, admin, updateOrder);
 
 module.exports = orderRouter;
