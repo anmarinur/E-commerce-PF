@@ -1,5 +1,3 @@
-import Pagination from 'react-bootstrap/Pagination';
-
 
 function PaginationProducts(props) {
   const numberPages = [];
