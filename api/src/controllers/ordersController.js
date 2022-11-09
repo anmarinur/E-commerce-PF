@@ -205,7 +205,7 @@ const updateStatus = async (req, res) => {
 
     if(oldStock){
      const unitsDB = await OrderDetail.findAll({     
-     where: {id: id},
+     where: {OrderId: id},
      attributes:['ProductId','units']    
      });
      const units = unitsDB.map(e => ({id: e.ProductId, qty: e.units}));
