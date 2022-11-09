@@ -14,6 +14,7 @@ const CardProduct = ({ product }) => {
     const dispatch = useDispatch();
     const cartGlobal = useSelector((state) => state.cart);
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const favTotal = useSelector(state=>state.totalFav)
 
     const addFavorite = async (e, id) => {
         e.preventDefault();
@@ -27,7 +28,7 @@ const CardProduct = ({ product }) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        if (result.status === 200) {
+        if (result.status === 200 && !favTotal.find(f=>f.id===id)) {
             try {
                 const token2 = await getAccessTokenSilently();
                 dispatch(getTotalFav(user.email, token2))
@@ -44,6 +45,17 @@ const CardProduct = ({ product }) => {
             } catch (error) {
                 console.log(error)
             }
+        }else{
+            toast.error('Already added!', {
+                position: "top-right",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         }
         
 

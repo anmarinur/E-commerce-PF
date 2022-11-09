@@ -39,6 +39,8 @@ export default function ProductDetail(props) {
   
   const [images, setImages] = useState([])
   const [showImage, setShowImage] = useState("")
+  const favTotal = useSelector(state=>state.totalFav);
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -117,7 +119,7 @@ export default function ProductDetail(props) {
             Authorization: `Bearer ${token}`
         }
     });
-    if (result.status === 200) {
+    if (result.status === 200 && !favTotal.find(f=>f.id===id)) {
         try {
             const token2 = await getAccessTokenSilently();
             dispatch(getTotalFav(user.email, token2))
@@ -134,6 +136,17 @@ export default function ProductDetail(props) {
         } catch (error) {
             console.log(error)
         }
+    }else{
+      toast.error('Already added!', {
+        position: "top-right",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
     }
     
 
