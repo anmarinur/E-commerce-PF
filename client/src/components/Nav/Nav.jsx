@@ -23,7 +23,7 @@ export default function Nav() {
             getFav(user ? user.email : '')
         }
 
-    }, [user, totalFav])
+    }, [user])
 
     useEffect(() => {
         if (items.length > 0 && cart.length === 0 && isFirstTime) {
