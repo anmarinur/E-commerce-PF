@@ -40,7 +40,24 @@ const getFiveProductsLowStock = async (req, res)=>{
     }
 }
 
+const getOrderTotalPaymentDaily = async (req, res)=>{
+    let data = [];
+    try {
+        const orders = await Order.findAll();
+        data = orders.map(o=>{
+            return {
+                total: o.total_payment,
+                day: o.createdAt
+            }
+        })
+        res.json(data)
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 module.exports = {
     getStatsCategories,
-    getFiveProductsLowStock
+    getFiveProductsLowStock,
+    getOrderTotalPaymentDaily
 }
