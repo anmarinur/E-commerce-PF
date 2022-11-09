@@ -84,7 +84,7 @@ const GetAllUsers = () =>{
                 { totalPages !==0 ?
                     <ReactPaginate
                         breakLabel=" . . ."
-                        breakLinkClassName='page-link'
+                        breakLinkClassName='btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1'
                         nextLabel=">"
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={5}
@@ -93,12 +93,13 @@ const GetAllUsers = () =>{
                         renderOnZeroPageCount={1}
                         className="pagination justify-content-center"
                         pageClassName="page-item "
-                        pageLinkClassName="page-link "
+                        pageLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1 "
                         activeClassName="active"
+                        activeLinkClassName="bg-danger border-danger text-white rounded shadow-sm "
                         previousClassName="page-item"
                         nextClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextLinkClassName="page-link"
+                        previousLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                        nextLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
                     />  
                 : null }
             </nav>
