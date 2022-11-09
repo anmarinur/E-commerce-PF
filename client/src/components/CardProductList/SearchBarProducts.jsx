@@ -19,7 +19,7 @@ const SearchBarProducts = (props) => {
                 </div>
                 <div className="col-md-3  text-end ">
                     <span className="text-center m-0 fw-semibold">Show</span>
-                    <select defaultValue={12} onChange={(e) => { props.setPage(e.target.value) }} className="d-inline p-1 border-0 w-auto fw-semibold text-white border-0 ms-1 bg-danger text-white rounded" id='page' aria-label="Default select example">
+                    <select defaultValue={12} onChange={(e) => { props.setPageSize(e.target.value) }} className="d-inline p-1 border-0 w-auto fw-semibold text-white border-0 ms-1 bg-danger text-white rounded" id='page' aria-label="Default select example">
                         <option className='fw-semibold text-white bg-danger' value={4}>4</option>
                         <option className='fw-semibold text-white bg-danger' value={8}>8</option>
                         <option className='fw-semibold text-white bg-danger' value={12}>12</option>
