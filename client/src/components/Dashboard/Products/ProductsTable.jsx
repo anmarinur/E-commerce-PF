@@ -60,13 +60,18 @@ const ProductsTable = ({ itemsPerPage }) => {
         history.push({ pathname: '/Dashboard/Products/Update', state: props })
     }
 
+    const setPageSize = (size) => {
+        setSize(size);
+        setPage(0)
+    }
+
     return (
         <>
             <Transition>
                 <div className="container-fluid mt-4 mx-auto ">
                     <div className="col-12 d-flex justify-content-center mx-auto my-4">
                         <div className="row w-100 align-items-center">
-                            <div className="col-8"><SearchBarProducts sort={sort} setSortOrder={setSort} setPage={setSize} setSearch={setSearch} /> </div>
+                            <div className="col-8"><SearchBarProducts sort={sort} setSortOrder={setSort} setPageSize={setPageSize} setSearch={setSearch} /> </div>
                             <div className="col-4 align-middle "> <Link to={'/Dashboard/Products/Create'} className="btn btn-danger py-2">  <i className="fa-solid fa-plus me-2"></i> Create Product</Link> </div>
 
                         </div>
