@@ -95,7 +95,7 @@ const CardProduct = ({ product }) => {
             {product.stock === 0 &&
                     <div className='d-flex flex-column align-items-center'>
                         <i className="fa-solid fa-circle-exclamation text-danger fw-bold fs-3"></i>
-                        <p className='text-danger fw-bold fs-2'>SOLD OUT</p>
+                        <p className='text-danger fw-bold fs-2 text-center'>SOLD OUT</p>
                     </div>
                 }
                 <Card.Title className="text-center text-danger"> {product.name} </Card.Title>
