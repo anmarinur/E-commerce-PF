@@ -309,11 +309,12 @@ export default function ProductDetail(props) {
                     </Button>
                   </div>
                   <div className="col-6">
-                    <Link to="/cart">
+                    <Link to="/cart" style={{pointerEvents: productDetail.stock === 0 ? 'none' : 'auto'}}>
                       <Button
                         className="px-3 py-3 rounded-4 "
                         variant="danger"
                         onClick={(e) => addCart(e, productDetail)}
+                        disabled={productDetail.stock === 0}
                         >
                         {" "}
                         <i className="fa-solid fa-cart-plus fa-xl"></i>{" "}

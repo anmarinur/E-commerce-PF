@@ -82,7 +82,7 @@ const CardProduct = ({ product }) => {
 
 
     return (
-        <Link to={`/product/${product.id}`} className='card cardProduct h-100 text-decoration-none shadow ' style={{pointerEvents: product.stock === 0 ? 'none' : 'auto'}}>
+        <Link to={`/product/${product.id}`} className='card cardProduct h-100 text-decoration-none shadow '>
             { product.Offer?.active === "true" && product.stock !== 0 && (<GlitchText disc={product.Offer.discount} />)  }
             <div className={product.stock === 0 ? "row h-100 align-items-center opacity-50" : "row h-100 align-items-center"}>
                 <div className="col mx-auto align-middle"  >
@@ -116,7 +116,7 @@ const CardProduct = ({ product }) => {
                         <Button variant="danger" disabled={!isAuthenticated} onClick={(e) => addFavorite(e, product.id)} className='btns-card-product'> <i className="fa-solid fa-heart-circle-plus fa-xl"></i> </Button>
                     </div>
                     <div className="col-6">
-                        <Button variant="danger" onClick={(e) => addCart(e)} className='btns-card-product' > <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
+                        <Button variant="danger" onClick={(e) => addCart(e)} className='btns-card-product' disabled={product.stock === 0}> <i className="fa-solid fa-cart-plus fa-xl"></i> </Button>
                     </div>
                 </div>
 
