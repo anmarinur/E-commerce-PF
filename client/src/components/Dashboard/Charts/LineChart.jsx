@@ -25,6 +25,13 @@ ChartJS.register(
 );
 
 export const options = {
+  scales: {
+    yAxes: [{
+      id: "y_axis_users"
+    },{
+      id: "y_axis_money"
+    }]
+  },
   responsive: true,
   plugins: {
     legend: {
@@ -37,28 +44,31 @@ export const options = {
   },
 };
 
-const labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octuber', 'November', 'December'];
 
 export let data = {
   labels,
   datasets: [
     {
-      label: 'VISITS',
-      data: labels.map(() => 1000 * Math.random()),
+      label: ' Monthly activity (new/users)',
+      data: [],
       borderColor: 'rgb(255, 99, 132)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
       tension: 0.5,
       fill: true,
-      pointBorderWidth: 5
+      pointBorderWidth: 5,
+      yAxisID: "y-axis-users"
     },
     {
-      label: 'SALES',
+      label: ' Monthly sales ($)',
       data: [],
       borderColor: 'rgb(53, 162, 235)',
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
       fill: true,
       tension: 0.5,
-      pointBorderWidth: 5
+      pointBorderWidth: 5,
+      yAxisID: "y-axis-money"
+
 
     },
   ],
@@ -77,36 +87,151 @@ export default function LineChart() {
                     Authorization: `Bearer ${token}`
                 }
             });
-            let Monday=0, Tuesday=0, Wednesday=0, Thursday=0, Friday=0, Saturday=0, Sunday = 0;
+            const users = await axios.get(`/stats/user`, {
+              headers: {
+                  Authorization: `Bearer ${token}`
+              }
+          });
+            let 
+            January = 0, 
+            February = 0, 
+            March = 0, 
+            April = 0, 
+            May = 0, 
+            June = 0, 
+            July = 0, 
+            August = 0, 
+            September = 0, 
+            Octuber = 0, 
+            November = 0, 
+            December = 0
             result.data.map(o=>{
-                const day = new Date(o.day).getDay()
-                switch(day){
+                const day = new Date(o.day).getDay();
+                const month = new Date(o.day).getMonth();
+                switch(month){
                     case(0):
-                        Sunday+=Number(o.total);
+                        January+=Number(o.total);
                         break;
                     case(1):
-                        Monday+=Number(o.total);
+                        February+=Number(o.total);
                         break;
                     case(2):
-                        Tuesday+=Number(o.total);
+                        March+=Number(o.total);
                         break;
                     case(3):
-                        Wednesday+=Number(o.total);
+                        April+=Number(o.total);
                         break;
                     case(4):
-                        Thursday+=Number(o.total);
+                        May+=Number(o.total);
                         break;
                     case(5):
-                        Friday+=Number(o.total);
+                        June+=Number(o.total);
+                        break;
+                    case(6):
+                        July+=Number(o.total);
+                        break;
+                    case(7):
+                        August+=Number(o.total);
+                        break;
+                    case(8):
+                        September+=Number(o.total);
+                        break;
+                    case(9):
+                        Octuber+=Number(o.total);
+                        break;
+                    case(10):
+                        November+=Number(o.total);
                         break;
                     default:
-                        Saturday+=Number(o.total);
+                        December+=Number(o.total);
                         break;
                 }
             });
             
-            const resultData = [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday];
+            const resultData = [
+              January, 
+              February, 
+              March, 
+              April, 
+              May, 
+              June, 
+              July, 
+              August, 
+              September,
+              Octuber, 
+              November, 
+              December
+            ];
             data.datasets[1].data = resultData;
+            let 
+            january = 0, 
+            february = 0, 
+            march = 0, 
+            april = 0, 
+            may = 0, 
+            june = 0, 
+            july = 0, 
+            august = 0, 
+            september = 0, 
+            octuber = 0, 
+            november = 0, 
+            december = 0
+            users.data.map(u=>{
+              const month = new Date(u.day).getMonth();
+              switch(month){
+                  case(0):
+                      january++;
+                      break;
+                  case(1):
+                      february++;
+                      break;
+                  case(2):
+                      march++;
+                      break;
+                  case(3):
+                      april++;
+                      break;
+                  case(4):
+                      may++;
+                      break;
+                  case(5):
+                      june++;
+                      break;
+                  case(6):
+                      july++;
+                      break;
+                  case(7):
+                      august++;
+                      break;
+                  case(8):
+                      september++;
+                      break;
+                  case(9):
+                      octuber++;
+                      break;
+                  case(10):
+                      november++;
+                      break;
+                  default:
+                      december++;
+                      break;
+              }
+          });
+          const userData = [
+            january, 
+            february,  
+            march,  
+            april,  
+            may,
+            june, 
+            july, 
+            august, 
+            september,
+            octuber,
+            november, 
+            december,
+          ];
+            data.datasets[0].data = userData;
             setStats(data);
         } catch (error) {
             console.log(error.message);
@@ -119,7 +244,7 @@ export default function LineChart() {
 
   return (
     <div style={{margin: "5em 0"}} className=' column col-12'>
-        <h3 style={{fontSize: "1rem", fontWeight: "bold", textAlign: "center"}}>PERFORMANCE</h3>
+        <h3 style={{fontSize: "1rem", fontWeight: "bold", textAlign: "center"}}>PERFORMANCE {`${new Date().getFullYear()}`}</h3>
         { stats && <Line options={options} data={stats} />}
     </div>
     )

@@ -39,6 +39,8 @@ export default function ProductDetail(props) {
   
   const [images, setImages] = useState([])
   const [showImage, setShowImage] = useState("")
+  const favTotal = useSelector(state=>state.totalFav);
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -117,7 +119,7 @@ export default function ProductDetail(props) {
             Authorization: `Bearer ${token}`
         }
     });
-    if (result.status === 200) {
+    if (result.status === 200 && !favTotal.find(f=>f.id===id)) {
         try {
             const token2 = await getAccessTokenSilently();
             dispatch(getTotalFav(user.email, token2))
@@ -134,6 +136,17 @@ export default function ProductDetail(props) {
         } catch (error) {
             console.log(error)
         }
+    }else{
+      toast.error('Already added!', {
+        position: "top-right",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
     }
     
 
@@ -309,11 +322,12 @@ export default function ProductDetail(props) {
                     </Button>
                   </div>
                   <div className="col-6">
-                    <Link to="/cart">
+                    <Link to="/cart" style={{pointerEvents: productDetail.stock === 0 ? 'none' : 'auto'}}>
                       <Button
                         className="px-3 py-3 rounded-4 "
                         variant="danger"
                         onClick={(e) => addCart(e, productDetail)}
+                        disabled={productDetail.stock === 0}
                         >
                         {" "}
                         <i className="fa-solid fa-cart-plus fa-xl"></i>{" "}

@@ -36,7 +36,7 @@ const Dashboard = () => {
                         <Switch>
                             <Route exact path="/Dashboard">
                                 <TransitionY>
-                                <div style={{height: "100vh", width: "100%"}} className='d-flex justify-content-center align-items-center'>
+                                <div style={{height: "90vh", width: "100%"}} className='d-flex justify-content-center align-items-center'>
                                     <DoughnutChart />
                                     <PolarAreaChart />
                                 </div>

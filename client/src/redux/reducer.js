@@ -11,7 +11,7 @@ const stateInitial = {
     profileImg: null,
     user: {},
     categories: [],
-    totalFav: 0,
+    totalFav: [],
     reviews: {},
     offers: [],
     modalShow: true

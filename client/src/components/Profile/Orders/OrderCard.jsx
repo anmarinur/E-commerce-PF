@@ -9,11 +9,14 @@ import jsPDF from 'jspdf';
 import logoTech from '../../Nav/images/Logo.png';
 import logoShipp from './shipping.png';
 import Loading from '../../Loading/Loading'
+import Popup from 'reactjs-popup';
 
-const OrderCard = ({ order, userData, userOrders, userEmail }) => {
+
+const OrderCard = ({ getUserOrders, order, userData, userOrders, userEmail }) => {
     
     const [modalShow, setModalShow] = useState(false);
     const [loadpdf, setLoadpdf] = useState(true);
+    const {getAccessTokenSilently} = useAuth0();
 
     async function payment(orderId) {
         const order = userOrders.find((el) => el.id === Number(orderId));
@@ -130,6 +133,35 @@ const OrderCard = ({ order, userData, userOrders, userEmail }) => {
         }
     
         //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--* FIN DE P D F S -*-*-*-*-*-*-*-*-*-*-*---
+    
+    const [open, setOpen] = useState(false);
+
+    useEffect(()=>{
+        getUserOrders();
+    }, [open])
+
+    const closeModal = () => {
+        setOpen(false)
+        return;
+    };
+
+    const handleCancelled= async()=>{
+        try {
+            const token = await getAccessTokenSilently()
+            const result = await axios.put(`/order/status/${order.id}`, { status: "cancelled" },{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        setOpen(false)
+        }catch(error){
+            console.log(error.message);
+        }
+    }
+
+    const cancelledOnClick = async () => {
+        setOpen(o => !o)
+    }
 
 
     return (
@@ -198,10 +230,15 @@ const OrderCard = ({ order, userData, userOrders, userEmail }) => {
                                         <i className="fa-sharp fa-solid fa-comment-dots me-2"></i>Comment
                                     </button>)
                                 }
+                                {order.status === 'created' &&
+                                    <button className='btn btn-danger mx-2 fw-bold ' onClick={cancelledOnClick}>
+                                        <i class="fa-solid fa-ban me-2"></i>Cancel
+                                    </button>
+                                }
 
                                 {
-                                loadpdf && order.id ?
-                                <button className='btn btn-success fw-bold ' onClick={()=>{
+                                loadpdf && order.id && order.status !== 'cancelled' ?
+                                <button className='btn btn-success mx-2 fw-bold ' onClick={()=>{
                                     setLoadpdf(false);
                                     setTimeout(()=>{
                                         getPDF(order);
@@ -212,7 +249,7 @@ const OrderCard = ({ order, userData, userOrders, userEmail }) => {
                                     }}>
                                     <i className="fa-solid fa-file-pdf me-2"></i>Download
                                 </button>
-                                : <Loading size={"50px"} height={"50px"} />
+                                : order.status !== 'cancelled' ? <Loading size={"50px"} height={"50px"} /> : <></>
                                 }
 
                             </div>
@@ -227,6 +264,22 @@ const OrderCard = ({ order, userData, userOrders, userEmail }) => {
                         />
                     </div>
             </div>
+            <Popup open={open} closeOnDocumentClick onClose={closeModal} >
+                <div className="row border border-dark rounded py-4 m-0">
+                    <div className="col-12 text-center py-4 text-dark">
+                        <i class="fa-solid fa-circle-question fa-4x"></i>
+                    </div>
+                    <div className="col-12">
+                        <h5 className="text-dark text-center font-weight-bold py-3">Sure you want to cancel the order</h5>
+                    </div>
+                    <div className="col-12 text-center">
+                        <div class="btn-group mx-auto" role="group" aria-label="Basic example">
+                            <button onClick={() => handleCancelled()} type="button" class="btn btn-success fs-6"> <i className="fa-solid fa-square-check fa-xl me-2"></i> Yes</button>
+                            <button onClick={() => setOpen(false)} type="button" class="btn btn-danger fs-6"> <i className="fa-solid fa-square-xmark fa-xl me-2"></i> No</button>
+                        </div>
+                    </div>
+                </div>
+            </Popup>
         </div>
     )
 }
