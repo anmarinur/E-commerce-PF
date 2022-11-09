@@ -40,7 +40,7 @@ const getFiveProductsLowStock = async (req, res)=>{
     }
 }
 
-const getOrderTotalPaymentDaily = async (req, res)=>{
+const getOrderTotalPaymentMonthly = async (req, res)=>{
     let data = [];
     try {
         const orders = await Order.findAll();
@@ -56,8 +56,24 @@ const getOrderTotalPaymentDaily = async (req, res)=>{
     }
 }
 
+const getCountUserMonthly = async (req, res)=>{
+    let data = [];
+    try {
+        const users = await User.findAll();
+        data = users.map(u=>{
+            return {
+                day: u.createdAt
+            }
+        })
+        res.json(data)
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 module.exports = {
     getStatsCategories,
     getFiveProductsLowStock,
-    getOrderTotalPaymentDaily
+    getOrderTotalPaymentMonthly,
+    getCountUserMonthly
 }
