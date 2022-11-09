@@ -232,7 +232,7 @@ const OrderCard = ({ getUserOrders, order, userData, userOrders, userEmail }) =>
                                 }
                                 {order.status === 'created' &&
                                     <button className='btn btn-danger mx-2 fw-bold ' onClick={cancelledOnClick}>
-                                        <i class="fa-solid fa-ban me-2"></i>Cancelled
+                                        <i class="fa-solid fa-ban me-2"></i>Cancel
                                     </button>
                                 }
 
