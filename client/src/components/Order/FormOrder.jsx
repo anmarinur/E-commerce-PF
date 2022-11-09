@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setProfileImg } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
 import spinner from '../spinner.gif';
+import Transition from '../Transition/Transition';
+import TransitionY from '../Transition/TransitionY';
+import Loading from '../Loading/Loading';
 
 
 const FormOrder = (props) => {
 
-    const { user } = useAuth0();
-    const { getAccessTokenSilently } = useAuth0();
+    const { getAccessTokenSilently, user } = useAuth0();
     const dispatch = useDispatch();
     const location = useLocation();
 
@@ -180,12 +182,15 @@ const FormOrder = (props) => {
 
     return (
         <>
+        <TransitionY>
             {loading ?
-            <img className='mx-0 my-0' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' />
+            <div className='d-flex justify-content-center'>
+                <Loading size={"50px"} />
+            </div>
             : location.pathname==="/profile/myInformation" ? 
                 <form onSubmit={handleSubmitImg} encType='multipart/form-data' className='row align-items-center'>
-                    <h5 className='m-0 col-4'>Change you profile picture:</h5>
-                    <label for="image" className='btn btn-secondary m-0 col-4'>Select and Upload Image</label>
+                    <h5 className='m-0 col-4'>Change your profile picture:</h5>
+                    <label htmlFor="image" className='btn btn-secondary m-0 col-4'>Select and Upload Image</label>
                     <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
                     <input className='col-2 btn btn-success m-2 text-center' type="submit" value="Save"/>
                 </form>
@@ -248,8 +253,7 @@ const FormOrder = (props) => {
 
 
             </form>
-
-
+            </TransitionY>
         </>
     )
 }

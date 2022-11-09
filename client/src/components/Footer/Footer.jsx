@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Footer(){
+ var today = new Date();
+
     return(
         <div className="container-fluid" style={{ backgroundColor: "#a52323"}}>
             <footer className="py-3 mt-4">
@@ -13,7 +15,7 @@ export default function Footer(){
                     <li className="nav-item "><Link to={`/developers`} className="nav-link px-2 text-white">Developers</Link></li>
                     <li className="nav-item "><Link to={`/about`} className="nav-link px-2 text-white">About</Link></li> 
                 </ul>
-                <p className="text-center text-white">© 2022 Tecnoshop</p>
+                <p className="text-center text-white">{`© ${today.getFullYear()} Tecnoshop`}</p>
             </footer>
         </div>
     )

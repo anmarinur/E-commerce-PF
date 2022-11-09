@@ -1,4 +1,4 @@
-const { Order, Product, OrderDetail, User } = require("../db");
+const { Order, Product, OrderDetail, Offer, User } = require("../db");
 const { Op } = require("sequelize");
 const emailNotifications = require("../utils/emailNotifications.js");
 const message = require("../utils/emailMessages");
@@ -60,7 +60,7 @@ const getOrdersById = async (req, res) => {
     const { id } = req.params;
     const order = await Order.findOne({
       where: {id},
-      include: Product
+      include: {model: Product, attributes: {exclude: ['OfferId']}, include: Offer }
     });
 
     order
@@ -74,18 +74,20 @@ const getOrdersById = async (req, res) => {
 const getOrdersByEmail = async (req, res) => {
   try {
     const { email } = req.params;
+    const orderBy = [["id", "DESC"]];
     const order = await Order.findAll({
       where: {
         user_email: email
       },
-      include: Product,
+      include: {model: Product, attributes: {exclude: ['OfferId']}, include: Offer },
+      order: orderBy
     });
 
     order.length !== 0
       ? res.status(200).send(order)
       : res.json("Order not found or email invalid");
   } catch (error) {
-    res.json(error.message);
+    res.status(404).json(error.message);
   }
 };
 
@@ -109,7 +111,7 @@ const postOrder = async (req, res) => {
     return res.status(200).json(orderDB.id);
     
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
   }
 };
 
@@ -159,7 +161,7 @@ const updateOrder = async (req, res) => {
     
     res.status(200).json("Order updated successfully");
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
   }
 };
 
@@ -212,7 +214,7 @@ const updateStatus = async (req, res) => {
 
     res.status(200).json("Status updated successfully");
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
   }
 };
 

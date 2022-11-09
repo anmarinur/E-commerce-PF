@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom"
 import { toast } from "react-toastify";
-import spinner from '../../spinner.gif';
+import Loading from "../../Loading/Loading";
+import Transition from "../../Transition/Transition";
 
 
 export default function ImageProduct(){
@@ -81,6 +82,7 @@ export default function ImageProduct(){
     }
 
     return (
+        <Transition>
         <div className="container">
             <h1 className="text-center py-2  text-danger">Upload product photos (ID:{id})</h1>
             <div className="d-flex" style={{gap: "5rem"}}>
@@ -88,20 +90,22 @@ export default function ImageProduct(){
 
             <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
             {loading
-            ?<div style={{width: "20rem"}}><img src={spinner} alt="loading" /></div>
+            ?<div style={{width: "20rem"}} className=""><Loading height={"250px"}/></div>
             :<img style={{width: "20rem"}} src={preview ||"https://removal.ai/wp-content/uploads/2021/02/no-img.png" } alt="photo" />
             }
             <br/>
-            <label for="image" className='my-2 mx-1 btn btn-secondary'>Select Photo</label>
+            <label htmlFor="image" className='my-2 mx-1 btn btn-secondary'>Select Photo</label>
             <button disabled={!preview} type="submit" className="btn btn-success text-center" onClick={uploadImage} ><i className="me-2 fa-solid fa-floppy-disk"></i> Save</button>
             </div>
             <div>
                 {images?.length>0
-                ? images.map(img=><div onClick={()=>deleteImage(img.public_id)} className="d-inline img-delete"><img className="m-1 img-thumbnail" style={{width:"10rem"}} src={img.image} alt="product"/></div>)
+                ? images.map((img, idx)=><div key={idx} onClick={()=>deleteImage(img.public_id)} className="d-inline img-delete"><img className="m-1 img-thumbnail" style={{width:"10rem"}} src={img.image} alt="product"/></div>)
                 :<></>
             }
             </div>
             </div>
         </div>
+        </Transition>
+
     )
 }

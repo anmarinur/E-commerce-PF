@@ -6,6 +6,7 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../../redux/actions'
+import Transition from '../../Transition/Transition';
 
 export default function Categories() {
 
@@ -55,6 +56,7 @@ export default function Categories() {
 
 
     return (
+        <Transition>
         <div className='container-fluid mt-4'>
             <div className="row">
                 <div className="col-12 bg-light border border-secondary px-2 rounded shadow">
@@ -63,7 +65,7 @@ export default function Categories() {
                             <tr>
                                 <th className='fw-semibold fs-6'>Id</th>
                                 <th className='fw-semibold fs-6'>Category</th>
-                                <th><Link to='/Dashboard/Categories/Create' className="btn btn-sm btn-info fw-bold"><i className="me-2 fa-solid fa-plus"></i>New Category</Link></th>
+                                <th><Link to='/Dashboard/Categories/Create' className="btn btn-danger fw-bold"><i className="me-2 fa-solid fa-plus"></i>New Category</Link></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,5 +112,6 @@ export default function Categories() {
                 </div>
             </Popup>
         </div>
+        </Transition>
     )
 }

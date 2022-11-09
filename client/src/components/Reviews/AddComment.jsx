@@ -8,9 +8,10 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import spinner from '../spinner.gif';
 import { useLocation } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 
 
-export default function AddComment({products, email, idOrder}) {
+export default function AddComment({products, email, idOrder, block}) {
 
   const location = useLocation();
 
@@ -128,6 +129,19 @@ export default function AddComment({products, email, idOrder}) {
               });
               
       setLoading(false);
+      setInput({
+        idProduct: '',
+        comment: ''
+      });
+      setStar({
+        star1: false,
+        star2: false,
+        star3: false,
+        star4: false,
+        star5: false
+      });
+      setPreview();
+
     }
 
   return(
@@ -138,40 +152,44 @@ export default function AddComment({products, email, idOrder}) {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Select product</Form.Label>
-              <Form.Control as="select" className={errors.idProduct ? "form-control border border-danger" : "form-control"}name="idProduct" onChange={(e) => handleChange(e)}>
-                <option>Select a product</option>
+              <Form.Control disabled={block === true ? true : ''} as="select" className={errors.idProduct ? "form-control border border-danger" : "form-control"}name="idProduct" value={input.idProduct} onChange={(e) => handleChange(e)}>
+                <option value={""}>Select a product</option>
                 {products ? products.map((product) => {
                   return (
                   <option key={product.id} value={product.id} >{product.name}</option>
                   )
                 }):('')}
               </Form.Control>
-              {errors.idProduct && <span className="ms-2 text-danger">{errors.idProduct}</span>}
+              {block === false && errors.idProduct && <span className="ms-2 text-danger">{errors.idProduct}</span>}
             </Form.Group>
-            <Form.Group className="mb-3" controlId="rate">
+            {block === false && <Form.Group className="mb-3" controlId="rate">
               <Form.Label>Rate</Form.Label>        
                 <Starv2 star={star} setStar={setStar}/>
-            </Form.Group>
+            </Form.Group>}
             <Form.Group className="mb-3" controlId="review">
               <Form.Label>Review:</Form.Label>
-              <Form.Control as="textarea" className={errors.comment ? "form-control border border-danger" : "form-control"} rows={2} name="comment" value={input.comment} onChange={(e) => handleChange(e)} placeholder="Enter a review"/>
-              {errors.comment && <span className="ms-2 text-danger">{errors.comment}</span>}
+              <Form.Control disabled={block === true ? true : ''} as="textarea" className={errors.comment ? "form-control border border-danger" : "form-control"} rows={2} name="comment" value={input.comment} onChange={(e) => handleChange(e)} placeholder="Enter a review"/>
+              {block === false && errors.comment && <span className="ms-2 text-danger">{errors.comment}</span>}
             </Form.Group>
           </Form>
           
           {loading
-          ?<img className='mx-0 my-0' style={{ maxWidth : '100px', maxHeight : '100px' }}  src={spinner} alt='Loading . . .' />
+          ? <div className='d-flex justify-content-center'><Loading /></div>
           :location.pathname==="/profile/myOrders" ? 
-                    <>
+                    block === false && <>
                     <p className='col-4'>Upload a photo of your product:</p>
-                    <input onChange={handleInputImg} type="file" name="image" accept='image/*' id="image" style={{"display":"none"}}/>
-                    <label for="image" className='m-2 btn btn-secondary col-3'>Select Photo</label>
+                    <input onChange={handleInputImg} type="file" name={`${idOrder}`} accept='image/*' id={`${idOrder}`} style={{"display":"none"}}/>
+                    <label for={`${idOrder}`} className='m-2 btn btn-secondary col-3'>Select Photo</label>
                     <img style={{width: "10rem"}} src={preview ||"https://removal.ai/wp-content/uploads/2021/02/no-img.png" } alt="photo" />
                     </>
           :<></>}
 
           <div className="d-flex justify-content-around py-3 w-50 mx-auto">
-            <Button disabled={errors.comment || errors.idProduct ? true : false} variant="danger" type="submit"  onClick={onSubmit}>Submit</Button>{' '}
+            {block === true ?
+              <div className="alert alert-danger text-center my-4" role="alert">
+                <i className="fa-solid fa-triangle-exclamation fs-1 mb-2"></i>
+                <p className='text-center fw-bold lh-2'>Sorry, you have been blocked because you have violated our policies</p>
+              </div> : <Button disabled={errors.comment || errors.idProduct ? true : false} variant="danger" type="submit"  onClick={onSubmit}>Submit</Button>}
           </div>
 
         </Card.Body>

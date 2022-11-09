@@ -18,8 +18,9 @@ import Offers from '../components/Dashboard/Offers/offers';
 import FormOffers from '../components/Dashboard/Offers/FormOffers';
 import UpdateOffers from '../components/Dashboard/Offers/UpdateOffers';
 
-import Transition from '../components/Transition/Transition';
-import TransitionY from '../components/Transition/TransitionY';
+import GoUpButton from '../components/GoUpButton/GoUpButton';
+import LineChart from '../components/Dashboard/Charts/LineChart';
+import TransitionY  from '../components/Transition/TransitionY';
 
 
 const Dashboard = () => {
@@ -34,79 +35,68 @@ const Dashboard = () => {
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         <Switch>
                             <Route exact path="/Dashboard">
-                                <div  className='d-flex justify-content-center align-items-center'>
+                                <TransitionY>
+                                <div style={{height: "100vh", width: "100%"}} className='d-flex justify-content-center align-items-center'>
                                     <DoughnutChart />
                                     <PolarAreaChart />
                                 </div>
+                                </TransitionY>
+                                <TransitionY>
+                                    <LineChart />
+                                </TransitionY>
                             </Route>
                             <Route exact path="/Dashboard/Products">
-                            <TransitionY>
                                 <ProductsTable />
-                            </TransitionY>
                             </Route>
 
                             <Route exact strict path="/Dashboard/Products/Create">
-                            <Transition>
                                 <FormCreate />
-                            </Transition>
                             </Route>
 
                             <Route exact strict path="/Dashboard/Products/Image">
-                            <Transition>
                                 <ImageProduct />
-                            </Transition>
                             </Route>
 
                             <Route exact strict path="/Dashboard/Products/Update">
-                            <Transition>
                                 <Update />
-                            </Transition>
                             </Route>
 
                             <Route path="/Dashboard/Orders">
-                            <TransitionY>
                                 <AdminOrderContainer />
-                            </TransitionY>
                             </Route>
 
                             <Route path="/Dashboard/Users">
-                            <Transition>
                                 <UsersList />
-                            </Transition>
                             </Route>
+
                             <Route exact path="/Dashboard/Categories">
-                            <Transition>
                                 <Categories />
-                            </Transition>
                             </Route>
+
                             <Route exact path="/Dashboard/Categories/Create">
-                            <TransitionY>
                                 <FormCategory />
-                            </TransitionY>
                             </Route>
+
                             <Route exact path="/Dashboard/Categories/Update/:id/:categorySelected">
-                            <TransitionY>
                                 <FormCategory />
-                            </TransitionY>
                             </Route>
+
                             <Route exact path="/Dashboard/Offers">
-                              <Transition>
                               <Offers />
-                              </Transition>
                             </Route>
+
                             <Route exact path="/Dashboard/Offers/create">
-                              <TransitionY>
                               <FormOffers />
-                              </TransitionY>
                             </Route>
+
                             <Route exact path="/Dashboard/Offers/update/:id">
-                              <TransitionY>
                               <UpdateOffers />
-                              </TransitionY>
                             </Route>
+                            
                         </Switch>
                     </main>
                 </div>
+            <GoUpButton />
             </div>
         </>
     )

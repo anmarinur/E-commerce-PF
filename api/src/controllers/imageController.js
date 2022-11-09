@@ -12,7 +12,7 @@ const getImageProductId = async (req, res)=>{
         });
         res.json(images);
     } catch (error) {
-        res.json(error.message);
+        res.status(404).json(error.message);
     }
 }
 
@@ -33,7 +33,7 @@ const postImageProductId = async (req, res)=>{
         res.json(newImage);
         
     } catch (error) {
-        res.json(error.message);
+        res.status(400).json(error.message);
     }
 }
 
@@ -48,7 +48,7 @@ const deleteImageProductId = async (req, res)=>{
         await deleteImage(id);
         res.json("Deleted successfully");
     } catch (error) {
-        res.json(error.message);
+        res.status(400).json(error.message);
     }
 }
 

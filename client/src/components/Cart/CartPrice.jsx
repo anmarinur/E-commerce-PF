@@ -17,6 +17,7 @@ const CardPrice = ({ order }) => {
 
     const { isAuthenticated } = useAuth0();
 
+
     function handleClick(e) {
         e.preventDefault();
         dispatch(setCurrentOrder(currentOrder));

@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import ReactPaginate from 'react-paginate';
 import AdminOrderCard from './AdminOrderCard';
 import  {toast}  from 'react-toastify';
+import Transition from '../../Transition/Transition';
 
 const AdminOrderContainer = () => {
 
@@ -48,8 +49,8 @@ const AdminOrderContainer = () => {
     async function updateStatus(e, id){
         const token = await getAccessTokenSilently()
         const orderById = orders.find((order) => order.id === id)
-        if (orderById.status === 'cancelled') {
-            toast.error('The order is currently cancelled', {
+        if (orderById.status === 'received' || orderById.status === 'cancelled') {
+            toast.error(`The order is currently ${orderById.status}`, {
                 position: "top-right",
                 autoClose: 1200,
                 hideProgressBar: false,
@@ -79,26 +80,33 @@ const AdminOrderContainer = () => {
 
 
     return (
-        <>
-            <div className='container  p-2 mt-4'>
-                <div className='row justify-content-around'>
-                    <select  onChange={(e) => setOrderAs(e.target.value)}class="form-select mb-4 w-25">
-                        <option selected>Order By</option>
-                        <option value="ASC">Older</option>
-                        <option value="DESC">Recent</option>
-                    </select>
-                    <select onChange={(e) => setStatusFilter(e.target.value)} class="form-select mb-4 w-25">
-                        <option selected value="all">Filter By Status (Default All)</option>
-                        <option value="received">Received</option>
-                        <option value="in process">In process</option>
-                        <option value="created">Created</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="pending">Pending</option>
-                    </select>
-                </div>
-                <div className="row">
-                    {/* <table className="table">
+      <>
+        <Transition>
+          <div className="container  p-2 mt-4">
+            <div className="row justify-content-around">
+              <select
+                onChange={(e) => setOrderAs(e.target.value)}
+                className="form-select mb-4 w-25"
+              >
+                <option value="">Order By</option>
+                <option value="ASC">Older</option>
+                <option value="DESC">Recent</option>
+              </select>
+              <select
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="form-select mb-4 w-25"
+              >
+                <option value="all">Filter By Status (Default All)</option>
+                <option value="received">Received</option>
+                <option value="in process">In process</option>
+                <option value="created">Created</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="pending">Pending</option>
+              </select>
+            </div>
+            <div className="row">
+              {/* <table className="table">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -116,7 +124,7 @@ const AdminOrderContainer = () => {
                                             <td>{order.user_email}</td>
                                             <td>{order.total_payment}</td>
                                             <td>
-                                                <select onChange={(e)=> updateStatus(e, order.id)} class="form-select mb-4 w-50">
+                                                <select onChange={(e)=> updateStatus(e, order.id)} className="form-select mb-4 w-50">
                                                     <option selected>{order.status}</option>
                                                     {availableStatus.map(status=> !(status == order.status) ?
                                                     <option value={status}>{status}</option> : null
@@ -130,38 +138,51 @@ const AdminOrderContainer = () => {
                                 }
                         </tbody>
                     </table> */}
-                    {orders.length !== 0 ? orders.map(order =>
-                            <AdminOrderCard availableStatus={availableStatus}  updateStatus={updateStatus} order={order} />
-                    ) : <h4 className='text-danger'>Orders not Found</h4>
-                    }
-                    
-                    <nav aria-label="navigation">
-                    { totalPages !==0 ?
-                        <ReactPaginate
-                        breakLabel=" . . ."
-                        breakLinkClassName='page-link'
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={totalPages}
-                        previousLabel="<"
-                        renderOnZeroPageCount={1}
-                        className="pagination justify-content-center"
-                        pageClassName="page-item "
-                        pageLinkClassName="page-link "
-                        activeClassName="active"
-                        previousClassName="page-item"
-                        nextClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextLinkClassName="page-link"
-                    />  
-                    : null} 
-                    
-                    </nav>
+              {orders.length !== 0 ? (
+                orders.map((order) => (
+                  <AdminOrderCard
+                    key={order.id}
+                    availableStatus={availableStatus}
+                    updateStatus={updateStatus}
+                    order={order}
+                  />
+                ))
+              ) : (
+                <div className="d-flex flex-column align-items-center mt-4">
+                  <i className="fa-solid fa-circle-exclamation fs-4 text-danger"></i>
+                  <p className="text-danger fw-bold fs-4 mt-2">
+                    Without Orders
+                  </p>
                 </div>
-            </div>
+              )}
 
-        </>
-    )
+              <nav aria-label="navigation">
+                {totalPages !== 0 ? (
+                  <ReactPaginate
+                    breakLabel=" . . ."
+                    breakLinkClassName="page-link"
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={totalPages}
+                    previousLabel="<"
+                    renderOnZeroPageCount={1}
+                    className="pagination justify-content-center"
+                    pageClassName="page-item "
+                    pageLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                    activeClassName="page-item"
+                    activeLinkClassName="bg-danger border-danger text-white rounded shadow-sm "
+                    previousClassName="page-item"
+                    nextClassName="page-item "
+                    previousLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                    nextLinkClassName="btn btn-secondary text-decoration-none rounded shadow text-white fw-semibold me-1"
+                  />
+                ) : null}
+              </nav>
+            </div>
+          </div>
+        </Transition>
+      </>
+    );
 }
 export default AdminOrderContainer;

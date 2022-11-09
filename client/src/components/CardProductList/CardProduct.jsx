@@ -7,6 +7,7 @@ import { addCartGlobal, getTotalFav } from '../../redux/actions';
 import './CardProduct.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import GlitchText from '../GlitchText/GlitchText';
 
 const CardProduct = ({ product }) => {
 
@@ -55,7 +56,7 @@ const CardProduct = ({ product }) => {
         if (!exist) {
             dispatch(addCartGlobal(product));
 
-            toast.success('Added to Car!', {
+            toast.success('Added to Cart!', {
                 position: "top-right",
                 autoClose: 1200,
                 hideProgressBar: false,
@@ -81,7 +82,8 @@ const CardProduct = ({ product }) => {
 
 
     return (
-        <Link to={`/product/${product.id}`} className='card cardProduct h-100 text-decoration-none shadow-sm ' >
+        <Link to={`/product/${product.id}`} className='card cardProduct h-100 text-decoration-none shadow ' >
+            { product.Offer?.active === "true" && (<GlitchText disc={product.Offer.discount} />)  }
             <div className="row h-100 align-items-center">
                 <div className="col mx-auto align-middle"  >
                     <Card.Img variant="top" src={product.image} style={{ maxWidth: '90%', minWidth: '100%', minHeight: '100%' }} className="img-product img-fluid w-50  mx-auto d-block p-3" />
@@ -93,7 +95,14 @@ const CardProduct = ({ product }) => {
                 <Card.Title className="text-center text-danger"> {product.name} </Card.Title>
 
                 <p className="card-text text-center fw-light text-muted start lh-1" >{product.category}</p>
-                <p className="card-text text-center  text-danger fs-4">${product.price}</p>
+                { product.Offer?.active === "true" && (  <p className='m-0 p-0 fw-bold text-center fs-4 text-danger' > $ { Math.trunc( (product.price - (product.price * (product.Offer.discount/100))) )}</p> ) }
+                {
+                    product.Offer?.active === "true" ? 
+                    (<p className="card-text text-center  text-danger fs-4 text-decoration-line-through">${product.price}</p>) 
+                    :
+                     (<p className="card-text text-center  text-danger fs-4">${product.price}</p>) 
+                }
+                
                 <p className="card-text text-center fw-light text-muted start lh-1" >{product.brand}</p>
                 <div className="row text-center">
                     <div className="col-6">
@@ -108,6 +117,4 @@ const CardProduct = ({ product }) => {
         </Link>
     )
 }
-
-
 export default CardProduct;

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../../redux/actions';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import Transition from '../../Transition/Transition';
 
 export default function Update(){
    
@@ -87,7 +88,7 @@ export default function Update(){
         if(!input.CategoryId) {
             errors.CategoryId = 'Select one category'
         } else {
-            errors.category = '';
+            errors.CategoryId = '';
         }
 
         if(!input.stock || input.stock <= 0) {
@@ -152,6 +153,7 @@ export default function Update(){
     }
 
     return (
+        <Transition>
         <div>
             {id ? <h1 className="text-center py-2  text-danger">Update product</h1> : <h1 className="text-center py-5 text-danger">Create new product</h1>}
             <Form className="w-75 mx-auto">
@@ -185,15 +187,9 @@ export default function Update(){
                         <option>Select a category</option>
                         {categories.map(c=>{
                             return(
-                                <option value={c.id}>{c.category}</option>
+                                <option key={c.id} value={c.id}>{c.category}</option>
                             )
                         })}
-                        {/* <option value="smartphones">Smartphones</option>
-                        <option value="laptops">PC Laptops</option>
-                        <option value="tablets">Tablets</option>
-                        <option value="smartwatches">Smartwatches</option>
-                        <option value="speakers">Speakers</option>
-                        <option value="tv">TVs</option> */}
                     </Form.Control>
                     {errors.CategoryId && <Form.Text className="text-muted">Select one category</Form.Text>}
                 </Form.Group>
@@ -214,7 +210,7 @@ export default function Update(){
             <div className="d-flex justify-content-around py-3 w-50 mx-auto">
                 <Button variant="danger" type="submit"  onClick={(e) => history.push('/Dashboard/Products')}><i className="fa-solid fa-left-long"></i></Button>{' '}
                 <Button variant="danger" type="submit"  onClick={(e) => handleClick(e)} 
-                disabled={(errors.name || errors.image || errors.description || errors.price || errors.category || errors.stock || errors.brand) ? true : ''}
+                disabled={(errors.name || errors.image || errors.description || errors.price || errors.CategoryId || errors.stock || errors.brand) ? true : ''}
                 >Submit</Button>{' '}
             </div>
             <ToastContainer/>
@@ -222,5 +218,6 @@ export default function Update(){
                 <h2 className="text-danger text-center font-weight-bold">"You dont have the necesary permissions"</h2>
             </Popup>
         </div>
+        </Transition>
     )
 }

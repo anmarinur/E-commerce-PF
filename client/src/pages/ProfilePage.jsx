@@ -13,6 +13,7 @@ import { getUser } from '../redux/actions.js';
 import MyFavorites from '../components/MyFavorites/MyFavorites.jsx';
 import Transition from '../components/Transition/Transition.jsx';
 import TransitionY from '../components/Transition/TransitionY.jsx';
+import GoUpButton from '../components/GoUpButton/GoUpButton.jsx';
 
 export default function ProfilePage() {
 
@@ -50,7 +51,7 @@ export default function ProfilePage() {
                     <div className="col-xl-3 col-md-4 col-sm-12  mb-4">
                         <div className=" text-center">
                             
-                            <img src={profileImg ? profileImg : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em', height: "6em"}} className="text-center rounded-circle" alt="Avatar" />
+                            <img src={profileImg ? profileImg : userLocal.image? userLocal.image : 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} style={ { width : '6em', height: "6em"}} className="text-center rounded-circle" alt="Avatar" />
                             <p className='m-0 p-0 fw-bold'>{user && user.name}</p>
                             <span className='m-0 p-0 fw-bold fs-15'>{user && user.email}</span>
                         </div>
@@ -66,33 +67,21 @@ export default function ProfilePage() {
 
                     <div className='col-xl-9 col-md-8 col-sm-12 '>
                         <Route path={'/profile/myInformation'}>
-                            <TransitionY>
                                 <FormOrder user={ user} />
-                            </TransitionY>
                         </Route>
                         <Route path={'/profile/myOrders'}>
-                            <TransitionY>
                                 <OrderContainer />
-                            </TransitionY>
                         </Route>
                         <Route path={'/profile/myFavorites'}>
-                            <TransitionY>
                                 <MyFavorites />
-                            </TransitionY>
                         </Route>
-                        
-                       
-
                     </div>
 
                 </div>
-
-
             </div>
+            <GoUpButton />
             </Transition>
             <Footer/>
-          
-            
         </>
     )
 }

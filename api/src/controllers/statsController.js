@@ -18,7 +18,8 @@ const getStatsCategories = async( req, res )=>{
         res.json(result);
         
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
+        res.status(404).json(error.message);
     }
 }
 
@@ -35,11 +36,28 @@ const getFiveProductsLowStock = async (req, res)=>{
         })
         res.json(products);
     } catch (error) {
-        res.json(error.message);
+        res.status(404).json(error.message);
+    }
+}
+
+const getOrderTotalPaymentDaily = async (req, res)=>{
+    let data = [];
+    try {
+        const orders = await Order.findAll();
+        data = orders.map(o=>{
+            return {
+                total: o.total_payment,
+                day: o.createdAt
+            }
+        })
+        res.json(data)
+    } catch (error) {
+        res.status(400).json(error.message)
     }
 }
 
 module.exports = {
     getStatsCategories,
-    getFiveProductsLowStock
+    getFiveProductsLowStock,
+    getOrderTotalPaymentDaily
 }

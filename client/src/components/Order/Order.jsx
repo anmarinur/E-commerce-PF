@@ -42,7 +42,6 @@ const Order = () => {
             quantity: product.qty
         }
     })
-
     const finalOrder = {
         user_email: user ? user.email : '',
         total_payment: totalCart,
@@ -160,7 +159,7 @@ const Order = () => {
                 }
             })
             const id = response.data;
-            getPdf();
+            /* getPdf(); */
             dispatch(clearCart());
             setUnits({});
             setCart([]);

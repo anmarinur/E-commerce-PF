@@ -7,13 +7,13 @@ import { deleteCartGlobal } from '../../redux/actions';
 
 
 function ProductTrElement(props) {
-    const { id, price, stock } = props.product;
-    
+    const { id, price, stock, Offer } = props.product;
+    const priceOffer = Offer?.active === "true" ? Math.trunc(price*(1-Offer.discount/100)) : price;
     const [unit, setUnit] = useState(Number(props.order[id]?.split("|")[0])||1);
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        props.setOrder(state=>{ return {...state, [id]: `${unit}|${price*unit}`}})
+        props.setOrder(state=>{ return {...state, [id]: `${unit}|${priceOffer*unit}`}})
     }, [unit]);
     
     function removeCart(id) {
@@ -57,7 +57,10 @@ function ProductTrElement(props) {
             <td className="align-middle" >
                 <Link className="text-decoration-none text-dark fw-semibold fs-6 " to={`/product/${props.product.id}`}>{props.product.name}</Link>
             </td>
-            <td className="align-middle fw-semibold" >$ {props.product.price}</td>
+            {Offer?.active
+            ?<td className="align-middle fw-semibold text-nowrap" >$ {priceOffer}</td>
+            :<td className="align-middle fw-semibold text-nowrap" >$ {props.product.price}</td>
+            }
 
             <td className="align-middle" style={{ maxWidth: '1em', minHeight: '1em' }} >
                 <input
@@ -74,7 +77,7 @@ function ProductTrElement(props) {
             </td>
 
             {!props.isWish ? (
-                <td className="subTotalShow align-middle fw-semibold">$ {props.product.price * unit}</td>
+                <td className="subTotalShow align-middle fw-semibold text-nowrap">$ {priceOffer * unit}</td>
             ) : (
                 ""
             )}

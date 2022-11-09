@@ -119,6 +119,7 @@ export const getAllProducts = (size, page, filterCategory, sort, search, brands,
     var querySearch = '';
     var queryBrands = '';
     var queryDisc = '';
+    var queryOffer = '';
 
 
     if (filterCategory) queryCat = `&cat=${filterCategory}`;

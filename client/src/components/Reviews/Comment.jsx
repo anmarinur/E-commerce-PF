@@ -10,13 +10,16 @@ import { getReviews } from '../../redux/actions';
 import isAdmin from '../../utils/isAdmin';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import Popup from 'reactjs-popup';
+import Modal from 'react-bootstrap/Modal';
 
 
 
-export default function Coment({ id, rating, comment, name, createdAt,image }) {
+export default function Coment({ id, rating, comment, createdAt, image, handleDelete }) {
 
 
   const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
   const reviews = useSelector(state => state.reviews[0].Reviews);
 
 
@@ -32,72 +35,68 @@ export default function Coment({ id, rating, comment, name, createdAt,image }) {
   const [admin, setAdmin] = useState();
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
+  const closeModal = () => {
+    setOpen(false)
+  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
   useEffect(() => {
     isAdmin(getAccessTokenSilently).then((res) => setAdmin(res)).catch(() => setAdmin(false));
-    if (admin === false) {
-      setOpen(o => !o)
-    }
     if (reviews.length === 0) dispatch(getReviews());
   }, [admin]);
 
 
-
-  const deleteP = async (id) => {
-    const token = await getAccessTokenSilently();
-    try {
-      await axios.delete(`/review/${id}`, {
-
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      console.log(id)
-      toast.success("Comment delete successfully");
-    }
-    catch (error) {
-    }
-    dispatch(getReviews());
+  function openModal() {
+    setOpen(o => !o)
   }
 
-
+  function handleClick(id) {
+    handleClose();
+    handleDelete(id);
+  }
 
   return (
-
-    <div className='col-xl-6'>
-        <Card.Body>
-          <img src={image} alt="foto" style={{width: "3rem", borderRadius: "10px"}}/>
-          <Card.Title>{name}</Card.Title>
-
-
-          {admin ?
-            <button onClick={() => deleteP(id)} type="button" className="btn-close" style={{ float: 'right' }} aria-label="Close"></button> : null
-          }
-          <div className="d-flex">
-            <img
-              src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-              alt="avatar"
-              style={{ maxWidth: '4em', maxHeight: '4em' }}
-            />
-            <div className="row">
-              <p className='ms-4 text-start my-0'>User Name </p>
-              <p className='ms-4 text-start my-0'>{ new Date(createdAt).toLocaleString() } </p>
-            </div>
-          </div>
-
-          <div className="d-flex flex-row px-2 pt-3">
-            {stars.map((star) => {
-              return star
-            })}
-          </div>
-          <Card.Text>
-            {comment}
-          </Card.Text>
-          {/* <div>
-            <Button className="m-3 fw-bold text-danger" variant="light" onClick={() => deleteP(id)}>X</Button>
-          </div> */}
-        </Card.Body>
+    <div className="w-50 my-3 p-3 border border-danger rounded bg-light bg-gradient">
+      <div className='d-flex flex-row justify-content-between mt-2'>
+        <div className="d-flex justify-content-between">
+        {stars.map((star) => {
+          return star
+        })}
+        </div>
+        <div>
+          <p>{ new Date(createdAt).toLocaleString() } </p>
+        </div>
+      </div>
+      <div>
+        <p className='fs-5 text-start'>{comment}</p>
+      </div>
+      <div className='d-flex flex-row justify-content-center'>
+        {image !== null && <img className="w-25 border border-danger rounded" role="button" src={image} alt='product' onClick={openModal}/>}
+      </div>
+      <div className='d-flex flex-row justify-content-end'>
+        {admin && <button className="btn btn-danger mt-4" onClick={handleShow}>Delete comment</button>}
+      </div>
+      <Popup open={open} closeOnDocumentClick onClose={closeModal}>
+        <div className='d-flex flex-row justify-content-center'>
+          <img className="col-6 rounded" src={image} alt='product'/>
+        </div>
+      </Popup>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Warning!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>This action cannot be undone. Are you shure you want to delete this comment?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            No
+          </Button>
+          <Button variant="primary" onClick={() => handleClick(id)}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }

@@ -11,7 +11,8 @@ module.exports= (sequelize) => {
         },
         event: {
             type: DataTypes.STRING,
-            defaultValue: null
+            allowNull: false,
+            unique: true
         },
         discount: {
             type: DataTypes.INTEGER,
@@ -32,6 +33,9 @@ module.exports= (sequelize) => {
             set(value){
                 throw new Error("Do not try to set the active value");
             }
+        },
+        detail: {
+         type: DataTypes.TEXT,
         }
       },
       {
