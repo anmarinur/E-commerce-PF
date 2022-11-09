@@ -202,7 +202,7 @@ export function getTotalFav(email,token) {
             });
             return dispatch({
                 type: GET_TOTAL_FAV,
-                payload: result.data.length 
+                payload: result.data
             })
         } catch (error) {
             console.log( ' : error : '+error)
