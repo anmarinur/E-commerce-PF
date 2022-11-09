@@ -9,6 +9,6 @@ statsRouter.get('/categories', login, admin, getStatsCategories);
 
 statsRouter.get('/stock', login, admin, getFiveProductsLowStock);
 
-statsRouter.get('/order', /* login, admin, */ getOrderTotalPaymentDaily);
+statsRouter.get('/order', login, admin, getOrderTotalPaymentDaily);
 
 module.exports = statsRouter;
