@@ -88,7 +88,7 @@ export default function Update(){
         if(!input.CategoryId) {
             errors.CategoryId = 'Select one category'
         } else {
-            errors.category = '';
+            errors.CategoryId = '';
         }
 
         if(!input.stock || input.stock <= 0) {
