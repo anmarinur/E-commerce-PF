@@ -315,7 +315,7 @@ export default function ProductDetail(props) {
                 </Card.Subtitle>
                 <div className="row text-center">
                   <div className="col-6">
-                    <Button className="px-3 py-3 rounded-4 " variant="danger"
+                    <Button disabled={!isAuthenticated} className="px-3 py-3 rounded-4 " variant="danger"
                     onClick={(e) => addFavorite(e, productDetail.id)}>
                       {" "}
                       <i className="fa-solid fa-heart-circle-plus fa-xl"></i>{" "}
