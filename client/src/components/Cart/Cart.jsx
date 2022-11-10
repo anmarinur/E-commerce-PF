@@ -37,7 +37,7 @@ export const Cart = () => {
     <div>
       <Nav />
       <Transition>
-      <div style={{minHeight: "60vh"}} className="">
+      <div style={{minHeight: "65vh"}} className="">
         <Container className="card mb-5 mt-4 rounded border border-secondary p-3 shadow  bg-light">
           <h5 className="text-left mb-4 ps-2">Cart List</h5>
           <Row className="mx-1" >
