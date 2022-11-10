@@ -169,7 +169,16 @@ const updateStatus = async (req, res) => {
   try {
     const { id } = req.params;
     let {status} = req.body;
-    if(status!=="cancelled") return;
+    
+    let oldStock = false;
+
+    if(status==="rejected") {
+     status="cancelled"
+     oldStock= true
+    }
+    if(status==="approved") status="in process"
+    if(status==="in_process") status="pending"
+    if(status==="pending") status="pending"
      
      await Order.update(
        { status: status },
@@ -182,16 +191,29 @@ const updateStatus = async (req, res) => {
 
     let orderDB = await Order.findByPk(id);
 
-    emailNotifications(orderDB.user_email, 'Information about your purchase', message.statusCancelled );
+    let msg =
+      orderDB.status === "in process"
+        ? message.statusInProcess
+        : orderDB.status === "delivered"
+        ? message.statusDelivered
+        : orderDB.status === "received"
+        ? message.statusReceived
+        : orderDB.status === "pending"
+        ? message.statusPending
+        : message.statusCancelled 
 
-     const unitsDB = await OrderDetail.findAll({     
-     where: {OrderId: id},
-     attributes:['ProductId','units']    
-     });
-     const units = unitsDB.map(e => ({id: e.ProductId, qty: e.units}));
-     units.map(async (e) => await Product.increment({stock: +e.qty}, {where:{id: e.id}}));     
+        emailNotifications(orderDB.user_email, 'Information about your purchase', msg);
 
-    res.status(200).json("Status updated successfully");
+        if(oldStock){
+         const unitsDB = await OrderDetail.findAll({     
+         where: {OrderId: id},
+         attributes:['ProductId','units']    
+         });
+         const units = unitsDB.map(e => ({id: e.ProductId, qty: e.units}));
+         units.map(async (e) => await Product.increment({stock: +e.qty}, {where:{id: e.id}}));     
+        }
+    
+        res.status(200).json("Status updated successfully");
   } catch (error) {
     res.status(400).json(error.message);
   }
