@@ -148,7 +148,7 @@ const OrderCard = ({ getUserOrders, order, userData, userOrders, userEmail }) =>
     const handleCancelled= async()=>{
         try {
             const token = await getAccessTokenSilently()
-            const result = await axios.put(`/order/status/${order.id}`, { status: "cancelled" },{
+            const result = await axios.put(`/order/status/${order.id}`, { status: "rejected" },{
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -17,11 +17,12 @@ import Transition from "../components/Transition/Transition";
 import CardOfferProduct from "../components/Oferts/CardOfferProduct";
 import GoUpButton from "../components/GoUpButton/GoUpButton";
 import Loading from "../components/Loading/Loading";
-
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 
 export default function Home() {
+  const { getAccessTokenSilently } = useAuth0()
 
   // --------------- temporal
   const location = useLocation();
@@ -37,17 +38,25 @@ export default function Home() {
   // ---------------------------
 
 
-  useEffect(() => {
+  useEffect(() => {    
     getLastestProducts();
     getBestRatingProducts();
     getOfferProduct();
-    if (id && status) axios.put(`order/status/${status}?id=${id}`);
+    updateStatus();    
+  }, [])
+
+  const updateStatus = async () => {
+    const token = await getAccessTokenSilently();
+    if (id && status) await axios.put(`order/status/${id}`, {status: status}, {headers: {
+      Authorization: `Bearer ${token}`
+  }});
     id = '';
     status = '';
-  }, [])
+  }
 
   const getLastestProducts = async () => {
     try {
+      const token = await getAccessTokenSilently()
       const result = await axios.get('/product/latest');
       setLastestProducts(result.data.products);
     } catch (error) {
