@@ -97,7 +97,7 @@ export default function Nav() {
                                         <i className="fa-solid fa-heart fa-2x "></i>
                                         <p className="fw-normal fs-6 lh-1 ">Favs</p>
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-                                            {totalFav && totalFav.length}
+                                            {typeof totalFav === "object" ? totalFav.length : 0}
                                         </span>
                                     </Link>
 
