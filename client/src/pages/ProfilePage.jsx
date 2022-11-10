@@ -46,7 +46,7 @@ export default function ProfilePage() {
         <>
             <Nav />
             <Transition>
-            <div className="container mt-4 border border-secondary rounded">
+            <div style={{minHeight: "65vh"}} className="container mt-4 border border-secondary rounded">
                 <div className="row my-3 ">
                     <div className="col-xl-3 col-md-4 col-sm-12  mb-4">
                         <div className=" text-center">

@@ -20,7 +20,7 @@ export default function Nav() {
 
     useEffect(() => {
         if (isAuthenticated) {
-            getFav(user ? user.email : '')
+            user && user.email && getFav(user.email)
         }
 
     }, [user])
@@ -97,7 +97,7 @@ export default function Nav() {
                                         <i className="fa-solid fa-heart fa-2x "></i>
                                         <p className="fw-normal fs-6 lh-1 ">Favs</p>
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-                                            {!isAuthenticated ? '-' : totalFav.length}
+                                            {totalFav && totalFav.length}
                                         </span>
                                     </Link>
 
@@ -105,9 +105,6 @@ export default function Nav() {
                                     <button disabled={true} className="text-white text-decoration-none bg-danger position-relative my-2 mx-5 p-1 border-0  ">
                                         <i className="fa-solid fa-heart fa-2x "></i>
                                         <p className="fw-normal fs-6 lh-1 ">Favs</p>
-                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-                                            -
-                                        </span>
                                     </button>
                                 )}
 

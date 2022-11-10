@@ -14,7 +14,7 @@ export default function Home(){
         <>
             <Nav />
             <Transition>
-            <div class="container mt-4">
+            <div style={{minHeight: "65vh"}} class="container mt-4">
                 <h2>About Tecnoshop</h2>
                 <p>
                     We are a technology store in Latin America. We are dedicated to the sale of laptops, smartphones, tablets, smartwatches, speakers and tv's for private consumers, companies or resellers.</p>
