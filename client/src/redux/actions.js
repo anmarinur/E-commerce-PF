@@ -200,9 +200,13 @@ export function getTotalFav(email,token) {
                     Authorization: `Bearer ${token}`
                 }
             });
+            let data = [];
+            if(typeof result.data === "object"){
+                data = result.data
+            }
             return dispatch({
                 type: GET_TOTAL_FAV,
-                payload: result.data
+                payload: data
             })
         } catch (error) {
             console.log( ' : error : '+error)
