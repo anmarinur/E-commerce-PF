@@ -20,7 +20,7 @@ const postCategory = async (req, res)=>{
         })
         created
             ? res.json(newCategory)
-            : res.json("Category already exist");
+            : res.status(403).json("Category already exist");
 
     } catch (error) {
         res.status(400).json(error.message);

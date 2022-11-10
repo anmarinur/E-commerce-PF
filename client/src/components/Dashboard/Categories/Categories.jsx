@@ -7,12 +7,12 @@ import 'reactjs-popup/dist/index.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../../redux/actions'
 import Transition from '../../Transition/Transition';
+import { toast } from 'react-toastify';
 
 export default function Categories() {
 
 
     const dispatch = useDispatch();
-    const [categories, setCategories] = React.useState(0);
     const { getAccessTokenSilently } = useAuth0();
     const [id, setId] = React.useState();
     const categoriesAll = useSelector(state => state.categories);
@@ -28,10 +28,6 @@ export default function Categories() {
         dispatch(getCategories())
     }, [dispatch])
 
-    const getAllCategories = async () => {
-        const result = await axios.get('/category')
-        setCategories(result.data);
-    }
 
     const deleteCategory = async (id) => {
         setOpen(o => !o)
@@ -47,6 +43,7 @@ export default function Categories() {
                     Authorization: `Bearer ${token}`
                 }
             })
+            toast.success(result.data);
         } catch (error) {
 
         }
@@ -98,15 +95,15 @@ export default function Categories() {
             <Popup open={open} closeOnDocumentClick onClose={closeModal} >
                 <div className="row border border-dark rounded py-4 m-0">
                     <div className="col-12 text-center py-4 text-dark">
-                        <i class="fa-solid fa-circle-question fa-4x"></i>
+                        <i className="fa-solid fa-circle-question fa-4x"></i>
                     </div>
                     <div className="col-12">
                         <h5 className="text-dark text-center font-weight-bold py-3">Are you sure to delete the category?</h5>
                     </div>
                     <div className="col-12 text-center">
-                        <div class="btn-group mx-auto" role="group" aria-label="Basic example">
-                            <button onClick={() => deleteOnClick(id)} type="button" class="btn btn-success fs-6"> <i className="fa-solid fa-square-check fa-xl me-2"></i> Yes</button>
-                            <button onClick={() => setOpen(false)} type="button" class="btn btn-danger fs-6"> <i className="fa-solid fa-square-xmark fa-xl me-2"></i> No</button>
+                        <div className="btn-group mx-auto" role="group" aria-label="Basic example">
+                            <button onClick={() => deleteOnClick(id)} type="button" className="btn btn-success fs-6"> <i className="fa-solid fa-square-check fa-xl me-2"></i> Yes</button>
+                            <button onClick={() => setOpen(false)} type="button" className="btn btn-danger fs-6"> <i className="fa-solid fa-square-xmark fa-xl me-2"></i> No</button>
                         </div>
                     </div>
                 </div>
