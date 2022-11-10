@@ -160,6 +160,7 @@ export default function Home() {
           <div className="row  py-4 m-0 bg-light "  >
             <div className="col-12 text-center text-dark ">
               <h3 className="text-uppercase fw-bold mt-4" >Product News</h3>
+              {lastestProducts == null ? <div className="d-flex justify-content-center"><Loading height={"250px"}/></div> : 
               <Carousel
                 swipeable={false}
                 draggable={false}
@@ -177,7 +178,7 @@ export default function Home() {
                     <CardProduct product={p} key={p.id} />
                   ) : (<div className="d-flex justify-content-center"><Loading height={"250px"}/></div>)
                 }
-              </Carousel>
+              </Carousel> }
             </div>
             <div className="col-12 text-center text-dark bg-white">
               <h3 className="text-uppercase fw-bold my-4">Product Offer</h3>
